@@ -453,7 +453,7 @@ process_italy = function(){
     gather(key = "gender", value = "covid_deaths", -age)
   data$gender = ifelse(data$gender  == 'male', 'Male', 'Female')
   
-  excess_death = read.csv('data/Six_euro_Mar_2021/euro_excess.csv')
+  excess_death = read.csv('data/euro_excess.csv')
   excess_death = as.data.table(excess_death) %>% select(week, year, italy, age, gender)
   excess_death = excess_death[!is.na(excess_death$italy),]
   excess_death$age = as.character(excess_death$age)
@@ -503,7 +503,7 @@ process_italy = function(){
 # Kenya
 process_kenya_covid19 = function(){
   data = read.csv('data/Kenya/covid19_deaths_raw.csv')
-  data$date = '2020-12-31'
+  data$date = '2020-03-31'
   data$rate = data$deaths/sum(data$deaths)
   
   # Selects deaths from JHU

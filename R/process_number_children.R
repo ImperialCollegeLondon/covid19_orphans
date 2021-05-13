@@ -341,17 +341,17 @@ process_number_children_italy <- function(){
   
   # fathers
   cat(sprintf("Processing number of children of fathers\n"))
-  data_f = read.csv(paste0('data/fertility/italy_fertility_m_all.csv'))
+  data_f = read.csv(paste0('data/Italy/italy_fertility_m_all.csv'))
   data_f$fertility_rate <- data_f$fertility_rate/1000
   data_f$date = data_f$year
   data_f$age = as.character(data_f$age)
-  process_children_father_65_plus("italy", data_f)
+  process_children_father_65_plus("Italy", data_f)
   is_child_mortality_needed = 1
-  add_child_mortality(is_child_mortality_needed, "italy")
+  add_child_mortality(is_child_mortality_needed, "Italy")
   
   # mothers
   cat(sprintf("Processing number of children of mothers\n"))
-  data = read.csv(paste0('data/fertility/italy_fertility_f.csv'))
+  data = read.csv(paste0('data/Italy/italy_fertility_f.csv'))
   data_f = copy(data)
   data_f$fertility_rate = data_f$fertility_rate/1000
   d_2019 = data_f[which(data_f$date == '2019'),]
@@ -389,10 +389,10 @@ process_number_children_kenya <- function(){
   data_f = copy(data)
   data_f$date = data_f$year
   data_f$gender = 'M'
-  write_csv(data_f, path = paste0('data/fertility/kenya_fertility_m_all.csv'))
-  process_children_father_80_plus("kenya", data_f)
+  write_csv(data_f, path = paste0('data/Kenya/kenya_fertility_m_all.csv'))
+  process_children_father_80_plus("Kenya", data_f)
   is_child_mortality_needed = 0
-  add_child_mortality(is_child_mortality_needed, "kenya")
+  add_child_mortality(is_child_mortality_needed, "Kenya")
   
   # mothers
   cat(sprintf("Processing number of children of mothers\n"))
@@ -417,7 +417,7 @@ process_number_children_kenya <- function(){
   data_f = copy(data)
   data_f$date = data_f$year
   data_f$gender = 'F'
-  write_csv(data_f, path = paste0('data/fertility/kenya_fertility_f.csv'))
+  write_csv(data_f, path = paste0('data/Kenya/kenya_fertility_f.csv'))
   is_child_mortality_needed = 0
   process_children_all("kenya", is_child_mortality_needed, data_f)
 
