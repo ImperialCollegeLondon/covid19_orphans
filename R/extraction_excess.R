@@ -540,7 +540,7 @@ process_mexico_covid19 = function(){
   
   data =  reshape2::melt(data, id.vars = c('date', 'age'), variable.name =  'gender', value.name = 'rate')
   
-  data_pop = readxl::read_xlsx('data/fertility_update/pop.xlsx', sheet = 2)
+  data_pop = readxl::read_xlsx('data/fertility/pop.xlsx', sheet = 2)
   countries = c('Mexico')
   names(data_pop) = as.character(data_pop[1,])
   data_pop = as.data.table(data_pop) %>% filter(Location %in% countries, Time == '2020') %>% select(Location, Time, Age, Female, Male)
@@ -584,7 +584,7 @@ process_nigeria_covid19 = function(){
 
 # Peru
 process_peru_covid19 = function(){
-  d_merge = read.csv('data/Peru/covid19_deaths_raw_feb.csv')
+  d_merge = read.csv('data/Peru/covid19_deaths_raw.csv')
 
   # Selects deaths from JHU
   deaths_data = read.csv("data/03-31-2021.csv")
