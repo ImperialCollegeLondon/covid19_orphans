@@ -1,7 +1,6 @@
 library(tidyverse)
 
-source("scripts/summary_orphans_feb.R")
-#source("scripts/process_skip_generation_feb.R")
+source("R/summary_orphans.R")
 
 argentina = t(data.frame(combine_orphans("Argentina", process_argentina_skip_generation())))
 brazil = t(data.frame(combine_orphans("Brazil", process_brazil_skip_generation())))
@@ -31,12 +30,7 @@ countries <- c("Argentina", "Brazil", "Colombia", "England", "France", "Germany"
 df = rbind(argentina, brazil, colombia, england, france, germany, india, iran, italy, kenya, malawi,
            mexico, nigeria, peru, philippines, poland, russia, south_africa, spain, usa, zimbabwe)
 
-# countries <- c("Argentina", "Brazil", "Colombia", "England", "France", "Germany", "India", "I.R. Iran",
-#                "Italy", "Kenya", "Mexico",
-#                "Nigeria", "Peru", "Poland", "Russian Federation", "South Africa", "Spain", "USA")
-# df = rbind(argentina, brazil, colombia, england, france, germany, india, iran, italy, kenya, 
-#            mexico, nigeria, peru, poland, russia, south_africa, spain, usa)
-
+# Set of countries for a sensitivity analysis
 #countries <- c("Brazil", "Colombia", "England", "India", "I.R. Iran",
 #               "Italy", "Kenya",  "Malawi", "Mexico",
 #               "Nigeria", "Peru", "Philippines", "Poland", "Russian Federation", "South Africa", 

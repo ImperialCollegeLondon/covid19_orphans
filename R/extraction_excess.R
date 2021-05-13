@@ -640,7 +640,7 @@ process_philippines = function(){
 }
 
 # Poland
-process_poland_covid19_and_excess = function(){
+process_poland_covid19 = function(){
   data = readxl::read_xlsx('data/Poland/poland-2020-by-age-and-gender.xlsx', sheet = 2)
   setnames(data, 1:3, c('age', 'Female', 'Male'))
   data = data[3:nrow(data),1:3]
@@ -731,7 +731,7 @@ process_spain = function(){
     gather(key = "gender", value = "covid_deaths", -age)
   data$gender = ifelse(data$gender  == 'male', 'Male', 'Female')
   
-  excess_death = read.csv('data/Six_euro_Mar_2021/euro_excess.csv')
+  excess_death = read.csv('data/euro_excess.csv')
   excess_death = as.data.table(excess_death) %>% select(week, year, spain, age, gender)
   excess_death = excess_death[!is.na(excess_death$spain),]
   excess_death$age = as.character(excess_death$age)

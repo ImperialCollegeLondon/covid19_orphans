@@ -100,12 +100,12 @@ add_child_mortality = function(is_child_mortality_needed, country){
 # Multiple countries
 process_child_mortality = function(country, countries){
   # rate per children 
-  if (country != "russian_federation"){
+  if (country != "Russia"){
     child = read.csv(paste0('data/child_mortality_rate', '.csv'))
     child = child %>% filter(country == countries)
     
   }else{
-    child = read.csv('data/children/mortality_rate_all_russain_federation.csv')
+    child = read.csv('data/Russia/mortality_rate_all.csv')
   }
   
   child_m_matrix = matrix(rep(0, 100*18), nrow = 100)

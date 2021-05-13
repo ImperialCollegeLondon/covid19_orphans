@@ -641,7 +641,7 @@ process_philippines_skip_generation = function(){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(path = paste0('data/fertility/skip_generation_', country,'.csv'), data)
+  write_csv(path = paste0('data/Philippines/skip_generation_', country,'.csv'), data)
   print(data)
 }
 
@@ -688,7 +688,7 @@ process_poland_skip_generation = function(){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(path = paste0('data/fertility/skip_generation_', country,'.csv'), data)
+  write_csv(path = paste0('data/Poland/skip_generation_', country,'.csv'), data)
   print(data)
 }
 
@@ -713,7 +713,7 @@ process_russia_skip_generation = function(){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(path = paste0('data/fertility/skip_generation_', country,'.csv'), data)
+  write_csv(path = paste0('data/Russia/skip_generation_', country,'.csv'), data)
   print(data)
 }
 
@@ -763,7 +763,7 @@ process_spain_skip_generation = function(){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(path = paste0('data/fertility/skip_generation_', country,'.csv'), data)
+  write_csv(path = paste0('data/Spain/skip_generation_', country,'.csv'), data)
   print(data)
 }
 
@@ -812,7 +812,7 @@ process_south_africa_skip_generation = function(){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(path = 'data/fertility/skip_generation_south_africa.csv', data)
+  write_csv(path = 'data/SouthAfrica/skip_generation_south_africa.csv', data)
   print(data)
 }
 
@@ -843,7 +843,7 @@ process_usa_skip_generation = function(){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(path = paste0('data/fertility/skip_generation_', country,'.csv'), data)
+  write_csv(path = paste0('data/USA/skip_generation_', country,'.csv'), data)
   print(data)
 }
 
@@ -889,6 +889,6 @@ process_zimbabwe_skip_generation = function(){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(path = paste0('data/fertility/skip_generation_', country,'.csv'), data)
+  write_csv(path = paste0('data/Zimbabwe/skip_generation_', country,'.csv'), data)
   print(data)
 }

@@ -176,7 +176,7 @@ combine_orphans("Peru", process_peru_skip_generation())
 #### Philippines #########################################################################################################
 cat(sprintf("Running Philippines======\n"))
 cat(sprintf("Processing Death data\n"))
-process_philippines()
+#process_philippines() <- see Readme for where to download this data.
 cat(sprintf("Processing number of children rates\n"))
 process_number_children_philippines()
 cat(sprintf("Processing number of orphans\n"))
@@ -187,7 +187,7 @@ combine_orphans("Philippines", process_philippines_skip_generation())
 ####  Poland #########################################################################################################
 cat(sprintf("Running Poland======\n"))
 cat(sprintf("Processing Death data\n"))
-process_poland_covid19_and_excess()
+process_poland_covid19()
 cat(sprintf("Processing number of children rates\n"))
 process_number_children_poland()
 cat(sprintf("Processing number of orphans\n"))
@@ -233,7 +233,7 @@ cat(sprintf("Running USA======\n"))
 cat(sprintf("Processing Death data\n"))
 process_usa()
 cat(sprintf("Processing number of children rates\n"))
-process_number_children_usa(high_fertility = TRUE)
+process_number_children_usa()
 cat(sprintf("Processing number of orphans\n"))
 process_orphans_usa()
 combine_orphans("USA", process_usa_skip_generation())
@@ -251,7 +251,7 @@ combine_orphans("Zimbabwe", process_zimbabwe_skip_generation())
 
 
 ### Summary ###################################################################################
-source("scripts/orphans_table_feb.R")
+source("R/orphans_table.R")
 
 
 
