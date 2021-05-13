@@ -48,10 +48,6 @@ saveRDS(df, file = "orphans.RDS")
 df = as.data.frame(df)
 df$country = countries
 
-# Save for tableau
-write_csv(df, file = 'a1.csv')
-
-
 # Table 1
 tab_1 <- select(df, "mother", "father", "both", "orphans", "sg_grandmother", "sg_grandfather", 
                 "sg_both", "primary_loss")

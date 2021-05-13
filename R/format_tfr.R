@@ -105,9 +105,7 @@ joined$fitting_deaths = ifelse(!is.na(joined$deaths), joined$deaths, joined$tota
 
 joined$all <- ifelse(is.na(joined$all), 0, joined$all)
 
-# Change names for Shiny
-joined$country[which(joined$country == "USA")] <- "United States of America"
-joined$country[which(joined$country == "I.R. Iran")] <- "Iran (Islamic Republic of)"
+# Change names to match WHO
 joined$country[which(joined$country == "Gambia")] <- "Gambia (Republic of The)"
 joined$country[which(joined$country == "Guinea-Bissau")] <- "Guinea Bissau"
 joined$country[which(joined$country == "Czechia")] <- "Czech Republic"
