@@ -9,11 +9,11 @@ argentina$age[which(argentina$age == "00-19")] = "0-19"
 
 brazil <- read.csv("data/Brazil/all_data.csv", stringsAsFactors = FALSE)
 names(brazil) <- c("age", "gender", "deaths", "orphans")
-brazil$country <- rep("Brazil", length(brazil$age))
+brazil$country <- rep("Brazil**", length(brazil$age))
 
 colombia <- read.csv("data/Colombia/all_data.csv", stringsAsFactors = FALSE)
 names(colombia) <- c("age", "gender", "deaths", "orphans")
-colombia$country <- rep("Colombia", length(colombia$age))
+colombia$country <- rep("Colombia**", length(colombia$age))
 
 england <- read.csv("data/UK/england_wales_all_data.csv", stringsAsFactors = FALSE)
 england <- select(england, age, gender, nb_deaths, nb_orphans)
@@ -35,7 +35,7 @@ india$country <- rep("India*", length(india$age))
 
 iran <- read.csv("data/Iran/all_data.csv", stringsAsFactors = FALSE)
 names(iran) <- c("age", "gender", "deaths", "orphans")
-iran$country <- rep("I.R. Iran", length(iran$age))
+iran$country <- rep("I.R. Iran**", length(iran$age))
 
 italy <- read.csv("data/Italy/all_data.csv", stringsAsFactors = FALSE)
 italy <- select(italy, age, gender, max_deaths, nb_orphans)
@@ -53,7 +53,7 @@ malawi$country <- rep("Malawi*", length(malawi$age))
 
 mexico <- read.csv("data/Mexico/all_data.csv", stringsAsFactors = FALSE)
 names(mexico) <- c("age", "gender", "deaths", "orphans")
-mexico$country <- rep("Mexico", length(mexico$age))
+mexico$country <- rep("Mexico**", length(mexico$age))
 
 nigeria <- read.csv("data/Nigeria/all_data.csv", stringsAsFactors = FALSE)
 names(nigeria) <- c("age", "gender", "deaths", "orphans")
@@ -61,7 +61,7 @@ nigeria$country <- rep("Nigeria*", length(nigeria$age))
 
 peru <- read.csv("data/Peru/all_data.csv", stringsAsFactors = FALSE)
 names(peru) <- c("age", "gender", "deaths", "orphans")
-peru$country <- rep("Peru", length(peru$age))
+peru$country <- rep("Peru**", length(peru$age))
 
 philippines <- read.csv("data/Philippines/all_data.csv", stringsAsFactors = FALSE)
 names(philippines) <- c("age", "gender", "deaths", "orphans")
@@ -78,7 +78,7 @@ russia$country <- rep("Russian Federation", length(russia$age))
 
 southafrica <- read.csv("data/SouthAfrica/all_data.csv", stringsAsFactors = FALSE)
 names(southafrica) <- c("age", "gender", "deaths", "orphans")
-southafrica$country <- rep("South Africa", length(southafrica$age))
+southafrica$country <- rep("South Africa**", length(southafrica$age))
 
 spain <- read.csv("data/Spain/all_data.csv", stringsAsFactors = FALSE)
 spain <- select(spain, age, gender, max_deaths, nb_orphans)
