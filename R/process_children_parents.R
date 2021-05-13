@@ -5353,7 +5353,7 @@ process_children_father_65_plus = function(country, data_f){
   
   country
   
-  write_csv(path = paste0('data/children/child_raw_', country, '_m.csv'), children)
+  write_csv(path = paste0('data/', country, '/child_raw_m.csv'), children)
   plot_c = as.data.frame(as.numeric(as.character(unlist(children))))
   plot_c$father_age = rep(1:100,18)
   plot_c$child_age =sort(rep(seq(18)-1, 100))

@@ -2,12 +2,12 @@
 # analysis and calculates the number of orphans and children who have lost care from
 # grandparents due to COVID-19
 
-source(file.path("R","extraction_excess.R"))
-source(file.path("R","process_fertility.R"))
-source(file.path("R","process_number_children.R"))
-source(file.path("R","calculate_orphans.R"))
-source(file.path("R","process_skip_generation.R"))
-source(file.path("R","summary_orphans.R"))
+source("R/extraction_excess.R")
+source("R/process_fertility.R")
+source("R/process_number_children.R")
+source("R/calculate_orphans.R")
+source("R/process_skip_generation.R")
+source("R/summary_orphans.R")
 
 #### Argentina ##############################################################################
 cat(sprintf("Running Argentina ======\n"))
@@ -59,6 +59,7 @@ cat(sprintf("Processing number of orphans\n"))
 process_orphans_england_wales()
 combine_orphans(country ="EnglandWales", 
                 process_skip_generation_england_wales())
+
 
 ####  France #########################################################################################################
 cat(sprintf("Running France======\n"))

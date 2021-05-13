@@ -101,7 +101,7 @@ add_child_mortality = function(is_child_mortality_needed, country){
 process_child_mortality = function(country, countries){
   # rate per children 
   if (country != "russian_federation"){
-    child = read.csv(paste0('data/children/mortality_rate_all', '.csv'))
+    child = read.csv(paste0('data/child_mortality_rate', '.csv'))
     child = child %>% filter(country == countries)
     
   }else{
@@ -134,7 +134,7 @@ process_child_mortality = function(country, countries){
   child_m_matrix = as.data.frame(child_m_matrix)
   names(child_m_matrix) = paste0(seq(0:17)-1, 'years')
   
-  write_csv(path = paste0('data/children/child_mortality_', country,'.csv'), child_m_matrix)
+  write_csv(path = paste0('data/', country, '/child_mortality_rate.csv'), child_m_matrix)
 }  
 
 # England and Wales

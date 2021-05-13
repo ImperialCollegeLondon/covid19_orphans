@@ -215,7 +215,7 @@ process_orphans_france = function(){
   d_deaths = read.csv('data/France/france_all.csv', stringsAsFactors = FALSE)
   d_merge = copy(d_deaths)
 
-  d_children = read.csv(paste0('data/children/france_children.csv'), stringsAsFactors = FALSE)
+  d_children = read.csv(paste0('data/France/children.csv'), stringsAsFactors = FALSE)
   d_children$age = paste0((d_children$age)%/%10 * 10 ,'-',(d_children$age) %/% 10 *10+9)
   d_children$age = ifelse(d_children$age %in% c('90-99', '100-109'), '90+', d_children$age)
   d_children = d_children %>% group_by(age, gender) %>% mutate(nb_c = mean(children)) %>%
@@ -229,7 +229,7 @@ process_orphans_france = function(){
 
   d_m1 = d_m1%>% arrange(age) 
 
-  write_csv(path = paste0('data/children/france_orphans_all.csv'), d_m1)
+  write_csv(path = paste0('data/France/france_orphans_all.csv'), d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +

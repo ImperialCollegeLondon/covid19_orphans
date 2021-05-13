@@ -237,7 +237,7 @@ process_england_wales_fertility = function(){
 
 # France
 process_france_fertility = function(){
-  data_fertility = read.csv('data/fertility_update/parents_live_births.csv')
+  data_fertility = read.csv('data/fertility/unsd_live_births.csv')
   data_fertility = data_fertility %>% filter(country == 'France',
                                              age != 'Unknown - Inconnu',
                                              gender == 'Male')
@@ -273,9 +273,9 @@ process_france_fertility = function(){
   data_combine= merge(data_fertility, data_pop, by = c('country','year', 'age', 'gender'))
   data_combine[,fertility_rate := value / (pop)]
   # live births per 1000 male
-  write_csv(path = 'data/fertility/france_fertility_m.csv', data_combine)
+  write_csv(path = 'data/France/fertility_m.csv', data_combine)
   
-  data_combine = read.csv('data/fertility/france_fertility_m.csv')
+  data_combine = read.csv('data/France/fertility_m.csv')
   data_combine$year = as.character(data_combine$year)
   ggplot(data_combine) +
     geom_point(aes(x = age, y = fertility_rate, color = year)) +
@@ -301,12 +301,13 @@ process_france_fertility = function(){
   
   
   data_combine = data_combine %>% arrange(year, age)
-  write_csv(path = 'data/fertility/france_fertility_m_all.csv', data_combine)
+  write_csv(path = 'data/France/france_fertility_m_all.csv', data_combine)
   
   # from IHME get the female fertility rates
   #url = 'http://ghdx.healthdata.org/sites/default/files/record-attached-files/IHME_GBD_2019_FERTILITY_1950_2019_ASFR_0.zip'
   #download.file(url, 'data/afr.zip')
-  data = fread(unzip('data/afr.zip', files = 'IHME_GBD_2019_FERTILITY_1950_2019_ASFR_Y2020M10D27.CSV'))
+  #data = fread(unzip('data/afr.zip', files = 'IHME_GBD_2019_FERTILITY_1950_2019_ASFR_Y2020M10D27.CSV'))
+  data = read.csv("data/IHME_GBD_2019_FERTILITY_1950_2019_ASFR_Y2020M10D27.CSV")
   data = data %>% select(location_name, age_group_name, year_id, val)
   countries = c('France')
   data = data %>% filter(location_name %in% countries & year_id %in% seq(2003, 2020))
@@ -318,7 +319,7 @@ process_france_fertility = function(){
   d_rate_ihme = copy(data)
   d_rate_ihme$fertility_rate = d_rate_ihme$afr * 1000
   
-  write_csv(path = 'data/fertility/france_fertility_f_ihme.csv', d_rate_ihme)
+  write_csv(file = 'data/France/france_fertility_f_ihme.csv', d_rate_ihme)
   
   # from WPP
   data = read_excel("data/WPP2019_FERT_F07_AGE_SPECIFIC_FERTILITY.xlsx")
@@ -346,11 +347,11 @@ process_france_fertility = function(){
   #  geom_point(data = d_wpp_long_rep, aes(age, fertility_rate, col = date), shape = 15) +
   #  facet_wrap(~date)
   
-  write_csv(path = 'data/fertility/france_fertility_f.csv', d_wpp_long_rep)
+  write_csv(path = 'data/France/france_fertility_f.csv', d_wpp_long_rep)
 }
 
 compare_fertility_france = function(){
-  data_fertility = read.csv('data/fertility_update/parents_live_births.csv')
+  data_fertility = read.csv('data/fertility/unsd_live_births.csv')
   data_fertility = data_fertility %>% filter(country == 'France',
                                              age != 'Unknown - Inconnu',
                                              gender == 'Female')
@@ -384,16 +385,16 @@ compare_fertility_france = function(){
   data_combine= merge(data_fertility, data_pop, by = c('country','year', 'age', 'gender'))
   data_combine[,fertility_rate := value / (pop)]
   # live births per 1000 male
-  #write_csv(path = 'data/fertility/france_fertility.csv', data_combine)
+
   data_combine = data_combine %>% select(year, age, fertility_rate)
   data_combine$source = 'UNSD'
   
-  data_combine_f = read.csv('data/fertility/france_fertility_f.csv')
+  data_combine_f = read.csv('data/France/france_fertility_f.csv')
   data_combine_f = data_combine_f %>% select(date, age, fertility_rate)
   data_combine_f$source = 'UNWPP'
   setnames(data_combine_f, 'date', 'year')
   
-  data_combine_f_ihme = read.csv('data/fertility/france_fertility_f_ihme.csv')
+  data_combine_f_ihme = read.csv('data/France/france_fertility_f_ihme.csv')
   data_combine_f_ihme = data_combine_f_ihme %>% select(date, age, fertility_rate)
   data_combine_f_ihme$source = 'IHME'
   setnames(data_combine_f_ihme, 'date', 'year')

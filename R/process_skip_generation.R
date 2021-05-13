@@ -206,7 +206,7 @@ process_france_skip_generation = function(){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(path = paste0('data/fertility/skip_generation_france.csv'), data)
+  write_csv(path = paste0('data/France/skip_generation_france.csv'), data)
   print(data)
 }
 

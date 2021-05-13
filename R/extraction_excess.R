@@ -302,7 +302,7 @@ process_france = function(){
     gather(key = "gender", value = "covid_deaths", -age)
   data$gender = ifelse(data$gender  == 'male', 'Male', 'Female')
   
-  excess_death = read.csv('data/Six_euro_Feb_2021/euro_excess.csv')
+  excess_death = read.csv('data/euro_excess.csv')
   excess_death = as.data.table(excess_death) %>% select(week, year, france, age, gender)
   excess_death = excess_death[!is.na(excess_death$france),]
   excess_death$age = as.character(excess_death$age)
