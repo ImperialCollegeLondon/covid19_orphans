@@ -431,7 +431,7 @@ process_iran <- function(){
   
   rate = total / total_covid
   covid_data$deaths = round(covid_data$deaths * rate)
-  write_csv(covid_data, path = 'data/Iran/iran_all.csv')
+  write_csv(covid_data, file = 'data/Iran/iran_all.csv')
 }
 
 # Italy
