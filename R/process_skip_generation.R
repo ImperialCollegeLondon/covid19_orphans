@@ -51,7 +51,7 @@ process_argentina_skip_generation = function(){
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
   
-  write_csv(path = 'data/fertility/skip_generation_argentina.csv', data)
+  write_csv(path = 'data/Argentina/skip_generation_argentina.csv', data)
   print(data)
 }
 
@@ -75,7 +75,7 @@ process_brazil_skip_generation = function(){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(path = 'data/fertility/skip_generation_brazil.csv', data)
+  write_csv(path = 'data/Brazil/skip_generation_brazil.csv', data)
   print(data)
 }
 
@@ -156,7 +156,7 @@ process_skip_generation_england_wales = function(max_excess_covid = 0){
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
   setnames(data, 'grand_deaths', '60+ deaths')
-  write_csv(path = 'data/fertility/skip_generation_england_wales.csv', data)
+  write_csv(path = 'data/UK/skip_generation_england_wales.csv', data)
 
   print(data)
 }

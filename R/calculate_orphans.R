@@ -2,7 +2,7 @@
 process_orphans_argentina = function(){
   d_merge = read.csv('data/Argentina/covid19_deaths.csv', stringsAsFactors = FALSE)
   country = 'colombia'
-  d_children = read.csv(paste0('data/children/', country,'_children.csv'), stringsAsFactors = FALSE)
+  d_children = read.csv(paste0('data/Colombia/','children.csv'), stringsAsFactors = FALSE)
   d_children$age = paste0(d_children$age%/%20 * 20,'-',d_children$age %/% 20 *20+19)
   d_children$age = ifelse(d_children$age %in% c('60-79', '80-99', '100-119'), '60+', d_children$age)
   d_children = d_children %>% group_by(age, gender) %>% mutate(nb_c = mean(children)) %>%
@@ -15,7 +15,7 @@ process_orphans_argentina = function(){
   d_m1$age = as.character(d_m1$age)
   d_m1$age = ifelse(d_m1$age == '0-19', '00-19', d_m1$age)
   d_m1 = d_m1%>% arrange(age)                  
-  write_csv(path = paste0('data/children/argentina_orphans_all.csv'), d_m1)
+  write_csv(file = paste0('data/Argentina/orphans_all.csv'), d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +
@@ -47,7 +47,7 @@ process_orphans_brazil = function(){
   d_merge = copy(d_deaths)
   d_merge$age = as.character(d_merge$age)
   setnames(d_merge, 'COVID19_deaths', 'deaths')
-  d_children = read.csv(paste0('data/children/', country,'_children.csv'), stringsAsFactors = FALSE)
+  d_children = read.csv(paste0('data/Brazil/children.csv'), stringsAsFactors = FALSE)
   d_children$age = paste0(d_children$age%/%5 * 5,'-',d_children$age %/% 5 *5+5)
   d_children$age = ifelse(d_children$age %in% c('100-105'), '100+', d_children$age)
   d_children = d_children %>% group_by(age, gender) %>% mutate(nb_c = mean(children)) %>%
@@ -58,14 +58,14 @@ process_orphans_brazil = function(){
   d_m1 = merge( d_children,d_merge, by = c('age', 'gender')) 
   d_m1 = as.data.table(d_m1)
   d_m1[, orphans := round(deaths * nb_c)]
-  #d_m = merge(d_m1, f_ew, by = c('age', 'gender'))
+
   d_m1$age = as.character(d_m1$age)
   d_m1$age = ifelse(d_m1$age == '5-10', '05-10', d_m1$age)
   d_m1$age = ifelse(d_m1$age == '95-100', '95-99', d_m1$age)
   d_m1$age = ifelse(d_m1$age == '100+', '99+', d_m1$age)
   d_m1 = d_m1%>% arrange(age) 
   
-  write_csv(path = paste0('data/children/', country,'_orphans_all.csv'), d_m1)
+  write_csv(path = paste0('data/Brazil/orphans_all.csv'), d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +
@@ -97,7 +97,7 @@ process_orphans_brazil = function(){
 process_orphans_colombia = function(){
   country = 'colombia'
   d_merge = read.csv('data/Colombia/covid19_deaths_all.csv', stringsAsFactors = FALSE)
-  d_children = read.csv(paste0('data/', country,'children.csv'), stringsAsFactors = FALSE)
+  d_children = read.csv(paste0('data/', country,'/children.csv'), stringsAsFactors = FALSE)
   d_children$age = paste0(d_children$age%/%5 * 5,'-',d_children$age %/% 5 *5+4)
   d_children$age = ifelse(d_children$age %in% c('80-84', '85-89', '90-94', '95-99', '100-104'), '80+', d_children$age)
   d_children = d_children %>% group_by(age, gender) %>% mutate(nb_c = mean(children)) %>%
@@ -155,7 +155,7 @@ process_orphans_england_wales = function(){
   d_merge$deaths <- ifelse(d_merge$nb_excess > d_merge$nb_covid19, d_merge$nb_excess,  d_merge$nb_covid19)
   d_merge$gender = as.character(d_merge$gender)
   
-  d_children = read.csv('data/children/england_wales_children.csv', stringsAsFactors = FALSE)
+  d_children = read.csv('data/UK/children.csv', stringsAsFactors = FALSE)
   d_children$age = paste0(d_children$age%/%5 * 5,'-',d_children$age %/% 5 *5+4)
   d_children$age = ifelse(d_children$age %in% c('90-94', '95-99', '100-104'), '90+', d_children$age)
   d_children = d_children %>% group_by(age, gender) %>% mutate(nb_c = mean(children)) %>%
@@ -169,7 +169,7 @@ process_orphans_england_wales = function(){
   d_m1 = as.data.table(d_m1)
   
   d_m1[, orphans := deaths * nb_c]
-  write_csv(path = 'data/children/england_wales_orphans_all.csv', d_m1)
+  write_csv(path = 'data/UK/england_wales_orphans_all.csv', d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +

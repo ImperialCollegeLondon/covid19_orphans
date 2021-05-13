@@ -125,7 +125,7 @@ process_argentina_covid19 = function(){
   d_merge
 }
 
-# Process Brazil - covid only, updated to 31st Dec
+# Process Brazil - covid only, updated to march
 process_brazil = function(age_range){
   options(repr.plot.width=15, repr.plot.height=15)
   ##  check: url:https://opendatasus.saude.gov.br/dataset/bd-srag-2020
@@ -133,7 +133,7 @@ process_brazil = function(age_range){
   url = 'https://s3-sa-east-1.amazonaws.com/ckan.saude.gov.br/SRAG/2020/INFLUD-19-04-2021.csv'
   file_name = strsplit(url, '/')
   file_name = file_name[[1]][length(file_name[[1]])]
-  #download.file(url, file.path('data/Brazil/', file_name))
+  download.file(url, file.path('data/Brazil/', file_name))
   df_SIVEP_ORIGINAL=read_csv2(file.path('data/Brazil/', file_name))
   
   df_SIVEP_ORIGINAL->df_SIVEP
@@ -167,8 +167,8 @@ process_brazil = function(age_range){
     dir.create(file.path('data','Brazil'))
   }
   
-  write_csv(path = paste0("data/Brazil/","brazil.csv"),df_SIVEP)
-  write_csv(path = paste0("data/Brazil/","brazil_plot.csv"),df_SIVEP.plt)
+  #write_csv(path = paste0("data/Brazil/","brazil.csv"),df_SIVEP)
+  #write_csv(path = paste0("data/Brazil/","brazil_plot.csv"),df_SIVEP.plt)
   
   df = df_SIVEP.plt[order(-date, agesex),]
   df = df[which(df$date <= as.Date("2021-03-31")),]

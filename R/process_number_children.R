@@ -28,10 +28,10 @@ process_number_children_brazil <- function(){
   data_f = copy(data)
   data_f$date = data_f$year
   data_f$gender = 'M'
-  write_csv(data_f, path = paste0('data/fertility/brazil_fertility_m_all.csv'))
-  process_children_father_80_plus("brazil", data_f)
+  write_csv(data_f, path = paste0('data/Brazil/brazil_fertility_m_all.csv'))
+  process_children_father_80_plus("Brazil", data_f)
   is_child_mortality_needed = 0
-  add_child_mortality(is_child_mortality_needed, "brazil")
+  add_child_mortality(is_child_mortality_needed, "Brazil")
  
   # Calculate number of children from different aged mothers
   cat(sprintf("Processing number of children of mothers\n"))
@@ -55,11 +55,11 @@ process_number_children_brazil <- function(){
   data_f = copy(data)
   data_f$date = data_f$year
   data_f$gender = 'F'  
-  write_csv(data_f, path = paste0('data/fertility/brazil_fertility_f.csv'))
+  write_csv(data_f, path = paste0('data/Brazil/brazil_fertility_f.csv'))
   is_child_mortality_needed = 0
-  process_children_all("brazil", is_child_mortality_needed, data_f)
+  process_children_all("Brazil", is_child_mortality_needed, data_f)
   
-  process_fertility_plots("brazil")
+  process_fertility_plots("Brazil")
 }
 
 # Colombia
@@ -139,7 +139,7 @@ process_number_children_england_wales <- function(){
   
   # fathers
   cat(sprintf("Processing number of children of fathers\n"))
-  data_f = read.csv('data/fertility/england_wales_fertility_m.csv')
+  data_f = read.csv('data/UK/england_wales_fertility_m.csv')
   data_f$fertility_rate <- data_f$rate/1000
   data_f$date = data_f$year
   data_f$age = as.character(data_f$age)
@@ -150,11 +150,11 @@ process_number_children_england_wales <- function(){
   data_f = rbind(data_f, d_2019, d_2020)
   process_children_father_england_wales(data_f)
   is_child_mortality_needed = 1
-  add_child_mortality(is_child_mortality_needed, "england_wales")
+  add_child_mortality(is_child_mortality_needed, "UK")
   
   # mothers
   cat(sprintf("Processing number of children of mothers\n"))
-  data = read.csv('data/fertility/england_wales_fertility_f.csv')
+  data = read.csv('data/UK/england_wales_fertility_f.csv')
   data_f = copy(data)
   data_f$fertility_rate <- data_f$rate/1000
   data_f$date = data_f$year
@@ -165,7 +165,7 @@ process_number_children_england_wales <- function(){
   d_2020 = copy(d_2019)
   d_2020$date = '2020'
   data_f = rbind(data_f, d_2020)
-  process_children_all("england_wales", is_child_mortality_needed, data_f)
+  process_children_all("UK", is_child_mortality_needed, data_f)
   
   cat(sprintf("Processing fertility rates\n"))
   process_fertility_plots("england_wales")

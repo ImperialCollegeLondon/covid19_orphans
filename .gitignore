@@ -40,5 +40,7 @@ vignettes/*.pdf
 
 .DS_Store
 
-.pdf
+*.pdf
+
+data/Brazil/INFLUD-19-04-2021.csv
 

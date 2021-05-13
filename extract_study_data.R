@@ -24,14 +24,13 @@ combine_orphans("Argentina", process_argentina_skip_generation())
 
 #### Brazil ##############################################################################
 cat(sprintf("Running Brazil======\n"))
-# deaths:
 cat(sprintf("Processing Death data\n"))
 age_range = c(seq(0,100,5), Inf)
-process_brazil(age_range)
+#process_brazil(age_range) <- this line is commented out since the data file takes a long time to download from the internet.  The file that is saved by this function is provided.
 cat(sprintf("Processing Number of children rates\n"))
 process_number_children_brazil()
 cat(sprintf("Comparing Brazilian fertilty rates\n"))
-source("scripts/dhs/br_compare_female.R")
+source("R/DHS/br_compare_female.R")
 cat(sprintf("Processing number of orphans\n"))
 process_orphans_brazil()
 cat(sprintf("Accounting for double orphans\n"))

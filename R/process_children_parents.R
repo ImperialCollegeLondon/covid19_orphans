@@ -612,7 +612,7 @@ process_children_all = function(country, is_child_mortality_needed, data_f){
   
   ###########  get the nb of children (considering the child mortality or not) ################
   if (is_child_mortality_needed){
-    child_m_matrix = read.csv(paste0('data/', country,'/child_mortality.csv'))
+    child_m_matrix = read.csv(paste0('data/', country,'/child_mortality_rate.csv'))
     child_and_m = as.matrix(children) * (1-as.matrix(child_m_matrix))
     child_and_m = as.data.frame(child_and_m)
     write_csv(file = paste0('data/', country, '/child_all_f.csv'), child_and_m)
@@ -625,7 +625,7 @@ process_children_all = function(country, is_child_mortality_needed, data_f){
   } else {
     child_and_m = children
     plot_c_and_m = copy(plot_c)
-    write_csv(file = paste0('data/', country, 'child_all_f.csv'), child_and_m)
+    write_csv(file = paste0('data/', country, '/child_all_f.csv'), child_and_m)
   }
   
   plot_c_and_m$gender = 'female'
@@ -653,7 +653,7 @@ process_children_all = function(country, is_child_mortality_needed, data_f){
     ylab('Number of Children')+
     guides(color=guide_legend(title="Sex of Parent"))
   ggsave(filename = paste0("figures/children_", country, ".pdf"), p, width = 6, height = 5)
-  write_csv(file = paste0('data/', country,'children.csv'), ddf)
+  write_csv(file = paste0('data/', country,'/children.csv'), ddf)
 }
 
 process_children_father_england_wales = function(data_f){
@@ -1384,17 +1384,11 @@ process_children_father_england_wales = function(data_f){
   children = as.data.frame(children)
   names(children) = paste0(seq(0:17)-1, ' years')
   
-  write_csv(path = paste0('data/children/child_raw_england_wales_m.csv'), children)
+  write_csv(path = paste0('data/UK/child_raw_m.csv'), children)
   plot_c = as.data.frame(as.numeric(as.character(unlist(children))))
   plot_c$father_age = rep(1:100,18)
   plot_c$child_age =sort(rep(seq(18)-1, 100))
   setnames(plot_c, 1, 'prob')
-  
-  #ggplot(as.data.frame(plot_c), aes(x=child_age, y=father_age, fill=prob)) +
-  #  geom_tile(color = "white")+
-  #  theme(axis.text.x = element_text(angle = 90)) + 
-  #  labs(x= "child age", y="father age") +
-  #  scale_fill_gradient2(low = "yellow", high = "red")
 }
 
 # dhs
@@ -2249,12 +2243,7 @@ process_children_father_80_plus = function(country, data_f){
   plot_c$father_age = rep(1:100,18)
   plot_c$child_age =sort(rep(seq(18)-1, 100))
   setnames(plot_c, 1, 'prob')
-  
-  #ggplot(as.data.frame(plot_c), aes(x=child_age, y=father_age, fill=prob)) +
-  #  geom_tile(color = "white")+
-  #  theme(axis.text.x = element_text(angle = 90)) + 
-  #  labs(x= "child age", y="father age") +
-  #  scale_fill_gradient2(low = "yellow", high = "red")
+
 }
 
 # Usa

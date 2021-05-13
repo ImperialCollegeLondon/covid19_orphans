@@ -6,10 +6,10 @@ library(rjson)
 # Code for processing fertility from IHME and UNSD and fertility plot
 process_fertility_plots = function(country){
   if (country == 'england_wales'){
-    data_combine = read.csv('data/fertility/england_wales_fertility_all.csv')
+    data_combine = read.csv('data/UK/england_wales_fertility_all.csv')
     data_combine$gender = ifelse(data_combine$gender == 'M', 'Male', 'Female')
     names(data_combine)[which(names(data_combine) == 'rate')] = "fertility_rate"
-  }else{
+  } else{
     data_father = read.csv(paste0('data/', country, '/', tolower(country), '_fertility_m_all.csv'))
     data_mother = read.csv(paste0('data/', country, '/', tolower(country), '_fertility_f.csv'))
     data_mother$gender = 'Female'
@@ -179,7 +179,7 @@ process_england_wales_fertility = function(){
   data_all = rbind(dd_data %>% select(year, age, rate, gender, country), data %>% filter(age != '0-20', age!= '60+'))
   data_all = data_all %>% arrange(year, age)
   ##  per 1000 men
-  write_csv(data_all, path = 'data/fertility/england_wales_fertility_m.csv')
+  write_csv(data_all, file = 'data/UK/england_wales_fertility_m.csv')
   
   # female
   # url = 'https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fbirthsdeathsandmarriages%2flivebirths%2fdatasets%2fbirthsbyparentscharacteristics%2f2018/parentscharacteristics2018workbook.xls'
@@ -202,7 +202,7 @@ process_england_wales_fertility = function(){
   data$gender = 'F'
   data$country = 'England_Wales'
   data$value = as.numeric(data$value)
-  write_csv(data, path = 'data/fertility/england_births_f.csv')
+  write_csv(data, file = 'data/UK/england_births_f.csv')
   
   pop = read.csv('data/UK/pop_england_wales.csv')
   pop = pop[,c(3:24)]
@@ -228,11 +228,11 @@ process_england_wales_fertility = function(){
   d_data = as.data.table(d_data)
   d_data[,rate := 1000* value /pop_nb]
   #d_data$gender = as.factor('F')
-  write_csv(d_data, path = 'data/fertility/england_wales_fertility_f.csv')
+  write_csv(d_data, path = 'data/UK/england_wales_fertility_f.csv')
   
-  d_fertility_m = read.csv('data/fertility/england_wales_fertility_m.csv')
+  d_fertility_m = read.csv('data/UK/england_wales_fertility_m.csv')
   d_all = rbind(d_data %>% select(-pop_nb, -value), d_fertility_m)
-  write_csv(d_all, path = 'data/fertility/england_wales_fertility_all.csv')
+  write_csv(d_all, path = 'data/UK/england_wales_fertility_all.csv')
 }
 
 # France
