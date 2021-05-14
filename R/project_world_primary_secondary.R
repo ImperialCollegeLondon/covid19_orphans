@@ -116,6 +116,8 @@ orphans_sample = data.frame("country" = joined$country,
                                              round.choose(ui, 100, 1)), 
                             "region" = joined$who_region)
 
+orphans_sample$text_ps <- as.character(orphans_sample$text_ps)
+
 # Exchange out study countries
 orphans_sample$text_ps[joined$all != 0] <- joined$final_orphans[joined$all != 0]
 # Remove 0 countries

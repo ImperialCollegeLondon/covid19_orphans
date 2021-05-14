@@ -84,6 +84,7 @@ orphans_sample = data.frame("country" = joined$country,
                             "region" = joined$who_region)
 
 # Exchange out study countries
+orphans_sample$text_pa <- as.character(orphans_sample$text_pa)
 orphans_sample$text_pa[joined$all != 0] <- joined$final_parent_orphans[joined$all != 0]
 # Remove 0 countries
 orphans_sample = orphans_sample[orphans_sample$mean > 0,]
