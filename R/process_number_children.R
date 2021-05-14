@@ -179,7 +179,7 @@ process_number_children_france <- function(){
 
   # child mortality
   cat(sprintf("Processing child mortality rates\n"))
-  process_child_mortality('france', 'France')
+  process_child_mortality('France', 'France')
   
   # fathers
   cat(sprintf("Processing number of children of fathers\n"))
@@ -213,7 +213,7 @@ process_number_children_germany <- function(){
   process_germany_fertility()
   # child mortality
   cat(sprintf("Processing child mortality rates\n"))
-  process_child_mortality('germany', 'Germany')
+  process_child_mortality('Germany', 'Germany')
   
   # fathers
   cat(sprintf("Processing number of children of fathers\n"))
@@ -221,9 +221,9 @@ process_number_children_germany <- function(){
   data_f$fertility_rate <- data_f$fertility_rate/1000
   data_f$date = data_f$year
   data_f$age = as.character(data_f$age)
-  process_children_father_65_plus("germany", data_f)
+  process_children_father_65_plus("Germany", data_f)
   is_child_mortality_needed = 1
-  add_child_mortality(is_child_mortality_needed, "germany")
+  add_child_mortality(is_child_mortality_needed, "Germany")
   
   # mothers
   cat(sprintf("Processing number of children of mothers\n"))
@@ -304,7 +304,7 @@ process_number_children_iran <- function(){
   process_iran_fertility()
   # child mortality
   cat(sprintf("Processing child mortality rates\n"))
-  process_child_mortality('iran', 'Iran')
+  process_child_mortality('Iran', 'Iran')
   
   # fathers
   cat(sprintf("Processing number of children of fathers\n"))
@@ -337,7 +337,7 @@ process_number_children_italy <- function(){
   process_italy_fertility()
   # child mortality
   cat(sprintf("Processing child mortality rates\n"))
-  process_child_mortality('italy', 'Italy')
+  process_child_mortality('Italy', 'Italy')
   
   # fathers
   cat(sprintf("Processing number of children of fathers\n"))
@@ -358,9 +358,9 @@ process_number_children_italy <- function(){
   d_2020 = copy(d_2019)
   d_2020$date = '2020'
   data_f = rbind(data_f, d_2020)
-  process_children_all("italy", is_child_mortality_needed, data_f)
+  process_children_all("Italy", is_child_mortality_needed, data_f)
 
-  process_fertility_plots("italy")
+  process_fertility_plots("Italy")
 }
 
 # Kenya
@@ -419,9 +419,9 @@ process_number_children_kenya <- function(){
   data_f$gender = 'F'
   write_csv(data_f, path = paste0('data/Kenya/kenya_fertility_f.csv'))
   is_child_mortality_needed = 0
-  process_children_all("kenya", is_child_mortality_needed, data_f)
+  process_children_all("Kenya", is_child_mortality_needed, data_f)
 
-  process_fertility_plots("kenya")
+  process_fertility_plots("Kenya")
 }
 
 # Malawi
@@ -492,7 +492,7 @@ process_number_children_mexico <- function(){
   process_mexico_fertility()
   # child mortality
   cat(sprintf("Processing child mortality rates\n"))
-  process_child_mortality('mexico', 'Mexico')
+  process_child_mortality('Mexico', 'Mexico')
   
   # fathers
   cat(sprintf("Processing number of children of fathers\n"))
@@ -568,9 +568,9 @@ process_number_children_nigeria <- function(){
   data_f$gender = 'F'
   write_csv(data_f, path = paste0('data/Nigeria/nigeria_fertility_f.csv'))
   is_child_mortality_needed = 0
-  process_children_all("nigeria", is_child_mortality_needed, data_f)
+  process_children_all("Nigeria", is_child_mortality_needed, data_f)
 
-  process_fertility_plots("nigeria")
+  process_fertility_plots("Nigeria")
 }
 
 # Peru
@@ -645,7 +645,7 @@ process_number_children_philippines <- function(){
   process_philippines_fertility()
   # child mortality
   cat(sprintf("Processing child mortality rates\n"))
-  process_child_mortality('philippines', 'Philippines')
+  process_child_mortality('Philippines', 'Philippines')
   
   # fathers
   cat(sprintf("Processing number of children of fathers\n"))
@@ -678,7 +678,7 @@ process_number_children_poland <- function(){
   process_poland_fertility()
   # child mortality
   cat(sprintf("Processing child mortality rates\n"))
-  process_child_mortality('poland', 'Poland')
+  process_child_mortality('Poland', 'Poland')
   
   # fathers
   cat(sprintf("Processing number of children of fathers\n"))
@@ -744,7 +744,7 @@ process_number_children_spain <- function(){
   process_spain_fertility()
   # child mortality
   cat(sprintf("Processing child mortality rates\n"))
-  process_child_mortality('spain', 'Spain')
+  process_child_mortality('Spain', 'Spain')
   
   # fathers
   cat(sprintf("Processing number of children of fathers\n"))
@@ -752,7 +752,7 @@ process_number_children_spain <- function(){
   data_f$fertility_rate <- data_f$fertility_rate/1000
   data_f$date = data_f$year
   data_f$age = as.character(data_f$age)
-  process_children_father_65_plus("spain", data_f)
+  process_children_father_65_plus("Spain", data_f)
   is_child_mortality_needed = 1
   add_child_mortality(is_child_mortality_needed, "Spain")
   
@@ -835,7 +835,7 @@ process_number_children_usa <- function(){
 
   # child mortality
   cat(sprintf("Processing child mortality rates\n"))
-  process_child_mortality('usa', 'United States of America')
+  process_child_mortality('USA', 'United States of America')
   
   # fathers
   cat(sprintf("Processing number of children of fathers\n"))
@@ -843,9 +843,9 @@ process_number_children_usa <- function(){
   data_f$fertility_rate <- data_f$fertility_rate/1000
   data_f$date = data_f$year
   data_f$age = as.character(data_f$age)
-  process_children_father_55_plus("usa", data_f)
+  process_children_father_55_plus("USA", data_f)
   is_child_mortality_needed = 1
-  add_child_mortality(is_child_mortality_needed, "usa")
+  add_child_mortality(is_child_mortality_needed, "USA")
   
   # mothers
   cat(sprintf("Processing number of children of mothers\n"))

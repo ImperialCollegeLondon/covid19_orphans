@@ -54,7 +54,7 @@ tab_1 <- select(df, "mother", "father", "both", "orphans", "sg_grandmother", "sg
 write.csv(tab_1, file = "orphans_tab1.csv")
 
 # Table 2
-child_pop <- read.csv("data/numbers_of_children.csv")
+child_pop <- read.csv("data/numbers_of_children.csv", stringsAsFactors = FALSE)
 child_pop <- select(child_pop, X, total)
 child_pop$X[which(child_pop$X == "Russia")] <- "Russian Federation"
 child_pop$X[which(child_pop$X == "Iran")] <- "I.R. Iran"

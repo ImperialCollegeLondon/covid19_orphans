@@ -97,7 +97,7 @@ process_orphans_brazil = function(){
 process_orphans_colombia = function(){
   country = 'colombia'
   d_merge = read.csv('data/Colombia/covid19_deaths_all.csv', stringsAsFactors = FALSE)
-  d_children = read.csv(paste0('data/', country,'/children.csv'), stringsAsFactors = FALSE)
+  d_children = read.csv(paste0('data/Colombia/children.csv'), stringsAsFactors = FALSE)
   d_children$age = paste0(d_children$age%/%5 * 5,'-',d_children$age %/% 5 *5+4)
   d_children$age = ifelse(d_children$age %in% c('80-84', '85-89', '90-94', '95-99', '100-104'), '80+', d_children$age)
   d_children = d_children %>% group_by(age, gender) %>% mutate(nb_c = mean(children)) %>%
@@ -111,7 +111,7 @@ process_orphans_colombia = function(){
   d_m1$age = ifelse(d_m1$age == '0-4', '00-04', 
                     ifelse(d_m1$age == '5-9','05-09' ,d_m1$age))
   d_m1 = d_m1%>% arrange(age)                  
-  write_csv(file = paste0('data/', country,'/orphans_all.csv'), d_m1)
+  write_csv(file = paste0('data/Colombia/orphans_all.csv'), d_m1)
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +
     theme_bw()+

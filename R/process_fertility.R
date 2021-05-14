@@ -756,7 +756,7 @@ process_mexico_fertility = function(){
 }
 
 process_philippines_fertility = function(){
-  data_fertility = read.csv('data/fertility/unsd_live_births.csv')
+  data_fertility = read.csv('data/fertility/unsd_live_births.csv', stringsAsFactors = FALSE)
   data_fertility = data_fertility %>% filter(country == 'Philippines',
                                              age != 'Unknown - Inconnu',
                                              gender == 'Male')
@@ -788,7 +788,6 @@ process_philippines_fertility = function(){
   # assume male are able to birth from 15 years old
   data_fertility$age = ifelse(data_fertility$age == '0-19', '15-19', data_fertility$age)
   data_fertility$year = as.character(data_fertility$year)
-  data_fertility$value[data_fertility$value == "-"] <- 0
   data_fertility$value = as.numeric(data_fertility$value)
   data_combine= merge(data_fertility, data_pop, by = c('country','year', 'age', 'gender'))
   data_combine[,fertility_rate := value / (pop)]
