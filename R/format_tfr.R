@@ -39,7 +39,7 @@ deaths_country$Country_Region[which(deaths_country$Country_Region == "Micronesia
 deaths_country <- deaths_country[which(deaths_country$Country_Region != "Taiwan"),]
 
 # Read in WHO regions
-regions <- read_csv(file = "data/who_regions.csv")
+regions <- read.csv(file = "data/who_regions.csv", stringsAsFactor = FALSE)
 deaths_country = left_join(deaths_country, regions)
 
 # Read in covariates
