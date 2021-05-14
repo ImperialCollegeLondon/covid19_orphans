@@ -1,0 +1,9 @@
+age,gender,COVID19_deaths,nb_orphans
+1-20,Female,23,1
+1-20,Male,8,0
+21-50,Female,288,670
+21-50,Male,428,1249
+51-70,Female,155,56
+51-70,Male,317,547
+71+,Female,114,0
+71+,Male,191,71

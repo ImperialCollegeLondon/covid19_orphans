@@ -125,7 +125,7 @@ process_argentina_covid19 = function(){
   d_merge
 }
 
-# Process Brazil - covid only, updated to 31st Dec
+# Process Brazil - covid only, updated to march
 process_brazil = function(age_range){
   options(repr.plot.width=15, repr.plot.height=15)
   ##  check: url:https://opendatasus.saude.gov.br/dataset/bd-srag-2020
@@ -133,7 +133,7 @@ process_brazil = function(age_range){
   url = 'https://s3-sa-east-1.amazonaws.com/ckan.saude.gov.br/SRAG/2020/INFLUD-19-04-2021.csv'
   file_name = strsplit(url, '/')
   file_name = file_name[[1]][length(file_name[[1]])]
-  #download.file(url, file.path('data/Brazil/', file_name))
+  download.file(url, file.path('data/Brazil/', file_name))
   df_SIVEP_ORIGINAL=read_csv2(file.path('data/Brazil/', file_name))
   
   df_SIVEP_ORIGINAL->df_SIVEP
@@ -167,8 +167,8 @@ process_brazil = function(age_range){
     dir.create(file.path('data','Brazil'))
   }
   
-  write_csv(path = paste0("data/Brazil/","brazil.csv"),df_SIVEP)
-  write_csv(path = paste0("data/Brazil/","brazil_plot.csv"),df_SIVEP.plt)
+  #write_csv(path = paste0("data/Brazil/","brazil.csv"),df_SIVEP)
+  #write_csv(path = paste0("data/Brazil/","brazil_plot.csv"),df_SIVEP.plt)
   
   df = df_SIVEP.plt[order(-date, agesex),]
   df = df[which(df$date <= as.Date("2021-03-31")),]
@@ -302,7 +302,7 @@ process_france = function(){
     gather(key = "gender", value = "covid_deaths", -age)
   data$gender = ifelse(data$gender  == 'male', 'Male', 'Female')
   
-  excess_death = read.csv('data/Six_euro_Feb_2021/euro_excess.csv')
+  excess_death = read.csv('data/euro_excess.csv')
   excess_death = as.data.table(excess_death) %>% select(week, year, france, age, gender)
   excess_death = excess_death[!is.na(excess_death$france),]
   excess_death$age = as.character(excess_death$age)
@@ -431,7 +431,7 @@ process_iran <- function(){
   
   rate = total / total_covid
   covid_data$deaths = round(covid_data$deaths * rate)
-  write_csv(covid_data, path = 'data/Iran/iran_all.csv')
+  write_csv(covid_data, file = 'data/Iran/iran_all.csv')
 }
 
 # Italy
@@ -453,7 +453,7 @@ process_italy = function(){
     gather(key = "gender", value = "covid_deaths", -age)
   data$gender = ifelse(data$gender  == 'male', 'Male', 'Female')
   
-  excess_death = read.csv('data/Six_euro_Mar_2021/euro_excess.csv')
+  excess_death = read.csv('data/euro_excess.csv')
   excess_death = as.data.table(excess_death) %>% select(week, year, italy, age, gender)
   excess_death = excess_death[!is.na(excess_death$italy),]
   excess_death$age = as.character(excess_death$age)
@@ -503,7 +503,7 @@ process_italy = function(){
 # Kenya
 process_kenya_covid19 = function(){
   data = read.csv('data/Kenya/covid19_deaths_raw.csv')
-  data$date = '2020-12-31'
+  data$date = '2020-03-31'
   data$rate = data$deaths/sum(data$deaths)
   
   # Selects deaths from JHU
@@ -540,7 +540,7 @@ process_mexico_covid19 = function(){
   
   data =  reshape2::melt(data, id.vars = c('date', 'age'), variable.name =  'gender', value.name = 'rate')
   
-  data_pop = readxl::read_xlsx('data/fertility_update/pop.xlsx', sheet = 2)
+  data_pop = readxl::read_xlsx('data/fertility/pop.xlsx', sheet = 2)
   countries = c('Mexico')
   names(data_pop) = as.character(data_pop[1,])
   data_pop = as.data.table(data_pop) %>% filter(Location %in% countries, Time == '2020') %>% select(Location, Time, Age, Female, Male)
@@ -584,7 +584,7 @@ process_nigeria_covid19 = function(){
 
 # Peru
 process_peru_covid19 = function(){
-  d_merge = read.csv('data/Peru/covid19_deaths_raw_feb.csv')
+  d_merge = read.csv('data/Peru/covid19_deaths_raw.csv')
 
   # Selects deaths from JHU
   deaths_data = read.csv("data/03-31-2021.csv")
@@ -640,7 +640,7 @@ process_philippines = function(){
 }
 
 # Poland
-process_poland_covid19_and_excess = function(){
+process_poland_covid19 = function(){
   data = readxl::read_xlsx('data/Poland/poland-2020-by-age-and-gender.xlsx', sheet = 2)
   setnames(data, 1:3, c('age', 'Female', 'Male'))
   data = data[3:nrow(data),1:3]
@@ -731,7 +731,7 @@ process_spain = function(){
     gather(key = "gender", value = "covid_deaths", -age)
   data$gender = ifelse(data$gender  == 'male', 'Male', 'Female')
   
-  excess_death = read.csv('data/Six_euro_Mar_2021/euro_excess.csv')
+  excess_death = read.csv('data/euro_excess.csv')
   excess_death = as.data.table(excess_death) %>% select(week, year, spain, age, gender)
   excess_death = excess_death[!is.na(excess_death$spain),]
   excess_death$age = as.character(excess_death$age)

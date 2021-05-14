@@ -9,11 +9,11 @@ add_child_mortality = function(is_child_mortality_needed, country){
 
   if (is_child_mortality_needed){
 
-    child_m_matrix = read.csv(paste0('data/', country, 'child_mortality_rate.csv'))
+    child_m_matrix = read.csv(paste0('data/', country, '/child_mortality_rate.csv'))
     names(child_m_matrix) = paste0(seq(0:17)-1, 'years')
     child_and_m = as.matrix(children) * (1-as.matrix(child_m_matrix))
     child_and_m = as.data.frame(child_and_m)
-    write_csv(file = paste0('data/', country, 'child_all_m.csv'), child_and_m)
+    write_csv(file = paste0('data/', country, '/child_all_m.csv'), child_and_m)
 
     plot_c_and_m = as.data.frame(as.numeric(as.character(unlist(child_and_m))))
     plot_c_and_m$father_age = rep(1:100,18)
@@ -100,12 +100,12 @@ add_child_mortality = function(is_child_mortality_needed, country){
 # Multiple countries
 process_child_mortality = function(country, countries){
   # rate per children 
-  if (country != "russian_federation"){
-    child = read.csv(paste0('data/children/mortality_rate_all', '.csv'))
+  if (country != "Russia"){
+    child = read.csv(paste0('data/child_mortality_rate', '.csv'))
     child = child %>% filter(country == countries)
     
   }else{
-    child = read.csv('data/children/mortality_rate_all_russain_federation.csv')
+    child = read.csv('data/Russia/mortality_rate_all.csv')
   }
   
   child_m_matrix = matrix(rep(0, 100*18), nrow = 100)
@@ -134,7 +134,7 @@ process_child_mortality = function(country, countries){
   child_m_matrix = as.data.frame(child_m_matrix)
   names(child_m_matrix) = paste0(seq(0:17)-1, 'years')
   
-  write_csv(path = paste0('data/children/child_mortality_', country,'.csv'), child_m_matrix)
+  write_csv(path = paste0('data/', country, '/child_mortality_rate.csv'), child_m_matrix)
 }  
 
 # England and Wales
@@ -173,7 +173,7 @@ process_children_mortality_england_wales = function(){
   data = reshape2::melt(data, id.vars = c('year'), variable.name =  'age', value.name = 'mortality')
   data$age = as.character(data$age)
   data$age = paste0(data$age, ' years')
-  write_csv(data, path = 'data/children/mortality_rate_england_wales.csv')
+  write_csv(data, file = 'data/UK/mortality_rate_england_wales.csv')
 }
 
 process_infant_mortality_england_wales = function(){
@@ -183,18 +183,18 @@ process_infant_mortality_england_wales = function(){
   data  = data[7:nrow(data),]
   names(data) = c('year', 'mortality')
   data$age = '0 year'
-  child_m = read.csv('data/children/mortality_rate_england_wales.csv')
+  child_m = read.csv('data/UK/mortality_rate_england_wales.csv')
   data$year = as.character(data$year)
   data$mortality = as.numeric(as.character(data$mortality))/1e3 * 1e5
   data = rbind(as.data.table(data) %>% filter(year >= 2002) %>% select(year, age, mortality), child_m)
   data$mortality = as.numeric(data$mortality)
-  write_csv(data, path = 'data/children/mortality_rate_all_england_wales.csv')
+  write_csv(data, path = 'data/UK/mortality_rate_all_england_wales.csv')
 }
 
 # Makes child mortality matrix for E and W
 process_child_mortality_england_wales = function(){
   # rate 1e5 per children 
-  child = read.csv('data/children/mortality_rate_all_england_wales.csv')
+  child = read.csv('data/UK/mortality_rate_all_england_wales.csv')
   
   child_m_matrix = matrix(rep(0, 100*18), nrow = 100)
   
@@ -229,18 +229,7 @@ process_child_mortality_england_wales = function(){
   
   child_m_matrix = as.data.frame(child_m_matrix)
   names(child_m_matrix) = paste0(seq(0:17)-1, 'years')
-  write_csv(path = 'data/children/child_mortality_england_wales.csv', child_m_matrix)
-  
-  #plot_c_m = as.data.frame(as.numeric(as.character(unlist(child_m_matrix))))
-  #plot_c_m$parent_age = rep(1:100,18)
-  #plot_c_m$child_age =sort(rep(seq(18)-1, 100))
-  #setnames(plot_c_m, 1, 'prob')
-  
-  #ggplot(as.data.frame(plot_c_m), aes(x=child_age, y=parent_age, fill=prob)) +
-  #  geom_tile(color = "white")+
-  #  theme(axis.text.x = element_text(angle = 90)) + 
-  #  labs(x= "child age", y="parent age") +
-  #  scale_fill_gradient2(low = "yellow", high = "red")
+  write_csv(path = 'data/UK/child_mortality_rate.csv', child_m_matrix)
 }  
 
 

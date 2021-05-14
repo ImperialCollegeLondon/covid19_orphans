@@ -40,5 +40,9 @@ vignettes/*.pdf
 
 .DS_Store
 
-.pdf
+*.pdf
+
+data/Brazil/INFLUD-19-04-2021.csv
+data/Philippines/DOH\ COVID\ Data\ Drop_\ 20210509\ -\ 04\ Case\ Information\ 2020.csv
+data/Philippines/DOH\ COVID\ Data\ Drop_\ 20210509\ -\ 04\ Case\ Information\ 2021.csv
 

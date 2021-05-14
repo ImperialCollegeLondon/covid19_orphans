@@ -1,0 +1,15 @@
+country,date,age,gender,deaths
+Kenya,2020-03-31,0-9,Male,30
+Kenya,2020-03-31,10-19,Male,15
+Kenya,2020-03-31,20-29,Male,53
+Kenya,2020-03-31,30-39,Male,151
+Kenya,2020-03-31,40-49,Male,310
+Kenya,2020-03-31,50-59,Male,332
+Kenya,2020-03-31,60+,Male,718
+Kenya,2020-03-31,0-9,Female,23
+Kenya,2020-03-31,10-19,Female,0
+Kenya,2020-03-31,20-29,Female,8
+Kenya,2020-03-31,30-39,Female,76
+Kenya,2020-03-31,40-49,Female,98
+Kenya,2020-03-31,50-59,Female,136
+Kenya,2020-03-31,60+,Female,204
