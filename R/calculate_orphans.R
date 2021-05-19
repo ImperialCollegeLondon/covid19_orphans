@@ -637,7 +637,7 @@ process_orphans_nigeria = function(){
   d_summary$age = as.character(d_summary$age)
   d_summary$age = ifelse(d_summary$age %in% c('0-4', '5-9', '10-14', '15-19'), '0-19',
                          ifelse(d_summary$age %in% c('20-24', '25-29', '30-34', '35-39', '40-44', '45-49'), '20-49',
-                                ifelse(d_summary$age %in% c('50-54', '55-59', '60-64', '64-69'), '50-69', '70+')))
+                                ifelse(d_summary$age %in% c('50-54', '55-59', '60-64', '65-69'), '50-69', '70+')))
   d_summary = d_summary %>% group_by(age, gender) %>% 
     mutate( COVID19_deaths = as.integer(round(sum(deaths))),
             nb_orphans = as.integer(round(sum(orphans)))) %>% ungroup() %>% 
