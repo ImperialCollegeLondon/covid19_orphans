@@ -652,7 +652,7 @@ process_children_all = function(country, is_child_mortality_needed, data_f){
     xlab( 'Age of Parent') +
     ylab('Number of Children')+
     guides(color=guide_legend(title="Sex of Parent"))
-  ggsave(filename = paste0("figures/children_", country, ".pdf"), p, width = 6, height = 5)
+  ggsave(filename = paste0("figures/children_", tolower(country), ".pdf"), p, width = 6, height = 5)
   write_csv(file = paste0('data/', country,'/children.csv'), ddf)
 }
 

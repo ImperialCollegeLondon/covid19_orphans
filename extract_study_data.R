@@ -2,7 +2,7 @@
 # analysis and calculates the number of orphans and children who have lost care from
 # grandparents due to COVID-19
 
-source("R/extraction_excess.R")
+source("R/extraction_deaths.R")
 source("R/process_fertility.R")
 source("R/process_number_children.R")
 source("R/calculate_orphans.R")
@@ -176,7 +176,7 @@ combine_orphans("Peru", process_peru_skip_generation())
 #### Philippines #########################################################################################################
 cat(sprintf("Running Philippines======\n"))
 cat(sprintf("Processing Death data\n"))
-#process_philippines() <- see Readme for where to download this data.
+#process_philippines() #<- see Readme for where to download this data.
 cat(sprintf("Processing number of children rates\n"))
 process_number_children_philippines()
 cat(sprintf("Processing number of orphans\n"))

@@ -77,7 +77,7 @@ process_orphans_brazil = function(){
   ggsave(filename = "figures/orphans_all_age_brazil.pdf", p, width = 6, height = 5)
   d_summary = d_m1 %>% select(age, gender, deaths, orphans)
   
-  d_summary$age = ifelse(d_summary$age %in% c('0-5', '5-10', '10-15'), '0-14',
+  d_summary$age = ifelse(d_summary$age %in% c('0-5', '05-10', '10-15'), '0-14',
                          ifelse(d_summary$age %in% c('50-55','55-60','60-65'), '50-64',
                                 ifelse(d_summary$age %in% c('15-20','20-25','25-30','30-35','35-40', '40-45', '45-50'), '15-49','65+')))
   d_summary = d_summary %>% group_by(age, gender) %>% mutate(#excess = sum(excess_death),
@@ -408,7 +408,7 @@ process_orphans_iran = function(){
   d_summary = d_m1 %>% 
     select(age, gender,deaths, orphans)
   d_summary$age = as.character(d_summary$age)
-  d_summary$age = ifelse(d_summary$age %in% c('70-79', '80-89', '90+'), '70+',
+  d_summary$age = ifelse(d_summary$age %in% c('70-79', '80+'), '70+',
                          ifelse(d_summary$age %in% c('50-59','60-69'), '50-69',
                                 ifelse(d_summary$age %in% c('20-29', '30-39', '40-49'), '20-49','0-19')))
   d_summary = d_summary %>% group_by(age, gender) %>% 
@@ -603,6 +603,8 @@ process_orphans_mexico = function(){
 process_orphans_nigeria = function(){
   country = 'nigeria'
   d_deaths = read.csv('data/Nigeria/covid19_deaths.csv', stringsAsFactors = FALSE)
+  d_deaths$age[d_deaths$age == "05-Sep"] <- "5-9"
+  d_deaths$age[d_deaths$age == "Oct-14"] <- "10-14"
   d_merge = copy(d_deaths)
   d_merge$age = as.character(d_merge$age)
   d_children = read.csv(paste0('data/Nigeria/children.csv'), stringsAsFactors = FALSE)
@@ -635,7 +637,7 @@ process_orphans_nigeria = function(){
   d_summary$age = as.character(d_summary$age)
   d_summary$age = ifelse(d_summary$age %in% c('0-4', '5-9', '10-14', '15-19'), '0-19',
                          ifelse(d_summary$age %in% c('20-24', '25-29', '30-34', '35-39', '40-44', '45-49'), '20-49',
-                                ifelse(d_summary$age %in% c('50-54', '55-59', '60-64', '64-69'), '50-69', '70+')))
+                                ifelse(d_summary$age %in% c('50-54', '55-59', '60-64', '65-69'), '50-69', '70+')))
   d_summary = d_summary %>% group_by(age, gender) %>% 
     mutate( COVID19_deaths = as.integer(round(sum(deaths))),
             nb_orphans = as.integer(round(sum(orphans)))) %>% ungroup() %>% 
@@ -650,6 +652,7 @@ process_orphans_nigeria = function(){
 process_orphans_peru = function(){
   country = 'peru'
   d_deaths = read.csv('data/Peru/covid19_deaths.csv', stringsAsFactors = FALSE)
+  d_deaths$age[d_deaths$age == "Oct-19"] <- "10-19"
   setnames(d_deaths, 'COVID19_deaths','deaths')
   d_merge = copy(d_deaths)
   d_children = read.csv(paste0('data/Peru/children.csv'), stringsAsFactors = FALSE)
@@ -917,7 +920,7 @@ process_orphans_south_africa = function(){
 
   d_summary = d_m1 %>% select(age, gender, deaths, orphans)
   
-  d_summary$age = ifelse(d_summary$age %in% c('70-79', '80-89', '90+'), '70+',
+  d_summary$age = ifelse(d_summary$age %in% c('70-79', '80+'), '70+',
                          ifelse(d_summary$age %in% c('50-59','60-69'), '50-69',
                                 ifelse(d_summary$age %in% c('20-29', '30-39', '40-49'), '20-49','0-19')))
   d_summary = d_summary %>% group_by(age, gender) %>% mutate(#excess = sum(excess_death),

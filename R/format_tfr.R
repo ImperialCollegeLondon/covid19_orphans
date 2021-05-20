@@ -7,7 +7,7 @@ orphans$country = row.names(orphans)
 orphans$country[which(orphans$country == "USA")] = "US"
 
 # Reads in deaths
-deaths = read.csv("data/03-31-2021.csv", stringsAsFactors = FALSE)
+deaths = read.csv("data/04-30-2021.csv", stringsAsFactors = FALSE)
 deaths_country = deaths %>% 
   group_by(Country_Region) %>%
   summarise(total_deaths = sum(Deaths)) 
