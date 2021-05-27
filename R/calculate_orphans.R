@@ -143,8 +143,8 @@ process_orphans_colombia = function(){
 process_orphans_england_wales = function(){
   d_deaths = read.csv('data/UK/deaths_all_england_wales.csv', stringsAsFactors = FALSE)
   d_deaths$week = as.numeric(sapply(d_deaths$week, function(x) strsplit(x, " ")[[1]][2]))
-  d_deaths = d_deaths[which((d_deaths$year.x == "2020" &  d_deaths$week >=10) | 
-                              (d_deaths$year.x == "2021" &  d_deaths$week <= 8)),]
+  d_deaths = d_deaths[which((d_deaths$year == "2020" &  d_deaths$week >=10) | 
+                              (d_deaths$year == "2021" &  d_deaths$week <= 17)),]
   d_merge = d_deaths %>% group_by(age, gender) %>% 
     mutate(nb_covid19 = sum(covid19_deaths),
            nb_excess = sum(excess_deaths)) %>% 

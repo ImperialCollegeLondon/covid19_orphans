@@ -33,11 +33,6 @@ joined$sd = (joined$tfr_u-joined$tfr_l)/(2*1.96)
 # Select a subset
 subset <- joined[which(joined$all != 0),]
 
-# Working out percentage of deaths
-subset_no_africa <- subset[which(! subset$country %in% c("Nigeria", "Kenya", "Malawi", "Zimbabwe")),]
-print(sprintf("proportion of covid deaths no africa: %f", sum(subset_no_africa$total_deaths)/sum(joined$total_deaths)))
-print(sprintf("proportion of covid deaths: %f", sum(subset$total_deaths)/sum(joined$total_deaths)))
-
 # Exclude Iran from fit
 subset = subset[which(!subset$country %in% c("I.R. Iran")),]
 print(sprintf("Pearsons r^2 primary and/or seconday: %f",  
