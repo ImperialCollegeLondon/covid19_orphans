@@ -62,9 +62,6 @@ for (i in 1:n){
   estimates_primary_orphans[, i] <- estimates_primary[, i] * joined$fitting_deaths
 }
 
-joined$estimates_primary <- rowMeans(estimates_primary_orphans)
-joined$final_primary_orphans_uq <- ifelse(joined$all == 0, joined$estimates_primary, joined$primary_loss)
-
 orphans_samples <- colSums(estimates_primary_orphans)
 print(sprintf("Primary orphans: %0.f [%0.f - %0.f]", 
               sum(joined$final_primary_orphans), floor(quantile(orphans_samples, probs = 0.025)), 

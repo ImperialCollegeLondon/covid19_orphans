@@ -81,16 +81,6 @@ for (i in 1:n){
   estimates_orphans[, i] <- estimates[, i] * joined$fitting_deaths
 }
 
-min = rowMins(ratio_fit)
-max = rowMaxs(ratio_fit)
-
-d = data.frame("country" = joined$country,
-               "fit" = joined$calculated_ratio,
-               "min" = min,
-               "max" = max)
-
-joined$estimates <- rowMeans(estimates_orphans)
-
 orphans_samples <- colSums(estimates_orphans)
 print(sprintf("Primary and/or secondary orphans: %0.f [%0.f - %0.f]", 
               sum(joined$final_orphans), floor(quantile(orphans_samples, probs = 0.025)), 

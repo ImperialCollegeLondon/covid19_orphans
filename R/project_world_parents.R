@@ -29,7 +29,6 @@ print(sprintf("Pearsons r^2 primary: %f",  cor(subset$tfr, subset$parent_ratio, 
 
 pars = c(0.1, 0.1, 0.1)
 output_p = optim(pars, error_parent, data=subset)
-#saveRDS(output_p$par, "data/shiny/parent_coefficients.RDS")
 print(output_p$par)
 
 x = seq(0, 5, 0.1)
@@ -59,9 +58,6 @@ for (i in 1:n){
   estimates_parent[, i] <- calc_ratio(output_p$par[1], output_p$par[2], output_p$par[3], rn)
   estimates_parent_orphans[, i] <- estimates_parent[, i] * joined$fitting_deaths
 }
-
-joined$estimates_parent <- rowMeans(estimates_parent_orphans)
-joined$final_parent_orphans_uq <- ifelse(joined$all == 0, joined$estimates_parent, joined$all_parents)
 
 orphans_samples <- colSums(estimates_parent_orphans)
 print(sprintf("Parent orphans: %0.f [%0.f - %0.f]", 
