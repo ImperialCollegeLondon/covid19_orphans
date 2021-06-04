@@ -230,7 +230,7 @@ gg <- ggplot(wrld) + geom_cartogram(map=wrld, data = wrld,
                                 color="#2b2b2b", size=0.15) + 
   coord_proj("+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs") +
   theme_map() +
-  labs(fill = "Primary and/or secondary caregiver loss")
+  labs(fill = "Primary and/or secondary caregiver loss") + theme(legend.position = "bottom")
 gg
 
 ggsave("figures/map.pdf", gg, width = 12, height = 6)
