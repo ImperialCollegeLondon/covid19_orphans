@@ -25,7 +25,7 @@ round.choose <- function(x, roundTo, dir = 1) {
 set.seed(10)
 
 # Load in data
-joined <- readRDS("data/tfr_covariates.RDS")
+joined <- readRDS("data/tfr_covariates_report.RDS")
 
 # Calculate country specific SD
 joined$sd = (joined$tfr_u-joined$tfr_l)/(2*1.96)
@@ -109,7 +109,7 @@ orphans_sample$text_ps[joined$all != 0] <- joined$final_orphans[joined$all != 0]
 #orphans_sample = orphans_sample[orphans_sample$mean > 0,]
 # Sort
 orphans_sample = orphans_sample[order(orphans_sample$region, orphans_sample$country),]
-saveRDS(orphans_sample, "data/country_estimates_ps.RDS")
+saveRDS(orphans_sample, "data/country_estimates_ps_report.RDS")
 
 # Make plots
 joined$colour = ifelse(joined$country == "I.R. Iran", 1, 0)

@@ -12,6 +12,16 @@ error_primary <- function(params, data){
   return(sum((calc_ratio(params[1], params[2], params[3], data$tfr) - data$primary_ratio)^2))
 }
 
+round.choose <- function(x, roundTo, dir = 1) {
+  if(dir == 1) {  ##ROUND UP
+    x + (roundTo - x %% roundTo)
+  } else {
+    if(dir == 0) {  ##ROUND DOWN
+      x - (x %% roundTo)
+    }
+  }
+}
+
 set.seed(10)
 
 # Load in data
@@ -86,7 +96,7 @@ orphans_sample = data.frame("country" = joined$country,
 orphans_sample$text_p <- as.character(orphans_sample$text_p)
 orphans_sample$text_p[joined$all != 0] <- joined$final_primary_orphans[joined$all != 0]
 # Remove 0 countries
-orphans_sample = orphans_sample[orphans_sample$mean > 0,]
+#orphans_sample = orphans_sample[orphans_sample$mean > 0,]
 # Sort
 orphans_sample = orphans_sample[order(orphans_sample$region, orphans_sample$country),]
 saveRDS(orphans_sample, "data/country_estimates_p.RDS")
@@ -136,6 +146,44 @@ print(loo_combined[which(loo_combined$orphans == min(loo_combined$orphans)),])
 print(loo_combined[which(loo_combined$orphans == max(loo_combined$orphans)),])
 
 save(p_fit_p_label, p_obs_pred_p, p_loo_p, file = "data/extrapolate_primary.RData")
+
+#Summaries for report
+country_samples <- as.data.frame(estimates_primary_orphans)
+country_samples$country <- joined$country
+country_samples$region <- joined$who_region
+
+# Replace samples with true value for study countries
+study_countries <- c("Argentina", "Brazil", "Colombia", "England & Wales", "France", 
+                     "Germany", "India", "I.R. Iran", "Italy", "Kenya", 
+                     "Malawi", "Mexico", "Nigeria","Peru", "Philippines", 
+                     "Poland", "Russian Federation", "South Africa", "Spain", "USA",
+                     "Zimbabwe")
+for (c in study_countries){
+  country_samples[which(country_samples$country == c),1:1000] = joined$final_primary_orphans[joined$country == c]
+}
+
+region_data = country_samples %>% select(-country) %>%
+  group_by(region) %>%
+  summarise(across(everything(), sum))
+
+region_data_matrix = as.matrix(region_data[,2:1001])
+means = rowMeans(region_data_matrix)
+li = rowQuantiles(region_data_matrix, probs = 0.025)
+ui = rowQuantiles(region_data_matrix, probs = 0.975)
+region_data = data.frame("region" = region_data$region, 
+                         "mean_p" = means,
+                         "lower_p" = li,
+                         "upper_p" = ui,
+                         "text_p" = sprintf("%.0f [%.0f - %.0f]", 
+                                             signif(means, 4), 
+                                             round.choose(li, 100, 0), 
+                                             round.choose(ui, 100, 1)))  
+
+test = region_data[which(region_data$mean < region_data$lower | region_data$mean > region_data$upper)]
+if (length(test$region == 0 )){
+  stop("Uncertainty is wrong.")
+}
+saveRDS(region_data, "data/region_estimates_p.RDS")
 
 
 
