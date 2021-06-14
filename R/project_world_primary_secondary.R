@@ -33,11 +33,6 @@ joined$sd = (joined$tfr_u-joined$tfr_l)/(2*1.96)
 # Select a subset
 subset <- joined[which(joined$all != 0),]
 
-# Working out percentage of deaths
-subset_no_africa <- subset[which(! subset$country %in% c("Nigeria", "Kenya", "Malawi", "Zimbabwe")),]
-print(sprintf("proportion of covid deaths no africa: %f", sum(subset_no_africa$total_deaths)/sum(joined$total_deaths)))
-print(sprintf("proportion of covid deaths: %f", sum(subset$total_deaths)/sum(joined$total_deaths)))
-
 # Exclude Iran from fit
 subset = subset[which(!subset$country %in% c("I.R. Iran")),]
 print(sprintf("Pearsons r^2 primary and/or seconday: %f",  
@@ -85,16 +80,6 @@ for (i in 1:n){
   ratio_fit = cbind(ratio_fit,  estimates[, i])
   estimates_orphans[, i] <- estimates[, i] * joined$fitting_deaths
 }
-
-min = rowMins(ratio_fit)
-max = rowMaxs(ratio_fit)
-
-d = data.frame("country" = joined$country,
-               "fit" = joined$calculated_ratio,
-               "min" = min,
-               "max" = max)
-
-joined$estimates <- rowMeans(estimates_orphans)
 
 orphans_samples <- colSums(estimates_orphans)
 print(sprintf("Primary and/or secondary orphans: %0.f [%0.f - %0.f]", 

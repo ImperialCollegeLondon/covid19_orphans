@@ -242,7 +242,9 @@ process_england_wales = function(){ # Just use excess
   #download.file(url, 'data/UK/england_wales_deaths-v30.csv')
   data2 = read.csv('data/UK/england_wales_deaths-v30.csv')
   
-  week_split <- function(x){
+ 
+  
+   week_split <- function(x){
     return(as.double(strsplit(x, "-")[[1]][2]))
   }
   data2$week = sapply(as.character(data2$week.number), week_split)
@@ -254,34 +256,33 @@ process_england_wales = function(){ # Just use excess
   data2 = data2 %>% arrange(week, year, gender, age)
   data2$age = as.character(data2$age)
   data_2020 = copy(data2)
+  
   data2 = data_2020 %>%filter(deaths == 'total-registered-deaths') %>% select(-deaths, -week)
   data2$age = ifelse(data2$age %in% c('0-1', '1-4'), '00-04',
                      ifelse(data2$age == '5-9', '05-09', data2$age))
-  data2 = data2 %>% group_by(week_nb, gender, age, year) %>% mutate(deaths = sum(value)) %>% ungroup() %>%
-    select(-value) %>% distinct() %>% arrange(week_nb, age, desc(gender))
+  data2 = data2 %>% group_by(week_nb, gender, age, year) %>% summarize(deaths = sum(value))  %>% arrange(week_nb, age, desc(gender))
   data2$week_nb = gsub('week-','Week ',data2$week_nb)
   setnames(data2,c('week_nb', 'deaths'),c('week', 'value_20'))
   
   setnames(data, 'value', 'value_pre')
   data$value_pre = as.numeric(data$value_pre)
   
-  dt = merge(data2, data, by=c('week', 'age', 'gender')) %>% 
-    mutate(deaths = value_20 - value_pre)
+  
+  dt = left_join(data2, data, by=c('week', 'age', 'gender'))
+  dt[is.na(dt)] <- 0
+  dt = dt %>% mutate(deaths = value_20 - value_pre)
   
   
   data_COVID19_d = data_2020 %>% filter(deaths == 'deaths-involving-covid-19-registrations')
   data_COVID19_d$age = ifelse(data_COVID19_d$age %in% c('0-1', '1-4'), '00-04',
                               ifelse(data_COVID19_d$age == '5-9', '05-09', data_COVID19_d$age))
   data_COVID19_d = data_COVID19_d %>% 
-    group_by(week_nb, gender, age) %>% 
-    mutate(deaths = sum(value)) %>% 
-    ungroup() %>%
-    select(-value, -week) %>% distinct()
-  setnames(data_COVID19_d, 'week_nb', 'week')
-  data_COVID19_d$week = as.character(data_COVID19_d$week)
-  data_COVID19_d$week = gsub('week-', 'Week ', data_COVID19_d$week)
-  d_deaths = merge(data_COVID19_d, dt, by= c('week', 'age', 'gender'))
-  d_deaths$deaths = apply(d_deaths[,c(5,8)], 1, max)
+    group_by(week_nb, gender, age, year) %>% 
+    summarize(deaths = sum(value)) 
+  data_COVID19_d$week = gsub('week-','Week ',data_COVID19_d$week_nb)
+  
+  d_deaths = left_join(data_COVID19_d, dt, by= c('week', 'age', 'gender', 'year'))
+  d_deaths[is.na(d_deaths)] <- 0
   setnames(d_deaths, c('deaths.x', 'deaths.y'), c('covid19_deaths', 'excess_deaths'))
   
   write_csv(path = 'data/UK/deaths_all_england_wales.csv', d_deaths)

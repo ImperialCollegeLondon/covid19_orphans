@@ -128,8 +128,8 @@ process_colombia_skip_generation = function(){
 process_skip_generation_england_wales = function(max_excess_covid = 0){
   data = read.csv('data/UK/deaths_all_england_wales.csv')
   data$week = as.numeric(sapply(as.character(data$week), function(x) strsplit(x, " ")[[1]][2]))
-  data = data[which((data$year.x == "2020" &  data$week >=10) | 
-                              (data$year.x == "2021" &  data$week <= 8)),]
+  data = data[which((data$year == "2020" &  data$week >=10) | 
+                              (data$year == "2021" &  data$week <= 17)),]
   # Summarise data for age groups
   data = data %>% group_by(age, gender) %>%
     summarise(covid = sum(covid19_deaths),
