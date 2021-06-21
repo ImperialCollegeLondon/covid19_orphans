@@ -8,6 +8,8 @@ library(colorspace)
 library(sf)
 library(ggalt)
 library(ggthemes)
+library(readxl)
+library(svglite)
 
 
 options(scipen = 999)
@@ -35,6 +37,7 @@ p_r <- ggplot(rates_long) +
 print(p_r)
 
 ggsave(filename = "figures/rates.pdf", p_r)
+ggsave(filename = "figures/rates.svg", p_r)
 
 #------------------------------------------------------------------------------------------------
 # Regions
@@ -101,6 +104,7 @@ p2 <- ggplot(regions_mean_long[order(regions_mean_long$type, decreasing=T),], ae
   scale_fill_manual(name = "", values = c("#e0f3db", "#a8ddb5", "#43a2ca"), guide = guide_legend(reverse = TRUE, ncol = 1))
 
 ggsave(filename = "figures/region_totals_unstacked_bar.pdf", p2)
+ggsave(filename = "figures/region_totals_unstacked_bar.svg", p2)
 
 #------------------------------------------------------------------------------------------------
 # # Makes ladder plot
@@ -226,11 +230,96 @@ wrld <- wrld[wrld$region != "Antarctica",]
 wrld <- left_join(wrld, prim_sec, by = c("region" = "country"))
 wrld$mean[which(wrld$region == "Greenland")] = 0
 gg <- ggplot(wrld) + geom_cartogram(map=wrld, data = wrld,
-                                aes(x=long, y=lat, map_id=region,fill= mean),
+                                aes(x=long, y=lat, map_id=region, fill= mean),
                                 color="#2b2b2b", size=0.15) + 
   coord_proj("+proj=robin +lon_0=0 +x_0=0 +y_0=0 +ellps=WGS84 +datum=WGS84 +units=m +no_defs") +
-  theme_map() +
+  theme_bw()  + ylab("") + xlab("") + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),
+        axis.title=element_blank(),
+        axis.text=element_blank(),
+        axis.ticks=element_blank(),
+        legend.key.width = unit(1, 'cm'))  + 
+  scale_fill_gradient(low = "yellow", high = "red", na.value = "grey") + 
   labs(fill = "Primary and/or secondary caregiver loss") + theme(legend.position = "bottom")
 gg
 
 ggsave("figures/map.pdf", gg, width = 12, height = 6)
+ggsave("figures/map.svg", gg, width = 12, height = 6)
+#------------------------------------------------------------------------------------------------
+# Progression figure
+d = read.csv("data/deaths_report_2020.csv")
+names(d) <-  c("date", "deaths", "loss")
+d$deaths <- as.numeric(d$deaths)
+d$date <- as.Date(d$date, format = "%d/%m/%Y")
+
+d2 = d
+d$deaths2 = d$deaths  - d$loss
+d$deaths = NULL
+d_long <- gather(d,  key = key, value = value, -date)
+
+p_prog  <- ggplot(d_long) + geom_line(aes(date, value/1e6, group=key)) +  geom_area(aes(date,  value/1e6,fill = key)) +
+  geom_segment(aes(x = as.Date("2020-03-01"), xend = as.Date("2020-03-01"),
+                   y = 0, yend = d2$deaths[which(d2$date == as.Date("2020-07-01"))]/1e6), linetype = "dashed") +
+  geom_segment(aes(x = as.Date("2020-03-01"), xend = as.Date("2021-01-14"),
+                   y = d2$deaths[which(d2$date == as.Date("2020-07-01"))]/1e6,
+                   yend = d2$deaths[which(d2$date == as.Date("2020-07-01"))]/1e6), linetype = "dashed") +
+  geom_segment(aes(x = as.Date("2020-07-01"), xend = as.Date("2020-07-01"),
+                   y = 0, yend = d2$deaths[which(d2$date == as.Date("2020-10-01"))]/1e6), linetype = "dashed") +
+  geom_segment(aes(x = as.Date("2020-07-01"), xend = as.Date("2021-01-14"),
+                   y = d2$deaths[which(d2$date == as.Date("2020-10-01"))]/1e6,
+                   yend = d2$deaths[which(d2$date == as.Date("2020-10-01"))]/1e6), linetype = "dashed") +
+  geom_segment(aes(x = as.Date("2020-10-01"), xend = as.Date("2020-10-01"),
+                   y = 0, yend = 1.5), linetype = "dashed") +
+  geom_segment(aes(x = as.Date("2020-10-01"), xend = as.Date("2021-01-14"),
+                   y = 1.5, yend = 1.5), linetype = "dashed") +
+  geom_segment(aes(x = as.Date("2020-12-01"), xend = as.Date("2020-12-01"),
+                   y = 0, yend = 1.86), linetype = "dashed") +
+  geom_segment(aes(x = as.Date("2020-12-01"), xend = as.Date("2021-01-14"),
+                   y = 1.86,
+                   yend = 1.86), linetype = "dashed") +
+  annotate("text", label = "March 1 to June 30", x = as.Date("2020-05-01"), y = 0.6, size = 3.5, colour = "black") +
+  annotate("text", label = "June 1 to Sept 30", x = as.Date("2020-08-15"), y = 1.15, size = 3.5, colour = "black") +
+  annotate("text", label = "Oct 1 to \nNov 30", x = as.Date("2020-11-01"), y = 1.65, size = 3.5, colour = "black") +
+  annotate("text", label = "Dec 1 to \nJan 14", x = as.Date("2020-12-20"), y = 2.00, size = 3.5, colour = "black") +
+  theme_bw()   + xlab("") + ylab("Millions") + 
+  scale_y_continuous(expand=expansion(mult=c(0,0.05))) + 
+  scale_x_date(breaks = scales::pretty_breaks(n = 12), expand=expansion(mult=c(0,0))) + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5)) + theme(plot.margin=unit(c(1,1,1,1),"cm"), legend.position = "bottom") +  
+  scale_fill_manual(name = "", values = c("#a8ddb5", "#43a2ca"), label = c("Deaths", "Orphaned &/or lost caregiver"))
+p_prog 
+ggsave("figures/deaths_2020.pdf", p_prog, width = 8, height = 6)
+ggsave("figures/deaths_2020.svg", p_prog, width = 8, height = 6)
+
+
+d = read.csv("data/deaths_report.csv")
+names(d) <-  c("date", "deaths", "loss")
+d$deaths <- as.numeric(d$deaths)
+d$date <- as.Date(d$date, format = "%d/%m/%Y")
+
+d2 = d
+d$deaths2 = d$deaths  - d$loss
+d$deaths = NULL
+d_long <- gather(d,  key = key, value = value, -date)
+p_prog  <- ggplot(d_long) + geom_line(aes(date, value/1e6, group=key)) +  geom_area(aes(date,  value/1e6,fill = key)) +
+  geom_segment(aes(x = as.Date("2020-03-01"), xend = as.Date("2020-03-01"),
+                   y = 0, yend = d2$deaths[which(d2$date == as.Date("2021-01-01"))]/1e6), linetype = "dashed") +
+  geom_segment(aes(x = as.Date("2020-03-01"), xend = as.Date("2021-06-01"),
+                   y = d2$deaths[which(d2$date == as.Date("2021-01-01"))]/1e6,
+                   yend = d2$deaths[which(d2$date == as.Date("2021-01-01"))]/1e6), linetype = "dashed") +
+  geom_segment(aes(x = as.Date("2021-01-01"), xend = as.Date("2021-01-01"),
+                   y = 0, yend = d2$deaths[which(d2$date == as.Date("2021-06-01"))]/1e6), linetype = "dashed") +
+  geom_segment(aes(x = as.Date("2021-01-01"), xend = as.Date("2021-06-01"),
+                   y = d2$deaths[which(d2$date == as.Date("2021-06-01"))]/1e6,
+                   yend = d2$deaths[which(d2$date == as.Date("2021-06-01"))]/1e6), linetype = "dashed") +
+  annotate("text", label = "2020",x = as.Date("2020-08-01"), y = 2, size = 4, colour = "black") +  
+  annotate("text", label = "2021",x = as.Date("2021-03-15"), y = 3.7, size = 4, colour = "black") +  
+  theme_bw()   + xlab("") + ylab("Millions") + 
+  scale_y_continuous(expand=expansion(mult=c(0,0.05))) + 
+  scale_x_date(breaks = scales::pretty_breaks(n = 12), expand=expansion(mult=c(0,0))) + 
+  theme(axis.text.x = element_text(angle = 45, vjust = 0.5)) + 
+  theme(plot.margin=unit(c(1,1,1,1),"cm"), legend.position = "bottom") +  
+  scale_fill_manual(name = "", values = c("#a8ddb5", "#43a2ca"), label = c("Deaths", "Orphaned &/or lost caregiver"))
+p_prog 
+ggsave("figures/deaths_2021.pdf", p_prog, width = 8, height = 6)
+ggsave("figures/deaths_2021.svg", p_prog, width = 8, height = 6)
+
