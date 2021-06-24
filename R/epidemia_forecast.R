@@ -1,18 +1,23 @@
+library(tidyverse)
+
 weeks = 139
 rt_val <- 1.0
 
 df <- fm$data
 projstart <- max(df$date)
+raw_pop <- df$pop[1]
 
 # time points in projection
 future_dates <- seq.Date(projstart+1, projstart+(7*weeks), by='day')
-df_new = rbind(df, data.frame(group = rep("World", length(future_dates)),
-                              date =  future_dates,
-                              week = rep(max(df$week), length(future_dates)),
-                              daily_deaths = rep(-1, length(future_dates))))
+n <- data.frame(group = rep("World", length(future_dates)),
+                date =  future_dates,
+                week = rep(max(df$week), length(future_dates)),
+                daily_deaths = rep(-1, length(future_dates)),
+                pop = rep(raw_pop, length(future_dates)))
+df_new = bind_rows(df, n)
 
 endTime <- nrow(df_new)
-raw_pop <- df$pop[1]
+
 
 # epi parameters
 si <- c(EuropeCovid$si, rep(0, endTime - length(EuropeCovid$si)))
@@ -34,10 +39,10 @@ intercept = as.matrix(fm, pars = "daily_deaths|(Intercept)")
 ifr = 0.02*invlogit(intercept)
 
 appendStart <- nrow(df) + 1
-for (i in (appendStart):endTime) {
+for (i in appendStart:endTime) {
   datenow <- df_new$date[i]
 
-  convolution <- infections[, 1:(i-1)] %*% si[i:2] # infections[, 1:i] %*% si[i:1]
+  convolution <- infections[, 1:(i-1)] %*% si[(i-1):1] #infections[, 1:(i-1)] %*% si[i:2] # infections[, 1:i] %*% si[i:1]
   cumsum <- rowSums(infections[, 1:(i-1)])
   
   # compute unadjusted rt
@@ -46,7 +51,7 @@ for (i in (appendStart):endTime) {
   
   # susceptible adjustment
   #infections[, i] <- (raw_pop - cumsum)*(1-exp(-Rt_adj[, i]*convolution/raw_pop))
-  infections[, i] <- infections[,i] + rt_val * convolution
+  infections[, i] <- infections[,1] + rt_val*convolution
   
   # Calculate observed values
   deaths[, i] <- infections[, 1:(i-1)] %*% deaths_i2o[(i-1):1] * ifr
@@ -61,11 +66,15 @@ rt_adj_samples <- Rt_adj[, appendStart:endTime]
 
 d <- data.frame(dates = c(df$date, future_dates),
                 deaths = c(df$daily_deaths,colMedians(deaths_samples)),
-                infections = c(df$daily_deaths,colMedians(infections_samples)),
+                infections = c(colMedians(model_infections),colMedians(infections_samples)),
                 lower = c(df$daily_deaths,colQuantiles(deaths_samples, probs = 0.025)),
                 upper = c(df$daily_deaths,colQuantiles(deaths_samples, probs = 0.975)),
                 rt_adj = c(rep(NA, length(df$daily_deaths)), colMedians(rt_adj_samples)))
-p <- ggplot(d) + geom_line(aes(x=dates, y=infections)) #+ geom_ribbon(aes(x=dates, ymin = lower, ymax = upper), fill = "blue", alpha = 0.5) + theme_bw()
+p <- ggplot(d) + geom_line(aes(x=dates, y=infections)) + geom_vline(xintercept = as.Date('2021/05/01'))#+ geom_ribbon(aes(x=dates, ymin = lower, ymax = upper), fill = "blue", alpha = 0.5) + theme_bw()
+print(p)
+
+p <- ggplot(d) + geom_line(aes(x=dates, y=deaths)) + geom_vline(xintercept = as.Date('2021/05/01'))#+ geom_ribbon(aes(x=dates, ymin = lower, ymax = upper), fill = "blue", alpha = 0.5) + theme_bw()
 print(p)
  
-median(rowSums(deaths_samples))
+print(median(rowSums(deaths_samples)))
+print(sum(df$daily_deaths))
