@@ -23,7 +23,7 @@ data$population <- max(data$population)# Should I use the actual population of t
 data$week = c(rep(1:(length(data$date)%/%7), each = 7), 
            rep(length(data$date)%/%7, length(data$date)%%7))
 data$place = "World"
-#data <- data[which(data$week < 20),]
+
 data$daily_deaths = c(data$deaths[1], diff(data$deaths))
 data$daily_deaths[which(data$daily_deaths < 0)] = 0 # there will be 3 spikes as 3 negative days
 
@@ -40,11 +40,7 @@ data$pop <- pop <-  as.numeric(7554158217)#data$population[1]
 inf <- epiinf(gen = EuropeCovid$si,
               seed_days = 6,
               pop_adjust = TRUE,
-              pops = pop)#,
-              #prior_susc = normal(0.49, 0.1), prior_seeds = normal(15e3, 2e3))
-
-#inf <- epiinf(gen = EuropeCovid$si, seed_days=20L, pop_adjust = TRUE, pops = pop,
- #             prior_susc = normal(0.49, 0.1), prior_seeds = normal(15e3, 2e3))
+              pops = pop)
 
 # Sets rt formulation
 rt <- epirt(formula = R(place, date) ~ rw(time = week, prior_scale = 0.1),
@@ -54,7 +50,7 @@ options(mc.cores = parallel::detectCores())
 
 args <- list(rt=rt, inf=inf, obs=deaths, data=data, seed=12345,
              algorithm = "sampling",
-             iter = 100, control = list(max_treedepth = 15))
+             iter = 1000, control = list(max_treedepth = 15))
 
 print("Solving model")
 fm <- do.call(epim, args)
