@@ -37,7 +37,7 @@ appendStart <- nrow(df) + 1
 for (i in (appendStart):endTime) {
   datenow <- df_new$date[i]
 
-  convolution <- infections[, 1:(i-1)] %*% si[i:2] # infections[, 1:i] %*% si[i:1]
+  convolution <- infections[, 1:(i-1)] %*% si[(i-1):1] # infections[, 1:i] %*% si[i:1]
   cumsum <- rowSums(infections[, 1:(i-1)])
   
   # compute unadjusted rt
