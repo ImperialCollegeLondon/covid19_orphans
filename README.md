@@ -22,6 +22,7 @@ The following R packages are necessary:
 - lubridate
 - repr
 - ggpubr
+- xlsx
 
 and rdhs for the DHS data.
 
