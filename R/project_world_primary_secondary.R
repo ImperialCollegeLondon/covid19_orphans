@@ -44,8 +44,13 @@ pars = c(0.1, 0.1, 0.1)
 output_ps = optim(pars, error, data=subset)
 joined$calculated_ratio <- calc_ratio(output_ps$par[1], output_ps$par[2], 
                                       output_ps$par[3], joined$tfr)
-#saveRDS(output_ps$par, "data/shiny/primary_secondary_coefficients.RDS")
 print(output_ps$par)
+
+ratio_dat <- select(joined, country, ratio, calculated_ratio)
+ratio_dat$calculated_ratio <- ifelse(is.na(ratio_dat$ratio), ratio_dat$calculated_ratio , ratio_dat$ratio)
+ratio_dat$ratio <- NULL
+names(ratio_dat) <- c("country", "primary_secondary_ratio")
+saveRDS(ratio_dat, "data/primary_secondary_ratios.RDS")
 
 x = seq(0, 5, 0.1)
 line_all = data.frame(x = x, 

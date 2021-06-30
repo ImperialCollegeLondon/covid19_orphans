@@ -143,3 +143,11 @@ p3 <- grid.arrange(arrangeGrob(p1 + theme(legend.position="none"),
 
 cowplot::save_plot("figures/fig2.pdf", p3, base_height = 12, base_width = 15)
 
+ps <- readRDS("data/primary_secondary_ratios.RDS")
+p <- readRDS("data/primary_ratios.RDS")
+pa <- readRDS("data/orphanhood_ratios.RDS")
+
+ratios <- left_join(pa, p, by = "country")
+ratios <- left_join(ratios, ps, by = "country")
+ratios <- ratios[order(ratios$country),]
+write_csv(ratios, "ratios.csv")
