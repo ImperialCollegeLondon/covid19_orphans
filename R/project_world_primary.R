@@ -12,6 +12,16 @@ error_primary <- function(params, data){
   return(sum((calc_ratio(params[1], params[2], params[3], data$tfr) - data$primary_ratio)^2))
 }
 
+round.choose <- function(x, roundTo, dir = 1) {
+  if(dir == 1) {  ##ROUND UP
+    x + (roundTo - x %% roundTo)
+  } else {
+    if(dir == 0) {  ##ROUND DOWN
+      x - (x %% roundTo)
+    }
+  }
+}
+
 set.seed(10)
 
 # Load in data
@@ -31,7 +41,6 @@ print(sprintf("Pearsons r^2 primary: %f",  cor(subset$tfr, subset$primary_ratio,
 
 pars = c(0.1, 0.1, 0.1)
 output_p = optim(pars, error_primary, data=subset)
-#saveRDS(output_p$par, "data/shiny/primary_coefficients.RDS")
 print(output_p$par)
 
 x = seq(0, 5, 0.1)
@@ -50,6 +59,13 @@ joined$calculated_primary_ratio <- calc_ratio(output_p$par[1], output_p$par[2],
                                               output_p$par[3], joined$tfr)
 joined$calculated_orphans <- joined$calculated_primary_ratio * joined$fitting_deaths 
 joined$final_primary_orphans <- ifelse(joined$primary == 0, joined$calculated_orphans, joined$primary)
+
+
+ratio_dat <- select(joined, country, primary_ratio, calculated_primary_ratio)
+ratio_dat$calculated_primary_ratio <- ifelse(is.na(ratio_dat$primary_ratio), ratio_dat$calculated_primary_ratio , ratio_dat$primary_ratio)
+ratio_dat$primary_ratio <- NULL
+names(ratio_dat) <- c("country", "primary_ratio")
+saveRDS(ratio_dat, "data/primary_ratios.RDS")
 
 # Calculate uncertainty
 n = 1000

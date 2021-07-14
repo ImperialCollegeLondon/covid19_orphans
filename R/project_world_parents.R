@@ -48,6 +48,12 @@ joined$calculated_parent_ratio <- calc_ratio(output_p$par[1], output_p$par[2],
 joined$calculated_orphans <- joined$calculated_parent_ratio * joined$fitting_deaths 
 joined$final_parent_orphans <- ifelse(is.na(joined$all_parents), joined$calculated_orphans, joined$all_parents)
 
+ratio_dat <- select(joined, country, parent_ratio, calculated_parent_ratio)
+ratio_dat$calculated_parent_ratio <- ifelse(is.na(ratio_dat$parent_ratio), ratio_dat$calculated_parent_ratio , ratio_dat$parent_ratio)
+ratio_dat$parent_ratio <- NULL
+names(ratio_dat) <- c("country", "orphanhood_ratio")
+saveRDS(ratio_dat, "data/orphanhood_ratios.RDS")
+
 # Calculate uncertainty
 n = 1000
 estimates_parent <- matrix(nrow = length(joined$country), ncol = n)
