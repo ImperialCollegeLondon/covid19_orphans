@@ -25,3 +25,5 @@ The following R packages are necessary:
 
 and rdhs for the DHS data.
 
+## Warranty
+Imperial makes no representation or warranty about the accuracy or completeness of the data nor that the results will not constitute in infringement of third-party rights. Imperial accepts no liability or responsibility for any use which may be made of any results, for the results, nor for any reliance which may be placed on any such work or results.
