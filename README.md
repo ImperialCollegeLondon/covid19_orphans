@@ -1,6 +1,6 @@
 # Global minimum estimates of children affected by COVID-19-associated orphanhood and deaths of caregivers: a modelling study
 
-This repository includes the code and underlying data, where possible, to recreate the analyses in [Hillis et al. (2021)](https://privpapers.ssrn.com/sol3/papers.cfm?abstract_id=3782441).  
+This repository includes the code and underlying data, where possible, to recreate the analyses in [Hillis, Unwin, Chen et al. (2021)](http://www.thelancet.com/journals/lancet/article/PIIS0140-6736(21)01253-8/fulltext).  
 
 Two files need to be run to recreate the analysis:
 1) extract_study_data.R
