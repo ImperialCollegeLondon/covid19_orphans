@@ -1,4 +1,4 @@
-# Under the Radar: Global Minimum Estimates for COVID-19-associated Orphanhood and Deaths among Caregivers 
+# Global minimum estimates of children affected by COVID-19-associated orphanhood and deaths of caregivers: a modelling study
 
 This repository includes the code and underlying data, where possible, to recreate the analyses in [Hillis et al. (2021)](https://privpapers.ssrn.com/sol3/papers.cfm?abstract_id=3782441).  
 
