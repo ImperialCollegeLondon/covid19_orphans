@@ -10,7 +10,10 @@ Two files need to be run to recreate the analysis:
 
 These methods use COVID-19 or excess deaths and fertility rates for US states, stratified by race and ethnicity. run_US.R runs the primary analysis and produces the manuscript tables and figures. submit-jobs.R generates a bash script to run the bootstrapped analysis and generates uncertainty intervals for the estimates, and is intended to run in a UNIX environment.
 
-Raw data is provided in the repository.
+Raw data is provided in the repository, with the exception of mortality data, which is too large to be added to the repository (75mb). To run the analysis, the data can be downloaded from :
+https://data.cdc.gov/NCHS/AH-Quarterly-Excess-Deaths-by-State-Sex-Age-and-Ra/jqg8-ycmh
+Save the data with the file path name:
+data/USA/AH_Quarterly_Excess_Deaths_by_State__Sex__Age__and_Race_Q2_2021.csv
 
 The following R packages are necessary for running analysis and producing figures:
 - readxl
