@@ -1,7 +1,7 @@
 # Minimum estimates of children affected by COVID-19-associated orphanhood and deaths of caregivers
 
 This repository includes code and data to recreate the following analyses:
-1) [Hillis, Unwin, Chen et al. (2021)](http://www.thelancet.com/journals/lancet/article/PIIS0140-6736(21)01253-8/fulltext),
+1) [Hillis, Unwin, Chen et al. (2021)](http://www.thelancet.com/journals/lancet/article/PIIS0140-6736(21)01253-8/fulltext) [![DOI](https://zenodo.org/badge/360452208.svg)](https://zenodo.org/badge/latestdoi/360452208),
 2) [Hillis, Blenkinsop et al. (2021)]()
 
 ## Global minimum estimates of children affected by COVID-19-associated orphanhood and deaths of caregivers: a modelling study
