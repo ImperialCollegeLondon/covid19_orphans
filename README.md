@@ -1,9 +1,6 @@
-This is a private fork on the public repo.  Please work on a branch.  Any questions ask Ettie.
-
-
 # Global minimum estimates of children affected by COVID-19-associated orphanhood and deaths of caregivers: a modelling study
 
-This repository includes the code and underlying data, where possible, to recreate the analyses in [Hillis, Unwin, Chen et al. (2021)](http://www.thelancet.com/journals/lancet/article/PIIS0140-6736(21)01253-8/fulltext).  
+This repository includes the code and underlying data, where possible, to recreate the analyses in [Hillis, Unwin, Chen et al. (2021)](http://www.thelancet.com/journals/lancet/article/PIIS0140-6736(21)01253-8/fulltext) [![DOI](https://zenodo.org/badge/360452208.svg)](https://zenodo.org/badge/latestdoi/360452208) 
 
 Two files need to be run to recreate the analysis:
 1) extract_study_data.R
