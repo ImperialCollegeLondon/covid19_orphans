@@ -7,6 +7,7 @@ library(tidyverse)
 library(ggrepel)
 library(brms)
 library(matrixStats)
+library(gridExtra)
 source("global_age_analysis_2021/R/brms_joint_fit.R")
 source("global_age_analysis_2021/R/utils.R")
 
@@ -345,18 +346,28 @@ reg_percent_summary$category <- factor(reg_percent_summary$category,
                                        labels = c("Maternal orphans 0-4", "Paternal orphans 0-4", "Maternal orphans 5-9",
                                                   "Paternal orphans 5-9", "Maternal orphans 10-17", "Paternal orphans 10-17"))
 
-p_global <- ggplot(reg_percent_summary) +
+p_global_a <- ggplot(reg_percent_summary %>% filter(region == "Global")) +
   geom_bar(aes(region, mean, fill = category), stat = "identity") +
   geom_text(aes(region, mean, label = sprintf("%.1f", round(mean, 1))), position = position_stack(vjust = 0.5)) +
   xlab("") + ylab("Percentage of orphans")  +
   scale_fill_manual(name = "", values = c("orchid1", "lightblue1", "orchid3", "lightblue3",  "orchid4",  "lightblue4")) +
-  theme_bw() + theme(legend.position = "bottom")
+  theme_bw()
 
+p_global_b <- ggplot(reg_percent_summary %>% filter(region != "Global")) +
+  geom_bar(aes(region, mean, fill = category), stat = "identity") +
+  geom_text(aes(region, mean, label = sprintf("%.1f", round(mean, 1))), position = position_stack(vjust = 0.5)) +
+  xlab("") + ylab("Percentage of orphans")  +
+  scale_fill_manual(name = "", values = c("orchid1", "lightblue1", "orchid3", "lightblue3",  "orchid4",  "lightblue4")) +
+  theme_bw()
+
+
+p_global <- ggarrange(p_global_a, p_global_b, common.legend = TRUE, 
+                      labels = "AUTO", legend="bottom", widths = c(1, 3))
 print(p_global)
 ggsave("global_age_analysis_2021/figures/fig_3_global_orphans_percentage.pdf", p_global, height = 7)
 
-# ---------- Calculating total numbers of 10-17s
 
+# ---------- Calculating total numbers of 10-17s
 adolescents = global[1,] + global[2,]
 print(sprintf("Adolescent orphans: %s [%s - %s]", 
               format(round(num_10_17_male_mean + num_10_17_female_mean, -2), big.mark = ",", trim = TRUE), 

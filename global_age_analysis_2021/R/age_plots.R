@@ -3,7 +3,7 @@ library(tidyverse)
 source("global_age_analysis_2021/R/utils.R")
 
 month = "_oct"
-n = 200
+n = 5
 percentages = readRDS(paste0("global_age_analysis_2021/data/age_outputs/age_data_scaled", month, ".RDS"))
 samples <- readRDS(paste0("global_age_analysis_2021/data/age_outputs/samples_age_data_scaled", month, ".RDS"))
 samples$sample <- rep(rep(1:n, each = 6), times = 20)
@@ -160,7 +160,7 @@ global_totals <- readRDS("global_age_analysis_2021/data/age_outputs/global_extra
 names(global_totals) <- names(tab_combined)
 tab_combined_ <- rbind(tab_combined, global_totals)
 
-write_csv(file = paste0("global_age_analysis_2021/age_table_1", month, ".csv"), tab_combined)
+write_csv(file = paste0("global_age_analysis_2021/age_table_1", month, ".csv"), tab_combined_)
 
 
 # Table 2: Percentages of ages and types ----------------------------------------------
@@ -180,6 +180,70 @@ names(global_dat) = c("country", "[0-5)_Female",  "[0-5)_Male", "[5-10)_Female",
 
 pretty_table_wide_raw <- rbind(pretty_table_wide_raw, global_dat)
 write_csv(file = paste0("global_age_analysis_2021/age_table_2", month, ".csv"), pretty_table_wide_raw)
+
+# Percentages pyramid ----------------------------------------------
+pyramid <- percentages
+pyramid$percent <- ifelse(pyramid$gender == "Paternal", -pyramid$percent, pyramid$percent)
+pyramid$li_percent <- ifelse(pyramid$gender == "Paternal", -pyramid$li_percent, pyramid$li_percent)
+pyramid$ui_percent <- ifelse(pyramid$gender == "Paternal", -pyramid$ui_percent, pyramid$ui_percent)
+
+tmp_adolescents_paternal <- pyramid[which(pyramid$gender == "Paternal" & pyramid$category == "10-17"),]
+pyramid$country = factor(pyramid$country, levels = tmp_adolescents_paternal$country[order(tmp_adolescents_paternal$percent)])
+n1 <- ggplot(pyramid) + 
+  geom_bar(data = subset(pyramid, gender == "Paternal"), stat = "identity", aes(x = category, y = percent/100, fill = gender)) + 
+  geom_bar(data = subset(pyramid, gender == "Maternal"), stat = "identity", aes(x = category, y = percent/100, fill = gender)) + 
+  geom_errorbar(aes(x=category, ymin =  li_percent/100, ymax = ui_percent/100)) + 
+  scale_y_continuous(labels = scales::percent) + 
+  #scale_y_continuous(breaks = seq(-0.08, 0.08, 0.02), 
+  #                   labels = paste0(as.character(c(seq(8, 0, -2), seq(2, 8, 2))), "%")) + 
+  xlab("") + ylab("Percent of children") +
+  coord_flip() + 
+  scale_fill_brewer(name = "", palette = "Set1", label = c("Maternal", "Paternal")) + 
+  theme_bw() + theme(legend.position = "bottom") + 
+  facet_wrap(~country, ncol =4)
+print(n1)
+ggsave(paste0("global_age_analysis_2021/figures/age_composition", month, ".pdf"),  n1, height = 7,  width = 14)
+
+children_numbers <- read.csv("global_age_analysis_2021/data/numbers_of_children_smaller.csv")
+children_numbers <- children_numbers[, c(1, 8, 9, 10)]
+names(children_numbers) <- c("country", "0-4", "5-9", "10-17")
+children_numbers$total = children_numbers$`0-4` + children_numbers$`5-9` + children_numbers$`10-17`
+children_numbers$`0-4` = (children_numbers$`0-4` / children_numbers$total)/2
+children_numbers$`5-9` = (children_numbers$`5-9` / children_numbers$total)/2
+children_numbers$`10-17` = (children_numbers$`10-17` / children_numbers$total)/2
+
+children_numbers_maternal = children_numbers
+children_numbers_maternal$gender = "Maternal"
+
+children_numbers_paternal = children_numbers
+children_numbers_paternal$gender = "Paternal"
+
+children_numbers = rbind(children_numbers_paternal, children_numbers_maternal)
+children_numbers = select(children_numbers, -total)
+children_numbers_long <- gather(children_numbers, key = "category", value = "children", -gender, -country)
+children_numbers_long$children = ifelse(children_numbers_long$gender == "Paternal", -children_numbers_long$children, 
+                                        children_numbers_long$children)
+children_numbers_long = children_numbers_long[which(children_numbers_long$country != "Russia"),]
+
+
+n2 <- ggplot(pyramid) + 
+  geom_bar(data = subset(pyramid, gender == "Paternal"), stat = "identity", aes(x = category, y = percent/100, fill = gender)) + 
+  geom_bar(data = subset(pyramid, gender == "Maternal"), stat = "identity", aes(x = category, y = percent/100, fill = gender)) + 
+  geom_bar(data = subset(children_numbers_long, gender == "Paternal"), stat = "identity", 
+           aes(x = category, y = children, fill = gender), colour="black", alpha = 0.5) + 
+  geom_bar(data = subset(children_numbers_long, gender == "Maternal"), stat = "identity", 
+           aes(x = category, y = children, fill = gender, alpha = 0.5), colour="black", alpha = 0.5) + 
+  geom_errorbar(aes(x=category, ymin =  li_percent/100, ymax = ui_percent/100)) + 
+  scale_y_continuous(labels = scales::percent) + 
+  #scale_y_continuous(breaks = seq(-0.08, 0.08, 0.02), 
+  #                   labels = paste0(as.character(c(seq(8, 0, -2), seq(2, 8, 2))), "%")) + 
+  xlab("") + ylab("Percent of children") +
+  coord_flip() + 
+  scale_fill_brewer(name = "", palette = "Set1", label = c("Maternal", "Paternal")) + 
+  theme_bw() + theme(legend.position = "bottom") + 
+  facet_wrap(~country, ncol =4)
+print(n2)
+ggsave(paste0("global_age_analysis_2021/figures/age_composition_children", month, ".pdf"),  n2, height = 7,  width = 14)
 
 
 # Working out proportions  ----------------------------------------------
@@ -248,7 +312,7 @@ p1 <- ggplot(percentages) +
 ggsave(paste0("global_age_analysis_2021/figures/fig_2_orphanhood_rates_age", month, ".pdf"),  p1, height = 7,  width = 14)
 
 
-# TTime varying figure ----------------------------------------------
+# Time varying figure ----------------------------------------------
 percentages_diff = readRDS(paste0("global_age_analysis_2021/data/age_outputs/age_data_scaled_diff.RDS"))
 percentages_diff$date = "Last 6 months"
 percentages_diff$group <- paste(percentages_diff$gender, percentages_diff$category)

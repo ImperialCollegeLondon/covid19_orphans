@@ -2,7 +2,7 @@ library(tidyverse)
 library(readxl)
 
 # Read in and format us census data
-dat = read.csv("data/us_census_population.csv") 
+dat = read.csv("global_age_analysis_2021/data/us_census_population.csv") 
 dat = select(dat, Country.Area.Name, GROUP, Population, Male.Population, Female.Population)
 dat = dat[which(dat$GROUP != "TOTAL"),]
 dat$GROUP = ifelse(dat$GROUP == "100+", 100, dat$GROUP)
@@ -11,7 +11,7 @@ dat$age = paste0((dat$GROUP)%/%5 * 5 ,'-',(dat$GROUP) %/% 5 *5+4)
 dat$age = ifelse(dat$age == "100-104", "100+", dat$age)
 
 # Read in and format england and wales data
-eng = read_excel("data/england_wales_pop.xlsx")
+eng = read_excel("global_age_analysis_2021/data/england_wales_pop.xlsx")
 eng = eng[8:98,5:8]
 names(eng) <- c("GROUP", "Male.Population", "Female.Population", "Population")
 eng$Country.Area.Name <- "England & Wales"
@@ -67,7 +67,7 @@ n1 <- ggplot(study_5_years) +
   scale_fill_brewer(name = "", palette = "Set1", label = c("Female", "Male")) + 
   theme_bw() + theme(legend.position = "bottom") + 
   facet_wrap(~Country.Area.Name, scales = "free", ncol =4)
-ggsave("figures/pop_pyramids.pdf", n1, height = 14, width = 8)
+ggsave("global_age_analysis_2021/figures/pop_pyramids.pdf", n1, height = 14, width = 8)
 
 
 # Get proportions of children
@@ -107,7 +107,7 @@ adult_bands$female_prop = adult_bands$female_population /  adult_bands$total_pop
 bespoke_bands = rbind(children_bands, adult_bands)
 bespoke_bands = bespoke_bands[which(! bespoke_bands$age %in% c("adult", "children")),]
 
-saveRDS(bespoke_bands, file = "data/bespoke_population_bands.RDS")
+saveRDS(bespoke_bands, file = "global_age_analysis_2021/data/bespoke_population_bands.RDS")
 
 
 #---------
