@@ -1,0 +1,9 @@
+age,sex,max_deaths,nb_orphans
+0-14,Female,7140,0
+0-14,Male,7979,0
+15-44,Female,8525,9519
+15-44,Male,9526,8831
+45-64,Female,62860,4282
+45-64,Male,70241,13523
+65+,Female,242568,3
+65+,Male,271055,1376

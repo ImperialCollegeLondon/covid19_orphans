@@ -1,0 +1,15 @@
+country,date,age,gender,deaths
+Kenya,2020-07-27,0-9,Male,73
+Kenya,2020-07-27,10-19,Male,36
+Kenya,2020-07-27,20-29,Male,127
+Kenya,2020-07-27,30-39,Male,364
+Kenya,2020-07-27,40-49,Male,745
+Kenya,2020-07-27,50-59,Male,800
+Kenya,2020-07-27,60+,Male,1727
+Kenya,2020-07-27,0-9,Female,55
+Kenya,2020-07-27,10-19,Female,0
+Kenya,2020-07-27,20-29,Female,18
+Kenya,2020-07-27,30-39,Female,182
+Kenya,2020-07-27,40-49,Female,236
+Kenya,2020-07-27,50-59,Female,327
+Kenya,2020-07-27,60+,Female,491

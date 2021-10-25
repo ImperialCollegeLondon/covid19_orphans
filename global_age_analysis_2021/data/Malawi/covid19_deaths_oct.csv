@@ -1,0 +1,17 @@
+age,gender,deaths
+0-9,Male,4
+10-19,Male,8
+20-29,Male,23
+30-39,Male,99
+40-49,Male,250
+50-59,Male,355
+60-69,Male,347
+70+,Male,415
+0-9,Female,10
+10-19,Female,12
+20-29,Female,39
+30-39,Female,72
+40-49,Female,86
+50-59,Female,140
+60-69,Female,183
+70+,Female,244

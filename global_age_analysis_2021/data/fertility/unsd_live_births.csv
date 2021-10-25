@@ -1,0 +1,2361 @@
+country,year,age,value,gender
+Argentina,2004,15 - 19,103809,Female
+Argentina,2004,20 - 24,191218,Female
+Argentina,2004,25 - 29,189560,Female
+Argentina,2004,30 - 34,144983,Female
+Argentina,2004,35 - 39,74936,Female
+Argentina,2004,40 - 44,21997,Female
+Argentina,2004,45 - 49,1392,Female
+Argentina,2004,50+     ,102,Female
+Argentina,2004,Unk,5635,Female
+Argentina,2006,0 - 14,2766,Female
+Argentina,2006,15 - 19,103885,Female
+Argentina,2006,20 - 24,174342,Female
+Argentina,2006,25 - 29,176931,Female
+Argentina,2006,30 - 34,139003,Female
+Argentina,2006,35 - 39,73177,Female
+Argentina,2006,40 - 44,19866,Female
+Argentina,2006,45 - 49,1405,Female
+Argentina,2006,50 +,83,Female
+Argentina,2006,Unknown - Inconnu,4993,Female
+Argentina,2007,0 - 14,2841,Female
+Argentina,2007,15 - 19,106720,Female
+Argentina,2007,20 - 24,174679,Female
+Argentina,2007,25 - 29,175632,Female
+Argentina,2007,30 - 34,139393,Female
+Argentina,2007,35 - 39,73532,Female
+Argentina,2007,40 - 44,19879,Female
+Argentina,2007,45 - 49,1428,Female
+Argentina,2007,50 +,69,Female
+Argentina,2007,Unknown - Inconnu,6619,Female
+Argentina,2009,0 - 14,3346,Female
+Argentina,2009,15 - 19,113478,Female
+Argentina,2009,20 - 24,182747,Female
+Argentina,2009,25 - 29,178935,Female
+Argentina,2009,30 - 34,155464,Female
+Argentina,2009,35 - 39,81397,Female
+Argentina,2009,40 - 44,20840,Female
+Argentina,2009,45 - 49,1440,Female
+Argentina,2009,50 +,106,Female
+Argentina,2009,Unknown - Inconnu,7583,Female
+Argentina,2010,0 - 14,3117,Female
+Argentina,2010,15 - 19,114474,Female
+Argentina,2010,20 - 24,184399,Female
+Argentina,2010,25 - 29,174780,Female
+Argentina,2010,30 - 34,160524,Female
+Argentina,2010,35 - 39,84658,Female
+Argentina,2010,40 - 44,21363,Female
+Argentina,2010,45 - 49,1527,Female
+Argentina,2010,50 +,88,Female
+Argentina,2010,Unknown - Inconnu,11246,Female
+Argentina,2011,0 - 14,3156,Female
+Argentina,2011,15 - 19,115856,Female
+Argentina,2011,20 - 24,186004,Female
+Argentina,2011,25 - 29,173015,Female
+Argentina,2011,30 - 34,161321,Female
+Argentina,2011,35 - 39,87141,Female
+Argentina,2011,40 - 44,22665,Female
+Argentina,2011,45 - 49,1537,Female
+Argentina,2011,50 +,129,Female
+Argentina,2011,Unknown - Inconnu,7218,Female
+Argentina,2013,0 - 14,3261,Female
+Argentina,2013,15 - 19,114125,Female
+Argentina,2013,20 - 24,185621,Female
+Argentina,2013,25 - 29,170655,Female
+Argentina,2013,30 - 34,158021,Female
+Argentina,2013,35 - 39,91091,Female
+Argentina,2013,40 - 44,23124,Female
+Argentina,2013,45 +,1520,Female
+Argentina,2013,Total,2832590,Female
+Argentina,2013,Unknown - Inconnu,7185,Female
+Argentina,2014,0 - 14,3007,Female
+Argentina,2014,15 - 19,113945,Female
+Argentina,2014,20 - 24,192415,Female
+Argentina,2014,25 - 29,177190,Female
+Argentina,2014,30 - 34,160012,Female
+Argentina,2014,35 - 39,95509,Female
+Argentina,2014,40 - 44,24305,Female
+Argentina,2014,45 +,1624,Female
+Argentina,2014,Total,2913121,Female
+Argentina,2014,Unknown - Inconnu,9005,Female
+Argentina,2015,0 - 14,2787,Female
+Argentina,2015,15 - 19,108912,Female
+Argentina,2015,20 - 24,189542,Female
+Argentina,2015,25 - 29,175362,Female
+Argentina,2015,30 - 34,155082,Female
+Argentina,2015,35 - 39,98623,Female
+Argentina,2015,40 - 44,25346,Female
+Argentina,2015,45 +,1755,Female
+Argentina,2015,Total,2952969,Female
+Argentina,2015,Unknown - Inconnu,12631,Female
+Argentina,2016,0 - 14,2419,Female
+Argentina,2016,15 - 19,96905,Female
+Argentina,2016,20 - 24,178069,Female
+Argentina,2016,25 - 29,170356,Female
+Argentina,2016,30 - 34,149478,Female
+Argentina,2016,35 - 39,96943,Female
+Argentina,2016,40 +,27215,Female
+Argentina,2016,Total,2803080,Female
+Argentina,2016,Unknown - Inconnu,6650,Female
+Argentina,2017,0 - 14,2493,Female
+Argentina,2017,10 - 14,19156,Female
+Argentina,2017,15 - 19,91586,Female
+Argentina,2017,20 - 24,169299,Female
+Argentina,2017,25 - 29,165665,Female
+Argentina,2017,30 - 34,142831,Female
+Argentina,2017,35 - 39,92677,Female
+Argentina,2017,40 +,25471,Female
+Argentina,2017,Total,2874466,Female
+Argentina,2017,Unknown - Inconnu,14587,Female
+Brazil,2003,15 - 19,563454,Female
+Brazil,2003,20 - 24,871916,Female
+Brazil,2003,25 - 29,675905,Female
+Brazil,2003,30 - 34,408699,Female
+Brazil,2003,35 - 39,201033,Female
+Brazil,2003,40 - 44,53005,Female
+Brazil,2003,45 - 49,4386,Female
+Brazil,2003,50+     ,579,Female
+Brazil,2003,Unk,22624,Female
+Brazil,2004,15 - 19,561046,Female
+Brazil,2004,20 - 24,864326,Female
+Brazil,2004,25 - 29,667869,Female
+Brazil,2004,30 - 34,417350,Female
+Brazil,2004,35 - 39,204960,Female
+Brazil,2004,40 - 44,55621,Female
+Brazil,2004,45 - 49,3949,Female
+Brazil,2004,50+     ,381,Female
+Brazil,2004,Unk,23511,Female
+Brazil,2005,0 - 14,6452,Female
+Brazil,2005,15 - 19,574484,Female
+Brazil,2005,20 - 24,875615,Female
+Brazil,2005,25 - 29,689359,Female
+Brazil,2005,30 - 34,429018,Female
+Brazil,2005,35 - 39,208757,Female
+Brazil,2005,40 - 44,56364,Female
+Brazil,2005,45 - 49,4129,Female
+Brazil,2005,50+,279,Female
+Brazil,2006,0 - 14,22159,Female
+Brazil,2006,15 - 19,551051,Female
+Brazil,2006,20 - 24,833275,Female
+Brazil,2006,25 - 29,680961,Female
+Brazil,2006,30 - 34,428072,Female
+Brazil,2006,35 - 39,210439,Female
+Brazil,2006,40 - 44,56579,Female
+Brazil,2006,45 - 49,4226,Female
+Brazil,2006,50 +,324,Female
+Brazil,2006,Unknown - Inconnu,16673,Female
+Brazil,2007,0 - 14,22276,Female
+Brazil,2007,15 - 19,531898,Female
+Brazil,2007,20 - 24,799660,Female
+Brazil,2007,25 - 29,683734,Female
+Brazil,2007,30 - 34,431445,Female
+Brazil,2007,35 - 39,210688,Female
+Brazil,2007,40 - 44,56376,Female
+Brazil,2007,45 - 49,4142,Female
+Brazil,2007,50 +,470,Female
+Brazil,2007,Unknown - Inconnu,14487,Female
+Brazil,2008,0 - 14,23149,Female
+Brazil,2008,15 - 19,519605,Female
+Brazil,2008,20 - 24,795565,Female
+Brazil,2008,25 - 29,705505,Female
+Brazil,2008,30 - 34,456116,Female
+Brazil,2008,35 - 39,219274,Female
+Brazil,2008,40 - 44,57752,Female
+Brazil,2008,45 - 49,4146,Female
+Brazil,2008,50 +,336,Female
+Brazil,2008,Unknown - Inconnu,16594,Female
+Brazil,2009,0 - 14,22665,Female
+Brazil,2009,15 - 19,501547,Female
+Brazil,2009,20 - 24,780465,Female
+Brazil,2009,25 - 29,696349,Female
+Brazil,2009,30 - 34,464391,Female
+Brazil,2009,35 - 39,220875,Female
+Brazil,2009,40 - 44,57811,Female
+Brazil,2009,45 - 49,4106,Female
+Brazil,2009,50 +,318,Female
+Brazil,2009,Unknown - Inconnu,16115,Female
+Brazil,2011,0 - 14,21859,Female
+Brazil,2011,15 - 19,498365,Female
+Brazil,2011,20 - 24,753774,Female
+Brazil,2011,25 - 29,707369,Female
+Brazil,2011,30 - 34,515553,Female
+Brazil,2011,35 - 39,244665,Female
+Brazil,2011,40 - 44,60388,Female
+Brazil,2011,45 - 49,4052,Female
+Brazil,2011,50 +,287,Female
+Brazil,2011,Total,250643,Female
+Brazil,2012,0 - 14,22932,Female
+Brazil,2012,15 - 19,502149,Female
+Brazil,2012,20 - 24,736188,Female
+Brazil,2012,25 - 29,695726,Female
+Brazil,2012,30 - 34,537034,Female
+Brazil,2012,35 - 39,254011,Female
+Brazil,2012,40 - 44,62371,Female
+Brazil,2012,45 - 49,4056,Female
+Brazil,2012,50 +,362,Female
+Brazil,2012,Unknown - Inconnu,15629,Female
+Brazil,2013,0 - 14,22967,Female
+Brazil,2013,15 - 19,502255,Female
+Brazil,2013,20 - 24,716103,Female
+Brazil,2013,25 - 29,685617,Female
+Brazil,2013,30 - 34,550031,Female
+Brazil,2013,35 - 39,262344,Female
+Brazil,2013,40 - 44,63092,Female
+Brazil,2013,45 - 49,4055,Female
+Brazil,2013,50 +,344,Female
+Brazil,2013,Unknown - Inconnu,25782,Female
+Brazil,2014,0 - 14,24165,Female
+Brazil,2014,15 - 19,507928,Female
+Brazil,2014,20 - 24,725828,Female
+Brazil,2014,25 - 29,707038,Female
+Brazil,2014,30 - 34,573862,Female
+Brazil,2014,35 - 39,286000,Female
+Brazil,2014,40 - 44,67090,Female
+Brazil,2014,45 - 49,4248,Female
+Brazil,2014,50 +,417,Female
+Brazil,2014,Unknown - Inconnu,16545,Female
+Brazil,2015,0 - 14,23187,Female
+Brazil,2015,15 - 19,495973,Female
+Brazil,2015,20 - 24,733328,Female
+Brazil,2015,25 - 29,714459,Female
+Brazil,2015,30 - 34,591410,Female
+Brazil,2015,35 - 39,306517,Female
+Brazil,2015,40 - 44,70792,Female
+Brazil,2015,45 - 49,4408,Female
+Brazil,2015,50 +,390,Female
+Brazil,2015,Unknown - Inconnu,12505,Female
+Brazil,2016,0 - 14,20991,Female
+Brazil,2016,15 - 19,456140,Female
+Brazil,2016,20 - 24,704866,Female
+Brazil,2016,25 - 29,668741,Female
+Brazil,2016,30 - 34,561136,Female
+Brazil,2016,35 - 39,303329,Female
+Brazil,2016,40 - 44,71208,Female
+Brazil,2016,45 - 49,4265,Female
+Brazil,2016,50 +,343,Female
+Brazil,2016,Unknown - Inconnu,12061,Female
+Brazil,2017,10 - 14,19156,Female
+Brazil,2017,15 - 19,437603,Female
+Brazil,2017,20 - 24,715776,Female
+Brazil,2017,25 - 29,686420,Female
+Brazil,2017,30 - 34,586037,Female
+Brazil,2017,35 - 39,334720,Female
+Brazil,2017,40 - 44,77923,Female
+Brazil,2017,45 - 49,4525,Female
+Brazil,2017,50 +,364,Female
+Brazil,2017,Unknown - Inconnu,11942,Female
+Colombia,2003,15 - 19,151346,Female
+Colombia,2003,20 - 24,212458,Female
+Colombia,2003,25 - 29,154340,Female
+Colombia,2003,30 - 34,106235,Female
+Colombia,2003,35 - 39,57743,Female
+Colombia,2003,40 - 44,15561,Female
+Colombia,2003,45 - 49,1193,Female
+Colombia,2003,50+     ,93,Female
+Colombia,2003,Unk,6483,Female
+Colombia,2005,0 - 14,47,Female
+Colombia,2005,15 - 19,154478,Female
+Colombia,2005,20 - 24,215258,Female
+Colombia,2005,25 - 29,160539,Female
+Colombia,2005,30 - 34,102659,Female
+Colombia,2005,35 - 39,58426,Female
+Colombia,2005,40 - 44,16338,Female
+Colombia,2005,45 - 49,1271,Female
+Colombia,2005,50+,186,Female
+Colombia,2006,0 - 14,6479,Female
+Colombia,2006,15 - 19,156234,Female
+Colombia,2006,20 - 24,210548,Female
+Colombia,2006,25 - 29,161333,Female
+Colombia,2006,30 - 34,100219,Female
+Colombia,2006,35 - 39,56231,Female
+Colombia,2006,40 - 44,16001,Female
+Colombia,2006,45 - 49,1333,Female
+Colombia,2006,50 +,172,Female
+Colombia,2006,Unknown - Inconnu,2907,Female
+Colombia,2007,0 - 14,6381,Female
+Colombia,2007,15 - 19,153068,Female
+Colombia,2007,20 - 24,200891,Female
+Colombia,2007,25 - 29,156925,Female
+Colombia,2007,30 - 34,96035,Female
+Colombia,2007,35 - 39,53581,Female
+Colombia,2007,40 - 44,15194,Female
+Colombia,2007,45 - 49,1244,Female
+Colombia,2007,50 +,175,Female
+Colombia,2007,Unknown - Inconnu,2365,Female
+Colombia,2007,0 - 19,43157,Male
+Colombia,2007,20 - 24,161249,Male
+Colombia,2007,25 - 29,173790,Male
+Colombia,2007,30 - 34,124209,Male
+Colombia,2007,35 - 39,82320,Male
+Colombia,2007,40 - 44,44157,Male
+Colombia,2007,45 - 49,18815,Male
+Colombia,2007,50 - 54,7995,Male
+Colombia,2007,55 - 59,2744,Male
+Colombia,2007,60 - 64,1208,Male
+Colombia,2007,65 +,830,Male
+Colombia,2007,Unknown - Inconnu,25385,Male
+Colombia,2008,0 - 14,6796,Female
+Colombia,2008,15 - 19,157530,Female
+Colombia,2008,20 - 24,203222,Female
+Colombia,2008,25 - 29,160939,Female
+Colombia,2008,30 - 34,98413,Female
+Colombia,2008,35 - 39,53608,Female
+Colombia,2008,40 - 44,15223,Female
+Colombia,2008,45 - 49,1282,Female
+Colombia,2008,50 +,168,Female
+Colombia,2008,Unknown - Inconnu,5349,Female
+Colombia,2008,0 - 19,44326,Male
+Colombia,2008,20 - 24,163959,Male
+Colombia,2008,25 - 29,180765,Male
+Colombia,2008,30 - 34,127190,Male
+Colombia,2008,35 - 39,82968,Male
+Colombia,2008,40 - 44,44719,Male
+Colombia,2008,45 - 49,19026,Male
+Colombia,2008,50 - 54,8091,Male
+Colombia,2008,55 - 59,2783,Male
+Colombia,2008,60 - 64,1184,Male
+Colombia,2008,65 +,821,Male
+Colombia,2008,Unknown - Inconnu,26699,Male
+Colombia,2009,0 - 14,6706,Female
+Colombia,2009,15 - 19,154272,Female
+Colombia,2009,20 - 24,198693,Female
+Colombia,2009,25 - 29,156543,Female
+Colombia,2009,30 - 34,98792,Female
+Colombia,2009,35 - 39,51073,Female
+Colombia,2009,40 - 44,14714,Female
+Colombia,2009,45 - 49,1155,Female
+Colombia,2009,50 +,121,Female
+Colombia,2009,Unknown - Inconnu,3976,Female
+Colombia,2009,0 - 19,43460,Male
+Colombia,2009,20 - 24,159519,Male
+Colombia,2009,25 - 29,174324,Male
+Colombia,2009,30 - 34,126783,Male
+Colombia,2009,35 - 39,79977,Male
+Colombia,2009,40 - 44,42532,Male
+Colombia,2009,45 - 49,18530,Male
+Colombia,2009,50 - 54,7882,Male
+Colombia,2009,55 - 59,2645,Male
+Colombia,2009,60 - 64,1077,Male
+Colombia,2009,65 +,631,Male
+Colombia,2009,Unknown - Inconnu,28685,Male
+Colombia,2010,0 - 19,40842,Male
+Colombia,2010,20 - 24,152100,Male
+Colombia,2010,25 - 29,165232,Male
+Colombia,2010,30 - 34,126916,Male
+Colombia,2010,35 - 39,76083,Male
+Colombia,2010,40 - 44,40809,Male
+Colombia,2010,45 - 49,17448,Male
+Colombia,2010,50 - 54,7278,Male
+Colombia,2010,55 - 59,2473,Male
+Colombia,2010,60 - 64,1038,Male
+Colombia,2010,65 +,538,Male
+Colombia,2010,Unknown - Inconnu,23870,Male
+Colombia,2011,0 - 14,6291,Female
+Colombia,2011,10 - 14,5849,Female
+Colombia,2011,15 - 19,150195,Female
+Colombia,2011,20 - 24,191801,Female
+Colombia,2011,25 - 29,149275,Female
+Colombia,2011,30 - 34,101446,Female
+Colombia,2011,35 - 39,49526,Female
+Colombia,2011,40 - 44,14093,Female
+Colombia,2011,45 - 49,1129,Female
+Colombia,2011,50 +,157,Female
+Colombia,2011,Unknown - Inconnu,1586,Female
+Colombia,2011,0 - 19,42704,Male
+Colombia,2011,20 - 24,153586,Male
+Colombia,2011,25 - 29,166191,Male
+Colombia,2011,30 - 34,132998,Male
+Colombia,2011,35 - 39,78149,Male
+Colombia,2011,40 - 44,42015,Male
+Colombia,2011,45 - 49,17436,Male
+Colombia,2011,50 - 54,7396,Male
+Colombia,2011,55 - 59,2370,Male
+Colombia,2011,60 - 64,1001,Male
+Colombia,2011,65 +,441,Male
+Colombia,2011,Unknown - Inconnu,21212,Male
+Colombia,2012,0 - 14,6547,Female
+Colombia,2012,15 - 19,155890,Female
+Colombia,2012,20 - 24,197195,Female
+Colombia,2012,25 - 29,148483,Female
+Colombia,2012,30 - 34,103230,Female
+Colombia,2012,35 - 39,49285,Female
+Colombia,2012,40 - 44,13902,Female
+Colombia,2012,45 - 49,1124,Female
+Colombia,2012,50 +,158,Female
+Colombia,2012,Unknown - Inconnu,1021,Female
+Colombia,2012,0 - 19,45480,Male
+Colombia,2012,20 - 24,160092,Male
+Colombia,2012,25 - 29,166947,Male
+Colombia,2012,30 - 34,135349,Male
+Colombia,2012,35 - 39,78149,Male
+Colombia,2012,40 - 44,41088,Male
+Colombia,2012,45 - 49,17051,Male
+Colombia,2012,50 - 54,7251,Male
+Colombia,2012,55 - 59,2367,Male
+Colombia,2012,60 - 64,970,Male
+Colombia,2012,65 +,428,Male
+Colombia,2012,Unknown - Inconnu,21663,Male
+Colombia,2014,0 - 14,6593,Female
+Colombia,2014,15 - 19,144030,Female
+Colombia,2014,20 - 24,195473,Female
+Colombia,2014,25 - 29,150072,Female
+Colombia,2014,30 - 34,106118,Female
+Colombia,2014,35 - 39,52432,Female
+Colombia,2014,40 - 44,12988,Female
+Colombia,2014,45 - 49,1063,Female
+Colombia,2014,50 +,128,Female
+Colombia,2014,Unknown - Inconnu,234,Female
+Colombia,2014,0 - 19,43790,Male
+Colombia,2014,20 - 24,156289,Male
+Colombia,2014,25 - 29,166282,Male
+Colombia,2014,30 - 34,137163,Male
+Colombia,2014,35 - 39,80662,Male
+Colombia,2014,40 - 44,39995,Male
+Colombia,2014,45 - 49,16475,Male
+Colombia,2014,50 - 54,7150,Male
+Colombia,2014,55 - 59,2355,Male
+Colombia,2014,60 - 64,898,Male
+Colombia,2014,65 +,415,Male
+Colombia,2014,Unknown - Inconnu,17663,Male
+Colombia,2016,10 - 14,5551,Female
+Colombia,2016,15 - 19,130235,Female
+Colombia,2016,20 - 24,188578,Female
+Colombia,2016,25 - 29,151065,Female
+Colombia,2016,30 - 34,103968,Female
+Colombia,2016,35 - 39,53945,Female
+Colombia,2016,40 - 44,12849,Female
+Colombia,2016,45 - 49,1052,Female
+Colombia,2016,50 +,156,Female
+Colombia,2016,Unknown - Inconnu,122,Female
+Colombia,2016,0 - 19,39497,Male
+Colombia,2016,20 - 24,146571,Male
+Colombia,2016,25 - 29,162214,Male
+Colombia,2016,30 - 34,131977,Male
+Colombia,2016,35 - 39,82070,Male
+Colombia,2016,40 - 44,37761,Male
+Colombia,2016,45 - 49,15596,Male
+Colombia,2016,50 - 54,6859,Male
+Colombia,2016,55 - 59,2078,Male
+Colombia,2016,60 - 64,834,Male
+Colombia,2016,65 +,363,Male
+Colombia,2016,Unknown - Inconnu,21701,Male
+Colombia,2017,10 - 14,5883,Female
+Colombia,2017,15 - 19,128634,Female
+Colombia,2017,20 - 24,190092,Female
+Colombia,2017,25 - 29,154921,Female
+Colombia,2017,30 - 34,105381,Female
+Colombia,2017,35 - 39,57095,Female
+Colombia,2017,40 - 44,13444,Female
+Colombia,2017,45 - 49,1027,Female
+Colombia,2017,50 +,146,Female
+Colombia,2017,Unknown - Inconnu,81,Female
+Colombia,2017,0 - 19,39747,Male
+Colombia,2017,20 - 24,146434,Male
+Colombia,2017,25 - 29,164892,Male
+Colombia,2017,30 - 34,134505,Male
+Colombia,2017,35 - 39,85259,Male
+Colombia,2017,40 - 44,39602,Male
+Colombia,2017,45 - 49,16265,Male
+Colombia,2017,50 - 54,7147,Male
+Colombia,2017,55 - 59,2236,Male
+Colombia,2017,60 - 64,867,Male
+Colombia,2017,65 +,368,Male
+Colombia,2017,Unknown - Inconnu,19382,Male
+France,2004,15 - 19,15181,Female
+France,2004,20 - 24,108885,Female
+France,2004,25 - 29,240057,Female
+France,2004,30 - 34,257966,Female
+France,2004,35 - 39,117119,Female
+France,2004,40 - 44,27101,Female
+France,2004,45 - 49,1417,Female
+France,2004,50+     ,51,Female
+France,2004,Unk,-,Female
+France,2005,0 - 14,11,Female
+France,2005,15 - 19,14946,Female
+France,2005,20 - 24,107288,Female
+France,2005,25 - 29,242272,Female
+France,2005,30 - 34,257933,Female
+France,2005,35 - 39,121735,Female
+France,2005,40 - 44,28525,Female
+France,2005,45 - 49,1564,Female
+France,2005,50+,45,Female
+France,2006,0 - 14,49,Female
+France,2006,15 - 19,14577,Female
+France,2006,20 - 24,108803,Female
+France,2006,25 - 29,253052,Female
+France,2006,30 - 34,258924,Female
+France,2006,35 - 39,130047,Female
+France,2006,40 - 44,29867,Female
+France,2006,45 - 49,1500,Female
+France,2006,50 +,77,Female
+France,2006,Unknown - Inconnu,-,Female
+France,2007,12 - 14,93,Female
+France,2007,15 - 19,19630,Female
+France,2007,20 - 24,117285,Female
+France,2007,25 - 29,261454,Female
+France,2007,30 - 34,242449,Female
+France,2007,35 - 39,119070,Female
+France,2007,40 - 44,24834,Female
+France,2007,45 - 49,1113,Female
+France,2007,50 +,57,Female
+France,2007,Unknown - Inconnu,-,Female
+France,2007,0 - 19,3726,Male
+France,2007,20 - 24,53996,Male
+France,2007,25 - 29,180394,Male
+France,2007,30 - 34,257634,Male
+France,2007,35 - 39,178486,Male
+France,2007,40 - 44,74062,Male
+France,2007,45 - 49,24801,Male
+France,2007,50 - 54,8300,Male
+France,2007,55 - 59,3335,Male
+France,2007,60 - 64,1122,Male
+France,2007,65 +,129,Male
+France,2007,Unknown - Inconnu,-,Male
+France,2008,12 - 14,94,Female
+France,2008,15 - 19,19609,Female
+France,2008,20 - 24,119146,Female
+France,2008,25 - 29,264843,Female
+France,2008,30 - 34,241970,Female
+France,2008,35 - 39,123586,Female
+France,2008,40 - 44,25463,Female
+France,2008,45 - 49,1254,Female
+France,2008,50 +,79,Female
+France,2008,Total,677947,Female
+France,2008,Unknown - Inconnu,-,Female
+France,2008,0 - 19,3784,Male
+France,2008,20 - 24,55482,Male
+France,2008,25 - 29,182925,Male
+France,2008,30 - 34,256125,Male
+France,2008,35 - 39,183422,Male
+France,2008,40 - 44,75695,Male
+France,2008,45 - 49,25588,Male
+France,2008,50 - 54,8477,Male
+France,2008,55 - 59,3211,Male
+France,2008,60 - 64,1235,Male
+France,2008,65 +,100,Male
+France,2008,Unknown - Inconnu,-,Male
+France,2009,0 - 19,3852,Male
+France,2009,20 - 24,54701,Male
+France,2009,25 - 29,183121,Male
+France,2009,30 - 34,253449,Male
+France,2009,35 - 39,182243,Male
+France,2009,40 - 44,76509,Male
+France,2009,45 - 49,26336,Male
+France,2009,50 - 54,8759,Male
+France,2009,55 - 59,3135,Male
+France,2009,60 - 64,1201,Male
+France,2009,65 +,114,Male
+France,2009,Unknown - Inconnu,-,Male
+France,2010,0 - 19,3235,Male
+France,2010,20 - 24,52892,Male
+France,2010,25 - 29,183322,Male
+France,2010,30 - 34,260153,Male
+France,2010,35 - 39,183348,Male
+France,2010,40 - 44,78729,Male
+France,2010,45 - 49,27067,Male
+France,2010,50 - 54,8978,Male
+France,2010,55 - 59,3130,Male
+France,2010,60 - 64,1261,Male
+France,2010,65 +,109,Male
+France,2011,12 - 14,110,Female
+France,2011,15 - 19,17718,Female
+France,2011,20 - 24,114375,Female
+France,2011,25 - 29,258165,Female
+France,2011,30 - 34,250435,Female
+France,2011,35 - 39,122440,Female
+France,2011,40 - 44,28162,Female
+France,2011,45 - 49,1480,Female
+France,2011,50 +,111,Female
+France,2011,Total,662685,Female
+France,2012,12 - 14,147,Female
+France,2012,15 - 19,17512,Female
+France,2012,20 - 24,111364,Female
+France,2012,25 - 29,253800,Female
+France,2012,30 - 34,255606,Female
+France,2012,35 - 39,121563,Female
+France,2012,40 - 44,28620,Female
+France,2012,45 - 49,1557,Female
+France,2012,50 +,121,Female
+France,2012,Total,792137,Female
+France,2012,0 - 19,3133,Male
+France,2012,20 - 24,49144,Male
+France,2012,25 - 29,175114,Male
+France,2012,30 - 34,260412,Male
+France,2012,35 - 39,177241,Male
+France,2012,40 - 44,82312,Male
+France,2012,45 - 49,28813,Male
+France,2012,50 - 54,9435,Male
+France,2012,55 - 59,3303,Male
+France,2012,60 - 64,1244,Male
+France,2012,65 +,139,Male
+France,2013,0 - 19,2874,Male
+France,2013,20 - 24,45946,Male
+France,2013,25 - 29,173301,Male
+France,2013,30 - 34,256974,Male
+France,2013,35 - 39,176030,Male
+France,2013,40 - 44,83507,Male
+France,2013,45 - 49,28753,Male
+France,2013,50 - 54,9647,Male
+France,2013,55 - 59,3279,Male
+France,2013,60 - 64,1165,Male
+France,2013,65 +,145,Male
+France,2014,0 - 19,8869,Female
+France,2014,10 - 14,134,Female
+France,2014,15 - 19,15977,Female
+France,2014,20 - 24,103146,Female
+France,2014,25 - 29,255898,Female
+France,2014,30 - 34,267500,Female
+France,2014,35 - 39,128988,Female
+France,2014,40 - 44,32280,Female
+France,2014,45 - 49,2059,Female
+France,2014,50 +,119,Female
+France,2014,Total,719737,Female
+France,2014,0 - 19,2801,Male
+France,2014,20 - 24,43367,Male
+France,2014,25 - 29,169753,Male
+France,2014,30 - 34,257676,Male
+France,2014,35 - 39,177422,Male
+France,2014,40 - 44,85031,Male
+France,2014,45 - 49,30269,Male
+France,2014,50 - 54,10050,Male
+France,2014,55 - 59,3472,Male
+France,2014,60 - 64,1191,Male
+France,2014,65 +,135,Male
+France,2015,0 - 19,2592,Male
+France,2015,20 - 24,39085,Male
+France,2015,25 - 29,162844,Male
+France,2015,30 - 34,250049,Male
+France,2015,35 - 39,177749,Male
+France,2015,40 - 44,82700,Male
+France,2015,45 - 49,30145,Male
+France,2015,50 - 54,10348,Male
+France,2015,55 - 59,3521,Male
+France,2015,60 - 64,1248,Male
+France,2015,65 +,140,Male
+France,2016,0 - 19,2471,Male
+France,2016,20 - 24,36311,Male
+France,2016,25 - 29,155476,Male
+France,2016,30 - 34,244419,Male
+France,2016,35 - 39,178704,Male
+France,2016,40 - 44,81868,Male
+France,2016,45 - 49,30131,Male
+France,2016,50 - 54,10436,Male
+France,2016,55 - 59,3588,Male
+France,2016,60 - 64,1187,Male
+France,2016,65 +,106,Male
+France,2017,0 - 19,2343,Male
+France,2017,20 - 24,34195,Male
+France,2017,25 - 29,148087,Male
+France,2017,30 - 34,239631,Male
+France,2017,35 - 39,177992,Male
+France,2017,40 - 44,81022,Male
+France,2017,45 - 49,31338,Male
+France,2017,50 - 54,10741,Male
+France,2017,55 - 59,3555,Male
+France,2017,60 - 64,1201,Male
+France,2017,65 +,137,Male
+Germany,2003,15 - 19,26546,Female
+Germany,2003,20 - 24,120894,Female
+Germany,2003,25 - 29,198749,Female
+Germany,2003,30 - 34,224356,Female
+Germany,2003,35 - 39,116917,Female
+Germany,2003,40 - 44,18446,Female
+Germany,2003,45 - 49,614,Female
+Germany,2003,50+     ,17,Female
+Germany,2004,15 - 19,25268,Female
+Germany,2004,20 - 24,119173,Female
+Germany,2004,25 - 29,200631,Female
+Germany,2004,30 - 34,218196,Female
+Germany,2004,35 - 39,121454,Female
+Germany,2004,40 - 44,20031,Female
+Germany,2004,45 - 49,678,Female
+Germany,2004,50+     ,21,Female
+Germany,2006,0 - 14,141,Female
+Germany,2006,15 - 19,23626,Female
+Germany,2006,20 - 24,108190,Female
+Germany,2006,25 - 29,198538,Female
+Germany,2006,30 - 34,198712,Female
+Germany,2006,35 - 39,119465,Female
+Germany,2006,40 - 44,23195,Female
+Germany,2006,45 - 49,826,Female
+Germany,2006,50 +,31,Female
+Germany,2006,Total,375,Female
+Germany,2007,0 - 14,148,Female
+Germany,2007,15 - 19,22712,Female
+Germany,2007,20 - 24,104696,Female
+Germany,2007,25 - 29,203168,Female
+Germany,2007,30 - 34,204865,Female
+Germany,2007,35 - 39,123185,Female
+Germany,2007,40 - 44,24955,Female
+Germany,2007,45 - 49,936,Female
+Germany,2007,50 +,38,Female
+Germany,2007,Unknown - Inconnu,159,Female
+Germany,2007,0 - 19,3217,Male
+Germany,2007,20 - 24,40602,Male
+Germany,2007,25 - 29,126408,Male
+Germany,2007,30 - 34,184082,Male
+Germany,2007,35 - 39,167942,Male
+Germany,2007,40 - 44,76017,Male
+Germany,2007,45 - 49,20424,Male
+Germany,2007,50 - 54,5485,Male
+Germany,2007,55 - 59,1843,Male
+Germany,2007,60 - 64,635,Male
+Germany,2007,65 +,292,Male
+Germany,2007,Unknown - Inconnu,57915,Male
+Germany,2008,12 - 14,130,Female
+Germany,2008,15 - 19,21682,Female
+Germany,2008,20 - 24,100708,Female
+Germany,2008,25 - 29,202342,Female
+Germany,2008,30 - 34,208617,Female
+Germany,2008,35 - 39,121095,Female
+Germany,2008,40 - 44,26721,Female
+Germany,2008,45 - 49,1040,Female
+Germany,2008,50 +,30,Female
+Germany,2008,Total,665126,Female
+Germany,2008,Unknown - Inconnu,149,Female
+Germany,2010,15 - 19,18401,Female
+Germany,2010,20 - 24,94431,Female
+Germany,2010,25 - 29,198199,Female
+Germany,2010,30 - 34,219937,Female
+Germany,2010,35 - 39,117601,Female
+Germany,2010,40 - 44,27552,Female
+Germany,2010,45 - 49,1232,Female
+Germany,2010,50 +,65,Female
+Germany,2010,Total,375,Female
+Germany,2010,Unknown - Inconnu,418,Female
+Germany,2011,15 - 19,16436,Female
+Germany,2011,20 - 24,88708,Female
+Germany,2011,25 - 29,190893,Female
+Germany,2011,30 - 34,222109,Female
+Germany,2011,35 - 39,115555,Female
+Germany,2011,40 - 44,27097,Female
+Germany,2011,45 - 49,1251,Female
+Germany,2011,50 +,81,Female
+Germany,2011,Total,106428,Female
+Germany,2011,Unknown - Inconnu,438,Female
+Germany,2011,0 - 19,2543,Male
+Germany,2011,20 - 24,36505,Male
+Germany,2011,25 - 29,117313,Male
+Germany,2011,30 - 34,191733,Male
+Germany,2011,35 - 39,151290,Male
+Germany,2011,40 - 44,80830,Male
+Germany,2011,45 - 49,25727,Male
+Germany,2011,50 - 54,6651,Male
+Germany,2011,55 - 59,1829,Male
+Germany,2011,60 - 64,597,Male
+Germany,2011,65 +,273,Male
+Germany,2011,Unknown - Inconnu,47394,Male
+Germany,2012,15 - 19,15791,Female
+Germany,2012,20 - 24,86862,Female
+Germany,2012,25 - 29,192393,Female
+Germany,2012,30 - 34,230928,Female
+Germany,2012,35 - 39,118594,Female
+Germany,2012,40 - 44,26959,Female
+Germany,2012,45 - 49,1386,Female
+Germany,2012,50 +,79,Female
+Germany,2012,Total,444,Female
+Germany,2012,Unknown - Inconnu,438,Female
+Germany,2012,0 - 19,2502,Male
+Germany,2012,20 - 24,36108,Male
+Germany,2012,25 - 29,118462,Male
+Germany,2012,30 - 34,198834,Male
+Germany,2012,35 - 39,152544,Male
+Germany,2012,40 - 44,80790,Male
+Germany,2012,45 - 49,27049,Male
+Germany,2012,50 - 54,6964,Male
+Germany,2012,55 - 59,1904,Male
+Germany,2012,60 - 64,621,Male
+Germany,2012,65 +,297,Male
+Germany,2012,Unknown - Inconnu,47469,Male
+Germany,2013,0 - 14,105,Female
+Germany,2013,15 - 19,15247,Female
+Germany,2013,20 - 24,82504,Female
+Germany,2013,25 - 29,192962,Female
+Germany,2013,30 - 34,238521,Female
+Germany,2013,35 - 39,124065,Female
+Germany,2013,40 - 44,26641,Female
+Germany,2013,45 - 49,1417,Female
+Germany,2013,50 +,87,Female
+Germany,2013,Unknown - Inconnu,520,Female
+Germany,2013,0 - 19,2310,Male
+Germany,2013,20 - 24,34137,Male
+Germany,2013,25 - 29,119349,Male
+Germany,2013,30 - 34,203946,Male
+Germany,2013,35 - 39,157907,Male
+Germany,2013,40 - 44,79327,Male
+Germany,2013,45 - 49,28094,Male
+Germany,2013,50 - 54,7447,Male
+Germany,2013,55 - 59,1942,Male
+Germany,2013,60 - 64,594,Male
+Germany,2013,65 +,276,Male
+Germany,2013,Unknown - Inconnu,46740,Male
+Germany,2014,0 - 14,135,Female
+Germany,2014,15 - 19,15332,Female
+Germany,2014,20 - 24,80364,Female
+Germany,2014,25 - 29,202696,Female
+Germany,2014,30 - 34,253567,Female
+Germany,2014,35 - 39,133254,Female
+Germany,2014,40 - 44,27484,Female
+Germany,2014,45 - 49,1483,Female
+Germany,2014,50 +,91,Female
+Germany,2014,Unknown - Inconnu,521,Female
+Germany,2014,0 - 19,2385,Male
+Germany,2014,20 - 24,33336,Male
+Germany,2014,25 - 29,125929,Male
+Germany,2014,30 - 34,216319,Male
+Germany,2014,35 - 39,168301,Male
+Germany,2014,40 - 44,80513,Male
+Germany,2014,45 - 49,29841,Male
+Germany,2014,50 - 54,8266,Male
+Germany,2014,55 - 59,2155,Male
+Germany,2014,60 - 64,646,Male
+Germany,2014,65 +,278,Male
+Germany,2014,Unknown - Inconnu,46958,Male
+Germany,2015,0 - 14,145,Female
+Germany,2015,15 - 19,15567,Female
+Germany,2015,20 - 24,79073,Female
+Germany,2015,25 - 29,210172,Female
+Germany,2015,30 - 34,261520,Female
+Germany,2015,35 - 39,140931,Female
+Germany,2015,40 - 44,27740,Female
+Germany,2015,45 - 49,1580,Female
+Germany,2015,50 +,114,Female
+Germany,2015,Unknown - Inconnu,733,Female
+Germany,2015,0 - 19,2243,Male
+Germany,2015,20 - 24,32100,Male
+Germany,2015,25 - 29,131482,Male
+Germany,2015,30 - 34,225083,Male
+Germany,2015,35 - 39,175580,Male
+Germany,2015,40 - 44,80879,Male
+Germany,2015,45 - 49,30309,Male
+Germany,2015,50 - 54,8600,Male
+Germany,2015,55 - 59,2256,Male
+Germany,2015,60 - 64,625,Male
+Germany,2015,65 +,303,Male
+Germany,2015,Unknown - Inconnu,48115,Male
+Germany,2016,0 - 14,170,Female
+Germany,2016,15 - 19,18334,Female
+Germany,2016,20 - 24,85571,Female
+Germany,2016,25 - 29,224557,Female
+Germany,2016,30 - 34,276999,Female
+Germany,2016,35 - 39,153719,Female
+Germany,2016,40 - 44,29517,Female
+Germany,2016,45 - 49,1712,Female
+Germany,2016,50 +,153,Female
+Germany,2016,Unknown - Inconnu,1405,Female
+Germany,2017,0 - 14,123,Female
+Germany,2017,15 - 19,15807,Female
+Germany,2017,20 - 24,80159,Female
+Germany,2017,25 - 29,219119,Female
+Germany,2017,30 - 34,279884,Female
+Germany,2017,35 - 39,157100,Female
+Germany,2017,40 - 44,30282,Female
+Germany,2017,45 - 49,1694,Female
+Germany,2017,50 +,147,Female
+Germany,2017,Unknown - Inconnu,586,Female
+Iran,2006,0 - 14,1706,Female
+Iran,2006,15 - 19,77246,Female
+Iran,2006,20 - 24,28966,Female
+Iran,2006,25 - 29,290575,Female
+Iran,2006,30 - 34,180284,Female
+Iran,2006,35 - 39,84634,Female
+Iran,2006,40 - 44,21436,Female
+Iran,2006,45 - 49,4185,Female
+Iran,2006,50 +,1331,Female
+Iran,2006,Total,166296,Female
+Iran,2012,0 - 14,1646,Female
+Iran,2012,15 - 19,109179,Female
+Iran,2012,20 - 24,357074,Female
+Iran,2012,25 - 29,444741,Female
+Iran,2012,30 - 34,300818,Female
+Iran,2012,35 - 39,125308,Female
+Iran,2012,40 - 44,27274,Female
+Iran,2012,45 - 49,1862,Female
+Iran,2012,50 +,406,Female
+Iran,2012,Unknown - Inconnu,7095,Female
+Iran,2013,0 - 14,1727,Female
+Iran,2013,15 - 19,107585,Female
+Iran,2013,20 - 24,357480,Female
+Iran,2013,25 - 29,460586,Female
+Iran,2013,30 - 34,325359,Female
+Iran,2013,35 - 39,137551,Female
+Iran,2013,40 - 44,29822,Female
+Iran,2013,45 - 49,2110,Female
+Iran,2013,50 +,386,Female
+Iran,2013,Unknown - Inconnu,8072,Female
+Iran,2014,0 - 14,1713,Female
+Iran,2014,15 - 19,102549,Female
+Iran,2014,20 - 24,345564,Female
+Iran,2014,25 - 29,474159,Female
+Iran,2014,30 - 34,363457,Female
+Iran,2014,35 - 39,159905,Female
+Iran,2014,40 - 44,34361,Female
+Iran,2014,45 - 49,2541,Female
+Iran,2014,50 +,264,Female
+Iran,2014,Unknown - Inconnu,8804,Female
+Iran,2016,10 - 14,1556,Female
+Iran,2016,15 - 19,90717,Female
+Iran,2016,20 - 24,301501,Female
+Iran,2016,25 - 29,454131,Female
+Iran,2016,30 - 34,394421,Female
+Iran,2016,35 - 39,191232,Female
+Iran,2016,40 - 44,42307,Female
+Iran,2016,45 - 49,3080,Female
+Iran,2016,50 +,284,Female
+Iran,2016,Unknown - Inconnu,8644,Female
+Iran,2017,10 - 14,1534,Female
+Iran,2017,15 - 19,88361,Female
+Iran,2017,20 - 24,284754,Female
+Iran,2017,25 - 29,429377,Female
+Iran,2017,30 - 34,391739,Female
+Iran,2017,35 - 39,197447,Female
+Iran,2017,40 - 44,44506,Female
+Iran,2017,45 - 49,3195,Female
+Iran,2017,50 +,315,Female
+Iran,2017,Unknown - Inconnu,9043,Female
+Italy,2003,15 - 19,9256,Female
+Italy,2003,20 - 24,50038,Female
+Italy,2003,25 - 29,142457,Female
+Italy,2003,30 - 34,194404,Female
+Italy,2003,35 - 39,108181,Female
+Italy,2003,40 - 44,19519,Female
+Italy,2003,45 - 49,810,Female
+Italy,2003,50 - 50,73,Female
+Italy,2003,50+     ,75,Female
+Italy,2003,Unk,6531,Female
+Italy,2004,0 - 14,168,Female
+Italy,2004,15 - 19,9730,Female
+Italy,2004,20 - 24,52429,Female
+Italy,2004,25 - 29,143476,Female
+Italy,2004,30 - 34,202272,Female
+Italy,2004,35 - 39,115961,Female
+Italy,2004,40 - 44,21898,Female
+Italy,2004,45 - 49,819,Female
+Italy,2004,50+,95,Female
+Italy,2005,0 - 14,3,Female
+Italy,2005,15 - 19,9416,Female
+Italy,2005,20 - 24,50715,Female
+Italy,2005,25 - 29,135713,Female
+Italy,2005,30 - 34,198611,Female
+Italy,2005,35 - 39,117659,Female
+Italy,2005,40 - 44,23874,Female
+Italy,2005,45 - 49,880,Female
+Italy,2005,50 +,113,Female
+Italy,2005,Unknown - Inconnu,7046,Female
+Italy,2006,0 - 19,1743.8841597844,Male
+Italy,2006,20 - 24,16888.995632396702,Male
+Italy,2006,25 - 29,72846.474614098406,Male
+Italy,2006,30 - 34,175526.65799546801,Male
+Italy,2006,35 - 39,164481.04384088199,Male
+Italy,2006,40 - 44,73108.209409458694,Male
+Italy,2006,45 - 49,18642.010075740101,Male
+Italy,2006,50 +,5896.1342272639004,Male
+Italy,2006,Total,23273,Male
+Italy,2006,Unknown - Inconnu,30876.590044907902,Male
+Italy,2007,0 - 19,1798,Male
+Italy,2007,20 - 24,16978,Male
+Italy,2007,25 - 29,70824,Male
+Italy,2007,30 - 34,171311,Male
+Italy,2007,35 - 39,166751,Male
+Italy,2007,40 - 44,75930,Male
+Italy,2007,45 - 49,20282,Male
+Italy,2007,50 - 54,4793,Male
+Italy,2007,55 - 59,1292,Male
+Italy,2007,60 - 64,44,Male
+Italy,2007,65 +,-,Male
+Italy,2007,Unknown - Inconnu,33930,Male
+Italy,2008,0 - 19,1855,Male
+Italy,2008,20 - 24,17582,Male
+Italy,2008,25 - 29,70376,Male
+Italy,2008,30 - 34,169196,Male
+Italy,2008,35 - 39,169672,Male
+Italy,2008,40 - 44,79531,Male
+Italy,2008,45 - 49,21421,Male
+Italy,2008,50 - 54,5121,Male
+Italy,2008,55 - 59,1067,Male
+Italy,2008,60 - 64,-,Male
+Italy,2008,65 +,-,Male
+Italy,2008,Unknown - Inconnu,40838,Male
+Italy,2009,0 - 19,1811,Male
+Italy,2009,20 - 24,17319,Male
+Italy,2009,25 - 29,67830,Male
+Italy,2009,30 - 34,161005,Male
+Italy,2009,35 - 39,167172,Male
+Italy,2009,40 - 44,79712,Male
+Italy,2009,45 - 49,22579,Male
+Italy,2009,50 - 54,5372,Male
+Italy,2009,55 - 59,1514,Male
+Italy,2009,60 - 64,71,Male
+Italy,2009,65 +,-,Male
+Italy,2009,Unknown - Inconnu,44472,Male
+Italy,2010,0 - 19,1792,Male
+Italy,2010,20 - 24,16945,Male
+Italy,2010,25 - 29,65671,Male
+Italy,2010,30 - 34,154329,Male
+Italy,2010,35 - 39,166658,Male
+Italy,2010,40 - 44,81055,Male
+Italy,2010,45 - 49,23794,Male
+Italy,2010,50 - 54,5621,Male
+Italy,2010,55 - 59,1414,Male
+Italy,2010,60 - 64,64,Male
+Italy,2010,65 +,-,Male
+Italy,2010,Unknown - Inconnu,44601,Male
+Italy,2011,12 - 14,26,Female
+Italy,2011,15 - 19,8975,Female
+Italy,2011,20 - 24,50822,Female
+Italy,2011,25 - 29,121658,Female
+Italy,2011,30 - 34,185076,Female
+Italy,2011,35 - 39,142223,Female
+Italy,2011,40 - 44,35267,Female
+Italy,2011,45 - 49,2349,Female
+Italy,2011,50 +,211,Female
+Italy,2011,Total,1031,Female
+Italy,2011,0 - 19,1756,Male
+Italy,2011,20 - 24,16927,Male
+Italy,2011,25 - 29,63518,Male
+Italy,2011,30 - 34,145649,Male
+Italy,2011,35 - 39,161319,Male
+Italy,2011,40 - 44,80387,Male
+Italy,2011,45 - 49,24792,Male
+Italy,2011,50 - 54,5930,Male
+Italy,2011,55 - 59,1529,Male
+Italy,2011,60 - 64,79,Male
+Italy,2011,65 +,-,Male
+Italy,2011,Unknown - Inconnu,44721,Male
+Italy,2012,0 - 14,-,Female
+Italy,2012,15 - 19,8781,Female
+Italy,2012,20 - 24,50355,Female
+Italy,2012,25 - 29,119222,Female
+Italy,2012,30 - 34,178723,Female
+Italy,2012,35 - 39,138037,Female
+Italy,2012,40 - 44,36217,Female
+Italy,2012,45 - 49,2570,Female
+Italy,2012,50 +,264,Female
+Italy,2012,Total,1031,Female
+Italy,2013,0 - 14,14,Female
+Italy,2013,15 - 19,8071,Female
+Italy,2013,20 - 24,47669,Female
+Italy,2013,25 - 29,114955,Female
+Italy,2013,30 - 34,171151,Female
+Italy,2013,35 - 39,132613,Female
+Italy,2013,40 - 44,36852,Female
+Italy,2013,45 - 49,2703,Female
+Italy,2013,50 +,280,Female
+Italy,2013,Total,1031,Female
+Italy,2013,0 - 19,1588,Male
+Italy,2013,20 - 24,16076,Male
+Italy,2013,25 - 29,59852,Male
+Italy,2013,30 - 34,133899,Male
+Italy,2013,35 - 39,147179,Male
+Italy,2013,40 - 44,79236,Male
+Italy,2013,45 - 49,24840,Male
+Italy,2013,50 - 54,6247,Male
+Italy,2013,55 - 59,1633,Male
+Italy,2013,60 - 64,453,Male
+Italy,2013,65 +,160,Male
+Italy,2013,Unknown - Inconnu,43145,Male
+Italy,2014,0 - 19,1502,Male
+Italy,2014,20 - 24,15330,Male
+Italy,2014,25 - 29,58384,Male
+Italy,2014,30 - 34,130273,Male
+Italy,2014,35 - 39,142109,Male
+Italy,2014,40 - 44,77976,Male
+Italy,2014,45 - 49,24823,Male
+Italy,2014,50 - 54,6523,Male
+Italy,2014,55 - 59,1708,Male
+Italy,2014,60 - 64,497,Male
+Italy,2014,65 +,217,Male
+Italy,2014,Unknown - Inconnu,43254,Male
+Italy,2015,0 - 14,13,Female
+Italy,2015,15 - 19,7121,Female
+Italy,2015,20 - 24,42839,Female
+Italy,2015,25 - 29,108772,Female
+Italy,2015,30 - 34,163117,Female
+Italy,2015,35 - 39,123689,Female
+Italy,2015,40 - 44,37073,Female
+Italy,2015,45 - 49,2869,Female
+Italy,2015,50 +,287,Female
+Italy,2015,Unknown - Inconnu,-,Female
+Italy,2016,0 - 14,11,Female
+Italy,2016,15 - 19,6739,Female
+Italy,2016,20 - 24,40600,Female
+Italy,2016,25 - 29,105946,Female
+Italy,2016,30 - 34,159891,Female
+Italy,2016,35 - 39,119743,Female
+Italy,2016,40 - 44,37024,Female
+Italy,2016,45 - 49,3152,Female
+Italy,2016,50 +,332,Female
+Italy,2016,Total,21968,Female
+Italy,2016,0 - 19,1295,Male
+Italy,2016,20 - 24,13464,Male
+Italy,2016,25 - 29,54874,Male
+Italy,2016,30 - 34,121882,Male
+Italy,2016,35 - 39,131227,Male
+Italy,2016,40 - 44,76886,Male
+Italy,2016,45 - 49,25225,Male
+Italy,2016,50 - 54,6915,Male
+Italy,2016,55 - 59,1777,Male
+Italy,2016,60 - 64,445,Male
+Italy,2016,65 +,204,Male
+Italy,2016,Unknown - Inconnu,39244,Male
+Italy,2017,0 - 14,6,Female
+Italy,2017,15 - 19,6045,Female
+Italy,2017,20 - 24,38179,Female
+Italy,2017,25 - 29,103110,Female
+Italy,2017,30 - 34,153618,Female
+Italy,2017,35 - 39,116945,Female
+Italy,2017,40 - 44,36474,Female
+Italy,2017,45 - 49,3410,Female
+Italy,2017,50 +,364,Female
+Italy,2017,Total,20828,Female
+Italy,2017,0 - 19,1168,Male
+Italy,2017,20 - 24,12614,Male
+Italy,2017,25 - 29,54021,Male
+Italy,2017,30 - 34,118352,Male
+Italy,2017,35 - 39,127129,Male
+Italy,2017,40 - 44,75344,Male
+Italy,2017,45 - 49,25445,Male
+Italy,2017,50 - 54,7139,Male
+Italy,2017,55 - 59,1872,Male
+Italy,2017,60 - 64,547,Male
+Italy,2017,65 +,235,Male
+Italy,2017,Unknown - Inconnu,34285,Male
+Kenya,2009,0 - 14,3877,Female
+Kenya,2009,15 - 19,89664,Female
+Kenya,2009,20 - 24,221828,Female
+Kenya,2009,25 - 29,174571,Female
+Kenya,2009,30 - 34,103940,Female
+Kenya,2009,35 - 39,49527,Female
+Kenya,2009,40 - 44,13231,Female
+Kenya,2009,45 - 49,2165,Female
+Kenya,2009,50 +,823,Female
+Kenya,2009,Total,1148352,Female
+Kenya,2009,Unknown - Inconnu,31686,Female
+Mexico,2003,15 - 19,403436,Female
+Mexico,2003,20 - 24,737283,Female
+Mexico,2003,25 - 29,641611,Female
+Mexico,2003,30 - 34,414762,Female
+Mexico,2003,35 - 39,187927,Female
+Mexico,2003,40 - 44,51731,Female
+Mexico,2003,45 - 49,6718,Female
+Mexico,2003,50+     ,2056,Female
+Mexico,2003,Unk,200437,Female
+Mexico,2005,0 - 14,5977,Female
+Mexico,2005,15 - 19,349273,Female
+Mexico,2005,20 - 24,637184,Female
+Mexico,2005,25 - 29,553779,Female
+Mexico,2005,30 - 34,376779,Female
+Mexico,2005,35 - 39,163801,Female
+Mexico,2005,40 - 44,39789,Female
+Mexico,2005,45 - 49,3977,Female
+Mexico,2005,50 +,868,Female
+Mexico,2005,Unknown - Inconnu,9656,Female
+Mexico,2005,0 - 19,119886,Male
+Mexico,2005,20 - 24,465158,Male
+Mexico,2005,25 - 29,531717,Male
+Mexico,2005,30 - 34,432785,Male
+Mexico,2005,35 - 39,233644,Male
+Mexico,2005,40 - 44,104465,Male
+Mexico,2005,45 - 49,42335,Male
+Mexico,2005,50 +,29404,Male
+Mexico,2005,Total,67364,Male
+Mexico,2005,Unknown - Inconnu,181689,Male
+Mexico,2006,0 - 14,6342,Female
+Mexico,2006,15 - 19,350838,Female
+Mexico,2006,20 - 24,641028,Female
+Mexico,2006,25 - 29,551825,Female
+Mexico,2006,30 - 34,379499,Female
+Mexico,2006,35 - 39,167335,Female
+Mexico,2006,40 - 44,40544,Female
+Mexico,2006,45 - 49,3827,Female
+Mexico,2006,50 +,954,Female
+Mexico,2006,Total,2185888,Female
+Mexico,2006,Unknown - Inconnu,9012,Female
+Mexico,2006,0 - 19,120550,Male
+Mexico,2006,20 - 24,466280,Male
+Mexico,2006,25 - 29,526918,Male
+Mexico,2006,30 - 34,433030,Male
+Mexico,2006,35 - 39,238858,Male
+Mexico,2006,40 - 44,106166,Male
+Mexico,2006,45 - 49,42502,Male
+Mexico,2006,50 +,30568,Male
+Mexico,2006,Total,68364,Male
+Mexico,2006,Unknown - Inconnu,186332,Male
+Mexico,2008,0 - 14,7605,Female
+Mexico,2008,15 - 19,393997,Female
+Mexico,2008,20 - 24,661880,Female
+Mexico,2008,25 - 29,562179,Female
+Mexico,2008,30 - 34,384782,Female
+Mexico,2008,35 - 39,178710,Female
+Mexico,2008,40 - 44,40499,Female
+Mexico,2008,45 - 49,3482,Female
+Mexico,2008,50 +,739,Female
+Mexico,2008,Total,2031806,Female
+Mexico,2008,Unknown - Inconnu,9272,Female
+Mexico,2008,0 - 19,135119,Male
+Mexico,2008,20 - 24,485582,Male
+Mexico,2008,25 - 29,540616,Male
+Mexico,2008,30 - 34,440879,Male
+Mexico,2008,35 - 39,256410,Male
+Mexico,2008,40 - 44,111200,Male
+Mexico,2008,45 - 49,44133,Male
+Mexico,2008,50 - 54,17287,Male
+Mexico,2008,55 - 59,11067,Male
+Mexico,2008,60 - 64,1123,Male
+Mexico,2008,65 +,753,Male
+Mexico,2008,Unknown - Inconnu,198976,Male
+Mexico,2009,0 - 14,8105,Female
+Mexico,2009,15 - 19,409097,Female
+Mexico,2009,20 - 24,661928,Female
+Mexico,2009,25 - 29,556810,Female
+Mexico,2009,30 - 34,377652,Female
+Mexico,2009,35 - 39,180761,Female
+Mexico,2009,40 - 44,41018,Female
+Mexico,2009,45 - 49,3515,Female
+Mexico,2009,50 +,671,Female
+Mexico,2009,Total,2031806,Female
+Mexico,2009,Unknown - Inconnu,13229,Female
+Mexico,2009,0 - 19,149066,Male
+Mexico,2009,20 - 24,496403,Male
+Mexico,2009,25 - 29,537328,Male
+Mexico,2009,30 - 34,429165,Male
+Mexico,2009,35 - 39,257373,Male
+Mexico,2009,40 - 44,109838,Male
+Mexico,2009,45 - 49,43537,Male
+Mexico,2009,50 - 54,16979,Male
+Mexico,2009,55 - 59,6812,Male
+Mexico,2009,60 - 64,2745,Male
+Mexico,2009,65 +,2006,Male
+Mexico,2009,Unknown - Inconnu,201534,Male
+Mexico,2010,0 - 19,141023,Male
+Mexico,2010,20 - 24,478875,Male
+Mexico,2010,25 - 29,522345,Male
+Mexico,2010,30 - 34,414879,Male
+Mexico,2010,35 - 39,251708,Male
+Mexico,2010,40 - 44,107405,Male
+Mexico,2010,45 - 49,41605,Male
+Mexico,2010,50 - 54,15848,Male
+Mexico,2010,55 - 59,6448,Male
+Mexico,2010,60 - 64,2638,Male
+Mexico,2010,65 +,1778,Male
+Mexico,2010,Unknown - Inconnu,184400,Male
+Mexico,2011,0 - 14,7681,Female
+Mexico,2011,15 - 19,418189,Female
+Mexico,2011,20 - 24,669685,Female
+Mexico,2011,25 - 29,554846,Female
+Mexico,2011,30 - 34,371381,Female
+Mexico,2011,35 - 39,185635,Female
+Mexico,2011,40 - 44,40638,Female
+Mexico,2011,45 - 49,3054,Female
+Mexico,2011,50 +,799,Female
+Mexico,2011,Unknown - Inconnu,10116,Female
+Mexico,2011,0 - 19,149890,Male
+Mexico,2011,20 - 24,501228,Male
+Mexico,2011,25 - 29,535713,Male
+Mexico,2011,30 - 34,417041,Male
+Mexico,2011,35 - 39,255125,Male
+Mexico,2011,40 - 44,111471,Male
+Mexico,2011,45 - 49,44389,Male
+Mexico,2011,50 - 54,16394,Male
+Mexico,2011,55 - 59,6688,Male
+Mexico,2011,60 - 64,2776,Male
+Mexico,2011,65 +,1779,Male
+Mexico,2011,Unknown - Inconnu,219530,Male
+Mexico,2013,0 - 14,7601,Female
+Mexico,2013,15 - 19,399650,Female
+Mexico,2013,20 - 24,658259,Female
+Mexico,2013,25 - 29,527565,Female
+Mexico,2013,30 - 34,354986,Female
+Mexico,2013,35 - 39,171557,Female
+Mexico,2013,40 - 44,40829,Female
+Mexico,2013,45 - 49,2672,Female
+Mexico,2013,50 +,389,Female
+Mexico,2013,Unknown - Inconnu,5425,Female
+Mexico,2013,0 - 19,148020,Male
+Mexico,2013,20 - 24,496963,Male
+Mexico,2013,25 - 29,509840,Male
+Mexico,2013,30 - 34,403658,Male
+Mexico,2013,35 - 39,243427,Male
+Mexico,2013,40 - 44,109685,Male
+Mexico,2013,45 - 49,40290,Male
+Mexico,2013,50 - 54,15970,Male
+Mexico,2013,55 - 59,6432,Male
+Mexico,2013,60 - 64,2533,Male
+Mexico,2013,65 +,1723,Male
+Mexico,2013,Unknown - Inconnu,190392,Male
+Mexico,2014,0 - 14,7556,Female
+Mexico,2014,15 - 19,382482,Female
+Mexico,2014,20 - 24,647521,Female
+Mexico,2014,25 - 29,519092,Female
+Mexico,2014,30 - 34,353534,Female
+Mexico,2014,35 - 39,170471,Female
+Mexico,2014,40 - 44,41257,Female
+Mexico,2014,45 - 49,2642,Female
+Mexico,2014,50 +,360,Female
+Mexico,2014,Unknown - Inconnu,4910,Female
+Mexico,2014,0 - 19,141220,Male
+Mexico,2014,20 - 24,488851,Male
+Mexico,2014,25 - 29,497795,Male
+Mexico,2014,30 - 34,398917,Male
+Mexico,2014,35 - 39,239390,Male
+Mexico,2014,40 - 44,110900,Male
+Mexico,2014,45 - 49,39944,Male
+Mexico,2014,50 - 54,15649,Male
+Mexico,2014,55 - 59,6289,Male
+Mexico,2014,60 - 64,2583,Male
+Mexico,2014,65 +,1589,Male
+Mexico,2014,Unknown - Inconnu,186698,Male
+Mexico,2015,10 - 14,7204,Female
+Mexico,2015,15 - 19,360457,Female
+Mexico,2015,20 - 24,635796,Female
+Mexico,2015,25 - 29,520558,Female
+Mexico,2015,30 - 34,352681,Female
+Mexico,2015,35 - 39,169705,Female
+Mexico,2015,40 - 44,41512,Female
+Mexico,2015,45 - 49,2723,Female
+Mexico,2015,50 +,450,Female
+Mexico,2015,Unknown - Inconnu,5188,Female
+Mexico,2015,0 - 19,131021,Male
+Mexico,2015,20 - 24,476794,Male
+Mexico,2015,25 - 29,494282,Male
+Mexico,2015,30 - 34,396268,Male
+Mexico,2015,35 - 39,237323,Male
+Mexico,2015,40 - 44,111077,Male
+Mexico,2015,45 - 49,40417,Male
+Mexico,2015,50 - 54,15730,Male
+Mexico,2015,55 - 59,6577,Male
+Mexico,2015,60 - 64,2558,Male
+Mexico,2015,65 +,1554,Male
+Mexico,2015,Unknown - Inconnu,182673,Male
+Mexico,2016,10 - 14,6531,Female
+Mexico,2016,15 - 19,341688,Female
+Mexico,2016,20 - 24,606757,Female
+Mexico,2016,25 - 29,510603,Female
+Mexico,2016,30 - 34,347242,Female
+Mexico,2016,35 - 39,167475,Female
+Mexico,2016,40 - 44,40787,Female
+Mexico,2016,45 - 49,2831,Female
+Mexico,2016,50 +,278,Female
+Mexico,2016,Unknown - Inconnu,4166,Female
+Mexico,2016,0 - 19,123479,Male
+Mexico,2016,20 - 24,453316,Male
+Mexico,2016,25 - 29,482689,Male
+Mexico,2016,30 - 34,386151,Male
+Mexico,2016,35 - 39,231847,Male
+Mexico,2016,40 - 44,108479,Male
+Mexico,2016,45 - 49,40033,Male
+Mexico,2016,50 - 54,15321,Male
+Mexico,2016,55 - 59,6294,Male
+Mexico,2016,60 - 64,2493,Male
+Mexico,2016,65 +,1435,Male
+Mexico,2016,Unknown - Inconnu,176821,Male
+Nigeria,2007,0 - 14,2528,Female
+Nigeria,2007,15 - 19,129716,Female
+Nigeria,2007,20 - 24,471036,Female
+Nigeria,2007,25 - 29,588454,Female
+Nigeria,2007,30 - 34,377593,Female
+Nigeria,2007,35 - 39,172081,Female
+Nigeria,2007,40 - 44,49519,Female
+Nigeria,2007,45 - 49,13411,Female
+Nigeria,2007,50 +,2687,Female
+Nigeria,2007,Total,14808,Female
+Philippines,2005,0 - 19,30260,Male
+Philippines,2005,20 - 24,289106,Male
+Philippines,2005,25 - 29,447676,Male
+Philippines,2005,30 - 34,367207,Male
+Philippines,2005,35 - 39,245765,Male
+Philippines,2005,40 - 44,128007,Male
+Philippines,2005,45 - 49,51542,Male
+Philippines,2005,50 - 54,15967,Male
+Philippines,2005,55 - 59,5658,Male
+Philippines,2005,60 - 64,1950,Male
+Philippines,2005,65 +,1553,Male
+Philippines,2005,Unknown - Inconnu,104227,Male
+Philippines,2007,0 - 19,36203,Male
+Philippines,2007,20 - 24,306531,Male
+Philippines,2007,25 - 29,458949,Male
+Philippines,2007,30 - 34,372744,Male
+Philippines,2007,35 - 39,249378,Male
+Philippines,2007,40 - 44,128315,Male
+Philippines,2007,45 - 49,52500,Male
+Philippines,2007,50 - 54,16619,Male
+Philippines,2007,55 - 59,5847,Male
+Philippines,2007,60 - 64,2079,Male
+Philippines,2007,65 +,1716,Male
+Philippines,2007,Unknown - Inconnu,118997,Male
+Philippines,2009,0 - 19,195662,Male
+Philippines,2009,20 - 24,495958,Male
+Philippines,2009,25 - 29,461020,Male
+Philippines,2009,30 - 34,328063,Male
+Philippines,2009,35 - 39,187578,Male
+Philippines,2009,40 - 44,66064,Male
+Philippines,2009,45 - 49,7712,Male
+Philippines,2009,50 - 54,494,Male
+Philippines,2009,55 - 59,34,Male
+Philippines,2009,60 - 64,0,Male
+Philippines,2009,65 +,0,Male
+Philippines,2009,Unknown - Inconnu,3000,Male
+Philippines,2012,0 - 19,50942,Male
+Philippines,2012,20 - 24,336210,Male
+Philippines,2012,25 - 29,434400,Male
+Philippines,2012,30 - 34,386932,Male
+Philippines,2012,35 - 39,243027,Male
+Philippines,2012,40 - 44,132535,Male
+Philippines,2012,45 - 49,52538,Male
+Philippines,2012,50 - 54,17850,Male
+Philippines,2012,55 - 59,6380,Male
+Philippines,2012,60 - 64,2601,Male
+Philippines,2012,65 +,1521,Male
+Philippines,2012,Unknown - Inconnu,125431,Male
+Philippines,2014,0 - 19,53258,Male
+Philippines,2014,20 - 24,339142,Male
+Philippines,2014,25 - 29,422732,Male
+Philippines,2014,30 - 34,367405,Male
+Philippines,2014,35 - 39,237948,Male
+Philippines,2014,40 - 44,123388,Male
+Philippines,2014,45 - 49,50133,Male
+Philippines,2014,50 - 54,17548,Male
+Philippines,2014,55 - 59,6147,Male
+Philippines,2014,60 - 64,2563,Male
+Philippines,2014,65 +,1622,Male
+Philippines,2014,Unknown - Inconnu,126971,Male
+Philippines,2015,0 - 19,52789,Male
+Philippines,2015,20 - 24,334718,Male
+Philippines,2015,25 - 29,424115,Male
+Philippines,2015,30 - 34,358963,Male
+Philippines,2015,35 - 39,241886,Male
+Philippines,2015,40 - 44,122441,Male
+Philippines,2015,45 - 49,51966,Male
+Philippines,2015,50 - 54,17687,Male
+Philippines,2015,55 - 59,6439,Male
+Philippines,2015,60 - 64,2601,Male
+Philippines,2015,65 +,1733,Male
+Philippines,2015,Unknown - Inconnu,129429,Male
+Philippines,2016,0 - 19,52070,Male
+Philippines,2016,20 - 24,327477,Male
+Philippines,2016,25 - 29,421840,Male
+Philippines,2016,30 - 34,350258,Male
+Philippines,2016,35 - 39,240212,Male
+Philippines,2016,40 - 44,121795,Male
+Philippines,2016,45 - 49,51496,Male
+Philippines,2016,50 - 54,17712,Male
+Philippines,2016,55 - 59,6565,Male
+Philippines,2016,60 - 64,2639,Male
+Philippines,2016,65 +,1709,Male
+Philippines,2016,Unknown - Inconnu,137552,Male
+Philippines,2017,0 - 19,52342,Male
+Philippines,2017,20 - 24,317520,Male
+Philippines,2017,25 - 29,416168,Male
+Philippines,2017,30 - 34,346451,Male
+Philippines,2017,35 - 39,233730,Male
+Philippines,2017,40 - 44,118109,Male
+Philippines,2017,45 - 49,49611,Male
+Philippines,2017,50 - 54,16893,Male
+Philippines,2017,55 - 59,6152,Male
+Philippines,2017,60 - 64,2530,Male
+Philippines,2017,65 +,1493,Male
+Philippines,2017,Unknown - Inconnu,139619,Male
+Philippinies,2007,0 - 19,36203,Male
+Philippinies,2007,20 - 24,306531,Male
+Philippinies,2007,25 - 29,458949,Male
+Philippinies,2007,30 - 34,372744,Male
+Philippinies,2007,35 - 39,249378,Male
+Philippinies,2007,40 - 44,128315,Male
+Philippinies,2007,45 - 49,52500,Male
+Philippinies,2007,50 - 54,16619,Male
+Philippinies,2007,55 - 59,5847,Male
+Philippinies,2007,60 - 64,2079,Male
+Philippinies,2007,65 +,1716,Male
+Philippinies,2007,Unknown - Inconnu,118997,Male
+Philippinies,2009,0 - 19,195662,Male
+Philippinies,2009,20 - 24,495958,Male
+Philippinies,2009,25 - 29,461020,Male
+Philippinies,2009,30 - 34,328063,Male
+Philippinies,2009,35 - 39,187578,Male
+Philippinies,2009,40 - 44,66064,Male
+Philippinies,2009,45 - 49,7712,Male
+Philippinies,2009,50 - 54,494,Male
+Philippinies,2009,55 - 59,34,Male
+Philippinies,2009,60 - 64,0,Male
+Philippinies,2009,65 +,0,Male
+Philippinies,2009,Unknown - Inconnu,3000,Male
+Poland,2003,15 - 19,22469,Female
+Poland,2003,20 - 24,101915,Female
+Poland,2003,25 - 29,128978,Female
+Poland,2003,30 - 34,66158,Female
+Poland,2003,35 - 39,24782,Female
+Poland,2003,40 - 44,6406,Female
+Poland,2003,45 - 49,316,Female
+Poland,2003,50+     ,3,Female
+Poland,2004,15 - 19,20461,Female
+Poland,2004,20 - 24,98392,Female
+Poland,2004,25 - 29,133134,Female
+Poland,2004,30 - 34,71678,Female
+Poland,2004,35 - 39,25723,Female
+Poland,2004,40 - 44,6338,Female
+Poland,2004,45 - 49,361,Female
+Poland,2004,50+     ,3,Female
+Poland,2006,0 - 14,44,Female
+Poland,2006,15 - 19,19186,Female
+Poland,2006,20 - 24,93569,Female
+Poland,2006,25 - 29,139853,Female
+Poland,2006,30 - 34,86825,Female
+Poland,2006,35 - 39,28487,Female
+Poland,2006,40 - 44,5975,Female
+Poland,2006,45 - 49,304,Female
+Poland,2006,50 +,1,Female
+Poland,2006,Total,102492,Female
+Poland,2007,0 - 19,2701,Male
+Poland,2007,20 - 24,48192,Male
+Poland,2007,25 - 29,125344,Male
+Poland,2007,30 - 34,116772,Male
+Poland,2007,35 - 39,49844,Male
+Poland,2007,40 - 44,18788,Male
+Poland,2007,45 - 49,6099,Male
+Poland,2007,50 +,2321,Male
+Poland,2007,Total,104594,Male
+Poland,2007,Unknown - Inconnu,17812,Male
+Poland,2008,12 - 14,81,Female
+Poland,2008,15 - 19,21126,Female
+Poland,2008,20 - 24,94099,Female
+Poland,2008,25 - 29,151894,Female
+Poland,2008,30 - 34,105477,Female
+Poland,2008,35 - 39,35069,Female
+Poland,2008,40 - 44,6438,Female
+Poland,2008,45 - 49,313,Female
+Poland,2008,50 +,2,Female
+Poland,2008,Unknown - Inconnu,-,Female
+Poland,2009,12 - 14,63,Female
+Poland,2009,15 - 19,20451,Female
+Poland,2009,20 - 24,87080,Female
+Poland,2009,25 - 29,154089,Female
+Poland,2009,30 - 34,110485,Female
+Poland,2009,35 - 39,38386,Female
+Poland,2009,40 - 44,6714,Female
+Poland,2009,45 - 49,317,Female
+Poland,2009,50 +,4,Female
+Poland,2009,Unknown - Inconnu,-,Female
+Poland,2009,0 - 19,2873,Male
+Poland,2009,20 - 24,45905,Male
+Poland,2009,25 - 29,130923,Male
+Poland,2009,30 - 34,132091,Male
+Poland,2009,35 - 39,59759,Male
+Poland,2009,40 - 44,20063,Male
+Poland,2009,45 - 49,6474,Male
+Poland,2009,50 - 54,1888,Male
+Poland,2009,55 - 59,508,Male
+Poland,2009,60 +,211,Male
+Poland,2009,Unknown - Inconnu,16894,Male
+Poland,2010,12 - 14,61,Female
+Poland,2010,15 - 19,18395,Female
+Poland,2010,20 - 24,79834,Female
+Poland,2010,25 - 29,152711,Female
+Poland,2010,30 - 34,113369,Female
+Poland,2010,35 - 39,41500,Female
+Poland,2010,40 - 44,7136,Female
+Poland,2010,45 - 49,293,Female
+Poland,2010,50 +,1,Female
+Poland,2010,Total,99491,Female
+Poland,2010,0 - 19,2553,Male
+Poland,2010,20 - 24,41029,Male
+Poland,2010,25 - 29,127388,Male
+Poland,2010,30 - 34,132879,Male
+Poland,2010,35 - 39,63377,Male
+Poland,2010,40 - 44,20674,Male
+Poland,2010,45 - 49,6415,Male
+Poland,2010,50 - 54,1984,Male
+Poland,2010,55 - 59,529,Male
+Poland,2010,60 +,226,Male
+Poland,2010,Unknown - Inconnu,16246,Male
+Poland,2011,12 - 14,44,Female
+Poland,2011,15 - 19,16098,Female
+Poland,2011,20 - 24,70754,Female
+Poland,2011,25 - 29,142865,Female
+Poland,2011,30 - 34,109558,Female
+Poland,2011,35 - 39,41587,Female
+Poland,2011,40 - 44,7176,Female
+Poland,2011,45 - 49,330,Female
+Poland,2011,50 +,4,Female
+Poland,2011,Unknown - Inconnu,-,Female
+Poland,2011,0 - 19,2103,Male
+Poland,2011,20 - 24,34939,Male
+Poland,2011,25 - 29,117782,Male
+Poland,2011,30 - 34,126400,Male
+Poland,2011,35 - 39,63343,Male
+Poland,2011,40 - 44,20257,Male
+Poland,2011,45 - 49,6086,Male
+Poland,2011,50 - 54,1917,Male
+Poland,2011,55 - 59,554,Male
+Poland,2011,60 +,208,Male
+Poland,2011,Unknown - Inconnu,14827,Male
+Poland,2012,15 - 19,15645,Female
+Poland,2012,20 - 24,68102,Female
+Poland,2012,25 - 29,140506,Female
+Poland,2012,30 - 34,110379,Female
+Poland,2012,35 - 39,43774,Female
+Poland,2012,40 - 44,7487,Female
+Poland,2012,45 - 49,301,Female
+Poland,2012,50 +,4,Female
+Poland,2012,Total,89841,Female
+Poland,2012,0 - 19,2231,Male
+Poland,2012,20 - 24,33640,Male
+Poland,2012,25 - 29,114291,Male
+Poland,2012,30 - 34,126439,Male
+Poland,2012,35 - 39,65320,Male
+Poland,2012,40 - 44,20696,Male
+Poland,2012,45 - 49,6013,Male
+Poland,2012,50 - 54,1819,Male
+Poland,2012,55 - 59,577,Male
+Poland,2012,60 +,217,Male
+Poland,2012,Unknown - Inconnu,15014,Male
+Poland,2013,0 - 14,48,Female
+Poland,2013,15 - 19,14444,Female
+Poland,2013,20 - 24,62949,Female
+Poland,2013,25 - 29,130958,Female
+Poland,2013,30 - 34,109789,Female
+Poland,2013,35 - 39,43343,Female
+Poland,2013,40 - 44,7714,Female
+Poland,2013,45 - 49,328,Female
+Poland,2013,50 +,3,Female
+Poland,2013,Total,82787,Female
+Poland,2014,0 - 14,51,Female
+Poland,2014,15 - 19,13236,Female
+Poland,2014,20 - 24,60053,Female
+Poland,2014,25 - 29,129245,Female
+Poland,2014,30 - 34,117017,Female
+Poland,2014,35 - 39,46891,Female
+Poland,2014,40 - 44,8321,Female
+Poland,2014,45 - 49,339,Female
+Poland,2014,50 +,7,Female
+Poland,2014,Unknown - Inconnu,-,Female
+Poland,2015,0 - 14,55,Female
+Poland,2015,15 - 19,11975,Female
+Poland,2015,20 - 24,57107,Female
+Poland,2015,25 - 29,123994,Female
+Poland,2015,30 - 34,119140,Female
+Poland,2015,35 - 39,47972,Female
+Poland,2015,40 - 44,8725,Female
+Poland,2015,45 - 49,336,Female
+Poland,2015,50 +,4,Female
+Poland,2015,Total,85500,Female
+Poland,2015,0 - 19,1668,Male
+Poland,2015,20 - 24,27666,Male
+Poland,2015,25 - 29,95145,Male
+Poland,2015,30 - 34,129420,Male
+Poland,2015,35 - 39,69982,Male
+Poland,2015,40 - 44,23164,Male
+Poland,2015,45 - 49,5812,Male
+Poland,2015,50 - 54,1684,Male
+Poland,2015,55 - 59,564,Male
+Poland,2015,60 - 64,165,Male
+Poland,2015,65 +,55,Male
+Poland,2015,Unknown - Inconnu,13983,Male
+Poland,2016,0 - 14,48,Female
+Poland,2016,15 - 19,11272,Female
+Poland,2016,20 - 24,55770,Female
+Poland,2016,25 - 29,126651,Female
+Poland,2016,30 - 34,126194,Female
+Poland,2016,35 - 39,52316,Female
+Poland,2016,40 - 44,9658,Female
+Poland,2016,45 - 49,344,Female
+Poland,2016,50 +,4,Female
+Poland,2016,Unknown - Inconnu,-,Female
+Poland,2016,0 - 19,1575,Male
+Poland,2016,20 - 24,26632,Male
+Poland,2016,25 - 29,96032,Male
+Poland,2016,30 - 34,135909,Male
+Poland,2016,35 - 39,75239,Male
+Poland,2016,40 - 44,25750,Male
+Poland,2016,45 - 49,6205,Male
+Poland,2016,50 - 54,1752,Male
+Poland,2016,55 - 59,588,Male
+Poland,2016,60 - 64,185,Male
+Poland,2016,65 +,58,Male
+Poland,2016,Unknown - Inconnu,12332,Male
+Poland,2017,0 - 14,44,Female
+Poland,2017,15 - 19,10032,Female
+Poland,2017,20 - 24,55928,Female
+Poland,2017,25 - 29,132464,Female
+Poland,2017,30 - 34,134904,Female
+Poland,2017,35 - 39,57563,Female
+Poland,2017,40 - 44,10642,Female
+Poland,2017,45 - 49,397,Female
+Poland,2017,50 +,8,Female
+Poland,2017,Unknown - Inconnu,-,Female
+Poland,2017,0 - 19,1493,Male
+Poland,2017,20 - 24,26406,Male
+Poland,2017,25 - 29,99545,Male
+Poland,2017,30 - 34,142884,Male
+Poland,2017,35 - 39,82676,Male
+Poland,2017,40 - 44,28505,Male
+Poland,2017,45 - 49,6731,Male
+Poland,2017,50 - 54,1845,Male
+Poland,2017,55 - 59,590,Male
+Poland,2017,60 - 64,204,Male
+Poland,2017,65 +,64,Male
+Poland,2017,Unknown - Inconnu,11039,Male
+Russian Federation,2003,15 - 19,169863,Female
+Russian Federation,2003,20 - 24,546779,Female
+Russian Federation,2003,25 - 29,415211,Female
+Russian Federation,2003,30 - 34,217696,Female
+Russian Federation,2003,35 - 39,79474,Female
+Russian Federation,2003,40 - 44,17093,Female
+Russian Federation,2003,45 - 49,774,Female
+Russian Federation,2003,50+     ,23,Female
+Russian Federation,2003,Unk,29943,Female
+Russian Federation,2004,15 - 19,171558,Female
+Russian Federation,2004,20 - 24,557843,Female
+Russian Federation,2004,25 - 29,434067,Female
+Russian Federation,2004,30 - 34,232411,Female
+Russian Federation,2004,35 - 39,85038,Female
+Russian Federation,2004,40 - 44,18073,Female
+Russian Federation,2004,45 - 49,837,Female
+Russian Federation,2004,50+     ,25,Female
+Russian Federation,2004,Unk,2243,Female
+Russian Federation,2006,0 - 14,332,Female
+Russian Federation,2006,15 - 19,160092,Female
+Russian Federation,2006,20 - 24,531018,Female
+Russian Federation,2006,25 - 29,434309,Female
+Russian Federation,2006,30 - 34,244383,Female
+Russian Federation,2006,35 - 39,89420,Female
+Russian Federation,2006,40 - 44,17253,Female
+Russian Federation,2006,45 - 49,929,Female
+Russian Federation,2006,50 +,44,Female
+Russian Federation,2006,Unknown - Inconnu,1857,Female
+Russian Federation,2007,12 - 14,377,Female
+Russian Federation,2007,15 - 19,151460,Female
+Russian Federation,2007,20 - 24,549262,Female
+Russian Federation,2007,25 - 29,487804,Female
+Russian Federation,2007,30 - 34,287605,Female
+Russian Federation,2007,35 - 39,110780,Female
+Russian Federation,2007,40 - 44,20099,Female
+Russian Federation,2007,45 - 49,1049,Female
+Russian Federation,2007,50 +,47,Female
+Russian Federation,2007,Unknown - Inconnu,1639,Female
+Russian Federation,2008,12 - 14,403,Female
+Russian Federation,2008,15 - 19,145056,Female
+Russian Federation,2008,20 - 24,561633,Female
+Russian Federation,2008,25 - 29,530160,Female
+Russian Federation,2008,30 - 34,322789,Female
+Russian Federation,2008,35 - 39,128645,Female
+Russian Federation,2008,40 - 44,22707,Female
+Russian Federation,2008,45 - 49,1224,Female
+Russian Federation,2008,50 +,66,Female
+Russian Federation,2008,Unknown - Inconnu,1264,Female
+Russian Federation,2009,12 - 14,385,Female
+Russian Federation,2009,15 - 19,131057,Female
+Russian Federation,2009,20 - 24,552829,Female
+Russian Federation,2009,25 - 29,563014,Female
+Russian Federation,2009,30 - 34,346388,Female
+Russian Federation,2009,35 - 39,140558,Female
+Russian Federation,2009,40 - 44,25025,Female
+Russian Federation,2009,45 - 49,1334,Female
+Russian Federation,2009,50 +,87,Female
+Russian Federation,2009,Unknown - Inconnu,1010,Female
+Russian Federation,2010,12 - 14,315,Female
+Russian Federation,2010,15 - 19,113534,Female
+Russian Federation,2010,20 - 24,526894,Female
+Russian Federation,2010,25 - 29,590205,Female
+Russian Federation,2010,30 - 34,370891,Female
+Russian Federation,2010,35 - 39,155228,Female
+Russian Federation,2010,40 - 44,28128,Female
+Russian Federation,2010,45 - 49,1476,Female
+Russian Federation,2010,50 +,92,Female
+Russian Federation,2010,Unknown - Inconnu,2185,Female
+Russian Federation,2011,12 - 14,351,Female
+Russian Federation,2011,15 - 19,103533,Female
+Russian Federation,2011,20 - 24,510184,Female
+Russian Federation,2011,25 - 29,603791,Female
+Russian Federation,2011,30 - 34,379884,Female
+Russian Federation,2011,35 - 39,165364,Female
+Russian Federation,2011,40 - 44,30221,Female
+Russian Federation,2011,45 - 49,1481,Female
+Russian Federation,2011,50 +,138,Female
+Russian Federation,2011,Total,292,Female
+Russian Federation,2011,Unknown - Inconnu,1682,Female
+Russian Federation,2011,0 - 19,13699,Male
+Russian Federation,2011,20 - 24,263262,Male
+Russian Federation,2011,25 - 29,520811,Male
+Russian Federation,2011,30 - 34,399070,Male
+Russian Federation,2011,35 - 39,225463,Male
+Russian Federation,2011,40 - 44,92522,Male
+Russian Federation,2011,45 - 49,31887,Male
+Russian Federation,2011,50 - 54,10693,Male
+Russian Federation,2011,55 - 59,2954,Male
+Russian Federation,2011,60 +,1044,Male
+Russian Federation,2011,Unknown - Inconnu,235224,Male
+Russian Federation,2012,0 - 19,12731,Male
+Russian Federation,2012,20 - 24,256939,Male
+Russian Federation,2012,25 - 29,564777,Male
+Russian Federation,2012,30 - 34,431851,Male
+Russian Federation,2012,35 - 39,245613,Male
+Russian Federation,2012,40 - 44,102880,Male
+Russian Federation,2012,45 - 49,33963,Male
+Russian Federation,2012,50 - 54,11671,Male
+Russian Federation,2012,55 - 59,3196,Male
+Russian Federation,2012,60 +,1203,Male
+Russian Federation,2012,Unknown - Inconnu,237260,Male
+South Africa,2007,0 - 14,804,Female
+South Africa,2007,15 - 19,93451,Female
+South Africa,2007,20 - 24,246545,Female
+South Africa,2007,25 - 29,222601,Female
+South Africa,2007,30 - 34,165240,Female
+South Africa,2007,35 - 39,95875,Female
+South Africa,2007,40 - 44,29099,Female
+South Africa,2007,45 - 49,4196,Female
+South Africa,2007,50 +,659,Female
+South Africa,2007,Total,890586,Female
+South Africa,2007,Unknown - Inconnu,396,Female
+South Africa,2012,0 - 14,822,Female
+South Africa,2012,15 - 19,112605,Female
+South Africa,2012,20 - 24,253843,Female
+South Africa,2012,25 - 29,244006,Female
+South Africa,2012,30 - 34,178694,Female
+South Africa,2012,35 - 39,101654,Female
+South Africa,2012,40 - 44,32046,Female
+South Africa,2012,45 - 49,2584,Female
+South Africa,2012,50 +,237,Female
+South Africa,2012,Total,876435,Female
+South Africa,2012,Unknown - Inconnu,235,Female
+South Africa,2016,0 - 14,1444,Female
+South Africa,2016,10 - 14,1444,Female
+South Africa,2016,15 - 19,107730,Female
+South Africa,2016,20 - 24,225847,Female
+South Africa,2016,25 - 29,226996,Female
+South Africa,2016,30 - 34,184962,Female
+South Africa,2016,35 - 39,97218,Female
+South Africa,2016,40 - 44,29298,Female
+South Africa,2016,45 - 49,1932,Female
+South Africa,2016,50 +,110,Female
+South Africa,2016,Unknown - Inconnu,898,Female
+South Africa,2016,0 - 19,4502,Male
+South Africa,2016,20 - 24,35319,Male
+South Africa,2016,25 - 29,72871,Male
+South Africa,2016,30 - 34,93538,Male
+South Africa,2016,35 - 39,69193,Male
+South Africa,2016,40 - 44,41377,Male
+South Africa,2016,45 - 49,17105,Male
+South Africa,2016,50 - 54,6369,Male
+South Africa,2016,55 - 59,2340,Male
+South Africa,2016,60 - 64,844,Male
+South Africa,2016,Unknown - Inconnu,532977,Male
+South Africa,2017,10 - 14,1302,Female
+South Africa,2017,15 - 19,97143,Female
+South Africa,2017,20 - 24,228936,Female
+South Africa,2017,25 - 29,235466,Female
+South Africa,2017,30 - 34,191418,Female
+South Africa,2017,35 - 39,102565,Female
+South Africa,2017,40 - 44,30318,Female
+South Africa,2017,45 - 49,2122,Female
+South Africa,2017,50 +,155,Female
+South Africa,2017,Unknown - Inconnu,8325,Female
+Spain,2003,15 - 19,12338,Female
+Spain,2003,20 - 24,43890,Female
+Spain,2003,25 - 29,115454,Female
+Spain,2003,30 - 34,171294,Female
+Spain,2003,35 - 39,84974,Female
+Spain,2003,40 - 44,13137,Female
+Spain,2003,44118,226,Female
+Spain,2003,45 - 49,593,Female
+Spain,2003,50+,33,Female
+Spain,2003,50+     ,33,Female
+Spain,2005,0 - 14,153,Female
+Spain,2005,15 - 19,12878,Female
+Spain,2005,20 - 24,44355,Female
+Spain,2005,25 - 29,115145,Female
+Spain,2005,30 - 34,183215,Female
+Spain,2005,35 - 39,94105,Female
+Spain,2005,40 - 44,15729,Female
+Spain,2005,45 - 49,733,Female
+Spain,2005,50 +,58,Female
+Spain,2005,Total,105913,Female
+Spain,2007,0 - 14,156,Female
+Spain,2007,15 - 19,14606,Female
+Spain,2007,20 - 24,48487,Female
+Spain,2007,25 - 29,115339,Female
+Spain,2007,30 - 34,189442,Female
+Spain,2007,35 - 39,105858,Female
+Spain,2007,40 - 44,18531,Female
+Spain,2007,45 - 49,1199,Female
+Spain,2007,50 +,84,Female
+Spain,2007,Total,107421,Female
+Spain,2007,0 - 19,3957,Male
+Spain,2007,20 - 24,24595,Male
+Spain,2007,25 - 29,79398,Male
+Spain,2007,30 - 34,174332,Male
+Spain,2007,35 - 39,136444,Male
+Spain,2007,40 - 44,47861,Male
+Spain,2007,45 - 49,12767,Male
+Spain,2007,50 - 54,3346,Male
+Spain,2007,55 - 59,1025,Male
+Spain,2007,60 - 64,288,Male
+Spain,2007,65 +,119,Male
+Spain,2007,Unknown - Inconnu,8395,Male
+Spain,2008,12 - 14,201,Female
+Spain,2008,15 - 19,15111,Female
+Spain,2008,20 - 24,51941,Female
+Spain,2008,25 - 29,118092,Female
+Spain,2008,30 - 34,197412,Female
+Spain,2008,35 - 39,114268,Female
+Spain,2008,40 - 44,20690,Female
+Spain,2008,45 - 49,1220,Female
+Spain,2008,50 +,115,Female
+Spain,2008,Unknown - Inconnu,-,Female
+Spain,2009,12 - 14,-,Female
+Spain,2009,15 - 19,13395,Female
+Spain,2009,20 - 24,46530,Female
+Spain,2009,25 - 29,107093,Female
+Spain,2009,30 - 34,188366,Female
+Spain,2009,35 - 39,115915,Female
+Spain,2009,40 - 44,21433,Female
+Spain,2009,45 - 49,1574,Female
+Spain,2009,50 +,-,Female
+Spain,2009,Unknown - Inconnu,-,Female
+Spain,2009,0 - 19,3444,Male
+Spain,2009,20 - 24,22533,Male
+Spain,2009,25 - 29,71339,Male
+Spain,2009,30 - 34,169731,Male
+Spain,2009,35 - 39,145680,Male
+Spain,2009,40 - 44,52812,Male
+Spain,2009,45 - 49,14272,Male
+Spain,2009,50 - 54,3916,Male
+Spain,2009,55 - 59,1117,Male
+Spain,2009,60 - 64,352,Male
+Spain,2009,65 +,85,Male
+Spain,2009,Unknown - Inconnu,9716,Male
+Spain,2010,12 - 14,155,Female
+Spain,2010,15 - 19,11689,Female
+Spain,2010,20 - 24,43689,Female
+Spain,2010,25 - 29,100237,Female
+Spain,2010,30 - 34,185112,Female
+Spain,2010,35 - 39,120149,Female
+Spain,2010,40 - 44,22858,Female
+Spain,2010,45 - 49,1543,Female
+Spain,2010,50 +,130,Female
+Spain,2010,Total,115641,Female
+Spain,2010,0 - 19,2977,Male
+Spain,2010,20 - 24,20367,Male
+Spain,2010,25 - 29,65820,Male
+Spain,2010,30 - 34,164450,Male
+Spain,2010,35 - 39,147660,Male
+Spain,2010,40 - 44,54426,Male
+Spain,2010,45 - 49,14647,Male
+Spain,2010,50 - 54,3944,Male
+Spain,2010,55 - 59,1104,Male
+Spain,2010,60 - 64,367,Male
+Spain,2010,65 +,97,Male
+Spain,2010,Unknown - Inconnu,9393,Male
+Spain,2011,12 - 14,145,Female
+Spain,2011,15 - 19,10202,Female
+Spain,2011,20 - 24,38374,Female
+Spain,2011,25 - 29,92347,Female
+Spain,2011,30 - 34,179276,Female
+Spain,2011,35 - 39,124160,Female
+Spain,2011,40 - 44,24485,Female
+Spain,2011,45 - 49,1462,Female
+Spain,2011,50 +,102,Female
+Spain,2011,Unknown - Inconnu,-,Female
+Spain,2011,0 - 19,2533,Male
+Spain,2011,20 - 24,18171,Male
+Spain,2011,25 - 29,59619,Male
+Spain,2011,30 - 34,155441,Male
+Spain,2011,35 - 39,150000,Male
+Spain,2011,40 - 44,60958,Male
+Spain,2011,45 - 49,9784,Male
+Spain,2011,50 - 54,3819,Male
+Spain,2011,55 - 59,1083,Male
+Spain,2011,60 - 64,313,Male
+Spain,2011,65 +,84,Male
+Spain,2011,Unknown - Inconnu,8748,Male
+Spain,2012,15 - 19,9517,Female
+Spain,2012,20 - 24,35677,Female
+Spain,2012,25 - 29,85755,Female
+Spain,2012,30 - 34,169622,Female
+Spain,2012,35 - 39,124417,Female
+Spain,2012,40 - 44,26467,Female
+Spain,2012,45 - 49,1626,Female
+Spain,2012,50 +,124,Female
+Spain,2012,Total,113177,Female
+Spain,2012,0 - 19,2619,Male
+Spain,2012,20 - 24,16781,Male
+Spain,2012,25 - 29,54703,Male
+Spain,2012,30 - 34,145708,Male
+Spain,2012,35 - 39,146681,Male
+Spain,2012,40 - 44,57522,Male
+Spain,2012,45 - 49,14651,Male
+Spain,2012,50 - 54,4187,Male
+Spain,2012,55 - 59,1068,Male
+Spain,2012,60 - 64,329,Male
+Spain,2012,65 +,92,Male
+Spain,2012,Unknown - Inconnu,9007,Male
+Spain,2013,0 - 14,139,Female
+Spain,2013,15 - 19,8753,Female
+Spain,2013,20 - 24,32024,Female
+Spain,2013,25 - 29,78612,Female
+Spain,2013,30 - 34,155443,Female
+Spain,2013,35 - 39,120493,Female
+Spain,2013,40 - 44,27240,Female
+Spain,2013,45 - 49,1654,Female
+Spain,2013,50 +,82,Female
+Spain,2013,Total,113593,Female
+Spain,2013,0 - 19,2376,Male
+Spain,2013,20 - 24,15288,Male
+Spain,2013,25 - 29,48689,Male
+Spain,2013,30 - 34,132325,Male
+Spain,2013,35 - 39,139743,Male
+Spain,2013,40 - 44,56906,Male
+Spain,2013,45 - 49,14741,Male
+Spain,2013,50 - 54,3910,Male
+Spain,2013,55 - 59,1056,Male
+Spain,2013,60 - 64,291,Male
+Spain,2013,65 +,106,Male
+Spain,2013,Unknown - Inconnu,9009,Male
+Spain,2014,0 - 14,136,Female
+Spain,2014,15 - 19,8416,Female
+Spain,2014,20 - 24,30752,Female
+Spain,2014,25 - 29,77856,Female
+Spain,2014,30 - 34,153787,Female
+Spain,2014,35 - 39,124271,Female
+Spain,2014,40 - 44,28819,Female
+Spain,2014,45 - 49,1919,Female
+Spain,2014,50 +,120,Female
+Spain,2014,Total,114907,Female
+Spain,2015,0 - 14,98,Female
+Spain,2015,15 - 19,8126,Female
+Spain,2015,20 - 24,29486,Female
+Spain,2015,25 - 29,74734,Female
+Spain,2015,30 - 34,148211,Female
+Spain,2015,35 - 39,125162,Female
+Spain,2015,40 - 44,30485,Female
+Spain,2015,45 - 49,2010,Female
+Spain,2015,50 +,120,Female
+Spain,2015,Total,114870,Female
+Spain,2016,0 - 14,110,Female
+Spain,2016,15 - 19,7843,Female
+Spain,2016,20 - 24,28541,Female
+Spain,2016,25 - 29,72368,Female
+Spain,2016,30 - 34,141470,Female
+Spain,2016,35 - 39,124054,Female
+Spain,2016,40 - 44,31867,Female
+Spain,2016,45 - 49,2348,Female
+Spain,2016,50 +,133,Female
+Spain,2016,Total,117425,Female
+Spain,2016,0 - 19,2159,Male
+Spain,2016,20 - 24,13300,Male
+Spain,2016,25 - 29,44027,Male
+Spain,2016,30 - 34,114301,Male
+Spain,2016,35 - 39,137085,Male
+Spain,2016,40 - 44,64590,Male
+Spain,2016,45 - 49,17444,Male
+Spain,2016,50 - 54,4305,Male
+Spain,2016,55 - 59,1108,Male
+Spain,2016,60 - 64,345,Male
+Spain,2016,65 +,100,Male
+Spain,2016,Unknown - Inconnu,9970,Male
+Spain,2017,0 - 14,113,Female
+Spain,2017,15 - 19,7644,Female
+Spain,2017,20 - 24,27862,Female
+Spain,2017,25 - 29,68440,Female
+Spain,2017,30 - 34,132442,Female
+Spain,2017,35 - 39,119192,Female
+Spain,2017,40 - 44,32766,Female
+Spain,2017,45 - 49,2645,Female
+Spain,2017,50 +,161,Female
+Spain,2017,Unknown - Inconnu,-,Female
+Spain,2017,0 - 19,2010,Male
+Spain,2017,20 - 24,12376,Male
+Spain,2017,25 - 29,41691,Male
+Spain,2017,30 - 34,105004,Male
+Spain,2017,35 - 39,129475,Male
+Spain,2017,40 - 44,64027,Male
+Spain,2017,45 - 49,18134,Male
+Spain,2017,50 - 54,4545,Male
+Spain,2017,55 - 59,1190,Male
+Spain,2017,60 - 64,367,Male
+Spain,2017,65 +,139,Male
+Spain,2017,Unknown - Inconnu,12307,Male
+United Kingdom,2003,15 - 19,49633,Female
+United Kingdom,2003,20 - 24,129867,Female
+United Kingdom,2003,25 - 29,175473,Female
+United Kingdom,2003,30 - 34,210071,Female
+United Kingdom,2003,35 - 39,109038,Female
+United Kingdom,2003,40 - 44,20233,Female
+United Kingdom,2003,45 - 49,853,Female
+United Kingdom,2003,50+     ,80,Female
+United Kingdom,2003,Unk,60,Female
+United Kingdom,2003,0 - 19,13848,Male
+United Kingdom,2003,20 - 24,70484,Male
+United Kingdom,2003,25 - 29,132039,Male
+United Kingdom,2003,30 - 34,206797,Male
+United Kingdom,2003,35 - 39,143461,Male
+United Kingdom,2003,40 - 44,55851,Male
+United Kingdom,2003,45 - 49,15730,Male
+United Kingdom,2003,50 - 54,4661,Male
+United Kingdom,2003,55 - 59,1616,Male
+United Kingdom,2003,60 - 64,465,Male
+United Kingdom,2003,65 +,280,Male
+United Kingdom,2003,Unknown - Inconnu,50317,Male
+United Kingdom,2004,10 - 14,226,Female
+United Kingdom,2004,15 - 19,50525,Female
+United Kingdom,2004,20 - 24,134615,Female
+United Kingdom,2004,25 - 29,179050,Female
+United Kingdom,2004,30 - 34,213619,Female
+United Kingdom,2004,35 - 39,114852,Female
+United Kingdom,2004,40 - 44,22107,Female
+United Kingdom,2004,44118,6789,Female
+United Kingdom,2004,45 - 49,923,Female
+United Kingdom,2004,Unknown - Inconnu,26,Female
+United Kingdom,2009,0 - 14,195,Female
+United Kingdom,2009,15 - 19,48372,Female
+United Kingdom,2009,20 - 24,151312,Female
+United Kingdom,2009,25 - 29,217460,Female
+United Kingdom,2009,30 - 34,214789,Female
+United Kingdom,2009,35 - 39,128065,Female
+United Kingdom,2009,40 - 44,28244,Female
+United Kingdom,2009,45 - 49,1636,Female
+United Kingdom,2009,50 +,111,Female
+United Kingdom,2009,Unknown - Inconnu,20,Female
+United Kingdom,2009,0 - 19,16030,Male
+United Kingdom,2009,20 - 24,87703,Male
+United Kingdom,2009,25 - 29,163634,Male
+United Kingdom,2009,30 - 34,207503,Male
+United Kingdom,2009,35 - 39,161952,Male
+United Kingdom,2009,40 - 44,72397,Male
+United Kingdom,2009,45 - 49,23214,Male
+United Kingdom,2009,50 - 54,6250,Male
+United Kingdom,2009,55 - 59,1781,Male
+United Kingdom,2009,60 - 64,606,Male
+United Kingdom,2009,65 +,269,Male
+United Kingdom,2009,Unknown - Inconnu,48865,Male
+United Kingdom,2011,12 - 14,178,Female
+United Kingdom,2011,15 - 19,40813,Female
+United Kingdom,2011,20 - 24,149667,Female
+United Kingdom,2011,25 - 29,223613,Female
+United Kingdom,2011,30 - 34,231658,Female
+United Kingdom,2011,35 - 39,129139,Female
+United Kingdom,2011,40 - 44,30601,Female
+United Kingdom,2011,45 - 49,1869,Female
+United Kingdom,2011,50 +,128,Female
+United Kingdom,2011,Unknown - Inconnu,110,Female
+United Kingdom,2012,15 - 19,37790,Female
+United Kingdom,2012,20 - 24,146576,Female
+United Kingdom,2012,25 - 29,225464,Female
+United Kingdom,2012,30 - 34,241604,Female
+United Kingdom,2012,35 - 39,128109,Female
+United Kingdom,2012,40 - 44,31008,Female
+United Kingdom,2012,45 - 49,1971,Female
+United Kingdom,2012,50 +,156,Female
+United Kingdom,2012,Unknown - Inconnu,97,Female
+United Kingdom,2012,0 - 19,13166,Male
+United Kingdom,2012,20 - 24,85617,Male
+United Kingdom,2012,25 - 29,168503,Male
+United Kingdom,2012,30 - 34,226297,Male
+United Kingdom,2012,35 - 39,160698,Male
+United Kingdom,2012,40 - 44,76266,Male
+United Kingdom,2012,45 - 49,25537,Male
+United Kingdom,2012,50 - 54,7396,Male
+United Kingdom,2012,55 - 59,2061,Male
+United Kingdom,2012,60 - 64,585,Male
+United Kingdom,2012,65 +,290,Male
+United Kingdom,2012,Unknown - Inconnu,46554,Male
+United Kingdom,2013,0 - 14,146,Female
+United Kingdom,2013,15 - 19,32675,Female
+United Kingdom,2013,20 - 24,132985,Female
+United Kingdom,2013,25 - 29,218607,Female
+United Kingdom,2013,30 - 34,237205,Female
+United Kingdom,2013,35 - 39,124449,Female
+United Kingdom,2013,40 - 44,30092,Female
+United Kingdom,2013,45 - 49,2003,Female
+United Kingdom,2013,50 +,179,Female
+United Kingdom,2013,Unknown - Inconnu,17,Female
+United Kingdom,2014,0 - 14,142,Female
+United Kingdom,2014,15 - 19,29102,Female
+United Kingdom,2014,20 - 24,125377,Female
+United Kingdom,2014,25 - 29,219258,Female
+United Kingdom,2014,30 - 34,241237,Female
+United Kingdom,2014,35 - 39,128610,Female
+United Kingdom,2014,40 - 44,29950,Female
+United Kingdom,2014,45 - 49,1995,Female
+United Kingdom,2014,50 +,177,Female
+United Kingdom,2014,Unknown - Inconnu,60,Female
+United Kingdom,2015,0 - 14,114,Female
+United Kingdom,2015,15 - 19,26710,Female
+United Kingdom,2015,20 - 24,120121,Female
+United Kingdom,2015,25 - 29,219997,Female
+United Kingdom,2015,30 - 34,243119,Female
+United Kingdom,2015,35 - 39,134416,Female
+United Kingdom,2015,40 - 44,29886,Female
+United Kingdom,2015,45 - 49,2147,Female
+United Kingdom,2015,50 +,229,Female
+United Kingdom,2015,Unknown - Inconnu,7,Female
+United Kingdom,2016,0 - 14,109,Female
+United Kingdom,2016,15 - 19,25109,Female
+United Kingdom,2016,20 - 24,113944,Female
+United Kingdom,2016,25 - 29,217688,Female
+United Kingdom,2016,30 - 34,245653,Female
+United Kingdom,2016,35 - 39,139097,Female
+United Kingdom,2016,40 - 44,30306,Female
+United Kingdom,2016,45 - 49,2213,Female
+United Kingdom,2016,50 +,251,Female
+United Kingdom,2016,Unknown - Inconnu,16,Female
+United Kingdom,2016,0 - 19,8897,Male
+United Kingdom,2016,20 - 24,64400,Male
+United Kingdom,2016,25 - 29,160571,Male
+United Kingdom,2016,30 - 34,224485,Male
+United Kingdom,2016,35 - 39,166950,Male
+United Kingdom,2016,40 - 44,72578,Male
+United Kingdom,2016,45 - 49,25524,Male
+United Kingdom,2016,50 - 54,7993,Male
+United Kingdom,2016,55 - 59,2400,Male
+United Kingdom,2016,60 - 64,667,Male
+United Kingdom,2016,65 +,274,Male
+United Kingdom,2016,Unknown - Inconnu,39647,Male
+United Kingdom,2017,0 - 14,84,Female
+United Kingdom,2017,15 - 19,22792,Female
+United Kingdom,2017,20 - 24,108052,Female
+United Kingdom,2017,25 - 29,210730,Female
+United Kingdom,2017,30 - 34,241621,Female
+United Kingdom,2017,35 - 39,139244,Female
+United Kingdom,2017,40 - 44,29667,Female
+United Kingdom,2017,45 - 49,2315,Female
+United Kingdom,2017,50 +,248,Female
+United Kingdom,2017,Unknown - Inconnu,1,Female
+United Kingdom,2017,0 - 19,8106,Male
+United Kingdom,2017,20 - 24,59908,Male
+United Kingdom,2017,25 - 29,155358,Male
+United Kingdom,2017,30 - 34,220563,Male
+United Kingdom,2017,35 - 39,165366,Male
+United Kingdom,2017,40 - 44,70283,Male
+United Kingdom,2017,45 - 49,25346,Male
+United Kingdom,2017,50 - 54,7808,Male
+United Kingdom,2017,55 - 59,2390,Male
+United Kingdom,2017,60 - 64,673,Male
+United Kingdom,2017,65 +,316,Male
+United Kingdom,2017,Unknown - Inconnu,38637,Male
+United States of America,2004,0 - 14,6781,Female
+United States of America,2004,15 - 19,415262,Female
+United States of America,2004,20 - 24,1034454,Female
+United States of America,2004,25 - 29,1104485,Female
+United States of America,2004,30 - 34,965663,Female
+United States of America,2004,35 - 39,475606,Female
+United States of America,2004,40 - 44,103679,Female
+United States of America,2004,45 - 49,5748,Female
+United States of America,2004,50 +,374,Female
+United States of America,2004,Total,1771,Female
+United States of America,2006,0 - 14,2,Female
+United States of America,2006,0 - 19,442000,Female
+United States of America,2006,15 - 19,226,Female
+United States of America,2006,20 - 24,1081000,Female
+United States of America,2006,25 - 29,1182000,Female
+United States of America,2006,30 - 34,950000,Female
+United States of America,2006,35 - 39,499000,Female
+United States of America,2006,40 - 44,105000,Female
+United States of America,2006,45 - 54,7000,Female
+United States of America,2006,Total,1771,Female
+United States of America,2006,0 - 19,129959,Male
+United States of America,2006,20 - 24,625254,Male
+United States of America,2006,25 - 29,958146,Male
+United States of America,2006,30 - 34,947453,Male
+United States of America,2006,35 - 39,623458,Male
+United States of America,2006,40 +,364393,Male
+United States of America,2006,Total,240569,Male
+United States of America,2006,Unknown - Inconnu,616892,Male
+United States of America,2008,0 - 14,5764,Female
+United States of America,2008,15 - 19,434758,Female
+United States of America,2008,20 - 24,1052184,Female
+United States of America,2008,25 - 29,1195774,Female
+United States of America,2008,30 - 34,956716,Female
+United States of America,2008,35 - 39,488875,Female
+United States of America,2008,40 - 44,105973,Female
+United States of America,2008,45 - 49,7109,Female
+United States of America,2008,50 +,541,Female
+United States of America,2008,Total,1771,Female
+United States of America,2008,0 - 19,142862,Male
+United States of America,2008,20 - 24,615796,Male
+United States of America,2008,25 - 29,960144,Male
+United States of America,2008,30 - 34,948291,Male
+United States of America,2008,35 - 39,616630,Male
+United States of America,2008,40 - 44,250629,Male
+United States of America,2008,45 - 49,84963,Male
+United States of America,2008,50 - 54,24459,Male
+United States of America,2008,55 +,10308,Male
+United States of America,2008,Unknown - Inconnu,593612,Male
+United States of America,2009,0 - 19,414831,Male
+United States of America,2009,20 - 24,1005982,Male
+United States of America,2009,25 - 29,1166787,Male
+United States of America,2009,30 - 34,955246,Male
+United States of America,2009,35 - 39,474103,Male
+United States of America,2009,40 - 44,105827,Male
+United States of America,2009,45 - 49,7320,Male
+United States of America,2009,50 - 54,569,Male
+United States of America,2009,Unknown - Inconnu,-,Male
+United States of America,2012,0 - 14,3672,Female
+United States of America,2012,15 - 19,305388,Female
+United States of America,2012,20 - 24,916811,Female
+United States of America,2012,25 - 29,1123900,Female
+United States of America,2012,30 - 34,1013416,Female
+United States of America,2012,35 - 39,472318,Female
+United States of America,2012,40 - 44,109579,Female
+United States of America,2012,45 - 49,7157,Female
+United States of America,2012,50 +,600,Female
+United States of America,2012,Total,1771,Female
+United States of America,2012,0 - 19,104735,Male
+United States of America,2012,20 - 24,526476,Male
+United States of America,2012,25 - 29,869863,Male
+United States of America,2012,30 - 34,975449,Male
+United States of America,2012,35 - 39,590180,Male
+United States of America,2012,40 - 44,256966,Male
+United States of America,2012,45 - 49,83782,Male
+United States of America,2012,50 - 54,26278,Male
+United States of America,2012,55 +,11341,Male
+United States of America,2012,Unknown - Inconnu,507771,Male
+United States of America,2013,0 - 14,3098,Female
+United States of America,2013,15 - 19,273105,Female
+United States of America,2013,20 - 24,896745,Female
+United States of America,2013,25 - 29,1120777,Female
+United States of America,2013,30 - 34,1036927,Female
+United States of America,2013,35 - 39,483873,Female
+United States of America,2013,40 - 44,109484,Female
+United States of America,2013,45 - 49,7495,Female
+United States of America,2013,50 - 54,677,Female
+United States of America,2013,Total,3988076,Female
+United States of America,2013,0 - 19,93205,Male
+United States of America,2013,20 - 24,509846,Male
+United States of America,2013,25 - 29,860750,Male
+United States of America,2013,30 - 34,990827,Male
+United States of America,2013,35 - 39,601402,Male
+United States of America,2013,40 - 44,256761,Male
+United States of America,2013,45 - 49,84250,Male
+United States of America,2013,50 - 54,27339,Male
+United States of America,2013,55 +,11578,Male
+United States of America,2013,Unknown - Inconnu,496223,Male
+United States of America,2014,0 - 19,85002,Male
+United States of America,2014,20 - 24,497940,Male
+United States of America,2014,25 - 29,867330,Male
+United States of America,2014,30 - 34,1022910,Male
+United States of America,2014,35 - 39,629724,Male
+United States of America,2014,40 - 44,261320,Male
+United States of America,2014,45 - 49,87146,Male
+United States of America,2014,50 - 54,28347,Male
+United States of America,2014,55 +,12430,Male
+United States of America,2014,Unknown - Inconnu,495927,Male
+United States of America,2015,0 - 14,2500,Female
+United States of America,2015,15 - 19,229715,Female
+United States of America,2015,20 - 24,850509,Female
+United States of America,2015,25 - 29,1152311,Female
+United States of America,2015,30 - 34,1094693,Female
+United States of America,2015,35 - 39,527996,Female
+United States of America,2015,40 - 44,111848,Female
+United States of America,2015,45 - 49,8171,Female
+United States of America,2015,50 +,754,Female
+United States of America,2015,Unknown - Inconnu,-,Female
+United States of America,2015,0 - 19,78966,Male
+United States of America,2015,20 - 24,477664,Male
+United States of America,2015,25 - 29,866460,Male
+United States of America,2015,30 - 34,1031310,Male
+United States of America,2015,35 - 39,648051,Male
+United States of America,2015,40 - 44,263377,Male
+United States of America,2015,45 - 49,89921,Male
+United States of America,2015,50 - 54,29105,Male
+United States of America,2015,55 +,12911,Male
+United States of America,2015,Unknown - Inconnu,480732,Male
