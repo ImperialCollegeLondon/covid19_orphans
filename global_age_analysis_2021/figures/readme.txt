@@ -1,0 +1,1 @@
+A file to ensure the figures directory exists.
