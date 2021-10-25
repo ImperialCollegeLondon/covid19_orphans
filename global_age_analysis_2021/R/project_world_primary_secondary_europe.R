@@ -1,0 +1,179 @@
+library(matrixStats)
+library(tidyverse)
+library(cowplot)
+library(ggrepel)
+library(stats)
+
+source("global_age_analysis_2021/R/utils.R")
+
+calc_ratio <- function(alpha, beta, gamma, delta, tfr, europe){
+  return(delta * (exp(alpha + beta * tfr + gamma * europe))/(1 + exp(alpha + beta * tfr + gamma * europe)))
+} 
+
+error <- function(params, data){
+  return(sum((calc_ratio(params[1], params[2], params[3], params[4], data$tfr, data$europe) - data$ratio)^2))
+}
+
+set.seed(10)
+
+# Load in data
+joined <- readRDS("global_age_analysis_2021/data/tfr_covariates.RDS")
+
+# Calculate country specific SD
+joined$sd = (joined$tfr_u-joined$tfr_l)/(2*1.96)
+
+joined$europe = ifelse(joined$who_region == "European", 1, 0)
+
+# Select a subset
+subset <- joined[which(joined$all != 0),]
+
+# Exclude Iran from fit
+subset = subset[which(!subset$country %in% c("I.R. Iran")),]
+print(sprintf("Pearsons r^2 primary and/or seconday: %f",  
+              cor(subset$tfr, subset$ratio, method = "pearson") ))
+
+
+# Fit primary and secondary
+pars = c(-7, 1, 1, 1)
+output_ps = optim(pars, error, data=subset, control = c(abstol = 1e-12))
+joined$calculated_ratio <- calc_ratio(output_ps$par[1], output_ps$par[2], 
+                                      output_ps$par[3], output_ps$par[4],
+                                      joined$tfr, joined$europe)
+print(output_ps$par)
+saveRDS(output_ps$par, "global_age_analysis_2021/data/shiny/primary_secondary_coefficients.RDS")
+
+ratio_dat <- select(joined, country, ratio, calculated_ratio)
+ratio_dat$calculated_ratio <- ifelse(is.na(ratio_dat$ratio), ratio_dat$calculated_ratio , ratio_dat$ratio)
+ratio_dat$ratio <- NULL
+names(ratio_dat) <- c("country", "primary_secondary_ratio")
+saveRDS(ratio_dat, "global_age_analysis_2021/data/primary_secondary_ratios.RDS")
+
+x = seq(0, 5, 0.1)
+line_all = data.frame(x = x, 
+                      y0 = calc_ratio(output_ps$par[1], output_ps$par[2], 
+                                     output_ps$par[3], output_ps$par[4], x, 0),
+                      y1 = calc_ratio(output_ps$par[1], output_ps$par[2], 
+                                     output_ps$par[3], output_ps$par[4], x, 1))
+p_fit_ps <- ggplot(subset) + 
+  geom_point(aes(tfr, ratio)) + 
+  geom_line(data = line_all, aes(x, y0), col = 'black') + 
+  geom_line(data = line_all, aes(x, y1), col = 'red') + 
+  xlab("Total fertility rate") + 
+  ylab("Ratio of children orphaned and/or losing caregivers (primary or secondary) \nto deaths of parents and/or caregivers (primary or secondary)") + 
+  theme_bw()
+p_fit_ps_label <- p_fit_ps + geom_text_repel(aes(x = tfr, y = ratio, label = country), size = 3, max.overlaps = 100)
+print(p_fit_ps_label)
+
+# Calculate deterministic number of orphans
+joined$calculated_ratio <- calc_ratio(output_ps$par[1], output_ps$par[2], 
+                                      output_ps$par[3], output_ps$par[4],
+                                      joined$tfr, joined$europe)
+joined$calculated_orphans <- joined$calculated_ratio * joined$fitting_deaths 
+joined$final_orphans <- ifelse(joined$all == 0, joined$calculated_orphans, joined$all)
+
+
+# Calculate uncertainty around primary and secondary estimate
+n = 1000
+estimates <- matrix(nrow = length(joined$country), ncol = n)
+estimates_orphans <- matrix(nrow = length(joined$country), ncol = n)
+
+rn2 = NULL
+ratio_fit = NULL
+for (i in 1:n){
+  rn <- rnorm(length(joined$country), mean = joined$tfr, sd = joined$sd)
+  rn2 = cbind(rn2, rn)
+  estimates[, i] <- calc_ratio(output_ps$par[1], output_ps$par[2], output_ps$par[3], 
+                               output_ps$par[4], rn, joined$europe)
+  ratio_fit = cbind(ratio_fit,  estimates[, i])
+  estimates_orphans[, i] <- estimates[, i] * joined$fitting_deaths
+}
+
+orphans_samples <- colSums(estimates_orphans)
+formatted <- sprintf("Primary and/or secondary orphans: %0.f [%0.f - %0.f]", 
+              round(sum(joined$final_orphans), -2), round.choose(quantile(orphans_samples, probs = 0.025), 100, 0), 
+              round.choose(quantile(orphans_samples, probs = 0.975), 100, 1))
+print(formatted)
+saveRDS(sprintf("%s [%s - %s]", 
+                format(round(sum(joined$final_orphans), -2), big.mark = ",", trim = TRUE), 
+                format(round.choose(quantile(orphans_samples, probs = 0.025), 100, 0), big.mark = ",", trim = TRUE), 
+                format(round.choose(quantile(orphans_samples, probs = 0.975), 100, 1), big.mark = ",", trim = TRUE)), 
+        file = "global_age_analysis_2021/data/formatted_primary_secondary.RDS")
+
+
+all_country_fit <- sum(joined$final_orphans)
+  
+# Separate out by regions
+mean = rowMeans(estimates_orphans)
+li = rowQuantiles(estimates_orphans, probs = 0.025)
+ui = rowQuantiles(estimates_orphans, probs = 0.975)
+
+orphans_sample = data.frame("country" = joined$country, 
+                            "mean" = joined$final_orphans, 
+                            "lower" = li, 
+                            "upper" = ui,
+                            "text_ps" = sprintf("%.0f [%.0f - %.0f]", 
+                                             signif(joined$final_orphans, 2), 
+                                             round.choose(li, 100, 0), 
+                                             round.choose(ui, 100, 1)), 
+                            "region" = joined$who_region)
+
+orphans_sample$text_ps <- as.character(orphans_sample$text_ps)
+
+# Exchange out study countries
+orphans_sample$text_ps[joined$all != 0] <- joined$final_orphans[joined$all != 0]
+# Remove 0 countries
+orphans_sample = orphans_sample[orphans_sample$mean > 0,]
+# Sort
+orphans_sample = orphans_sample[order(orphans_sample$region, orphans_sample$country),]
+saveRDS(orphans_sample, "global_age_analysis_2021/data/country_estimates_ps.RDS")
+
+# Make plots
+joined$colour = ifelse(joined$country == "I.R. Iran", 1, 0)
+joined$colour = factor(joined$colour)
+p_obs_pred_ps = ggplot(joined %>% filter(all != 0)) +
+  geom_point(aes(ratio, calculated_ratio)) + 
+  geom_point(data = joined %>% filter(country == "I.R. Iran"), aes(ratio, calculated_ratio), col = "red") + 
+  geom_abline(slope = 1, intercept = 0) + 
+  xlab("Ratio of children orphaned and/or losing caregivers (primary or secondary) \nto deaths of parents and/or caregivers (primary or secondary) (observed)") + 
+  ylab("Ratio of children orphaned and/or losing caregivers (primary or secondary) \nto deaths of parents and/or caregivers (primary or secondary) (predicted)") + 
+  geom_text_repel(aes(x = ratio, y = calculated_ratio, label = country, col = colour), size = 2, max.overlaps = 200) +
+  scale_color_manual(values = c("black", "red")) + 
+  theme_bw() + theme(legend.position = "none")
+
+# Leave one out analysis
+pars = c(-7, 1, 1, 1)
+loo_orphans = vector(length = length(subset$country))
+p <- p_fit_ps
+for (i in 1:length(subset$country)){
+  leave_one_out = subset[which(subset$country != subset$country[i]),]
+  output_loo_ps = optim(pars, error, data=leave_one_out, control = c(abstol = 1e-12))
+  #print(output_loo_ps$par)
+  #x = seq(0, 5, 0.1)
+  #line = data.frame(x = x,
+  #                  y = calc_ratio(output_loo_ps$par[1], output_loo_ps$par[2],
+  #                                 output_loo_ps$par[3], x))
+  #p <- p + geom_line(data = line, aes(x, y), col = "blue", alpha = 0.2)
+
+  joined$calculated_ratio_loo <- calc_ratio(output_loo_ps$par[1], output_loo_ps$par[2],
+                                            output_loo_ps$par[3], output_loo_ps$par[4], 
+                                            joined$tfr, joined$europe)
+  joined$calculated_orphans_loo <- joined$calculated_ratio_loo * joined$fitting_deaths
+  joined$final_orphans_loo <- ifelse(joined$all == 0, joined$calculated_orphans_loo, joined$all)
+  loo_orphans[i] = sum(joined$final_orphans_loo)
+}
+
+loo_combined = data.frame("country" = subset$country,
+                          "orphans" = loo_orphans)
+#p_loo_ps <- p + geom_line(data = line_all, aes(x, y), col = 'red') +
+#  geom_text_repel(aes(x = tfr, y = ratio, label = country), max.overlaps = 100)
+
+print("Range loo")
+print(loo_combined[which(loo_combined$orphans == min(loo_combined$orphans)),])
+print(loo_combined[which(loo_combined$orphans == max(loo_combined$orphans)),])
+
+#save(p_fit_ps_label, p_obs_pred_ps, p_loo_ps, file = "global_age_analysis_2021/data/extrapolate_primary_secondary.RData")
+
+mae <- abs(loo_combined$orphans - all_country_fit)
+print(sprintf("MAE LOO: %0.f", mean(mae)))
+
+
