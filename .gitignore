@@ -43,7 +43,7 @@ vignettes/*.pdf
 *.pdf
 *.png
 
-*_un
+*_un.csv
 
 *data/Brazil/INFLUD-19-04-2021.csv
 *data/Brazil/INFLUD-10-05-2021.csv
