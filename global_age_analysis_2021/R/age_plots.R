@@ -3,7 +3,7 @@ library(tidyverse)
 source("global_age_analysis_2021/R/utils.R")
 
 month = "_oct"
-n = 200
+n = 5
 percentages = readRDS(paste0("global_age_analysis_2021/data/age_outputs/age_data_scaled", month, ".RDS"))
 samples <- readRDS(paste0("global_age_analysis_2021/data/age_outputs/samples_age_data_scaled", month, ".RDS"))
 samples$sample <- rep(rep(1:n, each = 6), times = 20)

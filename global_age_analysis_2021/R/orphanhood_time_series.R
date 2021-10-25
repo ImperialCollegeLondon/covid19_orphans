@@ -1,5 +1,4 @@
 # This file produces a time series of orphans.
-library(covid19.analytics)
 library(tidyverse)
 library(scales)
 library(ggrepel)

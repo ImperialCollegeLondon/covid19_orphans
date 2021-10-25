@@ -43,6 +43,8 @@ vignettes/*.pdf
 *.pdf
 *.png
 
+*_un
+
 *data/Brazil/INFLUD-19-04-2021.csv
 *data/Brazil/INFLUD-10-05-2021.csv
 *data/Philippines/DOH\ COVID\ Data\ Drop_\ 20210509\ -\ 04\ Case\ Information\ 2020.csv
