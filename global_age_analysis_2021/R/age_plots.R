@@ -306,11 +306,29 @@ dat_cat$category <- ifelse(dat_cat$category == "[0-5)", "0-4",
                            ifelse(dat_cat$category == "[5-10)", "5-9", "10-17"))
 dat_cat$category <- factor(dat_cat$category, levels = c("0-4", "5-9", "10-17"))
 
+
+rates_samples <- samples
+rates_samples$category <- ifelse(rates_samples$category == "[0-5)", "0-4", 
+                                 ifelse(rates_samples$category == "[5-10)", "5-9", "10-17"))
+rates_samples$category <- factor(rates_samples$category, levels = c("0-4", "5-9", "10-17"))
+rates_samples_categories <- rates_samples %>% group_by(category, country, sample) %>% summarise(raw = sum(orphans))
+rates_samples_gender <- rates_samples %>% group_by(gender, country, sample) %>% summarise(raw = sum(orphans))
+rates_samples_cat <- rates_samples_categories %>% group_by(category, country) %>% 
+  summarise(li = quantile(raw, probs = 0.025),
+            ui = quantile(raw, probs = 0.975))
+rates_samples_gen <- rates_samples_gender %>% group_by(gender, country) %>% 
+  summarise(li = quantile(raw, probs = 0.025),
+            ui = quantile(raw, probs = 0.975))
+
 rates_categories <- dat_cat %>% group_by(category, country, who_region) %>% summarise(raw = sum(raw))
+rates_categories <- left_join(rates_categories, rates_samples_cat, by = c("category", "country"))
 rates_gender <- dat_cat %>% group_by(gender, country, who_region) %>% summarise(raw = sum(raw))
+rates_gender <- left_join(rates_gender, rates_samples_gen, by = c("gender", "country"))
 
 rates_categories <- left_join(rates_categories, pop_categories, by = c("country"="Country.Area.Name", "category"))
 rates_categories$raw_pop <- rates_categories$raw / rates_categories$population * 1000
+rates_categories$raw_pop_li <- rates_categories$li / rates_categories$population * 1000
+rates_categories$raw_pop_ui <- rates_categories$ui / rates_categories$population * 1000
 rates_categories$category <- factor(rates_categories$category, levels = c("0-4", "5-9", "10-17"))
 tmp_cat <- rates_categories[which(rates_categories$category == "10-17"),]
 rates_categories$country <- factor(rates_categories$country, levels = tmp_cat$country[order(tmp_cat$raw_pop)])
@@ -318,6 +336,8 @@ rates_categories$country <- factor(rates_categories$country, levels = tmp_cat$co
 rates_gender <- left_join(rates_gender, pop_gender, by = c("country"="Country.Area.Name", "gender"))
 rates_gender$gender <- ifelse(rates_gender$gender == "Male", "Paternal", "Maternal")
 rates_gender$raw_pop <- rates_gender$raw / rates_gender$population * 1000
+rates_gender$raw_pop_li <- rates_gender$li / rates_gender$population * 1000
+rates_gender$raw_pop_ui <- rates_gender$ui / rates_gender$population * 1000
 tmp_gender <- rates_gender[which(rates_gender$gender == "Paternal"),]
 rates_gender$country <- factor(rates_gender$country, levels = tmp_gender$country[order(tmp_gender$raw_pop)])
 
@@ -325,7 +345,7 @@ rates_gender$country <- factor(rates_gender$country, levels = tmp_gender$country
 
 p_cat <- ggplot(rates_categories) +
   geom_bar(aes(country, raw_pop, fill = who_region), stat = "identity") +
-  #geom_errorbar(aes(x=country, ymin =  raw_prop_li, ymax = raw_prop_ui)) + 
+  geom_errorbar(aes(x=country, ymin = raw_pop_li, ymax = raw_pop_ui)) + 
   facet_grid(~category) +
   theme_bw()  + theme(legend.title = element_blank(),
                       axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
@@ -334,7 +354,7 @@ p_cat <- ggplot(rates_categories) +
 
 p_gender <- ggplot(rates_gender) +
   geom_bar(aes(country, raw_pop, fill = who_region), stat = "identity") +
-  #geom_errorbar(aes(x=country, ymin =  raw_prop_li, ymax = raw_prop_ui)) + 
+  geom_errorbar(aes(x=country, ymin =  raw_pop_li, ymax = raw_pop_ui)) + 
   facet_grid(~gender) +
   theme_bw()  + theme(legend.title = element_blank(),
                       axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
