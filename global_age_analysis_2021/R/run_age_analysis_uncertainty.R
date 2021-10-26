@@ -13,7 +13,7 @@ source("global_age_analysis_2021/R/number_orphans_age.R")
 source("global_age_analysis_2021/R/process_number_children.R")
 source("global_age_analysis_2021/R/get_diff_deaths.R")
 
-n = 3
+n = 100
 
 run_age_analysis <- function(month = "_oct"){
   if (month != "_diff"){
@@ -802,7 +802,8 @@ run_age_analysis <- function(month = "_oct"){
   
 }
 
-
-run_age_analysis(month = "")
-run_age_analysis(month = "_oct")
+#run_age_analysis(month = "")
+#run_age_analysis(month = "_oct")
 run_age_analysis(month = "_diff")
+
+
