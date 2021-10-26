@@ -3,8 +3,9 @@ library(tidyverse)
 source("global_age_analysis_2021/R/utils.R")
 
 month = "_oct"
-n = 5
+n = 2
 percentages = readRDS(paste0("global_age_analysis_2021/data/age_outputs/age_data_scaled", month, ".RDS"))
+percentages_ = percentages
 samples <- readRDS(paste0("global_age_analysis_2021/data/age_outputs/samples_age_data_scaled", month, ".RDS"))
 samples$sample <- rep(rep(1:n, each = 6), times = 20)
 
@@ -164,7 +165,7 @@ write_csv(file = paste0("global_age_analysis_2021/age_table_1", month, ".csv"), 
 
 
 # Table 2: Percentages of ages and types ----------------------------------------------
-pretty_table <- percentages
+pretty_table <- percentages_
 pretty_table$raw_format <- sprintf("%.1f%% [%.1f%% - %.1f%%]", round(pretty_table$percent, digits = 1),
                                    round.choose(pretty_table$li_percent, 0.1, 0), round.choose(pretty_table$ui_percent, 0.1, 1))
 
@@ -183,12 +184,17 @@ write_csv(file = paste0("global_age_analysis_2021/age_table_2", month, ".csv"), 
 
 # Percentages pyramid ----------------------------------------------
 pyramid <- percentages
+pyramid$category <- ifelse(pyramid$category == "[0-5)", "0-4", 
+                           ifelse(pyramid$category == "[5-10)", "5-9", "10-17"))
+pyramid$category <- factor(pyramid$category, levels = c("0-4", "5-9", "10-17"))
+pyramid$gender <- ifelse(pyramid$gender == "Male", "Paternal", "Maternal")
 pyramid$percent <- ifelse(pyramid$gender == "Paternal", -pyramid$percent, pyramid$percent)
 pyramid$li_percent <- ifelse(pyramid$gender == "Paternal", -pyramid$li_percent, pyramid$li_percent)
 pyramid$ui_percent <- ifelse(pyramid$gender == "Paternal", -pyramid$ui_percent, pyramid$ui_percent)
 
 tmp_adolescents_paternal <- pyramid[which(pyramid$gender == "Paternal" & pyramid$category == "10-17"),]
-pyramid$country = factor(pyramid$country, levels = tmp_adolescents_paternal$country[order(tmp_adolescents_paternal$percent)])
+pyramid$country = factor(pyramid$country, levels = unique(tmp_adolescents_paternal$country[order(tmp_adolescents_paternal$percent)]))
+
 n1 <- ggplot(pyramid) + 
   geom_bar(data = subset(pyramid, gender == "Paternal"), stat = "identity", aes(x = category, y = percent/100, fill = gender)) + 
   geom_bar(data = subset(pyramid, gender == "Maternal"), stat = "identity", aes(x = category, y = percent/100, fill = gender)) + 
@@ -224,6 +230,8 @@ children_numbers_long <- gather(children_numbers, key = "category", value = "chi
 children_numbers_long$children = ifelse(children_numbers_long$gender == "Paternal", -children_numbers_long$children, 
                                         children_numbers_long$children)
 children_numbers_long = children_numbers_long[which(children_numbers_long$country != "Russia"),]
+children_numbers_long$country = factor(children_numbers_long$country,
+                                       levels = unique(tmp_adolescents_paternal$country[order(tmp_adolescents_paternal$percent)]))
 
 
 n2 <- ggplot(pyramid) + 

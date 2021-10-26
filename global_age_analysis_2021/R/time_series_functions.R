@@ -50,8 +50,8 @@ calculate_all_orphans_time_series <- function(c_data, date){
   study_ratios <- readRDS("global_age_analysis_2021/data/shiny/calculated_ratios.RDS")
   
   # Calculate
-  parents_orphans <- calculate_orphans_time(c_data, readRDS("global_age_analysis_2021/data/shiny/parent_coefficients.RDS"), 
-                                       study_ratios[,c(1,2)], date)
+  ps_orphans <- calculate_orphans_time(c_data, readRDS("global_age_analysis_2021/data/shiny/primary_secondary_coefficients.RDS"), 
+                                       study_ratios[,c(1,4)], date)
   
-  return (parents_orphans)
+  return (ps_orphans)
 }

@@ -59,7 +59,7 @@ process_euro_excess_new = function(){
     df = df %>% group_by(week) %>% mutate(avg_spain = mean(Spain[!is.na(Spain)]), 
                                           avg_france = mean(France[!is.na(France)]), 
                                           avg_italy = mean(Italy[!is.na(Italy)]), 
-                                          avg_poland = mean(Italy[!is.na(Poland)])) %>% ungroup() 
+                                          avg_poland = mean(Poland[!is.na(Poland)])) %>% ungroup() 
     df = unique(df %>% select(-year,-Spain, -France, -Italy, -Poland))
     df = as.data.table(df)
     dt = dt[which(dt$year %in% c('2020', '2021')),]

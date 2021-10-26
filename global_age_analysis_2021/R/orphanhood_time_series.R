@@ -61,7 +61,7 @@ combined_data <- left_join(data, deaths_country, by = c("country" = "Country.Reg
 dates <- names(combined_data)
 dates <- dates[9:(length(dates)-1)]
 
-parents = NULL
+ps_children_all = NULL
 
 # Could be re-written so just add new column on end of spreadsheet each day
 for (i in 1:length(dates)){
@@ -69,38 +69,41 @@ for (i in 1:length(dates)){
   c_data <- combined_data[,c("country", "tfr", "tfr_l",  "tfr_u", "sd", "who_region", "europe", dates[i])]
   c_data[,dates[i]][is.na(c_data[,dates[i]])] <- 0
   names(c_data) <- c("country", "tfr", "tfr_l", "tfr_u", "sd",  "who_region", "europe", "total_deaths")
-  orphans <- calculate_all_orphans_time_series(c_data, dates[i])
+  ps_children <- calculate_all_orphans_time_series(c_data, dates[i])
 
-  parents <- rbind(parents, orphans)
+  ps_children_all <- rbind(ps_children_all, ps_children)
 }
 
-children <- parents %>% select(country, date, central) %>%
+children <- ps_children_all %>% select(country, date, central) %>%
   group_by(date) %>% summarise(total = sum(central))
 
-parents$region = ifelse(parents$region == "Eastern European", "European", parents$region)
-children_region <- parents %>% select(country, region, date, central) %>%
+ps_children_all$region = ifelse(ps_children_all$region == "Eastern European", "European", ps_children_all$region)
+children_region <- ps_children_all %>% select(country, region, date, central) %>%
   group_by(date, region) %>% summarise(total = sum(central))
 
 deaths_jhu = d2 %>% select(-Country.Region, -X) %>% summarise_all(sum) 
-deaths_jhu_multiplier <- deaths_jhu*4629314/3180204 ###### Need to recalculate this for new data set
 
-d2_region <- left_join(deaths_country, data, by = c("Country.Region"= "country"))
+d2_region <- left_join(d2, data, by = c("Country.Region"= "country"))
 d2_region <- d2_region[!d2_region$Country.Region %in%  c("Summer Olympics 2020", "Taiwan"),] 
 d2_region$who_region =  ifelse(d2_region$who_region == "Eastern European", "European", d2_region$who_region)
-deaths_jhu_region = d2_region %>% select(-Country.Region, -X) %>% group_by(who_region) %>% summarise_all(sum) 
-
-dats <- sub('.', '', children$date)
-dats <- as.Date(dats, format = "%m.%d.%y")
+deaths_jhu_region = d2_region %>% select(-Country.Region, -X, -tfr, -tfr_l, -tfr_u, -sd, -europe) %>% 
+  group_by(who_region) %>% summarise_all(sum) 
 
 deaths_jhu_region_long <- gather(deaths_jhu_region, key = "date", value =  "deaths", -who_region)
 deaths_jhu_region_long$date  <- str_remove(deaths_jhu_region_long$date,  "X")
 deaths_jhu_region_long$date <- as.Date(deaths_jhu_region_long$date, format = "%m.%d.%y")
 
+tmp = deaths_jhu_region_long[which(deaths_jhu_region_long$date == max(deaths_jhu_region_long$date)),]
+print(sum(tmp$deaths))
+
+dats <- sub('.', '', children$date)
+dats <- as.Date(dats, format = "%m.%d.%y")
+
 df <- data.frame(date = as.Date(dats), 
                  orphans = children$total)
 df <- df[order(df$date),]
 df$covid = unlist(deaths_jhu)
-df$excess = unlist(deaths_jhu_multiplier)
+print(df$covid[df$date == max(df$date)])
 
 children_region$date <- str_remove(children_region$date,  "X")
 children_region$date <- as.Date(children_region$date, format = "%m.%d.%y")
@@ -108,6 +111,7 @@ children_region$date <- as.Date(children_region$date, format = "%m.%d.%y")
 df_region <- children_region
 names(df_region)  <- c("date", "region", "orphans")
 df_region <- df_region[order(df_region$date),]
+sum(deaths_jhu_region_long$deaths)
 
 df_region = left_join(df_region, deaths_jhu_region_long,  by = c("region"= "who_region", "date"))
 
@@ -124,10 +128,9 @@ p_global <- ggplot(df_long %>% filter(date >= "2020-03-01" & key != "Excess deat
   geom_line(aes(date, value/1e6, col = key)) + 
   geom_vline(xintercept = as.Date("2021-04-30"), linetype = "dashed") + 
   theme_bw() + 
-  scale_y_continuous(expand  = expansion(0,0), limits = c(0, 5.1))  + 
-  #annotate("text", label = "Excess Deaths \n(millions)", y = 6, x = as.Date("2021-10-15"), size = 3, colour = "black", hjust=1) +
-  annotate("text", label = "COVID-19 deaths \n(millions)", y = 3.9, x = as.Date("2021-10-15"), size = 3, colour = "black", hjust=1) +
-  annotate("text", label = "Orphanhood \n(millions)", y = 2.8, x = as.Date("2021-10-15"), size = 3, colour = "black", hjust=1) +
+  scale_y_continuous(expand  = expansion(0,0), limits = c(0, 6.0))  + 
+  annotate("text", label = "COVID-19 deaths \n(millions)", y = 4.1, x = as.Date("2021-10-15"), size = 3, colour = "black", hjust=1) +
+  annotate("text", label = "Orphanhood &/or caregiver loss \n(millions)", y = 5.75, x = as.Date("2021-10-15"), size = 3, colour = "black", hjust=1) +
   scale_x_date(expand  = expansion(0,0), date_breaks = "1 month", labels = date_format("%b-%Y")) +
   theme(legend.position = "bottom", axis.text.x = element_text(angle = 45, hjust=1)) +  
   xlab("")  + ylab("Millions of people") + 
@@ -149,4 +152,4 @@ p_region <- ggplot(df_region_long %>% filter(date >= "2020-03-01")) +
 
 p <- ggarrange(p_global, p_region, ncol = 1, labels = "AUTO", common.legend = TRUE, legend= "bottom")
 print(p)
-ggsave("global_age_analysis_2021/figures/fig_1_time_series_line.pdf", p, width =  10,  height = 12)
+ggsave("global_age_analysis_2021/figures/fig_1_time_series_line.pdf", p, width =  12,  height = 12)
