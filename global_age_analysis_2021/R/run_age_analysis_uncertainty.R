@@ -802,8 +802,8 @@ run_age_analysis <- function(month = "_oct"){
   
 }
 
-#run_age_analysis(month = "")
-#run_age_analysis(month = "_oct")
+run_age_analysis(month = "")
+run_age_analysis(month = "_oct")
 run_age_analysis(month = "_diff")
 
 
