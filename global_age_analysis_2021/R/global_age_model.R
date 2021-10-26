@@ -224,6 +224,17 @@ ui_maternal <- quantile(global_0_4_female + global_5_9_female + global_10_17_fem
 li_paternal <- quantile(global_0_4_male + global_5_9_male + global_10_17_male, probs = 0.025)
 ui_paternal <- quantile(global_0_4_male + global_5_9_male + global_10_17_male, probs = 0.975)
 
+li_0_4_percent <- quantile((global_0_4_female + global_0_4_male)/totals, probs = 0.025)
+ui_0_4_percent <- quantile((global_0_4_female + global_0_4_male)/totals, probs = 0.975)
+li_5_9_percent <- quantile((global_5_9_female + global_5_9_male)/totals, probs = 0.025)
+ui_5_9_percent <- quantile((global_5_9_female + global_5_9_male)/totals, probs = 0.975)
+li_10_17_percent <- quantile((global_10_17_female + global_10_17_male)/totals, probs = 0.025)
+ui_10_17_percent <- quantile((global_10_17_female + global_10_17_male)/totals, probs = 0.975)
+li_maternal_percent <- quantile((global_0_4_female + global_5_9_female + global_10_17_female)/totals, probs = 0.025)
+ui_maternal_percent <- quantile((global_0_4_female + global_5_9_female + global_10_17_female)/totals, probs = 0.975)
+li_paternal_percent <- quantile((global_0_4_male + global_5_9_male + global_10_17_male)/totals, probs = 0.025)
+ui_paternal_percent <- quantile((global_0_4_male + global_5_9_male + global_10_17_male)/totals, probs = 0.975)
+
 global_totals = data.frame("country" = "Global extrapolation",
                            "[0-5)" = sprintf("%s [%s - %s]",
                                              format(round(num_0_4_male_mean + num_0_4_female_mean, -2),  big.mark = ",", trim = TRUE),
@@ -249,7 +260,31 @@ global_totals = data.frame("country" = "Global extrapolation",
                                               format(round(num_0_4_male_mean + num_5_9_male_mean + num_10_17_male_mean, -2),  big.mark = ",", trim = TRUE),
                                               format(round.choose(li_paternal, 100, 0), big.mark = ",", trim = TRUE),
                                               format(round.choose(ui_paternal, 100, 1), big.mark = ",", trim = TRUE)))
-saveRDS(global_totals, "global_age_analysis_2021/data/age_outputs/global_extrapolation_totals.RDS")
+
+global_totals_2 = data.frame("country" = "Global extrapolation percentages",
+                           "[0-5)" = sprintf("%s%% [%s%% - %s%%]",
+                                             format(round(100*(num_0_4_male_mean + num_0_4_female_mean)/sum(mean), 1),  big.mark = ",", trim = TRUE),
+                                             format(round.choose(100*li_0_4_percent, 0.1, 0), big.mark = ",", trim = TRUE),
+                                             format(round.choose(100*ui_0_4_percent, 0.1, 1), big.mark = ",")), 
+                           "[5-10)" = sprintf("%s%% [%s%% - %s%%]",
+                                              format(round(100*(num_5_9_male_mean + num_5_9_female_mean)/sum(mean), 1),  big.mark = ",", trim = TRUE),
+                                              format(round.choose(100*li_5_9_percent, 0.1, 0), big.mark = ",", trim = TRUE),
+                                              format(round.choose(100*ui_5_9_percent, 0.1, 1), big.mark = ",", trim = TRUE)), 
+                           "[10-18)" = sprintf("%s%% [%s%% - %s%%]",
+                                               format(round(100*(num_10_17_male_mean + num_10_17_female_mean)/sum(mean), 1),  big.mark = ",", trim = TRUE),
+                                               format(round.choose(100*li_10_17_percent, 0.1, 0), big.mark = ",", trim = TRUE),
+                                               format(round.choose(100*ui_10_17_percent, 0.1, 1), big.mark = ",", trim = TRUE)),
+                           "Total" = sprintf("-"),
+                           "Maternal" = sprintf("%s%% [%s%% - %s%%]",
+                                                format(round(100*(num_0_4_female_mean + num_5_9_female_mean + num_10_17_female_mean)/sum(mean), 1),  big.mark = ",", trim = TRUE),
+                                                format(round.choose(100*li_maternal_percent, 0.1, 0), big.mark = ",", trim = TRUE),
+                                                format(round.choose(100*ui_maternal_percent, 0.1, 1), big.mark = ",", trim = TRUE)),
+                           "Paternal" = sprintf("%s%% [%s%% - %s%%]",
+                                                format(round(100*(num_0_4_male_mean + num_5_9_male_mean + num_10_17_male_mean)/sum(mean), 1),  big.mark = ",", trim = TRUE),
+                                                format(round.choose(100*li_paternal_percent, 0.1, 0), big.mark = ",", trim = TRUE),
+                                                format(round.choose(100*ui_paternal_percent, 0.1, 1), big.mark = ",", trim = TRUE)))
+saveRDS(rbind(global_totals, global_totals_2), 
+        "global_age_analysis_2021/data/age_outputs/global_extrapolation_totals.RDS")
 
 print(sprintf("Mean totals of deterministic model: %f", sum(mean)))
 
@@ -364,7 +399,7 @@ p_global_b <- ggplot(reg_percent_summary %>% filter(region != "Global")) +
 p_global <- ggarrange(p_global_a, p_global_b, common.legend = TRUE, 
                       labels = "AUTO", legend="bottom", widths = c(1, 3))
 print(p_global)
-ggsave("global_age_analysis_2021/figures/fig_3_global_orphans_percentage.pdf", p_global, height = 7)
+ggsave("global_age_analysis_2021/figures/fig_4_global_orphans_percentage.pdf", p_global, height = 7)
 
 
 # ---------- Calculating total numbers of 10-17s

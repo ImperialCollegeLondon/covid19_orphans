@@ -55,7 +55,7 @@ bands_5_year_long <- gather(bands_5_year_prop, key = "Gender", value = 'Proporti
 
 # Make plot of population pyramids for study countries
 study_countries = c("Argentina", "Brazil", "Colombia", "England & Wales", "France", "Germany", "India", "Iran", "Italy", "Kenya", 
-                    "Malawi", "Mexico", "Nigeria", "Peru", "Philippines", "Russia", "South Africa", "Spain", "United States", "Zimbabwe")
+                    "Malawi", "Mexico", "Nigeria", "Peru", "Philippines", "Poland", "Russia", "South Africa", "Spain", "United States", "Zimbabwe")
 study_5_years <- bands_5_year_long[which(bands_5_year_long$Country.Area.Name %in% study_countries),]
 n1 <- ggplot(study_5_years) + 
   geom_bar(data = subset(study_5_years, Gender == "female_prop"), stat = "identity", aes(x = age, y = Proportion, fill = Gender)) + 
@@ -124,4 +124,18 @@ spa = sum(spa$Population[which(spa$GROUP > 4 & spa$GROUP < 10)]) / sum(spa$Popul
 ken = dat[which(dat$Country.Area.Name == "Kenya"),]
 ken = sum(ken$Population[which(ken$GROUP > 4 & ken$GROUP < 10)]) / sum(ken$Population[which(ken$GROUP < 18)])
 
+
+#------
+dat_study = dat[which(dat$Country.Area.Name %in% study_countries),]
+dat_study = dat_study[which(dat_study$GROUP < 18),]
+dat_study$category = ifelse(dat_study$GROUP < 5, "0-4", 
+                            ifelse(dat_study$GROUP > 5 &  dat_study$GROUP < 10, "5-9", "10-17"))
+dat_study_group = dat_study %>%
+  group_by(Country.Area.Name, category) %>%
+  summarise("Male" = sum(Male.Population),
+            "Female" = sum(Female.Population))
+
+
+dat_study_group_long <- gather(dat_study_group, key = "gender", value = "population", -category, -Country.Area.Name)
+saveRDS(dat_study_group_long, "global_age_analysis_2021/data/grouped_age_sex_population.RDS")
 
