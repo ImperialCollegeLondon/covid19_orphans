@@ -13,7 +13,7 @@ source("global_age_analysis_2021/R/number_orphans_age.R")
 source("global_age_analysis_2021/R/process_number_children.R")
 source("global_age_analysis_2021/R/get_diff_deaths.R")
 
-n = 2
+n = 3
 
 run_age_analysis <- function(month = "_oct"){
   if (month != "_diff"){
@@ -21,7 +21,7 @@ run_age_analysis <- function(month = "_oct"){
   }
 
   
-  set.seed(1)
+  set.seed(3)
   
   # Argentina -----------------------------------------------------------------
   cat(sprintf("Running Argentina======\n"))

@@ -8,8 +8,12 @@ library(ggrepel)
 library(brms)
 library(matrixStats)
 library(gridExtra)
+library(xtable)
+library(ggpubr)
 source("global_age_analysis_2021/R/brms_joint_fit.R")
 source("global_age_analysis_2021/R/utils.R")
+
+set.seed = 1
 
 month = "_oct"
 data = readRDS(paste0("global_age_analysis_2021/data/age_outputs/age_data_scaled", month, ".RDS"))
@@ -137,8 +141,8 @@ response_wide$response <- with(response_wide,
                                      `[5-10)_Male`, `[10-18)_Female`, `[10-18)_Male`))
 formula = response | trials(N) ~ parents + old_parents + grandparents + 
   pre_school + primary_school + secondary_school + gdp
-mod = joint_fit(all_data = data, data = response_wide, formula, plot = TRUE, loo = FALSE)
-saveRDS(mod, "global_age_analysis_2021/data/age_outputs/global_age_fit.RDS")
+#mod = joint_fit(all_data = data, data = response_wide, formula, plot = TRUE, loo = FALSE)
+#saveRDS(mod, "global_age_analysis_2021/data/age_outputs/global_age_fit.RDS")
 mod = readRDS("global_age_analysis_2021/data/age_outputs/global_age_fit.RDS")
 
 # Out of sample prediction
@@ -155,22 +159,43 @@ for (country in sample_percent_wide$country){
   prediction[which(prediction$country == country), 1:6] = sample_percent_wide[sample_percent_wide$country == country, 2:7]/100
 }
 
+write.csv(prediction, file = "global_age_analysis_2021/data/age_outputs/age_prediction.csv")
+
 # Read in orphanhood samples
 samples <- readRDS("global_age_analysis_2021/data/orphanhood_samples.RDS")
 mean_values <- readRDS("global_age_analysis_2021/data/country_estimates_pa.RDS")
-print(sprintf("Global sum of read in data: %f", sum(mean_values$mean)))
+#print(sprintf("Global sum of read in data: %f", sum(mean_values$mean)))
+mean_values_format <- select(mean_values, country, text_pa)
 mean_values <- select(mean_values, country, mean)
 
 totals_tmp = colSums(samples[,1:1000])
-print(sprintf("Mean of column samples post reading in: %f [%f - %f]", mean(totals_tmp), 
-              quantile(totals_tmp, probs = 0.025), quantile(totals_tmp, probs = 0.975)))
+g_tot <- sprintf("%s [%s - %s]", 
+                 format(round(sum(mean_values$mean), -2), big.mark = ",", trim = TRUE), 
+                 format(round.choose(quantile(totals_tmp, probs = 0.025), 100, 0), big.mark = ",", trim = TRUE), 
+                 format(round.choose(quantile(totals_tmp, probs = 0.975), 100, 1), big.mark = ",", trim = TRUE))
+print(g_tot)
 
 dat <- left_join(prediction, samples, by = c("country"))
-dat_mean <- left_join(prediction, mean_values)
+dat_mean <- left_join(prediction, mean_values, by = c("country"))
+
+
+data_save <- left_join(mean_values_format, prediction, by = c("country"))
+names(data_save) <- c("Country", "Total Orphans", "Maternal 0-4", "Paternal 0-4", "Maternal 5-9", "Paternal 5-9",
+                      "Maternal 10-17", "Paternal 10-17")
+data_save$`Maternal 0-4` = sprintf("%.1f%%", data_save$`Maternal 0-4` * 100)
+data_save$`Paternal 0-4` = sprintf("%.1f%%", data_save$`Paternal 0-4` * 100)
+data_save$`Maternal 5-9` = sprintf("%.1f%%", data_save$`Maternal 5-9` * 100)
+data_save$`Paternal 5-9` = sprintf("%.1f%%", data_save$`Paternal 5-9` * 100)
+data_save$`Maternal 10-17` = sprintf("%.1f%%", data_save$`Maternal 10-17` * 100)
+data_save$`Paternal 10-17` = sprintf("%.1f%%", data_save$`Paternal 10-17` * 100)
+write.csv(data_save, file = "global_age_analysis_2021/data/age_outputs/country_specific_totals.csv")
+
+tab<-xtable(data_save)
+#print(tab, include.rownames=FALSE)
 
 totals = colSums(dat[,8:1007])
-print(sprintf("Mean of column samples once changed the data: %f [%f - %f ]", mean(totals), 
-              quantile(totals, probs = 0.025), quantile(totals, probs = 0.975)))
+#print(sprintf("Mean of column samples once changed the data: %f [%f - %f ]", mean(totals), 
+#              quantile(totals, probs = 0.025), quantile(totals, probs = 0.975)))
 
 # Weight samples by country specific percentages in different ages
 num_10_17_male <- dat$`[10-18)_Male` * dat[,8:1007]
@@ -285,7 +310,7 @@ global_totals_2 = data.frame("country" = "Global extrapolation percentages",
 saveRDS(rbind(global_totals, global_totals_2), 
         "global_age_analysis_2021/data/age_outputs/global_extrapolation_totals.RDS")
 
-print(sprintf("Mean totals of deterministic model: %f", sum(mean)))
+#print(sprintf("Mean totals of deterministic model: %f", sum(mean)))
 
 global_percent_summary <- data.frame(mean = mean_percent * 100,
                                      li = li * 100,
