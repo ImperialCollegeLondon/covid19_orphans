@@ -5,7 +5,7 @@ library(ggpubr)
 source("global_age_analysis_2021/R/utils.R")
 
 month = "_oct"
-n = 1000
+n = 2
 percentages = readRDS(paste0("global_age_analysis_2021/data/age_outputs/age_data_scaled", month, ".RDS"))
 percentages_ = percentages
 samples <- readRDS(paste0("global_age_analysis_2021/data/age_outputs/samples_age_data_scaled", month, ".RDS"))
@@ -378,8 +378,15 @@ percentages_diff$category <- ifelse(percentages_diff$category == "[0-5)", "0-4",
                                ifelse(percentages_diff$category == "[5-10)", "5-9", "10-17"))
 
 
-percentages_initial = percentages
+percentages_initial = readRDS(paste0("global_age_analysis_2021/data/age_outputs/age_data_scaled.RDS"))
 percentages_initial$date = "Initial study"
+percentages_initial$group <- paste(percentages_initial$gender, percentages_initial$category)
+percentages_initial$group <- factor(percentages_initial$group, levels = c("Female [0-5)", "Male [0-5)", "Female [5-10)",
+                                                                    "Male [5-10)", "Female [10-18)", "Male [10-18)"),
+                                 labels = c("Maternal orphans 0-4", "Paternal orphans 0-4", "Maternal orphans 5-9",
+                                            "Paternal orphans 5-9", "Maternal orphans 10-17", "Paternal orphans 10-17"))
+percentages_initial$category <- ifelse(percentages_initial$category == "[0-5)", "0-4", 
+                                    ifelse(percentages_initial$category == "[5-10)", "5-9", "10-17"))
 
 percentages_all <- rbind(percentages_initial, percentages_diff)
 
