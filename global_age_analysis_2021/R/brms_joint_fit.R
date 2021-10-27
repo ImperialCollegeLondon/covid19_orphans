@@ -76,8 +76,8 @@ joint_fit <- function(all_data, data, formula, plot = FALSE, loo = FALSE){
     p <- cowplot::plot_grid(p_m_10_17, p_p_10_17,
                             p_m_5_9, p_p_5_9,
                             p_m_0_4, p_p_0_4,
-                            ncol = 2)
-    ggsave("figures/observed_predicted.png", p, width = 8, height = 10)
+                            ncol = 2, labels = "AUTO")
+    ggsave("global_age_analysis_2021/figures/observed_predicted.png", p, width = 8, height = 10)
   }
   
   if (loo == TRUE){

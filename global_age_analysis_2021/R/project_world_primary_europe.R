@@ -48,7 +48,7 @@ p_fit_p <- ggplot(subset) +
   geom_point(aes(tfr, primary_ratio)) + 
   geom_line(data = line_all, aes(x, y0), col = 'black') + 
   geom_line(data = line_all, aes(x, y1), col = 'red') + 
-  xlab("Total fertility rate") + ylab("Ratio of children orphaned or losing primary caregivers \nto deaths of parents or primary caregivers") + 
+  xlab("Total fertility rate") + ylab("Ratio of children orphaned or losing primary caregivers \nto deaths") + 
   theme_bw()
 p_fit_p_label <- p_fit_p + geom_text_repel(aes(x = tfr, y = primary_ratio, label = country), size = 3, max.overlaps = 100)
 print(p_fit_p_label)
@@ -123,8 +123,8 @@ p_obs_pred_p = ggplot(joined %>% filter(all != 0)) +
   geom_point(data = joined %>% filter(country == "I.R. Iran"), 
              aes(primary_ratio, calculated_primary_ratio), col = "red") + 
   geom_abline(slope = 1, intercept = 0) + 
-  xlab("Ratio of children orphaned or losing primary caregivers \nto deaths of parents or primary caregivers (observed)") + 
-  ylab("Ratio of children orphaned or losing primary caregivers \nto deaths of parents or primary caregivers (predicted)") + 
+  xlab("Ratio of children orphaned or losing primary caregivers \nto deaths (observed)") + 
+  ylab("Ratio of children orphaned or losing primary caregivers \nto deaths (predicted)") + 
   geom_text_repel(aes(x = primary_ratio, y = calculated_primary_ratio, label = country, col = colour), 
                   size = 2, max.overlaps = 100) +
   scale_color_manual(values = c("black", "red")) + 
@@ -161,7 +161,7 @@ print("Range loo")
 print(loo_combined[which(loo_combined$orphans == min(loo_combined$orphans)),])
 print(loo_combined[which(loo_combined$orphans == max(loo_combined$orphans)),])
 
-#save(p_fit_p_label, p_obs_pred_p, p_loo_p, file = "global_age_analysis_2021/data/extrapolate_primary.RData")
+save(p_fit_p_label, p_obs_pred_p, p_loo_p, file = "global_age_analysis_2021/data/extrapolate_primary.RData")
 
 mae <- abs(loo_combined$orphans - all_country_fit)
 print(sprintf("MAE LOO: %0.f", mean(mae)))

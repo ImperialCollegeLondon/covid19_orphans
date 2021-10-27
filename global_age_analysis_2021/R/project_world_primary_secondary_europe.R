@@ -59,7 +59,7 @@ p_fit_ps <- ggplot(subset) +
   geom_line(data = line_all, aes(x, y0), col = 'black') + 
   geom_line(data = line_all, aes(x, y1), col = 'red') + 
   xlab("Total fertility rate") + 
-  ylab("Ratio of children orphaned and/or losing caregivers (primary or secondary) \nto deaths of parents and/or caregivers (primary or secondary)") + 
+  ylab("Ratio of children orphaned and/or losing caregivers (primary or secondary) \nto deaths") + 
   theme_bw()
 p_fit_ps_label <- p_fit_ps + geom_text_repel(aes(x = tfr, y = ratio, label = country), size = 3, max.overlaps = 100)
 print(p_fit_ps_label)
@@ -134,8 +134,8 @@ p_obs_pred_ps = ggplot(joined %>% filter(all != 0)) +
   geom_point(aes(ratio, calculated_ratio)) + 
   geom_point(data = joined %>% filter(country == "I.R. Iran"), aes(ratio, calculated_ratio), col = "red") + 
   geom_abline(slope = 1, intercept = 0) + 
-  xlab("Ratio of children orphaned and/or losing caregivers (primary or secondary) \nto deaths of parents and/or caregivers (primary or secondary) (observed)") + 
-  ylab("Ratio of children orphaned and/or losing caregivers (primary or secondary) \nto deaths of parents and/or caregivers (primary or secondary) (predicted)") + 
+  xlab("Ratio of children orphaned and/or losing caregivers (primary or secondary) \nto deaths (observed)") + 
+  ylab("Ratio of children orphaned and/or losing caregivers (primary or secondary) \nto deaths (predicted)") + 
   geom_text_repel(aes(x = ratio, y = calculated_ratio, label = country, col = colour), size = 2, max.overlaps = 200) +
   scale_color_manual(values = c("black", "red")) + 
   theme_bw() + theme(legend.position = "none")
@@ -171,7 +171,7 @@ print("Range loo")
 print(loo_combined[which(loo_combined$orphans == min(loo_combined$orphans)),])
 print(loo_combined[which(loo_combined$orphans == max(loo_combined$orphans)),])
 
-#save(p_fit_ps_label, p_obs_pred_ps, p_loo_ps, file = "global_age_analysis_2021/data/extrapolate_primary_secondary.RData")
+save(p_fit_ps_label, p_obs_pred_ps, p_loo_ps, file = "global_age_analysis_2021/data/extrapolate_primary_secondary.RData")
 
 mae <- abs(loo_combined$orphans - all_country_fit)
 print(sprintf("MAE LOO: %0.f", mean(mae)))
