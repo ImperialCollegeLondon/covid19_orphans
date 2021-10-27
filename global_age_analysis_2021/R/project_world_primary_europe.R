@@ -24,6 +24,9 @@ joined$sd = (joined$tfr_u-joined$tfr_l)/(2*1.96)
 
 joined$europe = ifelse(joined$who_region == "European", 1, 0)
 
+prop_double <- sum(subset$sg_both + subset$both) / sum(subset$primary)
+print(sprintf("Primary prop double: %f", prop_double*100))
+
 # Calculate primary ratio
 joined$primary <- ifelse(is.na(joined$primary), 0, joined$primary)
 joined$primary_ratio <- joined$primary_loss/joined$deaths
@@ -84,6 +87,10 @@ formatted = sprintf("Primary orphans: %0.f [%0.f - %0.f]",
               round(sum(joined$final_primary_orphans), -2), round.choose(quantile(orphans_samples, probs = 0.025), 100, 0), 
               round.choose(quantile(orphans_samples, probs = 0.975), 100, 1))
 print(formatted)
+formatted_double <- sprintf("Primary double orphans: %0.f [%0.f - %0.f]", 
+                            round(sum(joined$final_primary_orphans)*prop_double, -2), round.choose(quantile(orphans_samples, probs = 0.025)*prop_double, 100, 0), 
+                            round.choose(quantile(orphans_samples, probs = 0.975)*prop_double, 100, 1))
+print(formatted_double)
 saveRDS(sprintf("%s [%s - %s]", 
                 format(round(sum(joined$final_primary_orphans), -2), big.mark = ",", trim = TRUE), 
                 format(round.choose(quantile(orphans_samples, probs = 0.025), 100, 0), big.mark = ",", trim = TRUE), 
@@ -154,8 +161,8 @@ for (i in 1:length(subset$country)){
 
 loo_combined = data.frame("country" = subset$country,
                           "orphans" = loo_orphans)
-#p_loo_p <- p + geom_line(data = line_all, aes(x, y), col = 'red') +
-#  geom_text_repel(aes(x = tfr, y = primary_ratio, label = country), max.overlaps = 100)
+p_loo_p <- p + geom_line(data = line_all, aes(x, y), col = 'red') +
+  geom_text_repel(aes(x = tfr, y = primary_ratio, label = country), max.overlaps = 100)
 
 print("Range loo")
 print(loo_combined[which(loo_combined$orphans == min(loo_combined$orphans)),])
@@ -166,3 +173,4 @@ save(p_fit_p_label, p_obs_pred_p, p_loo_p, file = "global_age_analysis_2021/data
 mae <- abs(loo_combined$orphans - all_country_fit)
 print(sprintf("MAE LOO: %0.f", mean(mae)))
 
+print(sprintf("Prop p orphans study: %f", sum(subset$primary)/sum(joined$final_primary_orphans)*100))

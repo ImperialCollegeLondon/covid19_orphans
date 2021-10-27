@@ -14,5 +14,3 @@ p_all <- cowplot::plot_grid(p_fit_pa_label, p_obs_pred_pa,
                             p_fit_ps_label, p_obs_pred_ps, labels = "AUTO", ncol = 2)
 cowplot::save_plot("global_age_analysis_2021/figures/logistic_fit.pdf", p_all, base_width = 12, base_height = 18)
 
-p <- cowplot::plot_grid(p_loo_pa, p_loo_p, p_loo_ps, labels = "AUTO", ncol = 3)
-cowplot::save_plot("global_age_analysis_2021/figures/loo_fit.pdf", p, base_width = 18, base_height =6)

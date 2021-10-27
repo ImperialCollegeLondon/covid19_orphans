@@ -27,6 +27,9 @@ joined$europe = ifelse(joined$who_region == "European", 1, 0)
 # Select a subset
 subset <- joined[which(joined$all != 0),]
 
+prop_double <- sum(subset$mg_both + subset$sg_both + subset$both) / sum(subset$all)
+print(sprintf("Primary + secondary prop double: %f", prop_double*100))
+
 # Exclude Iran from fit
 subset = subset[which(!subset$country %in% c("I.R. Iran")),]
 print(sprintf("Pearsons r^2 primary and/or seconday: %f",  
@@ -93,6 +96,10 @@ formatted <- sprintf("Primary and/or secondary orphans: %0.f [%0.f - %0.f]",
               round(sum(joined$final_orphans), -2), round.choose(quantile(orphans_samples, probs = 0.025), 100, 0), 
               round.choose(quantile(orphans_samples, probs = 0.975), 100, 1))
 print(formatted)
+formatted_double <- sprintf("Primary and/or secondary double orphans: %0.f [%0.f - %0.f]", 
+                     round(sum(joined$final_orphans)*prop_double, -2), round.choose(quantile(orphans_samples, probs = 0.025)*prop_double, 100, 0), 
+                     round.choose(quantile(orphans_samples, probs = 0.975)*prop_double, 100, 1))
+print(formatted_double)
 saveRDS(sprintf("%s [%s - %s]", 
                 format(round(sum(joined$final_orphans), -2), big.mark = ",", trim = TRUE), 
                 format(round.choose(quantile(orphans_samples, probs = 0.025), 100, 0), big.mark = ",", trim = TRUE), 
@@ -164,8 +171,8 @@ for (i in 1:length(subset$country)){
 
 loo_combined = data.frame("country" = subset$country,
                           "orphans" = loo_orphans)
-#p_loo_ps <- p + geom_line(data = line_all, aes(x, y), col = 'red') +
-#  geom_text_repel(aes(x = tfr, y = ratio, label = country), max.overlaps = 100)
+p_loo_ps <- p + geom_line(data = line_all, aes(x, y), col = 'red') +
+  geom_text_repel(aes(x = tfr, y = ratio, label = country), max.overlaps = 100)
 
 print("Range loo")
 print(loo_combined[which(loo_combined$orphans == min(loo_combined$orphans)),])
@@ -176,4 +183,5 @@ save(p_fit_ps_label, p_obs_pred_ps, p_loo_ps, file = "global_age_analysis_2021/d
 mae <- abs(loo_combined$orphans - all_country_fit)
 print(sprintf("MAE LOO: %0.f", mean(mae)))
 
+print(sprintf("Prop ps orphans study: %f", sum(subset$all)/sum(joined$final_orphans)*100))
 
