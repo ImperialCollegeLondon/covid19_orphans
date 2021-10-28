@@ -8,7 +8,7 @@ source("global_age_analysis_2021/R/run_global_extrapolation_europe.R")
 source("global_age_analysis_2021/R/run_age_analysis_uncertainty.R")
 
 # # Run global age model
-source("global_age_analysis_2021/R/global_age_model.R")
+#source("global_age_analysis_2021/R/global_age_model.R")
 # 
 # # Makes time series plot
 #source("global_age_analysis_2021/R/orphanhood_time_series.R")
