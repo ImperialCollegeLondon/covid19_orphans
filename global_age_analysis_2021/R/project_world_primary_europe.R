@@ -24,9 +24,6 @@ joined$sd = (joined$tfr_u-joined$tfr_l)/(2*1.96)
 
 joined$europe = ifelse(joined$who_region == "European", 1, 0)
 
-prop_double <- sum(subset$sg_both + subset$both) / sum(subset$primary)
-print(sprintf("Primary prop double: %f", prop_double*100))
-
 # Calculate primary ratio
 joined$primary <- ifelse(is.na(joined$primary), 0, joined$primary)
 joined$primary_ratio <- joined$primary_loss/joined$deaths
@@ -35,6 +32,9 @@ joined$primary_ratio <- joined$primary_loss/joined$deaths
 subset <- joined[which(joined$primary_ratio != 0),]
 subset = subset[which(!subset$country %in% c("I.R. Iran")),]
 print(sprintf("Pearsons r^2 primary: %f",  cor(subset$tfr, subset$primary_ratio, method = "pearson") ))
+
+prop_double <- sum(subset$sg_both + subset$both) / sum(subset$primary)
+print(sprintf("Primary prop double: %f", prop_double*100))
 
 pars = c(-1, 1, 1, 1)
 output_p = optim(pars, error_primary, data=subset, control = c(abstol = 1e-12))
@@ -123,6 +123,18 @@ orphans_sample = orphans_sample[orphans_sample$mean > 0,]
 orphans_sample = orphans_sample[order(orphans_sample$region, orphans_sample$country),]
 saveRDS(orphans_sample, "global_age_analysis_2021/data/country_estimates_p.RDS")
 
+# Group data for region totals
+joined$who_region <- ifelse(joined$who_region == "Eastern European", "European", joined$who_region)
+estimates_primary_orphans[which(joined$all != 0),] = joined$final_primary_orphans[which(joined$all != 0)]
+reg_mean <- joined %>% group_by(who_region) %>% summarise(mean = sum(final_primary_orphans))
+reg_samples <- cbind(data.frame(estimates_primary_orphans), joined$who_region)
+reg_samples_ <- reg_samples %>%
+  group_by(joined$who_region) %>%
+  summarise_all(sum)
+intervals = rowQuantiles(as.matrix(reg_samples_[,2:1000]), probs = c(0.025, 0.975))
+reg <- cbind(reg_mean, intervals)
+saveRDS(reg, "global_age_analysis_2021/data/age_outputs/reg_p.RDS")
+
 joined$colour = ifelse(joined$country == "I.R. Iran", 1, 0)
 joined$colour = factor(joined$colour)
 p_obs_pred_p = ggplot(joined %>% filter(all != 0)) +
@@ -161,14 +173,14 @@ for (i in 1:length(subset$country)){
 
 loo_combined = data.frame("country" = subset$country,
                           "orphans" = loo_orphans)
-p_loo_p <- p + geom_line(data = line_all, aes(x, y), col = 'red') +
-  geom_text_repel(aes(x = tfr, y = primary_ratio, label = country), max.overlaps = 100)
+#p_loo_p <- p + geom_line(data = line_all, aes(x, y), col = 'red') +
+  #geom_text_repel(aes(x = tfr, y = primary_ratio, label = country), max.overlaps = 100)
 
 print("Range loo")
 print(loo_combined[which(loo_combined$orphans == min(loo_combined$orphans)),])
 print(loo_combined[which(loo_combined$orphans == max(loo_combined$orphans)),])
 
-save(p_fit_p_label, p_obs_pred_p, p_loo_p, file = "global_age_analysis_2021/data/extrapolate_primary.RData")
+save(p_fit_p_label, p_obs_pred_p, file = "global_age_analysis_2021/data/extrapolate_primary.RData")
 
 mae <- abs(loo_combined$orphans - all_country_fit)
 print(sprintf("MAE LOO: %0.f", mean(mae)))

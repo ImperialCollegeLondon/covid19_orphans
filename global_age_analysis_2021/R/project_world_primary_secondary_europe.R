@@ -109,7 +109,7 @@ saveRDS(sprintf("%s [%s - %s]",
 
 all_country_fit <- sum(joined$final_orphans)
   
-# Separate out by regions
+# Separate out by countries
 mean = rowMeans(estimates_orphans)
 li = rowQuantiles(estimates_orphans, probs = 0.025)
 ui = rowQuantiles(estimates_orphans, probs = 0.975)
@@ -133,6 +133,18 @@ orphans_sample = orphans_sample[orphans_sample$mean > 0,]
 # Sort
 orphans_sample = orphans_sample[order(orphans_sample$region, orphans_sample$country),]
 saveRDS(orphans_sample, "global_age_analysis_2021/data/country_estimates_ps.RDS")
+
+# Group data for region totals
+joined$who_region <- ifelse(joined$who_region == "Eastern European", "European", joined$who_region)
+estimates_orphans[which(joined$all != 0),] = joined$final_orphans[which(joined$all != 0)]
+reg_mean <- joined %>% group_by(who_region) %>% summarise(mean = sum(final_orphans))
+reg_samples <- cbind(data.frame(estimates_orphans), joined$who_region)
+reg_samples_ <- reg_samples %>%
+  group_by(joined$who_region) %>%
+  summarise_all(sum)
+intervals = rowQuantiles(as.matrix(reg_samples_[,2:1000]), probs = c(0.025, 0.975))
+reg <- cbind(reg_mean, intervals)
+saveRDS(reg, "global_age_analysis_2021/data/age_outputs/reg_ps.RDS")
 
 # Make plots
 joined$colour = ifelse(joined$country == "I.R. Iran", 1, 0)

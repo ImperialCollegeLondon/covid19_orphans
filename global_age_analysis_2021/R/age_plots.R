@@ -5,7 +5,7 @@ library(ggpubr)
 source("global_age_analysis_2021/R/utils.R")
 
 month = "_oct"
-n = 2
+n = 3
 percentages = readRDS(paste0("global_age_analysis_2021/data/age_outputs/age_data_scaled", month, ".RDS"))
 percentages_ = percentages
 samples <- readRDS(paste0("global_age_analysis_2021/data/age_outputs/samples_age_data_scaled", month, ".RDS"))
@@ -297,9 +297,14 @@ pop_categories <- pop %>% group_by(category, Country.Area.Name) %>% summarise(po
 pop_categories$Country.Area.Name[which(pop_categories$Country.Area.Name == "United States")] = "USA"
 pop_categories$Country.Area.Name[which(pop_categories$Country.Area.Name == "Iran")] = "Iran (Islamic Republic of)"
 
-pop_gender <- pop %>% group_by(gender, Country.Area.Name) %>% summarise(population = sum(population))
+pop_gender <- pop %>% group_by(Country.Area.Name) %>% summarise(population = sum(population))
 pop_gender$Country.Area.Name[which(pop_gender$Country.Area.Name == "United States")] = "USA"
 pop_gender$Country.Area.Name[which(pop_gender$Country.Area.Name == "Iran")] = "Iran (Islamic Republic of)"
+pop_gender_f = pop_gender
+pop_gender_f$gender = "Female"
+pop_gender_m = pop_gender
+pop_gender_m$gender = "Male"
+pop_gender = rbind(pop_gender_f,pop_gender_m)
 
 dat_cat = percentages
 dat_cat$category <- ifelse(dat_cat$category == "[0-5)", "0-4", 
@@ -359,7 +364,7 @@ p_gender <- ggplot(rates_gender) +
   theme_bw()  + theme(legend.title = element_blank(),
                       axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
                       plot.margin = margin(0.5, 0.5, 0.5, 0.5, "cm")) +
-  xlab("") + ylab("Rate of orphans per 1000 children\n in each category")
+  xlab("") + ylab("Rate of orphans per 1000 childrenr")
 
 p <- ggarrange(p_cat, p_gender, labels = "AUTO", ncol = 1, common.legend = TRUE, legend = "bottom")
 
