@@ -110,7 +110,7 @@ process_argentina_covid19 = function(){
   data_combine[,COVID19_deaths := rate * pop/100]
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/10-09-2021.csv")
+  deaths_data = read.csv("global_age_analysis_2021/data/10-31-2021.csv")
   arg <- deaths_data[which(deaths_data$Country_Region == "Argentina"),]
   total = arg$Deaths
   data_combine$date = '2021-10-09'
@@ -186,7 +186,7 @@ process_brazil = function(age_range){
     select(date, gender, age, total_COVID19_deaths) 
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/10-09-2021.csv")
+  deaths_data = read.csv("global_age_analysis_2021/data/10-31-2021.csv")
   bra <- deaths_data[which(deaths_data$Country_Region == "Brazil"),]
   total = sum(bra$Deaths)
   
@@ -210,7 +210,7 @@ process_colombia_covid19 = function(){
   data$rate = data$covid19_deaths/sum(data$covid19_deaths)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/10-09-2021.csv")
+  deaths_data = read.csv("global_age_analysis_2021/data/10-31-2021.csv")
   col <- deaths_data[which(deaths_data$Country_Region == "Colombia"),]
   total = sum(col$Deaths)
   data$date = '2021-10-09'
@@ -344,7 +344,7 @@ process_france = function(){
   total_covid = sum(d_merge$covid_deaths)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/10-09-2021.csv")
+  deaths_data = read.csv("global_age_analysis_2021/data/10-31-2021.csv")
   fra <- deaths_data[which(deaths_data$Country_Region == "France"),]
   total = sum(fra$Deaths)
   
@@ -373,7 +373,7 @@ process_germany = function(){
   total_covid = sum(data$deaths)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/10-09-2021.csv")
+  deaths_data = read.csv("global_age_analysis_2021/data/10-31-2021.csv")
   ger <- deaths_data[which(deaths_data$Country_Region == "Germany"),]
   total = sum(ger$Deaths)
   
@@ -386,7 +386,7 @@ process_germany = function(){
 
 # India
 process_india_covid = function(){
-  total_deaths = 450621 # on 9th oct from https://www.covid19india.org
+  total_deaths = 458470 # on 9th oct from https://www.covid19india.org
   demog <- read_excel("global_age_analysis_2021/data/India/jghs-2-e17-i002.xlsx")
   
   tot_deaths = data.frame(demog[c(13), c(3, 5)])
@@ -435,7 +435,7 @@ process_iran <- function(){
   total_covid = sum(covid_data$deaths)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/10-09-2021.csv")
+  deaths_data = read.csv("global_age_analysis_2021/data/10-31-2021.csv")
   iran <- deaths_data[which(deaths_data$Country_Region == "Iran"),]
   total = sum(iran$Deaths)
   
@@ -499,7 +499,7 @@ process_italy = function(){
   total_covid = sum(d_merge$covid_deaths)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/10-09-2021.csv")
+  deaths_data = read.csv("global_age_analysis_2021/data/10-31-2021.csv")
   ita <- deaths_data[which(deaths_data$Country_Region == "Italy"),]
   total = sum(ita$Deaths)
   
@@ -517,13 +517,13 @@ process_kenya_covid19 = function(){
   data$rate = data$deaths/sum(data$deaths)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/10-09-2021.csv")
+  deaths_data = read.csv("global_age_analysis_2021/data/10-31-2021.csv")
   ken <- deaths_data[which(deaths_data$Country_Region == "Kenya"),]
   total = sum(ken$Deaths)
   
   data$deaths = round(data$rate * total)
   data = data %>% select(-rate)
-  write_csv(data, path = 'global_age_analysis_2021/data/Kenya/covid19_deaths_oct.csv')
+  write_csv(data, file = 'global_age_analysis_2021/data/Kenya/covid19_deaths_oct.csv')
 }
 
 # Malawi
@@ -533,7 +533,7 @@ process_malawi = function(){
   data$rate = data$deaths/sum(data$deaths)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/10-09-2021.csv")
+  deaths_data = read.csv("global_age_analysis_2021/data/10-31-2021.csv")
   mal <- deaths_data[which(deaths_data$Country_Region == "Malawi"),]
   total = sum(mal$Deaths)
   
@@ -567,7 +567,7 @@ process_mexico_covid19 = function(){
   data_combine[,COVID19_deaths := round(rate * pop/100)]
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/10-09-2021.csv")
+  deaths_data = read.csv("global_age_analysis_2021/data/10-31-2021.csv")
   mex <- deaths_data[which(deaths_data$Country_Region == "Mexico"),]
   total = sum(mex$Deaths)
   
@@ -582,11 +582,11 @@ process_nigeria_covid19 = function(){
   setnames(d_merge, 'COVID19_deaths', 'deaths')
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/10-09-2021.csv")
+  deaths_data = read.csv("global_age_analysis_2021/data/10-31-2021.csv")
   nig <- deaths_data[which(deaths_data$Country_Region == "Nigeria"),]
   total = sum(nig$Deaths)
   
-  d_merge$date = '2021-10-09'
+  d_merge$date = '2021-10-31'
   d_merge$rate = d_merge$deaths/sum(d_merge$deaths)
   d_merge$deaths = round(d_merge$rate * total)
   write_csv(d_merge %>% select(-rate), path = 'global_age_analysis_2021/data/Nigeria/covid19_deaths_oct.csv')
@@ -597,7 +597,7 @@ process_peru_covid19 = function(){
   d_merge = read.csv('global_age_analysis_2021/data/Peru/covid19_deaths_raw_oct.csv')
 
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/10-09-2021.csv")
+  deaths_data = read.csv("global_age_analysis_2021/data/10-31-2021.csv")
   per <- deaths_data[which(deaths_data$Country_Region == "Peru"),]
   total = sum(per$Deaths)
   
@@ -633,7 +633,7 @@ process_philippines = function(){
   d$gender <- ifelse(d$gender == "MALE", "male", "female")
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/10-09-2021.csv")
+  deaths_data = read.csv("global_age_analysis_2021/data/10-31-2021.csv")
   phi <- deaths_data[which(deaths_data$Country_Region == "Philippines"),]
   total = sum(phi$Deaths)
   
@@ -695,7 +695,7 @@ process_poland_covid19 = function(){
   write_csv(path = paste0("global_age_analysis_2021/data/Poland/","poland_all_oct.csv"),d_merge)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/10-09-2021.csv")
+  deaths_data = read.csv("global_age_analysis_2021/data/10-31-2021.csv")
   pol <- deaths_data[which(deaths_data$Country_Region == "Poland"),]
   total = sum(pol$Deaths)
   
@@ -804,7 +804,7 @@ process_spain = function(){
   total_covid = sum(d_merge$covid_deaths)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/10-09-2021.csv")
+  deaths_data = read.csv("global_age_analysis_2021/data/10-31-2021.csv")
   spa <- deaths_data[which(deaths_data$Country_Region == "Spain"),]
   total = sum(spa$Deaths)
   
@@ -820,7 +820,7 @@ process_sa_covid19 = function(){
   d_merge = read.csv('global_age_analysis_2021/data/SouthAfrica/covid19_deaths_raw_oct.csv')
 
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/10-09-2021.csv")
+  deaths_data = read.csv("global_age_analysis_2021/data/10-31-2021.csv")
   sa <- deaths_data[which(deaths_data$Country_Region == "South Africa"),]
   total = sum(sa$Deaths)
   
@@ -909,7 +909,7 @@ process_usa = function(){
   total_covid = sum(d_merge$covid_deaths)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/10-09-2021.csv")
+  deaths_data = read.csv("global_age_analysis_2021/data/10-31-2021.csv")
   us <- deaths_data[which(deaths_data$Country_Region == "US"),]
   total = sum(us$Deaths)
   
@@ -929,7 +929,7 @@ process_zimbabwe = function(){
     gather( key = gender, value = rate, -Category)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/10-09-2021.csv")
+  deaths_data = read.csv("global_age_analysis_2021/data/10-31-2021.csv")
   zim <- deaths_data[which(deaths_data$Country_Region == "Zimbabwe"),]
   total = sum(zim$Deaths)
   

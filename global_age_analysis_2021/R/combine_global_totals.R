@@ -31,4 +31,3 @@ dat = left_join(dat, primary_secondary, by = "who_region")
 tab<-xtable(dat)
 print(tab, include.rownames=FALSE)
 
-print(sprintf("Prop SE Asia: %f", ))

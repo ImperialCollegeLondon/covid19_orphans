@@ -20,6 +20,7 @@ process_orphans_age_argentina = function(uncertainty = FALSE, month = ""){
   d_children$gender = ifelse(d_children$gender == 'female', 'Female', 'Male')
   d_children$nb_c[which(d_children$gender == "Male" & d_children$parents_age %in% c('80-89', '90+'))] = 0
   
+  
   # d_plot <- d_children
   # d_plot$nb_c[which(d_plot$nb_c == 0)] <- NA
   # p_female <- ggplot(d_plot %>% filter(gender == "Female")) +
@@ -32,6 +33,7 @@ process_orphans_age_argentina = function(uncertainty = FALSE, month = ""){
   
   d_m1 = left_join(d_merge, d_children, by = c('age'='parents_age', 'gender')) 
   d_m1 = as.data.table(d_m1)
+  
   d_m1[, orphans := round(deaths * nb_c)]
   
   d_m1 = d_m1%>% arrange(age) 
@@ -555,7 +557,6 @@ process_orphans_age_india = function(uncertainty = FALSE, month = ""){
   d_m1 = left_join(d_merge, d_children, by = c('age'='parents_age', 'gender')) 
   d_m1 = as.data.table(d_m1)
   d_m1[, orphans := round(deaths * nb_c)]
-  
   d_m1 = d_m1%>% arrange(age) 
   print(sprintf("Total number of orphans %d:", sum(d_m1$orphans)))
   

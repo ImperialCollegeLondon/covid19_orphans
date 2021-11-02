@@ -434,5 +434,38 @@ print(sprintf("Adolescent orphans: %s [%s - %s]",
               format(round.choose(quantile(adolescents, probs = 0.975), 100, 1), big.mark = ",", trim = TRUE)))
 
 
+# --------- Fertility sensitivity
+pre_school = num_0_4_male_mean + num_0_4_female_mean
+under_one = pre_school * 0.2
+under_one_2021 = under_one * 0.5
+under_one_2021_reduced = under_one_2021 * 0.2
 
+pre_school_reduced = pre_school - under_one_2021_reduced
+tot_reduced = pre_school_reduced + num_5_9_male_mean + num_10_17_male_mean + num_5_9_female_mean + num_10_17_female_mean
+tot = num_0_4_male_mean + num_5_9_male_mean + num_10_17_male_mean + num_0_4_female_mean + num_5_9_female_mean + num_10_17_female_mean
 
+li_0_4_reduced <- quantile((global_0_4_female + global_0_4_male) * 0.2 * 0.5 * 0.2, probs = 0.025)
+ui_0_4_reduced <- quantile((global_0_4_female + global_0_4_male) * 0.2 * 0.5 * 0.2, probs = 0.975)
+
+li = quantile(((global_0_4_female + global_0_4_male) - (global_0_4_female + global_0_4_male) * 0.2 * 0.5 * 0.2 + 
+           global_5_9_female + global_5_9_male + global_10_17_female + global_10_17_male) / 
+           (global_0_4_female + global_0_4_male + global_5_9_female + global_5_9_male + global_10_17_female + global_10_17_male), 
+         probs = 0.025) * 100
+ui = quantile(((global_0_4_female + global_0_4_male) - (global_0_4_female + global_0_4_male) * 0.2 * 0.5 * 0.2 + 
+           global_5_9_female + global_5_9_male + global_10_17_female + global_10_17_male) / 
+  (global_0_4_female + global_0_4_male + global_5_9_female + global_5_9_male + global_10_17_female + global_10_17_male), probs = 0.975) * 100
+
+print(sprintf("All orphans under one: %s [%s - %s]", 
+              format(round(under_one_2021, -2), big.mark = ",", trim = TRUE),
+              format(round.choose(quantile((global_0_4_female + global_0_4_male) * 0.2 * 0.5, probs = 0.025), 100, 0), big.mark = ",", trim = TRUE),
+              format(round.choose(quantile((global_0_4_female + global_0_4_male) * 0.2 * 0.5, probs = 0.025), 100, 1), big.mark = ",", trim = TRUE)))
+
+print(sprintf("Reduced orphans: %s [%s - %s]", 
+      format(round(under_one_2021_reduced, -2), big.mark = ",", trim = TRUE),
+      format(round.choose(li_0_4_reduced, 100, 0), big.mark = ",", trim = TRUE),
+      format(round.choose(ui_0_4_reduced, 100, 1), big.mark = ",", trim = TRUE)))
+
+print(sprintf("Percentage reduction in orphanhood: %.2f%% [%.2f%% - %.2f%%]",
+              round(100 - tot_reduced/tot * 100, digits = 2),
+              round.choose(100-li, 0.01, 0),
+              round.choose(100-ui, 0.01, 1)))
