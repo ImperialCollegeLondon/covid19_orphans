@@ -712,7 +712,7 @@ process_poland_covid19 = function(){
 # Russia
 process_russia_excess = function(){
   # Need to weight by age before weight by sex
-  total_excess = 679897
+  total_excess = 667313
   demog <- read_excel("global_age_analysis_2021/data/Russia/demo24.xls")
   demog_2019 <- demog[33,]
   men <- sum(as.numeric(demog_2019[c(2,4,6,8,10,12)]))
