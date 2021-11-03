@@ -83,7 +83,7 @@ process_euro_excess_new = function(){
   write.csv(age_summary, file = paste0("global_age_analysis_2021/data/euro_excess_oct.csv"), row.names = FALSE)
 }
 
-# Process Argentina - covid only, updated to 31st dec
+# Process Argentina - covid only, updated to 27 oct
 process_argentina_covid19 = function(){
   data = read.csv('global_age_analysis_2021/data/Argentina/Argentina - Deaths by age and sex (rates per 100,000)-oct.csv')
   data =  reshape2::melt(data, id.vars = c('date', 'age'), variable.name =  'gender', value.name = 'rate')

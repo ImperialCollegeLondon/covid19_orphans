@@ -15,7 +15,7 @@ format_table <- function(date){
   # Load in extrapolation
   ps_extrapolation = readRDS("global_age_analysis_2021/data/formatted_primary_secondary.RDS")
   p_extrapolation = readRDS("global_age_analysis_2021/data/formatted_primary.RDS")
-  pa_extrapolation = readRDS("global_age_analysis_2021/data/formatted_primary.RDS")
+  pa_extrapolation = readRDS("global_age_analysis_2021/data/formatted_parents.RDS")
   
   data = rbind(data, 
                data.frame(country = "Global extrapolation",
