@@ -128,7 +128,7 @@ process_brazil = function(age_range){
   options(repr.plot.width=15, repr.plot.height=15)
   ##  check: url:https://opendatasus.saude.gov.br/dataset/bd-srag-2020
   # the latest version, update weekly
-  url = 'https://s3-sa-east-1.amazonaws.com/ckan.saude.gov.br/SRAG/2020/INFLUD-04-10-2021.csv'
+  url = 'https://s3-sa-east-1.amazonaws.com/ckan.saude.gov.br/SRAG/2020/INFLUD-25-10-2021.csv'
   file_name = strsplit(url, '/')
   file_name = file_name[[1]][length(file_name[[1]])]
   download.file(url, file.path('global_age_analysis_2021/data/Brazil/', file_name))
@@ -160,9 +160,9 @@ process_brazil = function(age_range){
   df_SIVEP.plt <- df_SIVEP 
   df_SIVEP.plt$agesex = paste0(df_SIVEP$gender, df_SIVEP$age)
   
-  if(!file.exists(file.path('data','Brazil')))
+  if(!file.exists(file.path('global_age_analysis_2021/data','Brazil')))
   {
-    dir.create(file.path('data','Brazil'))
+    dir.create(file.path('global_age_analysis_2021/data','Brazil'))
   }
   
   #write_csv(path = paste0("global_age_analysis_2021/data/Brazil/","brazil.csv"),df_SIVEP)
