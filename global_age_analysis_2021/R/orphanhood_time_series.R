@@ -8,7 +8,7 @@ library(ggpubr)
 source("global_age_analysis_2021/R/time_series_functions.R")
 
 #d <- read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv")
-#d <- write.csv(d, "data/covid_timeseries.csv")
+#d <- write.csv(d, "global_age_analysis_2021/data/covid_timeseries.csv")
 d <- read.csv("global_age_analysis_2021/data/covid_timeseries.csv")
 d2 <- select(d, -Long, -Lat, -Province.State)
 
@@ -82,6 +82,8 @@ children_region <- ps_children_all %>% select(country, region, date, central) %>
   group_by(date, region) %>% summarise(total = sum(central))
 
 deaths_jhu = d2 %>% select(-Country.Region, -X) %>% summarise_all(sum) 
+deaths_excess = deaths_country %>% select(-Country.Region, -X) %>% summarise_all(sum) 
+deaths_excess$mult = NULL
 
 d2_region <- left_join(d2, data, by = c("Country.Region"= "country"))
 d2_region <- d2_region[!d2_region$Country.Region %in%  c("Summer Olympics 2020", "Taiwan"),] 
@@ -89,12 +91,20 @@ d2_region$who_region =  ifelse(d2_region$who_region == "Eastern European", "Euro
 deaths_jhu_region = d2_region %>% select(-Country.Region, -X, -tfr, -tfr_l, -tfr_u, -sd, -europe) %>% 
   group_by(who_region) %>% summarise_all(sum) 
 
-deaths_jhu_region_long <- gather(deaths_jhu_region, key = "date", value =  "deaths", -who_region)
+deaths_country_region <- left_join(deaths_country, data, by = c("Country.Region"= "country"))
+deaths_country_region <- deaths_country_region[!deaths_country_region$Country.Region %in%  c("Summer Olympics 2020", "Taiwan"),]
+deaths_country_region$who_region =  ifelse(deaths_country_region$who_region == "Eastern European", "European", deaths_country_region$who_region)
+deaths_country_region_excess = deaths_country_region %>% select(-Country.Region, -X, -tfr, -tfr_l, -tfr_u, -sd, -europe) %>% 
+  group_by(who_region) %>% summarise_all(sum) 
+
+deaths_jhu_region_long <- gather(deaths_jhu_region, key = "date", value =  "covid", -who_region)
 deaths_jhu_region_long$date  <- str_remove(deaths_jhu_region_long$date,  "X")
 deaths_jhu_region_long$date <- as.Date(deaths_jhu_region_long$date, format = "%m.%d.%y")
 
-tmp = deaths_jhu_region_long[which(deaths_jhu_region_long$date == max(deaths_jhu_region_long$date)),]
-print(sum(tmp$deaths))
+deaths_excess_region_long <- gather(deaths_country_region_excess, key = "date", value =  "excess", -who_region)
+deaths_excess_region_long$date  <- str_remove(deaths_excess_region_long$date,  "X")
+deaths_excess_region_long$date <- as.Date(deaths_excess_region_long$date, format = "%m.%d.%y")
+
 
 dats <- sub('.', '', children$date)
 dats <- as.Date(dats, format = "%m.%d.%y")
@@ -103,6 +113,7 @@ df <- data.frame(date = as.Date(dats),
                  orphans = children$total)
 df <- df[order(df$date),]
 df$covid = unlist(deaths_jhu)
+df$excess = unlist(deaths_excess)
 print(df$covid[df$date == max(df$date)])
 
 children_region$date <- str_remove(children_region$date,  "X")
@@ -111,9 +122,9 @@ children_region$date <- as.Date(children_region$date, format = "%m.%d.%y")
 df_region <- children_region
 names(df_region)  <- c("date", "region", "orphans")
 df_region <- df_region[order(df_region$date),]
-sum(deaths_jhu_region_long$deaths)
 
 df_region = left_join(df_region, deaths_jhu_region_long,  by = c("region"= "who_region", "date"))
+df_region = left_join(df_region, deaths_excess_region_long,  by = c("region"= "who_region", "date"))
 
 saveRDS(df,file = "global_age_analysis_2021/data/age_outputs/orphanhoodtime_series.RDS")
 df = readRDS(file = "global_age_analysis_2021/data/age_outputs/orphanhoodtime_series.RDS")
@@ -124,7 +135,7 @@ df_region = readRDS(file = "global_age_analysis_2021/data/age_outputs/orphanhood
 df_long <- gather(df, key = key, value = value, -date)
 df_long$key = factor(df_long$key, levels = c("excess", "covid", "orphans"),
                      labels = c("Excess deaths", "COVID-19 deaths", "Orphanhood &/or caregiver loss"))
-p_global <- ggplot(df_long %>% filter(date >= "2020-03-01" & key != "Excess deaths")) +
+p_global <- ggplot(df_long %>% filter(date >= "2020-03-01" & key != "Excess deaths" & date <= "2021-10-31")) +
   geom_line(aes(date, value/1e6, col = key)) + 
   geom_vline(xintercept = as.Date("2021-04-30"), linetype = "dashed") + 
   theme_bw() + 
@@ -137,10 +148,10 @@ p_global <- ggplot(df_long %>% filter(date >= "2020-03-01" & key != "Excess deat
   scale_colour_manual("", values  = c("darkorchid4", "deepskyblue2")) 
 
 df_region_long <- gather(df_region, key = key, value = value, -date, -region)
-df_region_long$key = factor(df_region_long$key, levels = c("deaths", "orphans"),
-                     labels = c("COVID-19 deaths", "Orphanhood &/or caregiver loss"))
+df_region_long$key = factor(df_region_long$key, levels = c("excess", "covid", "orphans"),
+                     labels = c("Excess deaths", "COVID-19 deaths", "Orphanhood &/or caregiver loss"))
 df_region_long <- df_region_long[order(df_region_long$date),]
-p_region <- ggplot(df_region_long %>% filter(date >= "2020-03-01")) +
+p_region <- ggplot(df_region_long %>% filter(date >= "2020-03-01" & key != "Excess deaths" & date <= "2021-10-31")) +
   geom_line(aes(date, value/1e6, col = key)) + 
   geom_vline(xintercept = as.Date("2021-04-30"), linetype = "dashed") + 
   theme_bw() + 
@@ -151,5 +162,31 @@ p_region <- ggplot(df_region_long %>% filter(date >= "2020-03-01")) +
   scale_colour_manual("", values  = c("darkorchid4", "deepskyblue2"))
 
 p <- ggarrange(p_global, p_region, ncol = 1, labels = "AUTO", common.legend = TRUE, legend= "bottom")
-print(p)
 ggsave("global_age_analysis_2021/figures/fig_1_time_series_line.pdf", p, width =  12,  height = 12)
+
+
+p_global_excess <- ggplot(df_long %>% filter(date >= "2020-03-01" & date <= "2021-10-31")) +
+  geom_line(aes(date, value/1e6, col = key)) + 
+  geom_vline(xintercept = as.Date("2021-04-30"), linetype = "dashed") + 
+  theme_bw() + 
+  scale_y_continuous(expand  = expansion(0,0), limits = c(0, 11.5))  + 
+  annotate("text", label = "COVID-19 deaths \n(millions)", y = 3.7, x = as.Date("2021-10-25"), size = 3, colour = "black", hjust=1) +
+  annotate("text", label = "Orphanhood &/or caregiver loss \n(millions)", y = 6.1, x = as.Date("2021-10-25"), size = 3, colour = "black", hjust=1) +
+  annotate("text", label = "Excess deaths \n(millions)", y = 9.6, x = as.Date("2021-10-25"), size = 3, colour = "black", hjust=1) +
+  scale_x_date(expand  = expansion(0,0), date_breaks = "1 month", labels = date_format("%b-%Y")) +
+  theme(legend.position = "bottom", axis.text.x = element_text(angle = 45, hjust=1)) +  
+  xlab("")  + ylab("Millions of people") + 
+  scale_colour_manual("", values  = c("darkorchid3", "darkorchid4", "deepskyblue2")) 
+p_global_excess
+p_region_excess <- ggplot(df_region_long %>% filter(date >= "2020-03-01" & date <= "2021-10-31")) +
+  geom_line(aes(date, value/1e6, col = key)) + 
+  geom_vline(xintercept = as.Date("2021-04-30"), linetype = "dashed") + 
+  theme_bw() + 
+  scale_x_date(expand  = expansion(0,0), date_breaks = "2 month", labels = date_format("%b-%Y")) +
+  theme(legend.position = "bottom", axis.text.x = element_text(angle = 45, hjust=1)) +  
+  xlab("")  + ylab("Millions of people") + 
+  facet_wrap(~region, scales = "free") + 
+  scale_colour_manual("", values  = c("darkorchid3", "darkorchid4", "deepskyblue2"))
+
+p_excess <- ggarrange(p_global_excess, p_region_excess, ncol = 1, labels = "AUTO", common.legend = TRUE, legend= "bottom")
+ggsave("global_age_analysis_2021/figures/time_series_line_excess.pdf", p_excess, width =  12,  height = 12)
