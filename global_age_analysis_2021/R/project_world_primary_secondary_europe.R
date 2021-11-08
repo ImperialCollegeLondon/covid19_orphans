@@ -30,7 +30,7 @@ extrapolate_primary_secondary <- function(data = "covid"){
     excess <- select(excess, country, fitting_deaths)
   }
   
-  comb <- left_join(covid, excess, by = c("country"))
+  #comb <- left_join(covid, excess, by = c("country"))
  
   # Calculate country specific SD
   joined$sd = (joined$tfr_u-joined$tfr_l)/(2*1.96)
