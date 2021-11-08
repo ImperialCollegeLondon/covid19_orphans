@@ -7,6 +7,7 @@ source("global_age_analysis_2021/R/run_global_extrapolation_europe_april.R")
 source("global_age_analysis_2021/R/format_update_results.R")
 format_table("apr")
 
+# Clears the environment
 rm(list = ls())
 
 # Updates global numbers though 31st October
