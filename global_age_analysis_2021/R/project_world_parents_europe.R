@@ -71,7 +71,7 @@ n = 1000
 estimates_parent <- matrix(nrow = length(joined$country), ncol = n)
 estimates_parent_orphans <- matrix(nrow = length(joined$country), ncol = n)
 
-set.seed(10)
+base::set.seed(10)
 
 for (i in 1:n){
   rn <- rnorm(length(joined$country), mean = joined$tfr, sd = joined$sd)
