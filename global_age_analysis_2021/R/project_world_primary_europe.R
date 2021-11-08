@@ -35,7 +35,7 @@ prop_double <- sum(subset$sg_both + subset$both) / sum(subset$primary)
 print(sprintf("Primary prop double: %f", prop_double*100))
 
 pars = c(-1, 1, 1, 1)
-output_p = optim(pars, error_primary, data=subset, control = c(abstol = 1e-12))
+output_p = stats::optim(pars, error_primary, data=subset, control = c(abstol = 1e-12))
 print(output_p$par)
 saveRDS(output_p$par, "global_age_analysis_2021/data/shiny/primary_coefficients.RDS")
 

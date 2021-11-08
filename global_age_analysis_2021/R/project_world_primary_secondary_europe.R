@@ -36,7 +36,7 @@ print(sprintf("Pearsons r^2 primary and/or seconday: %f",
 
 # Fit primary and secondary
 pars = c(-7, 1, 1, 1)
-output_ps = optim(pars, error, data=subset, control = c(abstol = 1e-12))
+output_ps = stats::optim(pars, error, data=subset, control = c(abstol = 1e-12))
 joined$calculated_ratio <- calc_ratio(output_ps$par[1], output_ps$par[2], 
                                       output_ps$par[3], output_ps$par[4],
                                       joined$tfr, joined$europe)
