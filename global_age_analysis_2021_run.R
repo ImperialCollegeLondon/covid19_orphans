@@ -1,5 +1,7 @@
 # Complete age analysis
 
+RNGkind(sample.kind = "Rounding")
+
 # Updates global numbers through 30th April with new india coefficient
 source("TheLancet_global_minimum_estimates_2021/extract_study_data.R")
 extract_study_data(updated_coef = TRUE)

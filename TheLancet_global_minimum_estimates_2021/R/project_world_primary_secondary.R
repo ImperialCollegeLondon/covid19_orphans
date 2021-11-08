@@ -22,8 +22,6 @@ round.choose <- function(x, roundTo, dir = 1) {
   }
 }
 
-set.seed(10)
-
 # Load in data
 joined <- readRDS("TheLancet_global_minimum_estimates_2021/data/tfr_covariates.RDS")
 
@@ -77,6 +75,8 @@ estimates_orphans <- matrix(nrow = length(joined$country), ncol = n)
 
 rn2 = NULL
 ratio_fit = NULL
+set.seed(10)
+
 for (i in 1:n){
   rn <- rnorm(length(joined$country), mean = joined$tfr, sd = joined$sd)
   rn2 = cbind(rn2, rn)

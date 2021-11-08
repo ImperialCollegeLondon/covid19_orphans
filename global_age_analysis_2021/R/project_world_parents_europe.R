@@ -14,8 +14,6 @@ error_parent<- function(params, data){
 
 source("global_age_analysis_2021/R/utils.R")
 
-set.seed(10)
-
 # Load in data
 joined <- readRDS("global_age_analysis_2021/data/tfr_covariates.RDS")
 joined$all_parents = joined$mother + joined$father + joined$both
@@ -72,6 +70,8 @@ saveRDS(ratio_dat, "global_age_analysis_2021/data/orphanhood_ratios.RDS")
 n = 1000
 estimates_parent <- matrix(nrow = length(joined$country), ncol = n)
 estimates_parent_orphans <- matrix(nrow = length(joined$country), ncol = n)
+
+set.seed(10)
 
 for (i in 1:n){
   rn <- rnorm(length(joined$country), mean = joined$tfr, sd = joined$sd)
