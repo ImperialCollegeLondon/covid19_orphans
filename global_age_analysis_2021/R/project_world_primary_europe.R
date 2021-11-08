@@ -13,8 +13,6 @@ error_primary <- function(params, data){
 
 source("global_age_analysis_2021/R/utils.R")
 
-base::set.seed(10)
-
 # Load in data
 joined <- readRDS("global_age_analysis_2021/data/tfr_covariates.RDS")
 
@@ -74,12 +72,16 @@ saveRDS(ratio_dat, "global_age_analysis_2021/data/primary_ratios.RDS")
 n = 1000
 estimates_primary <- matrix(nrow = length(joined$country), ncol = n)
 estimates_primary_orphans <- matrix(nrow = length(joined$country), ncol = n)
+tot_rn = 0
+base::set.seed(10)
 
 for (i in 1:n){
-  rn <- stats::rnorm(length(joined$country), mean = joined$tfr, sd = joined$sd)
+  rn <- rnorm(length(joined$country), mean = joined$tfr, sd = joined$sd)
+  tot_rn <- tot_rn + sum(rn)
   estimates_primary[, i] <- calc_ratio(output_p$par[1], output_p$par[2], output_p$par[3], output_p$par[4], rn, joined$europe)
   estimates_primary_orphans[, i] <- estimates_primary[, i] * joined$fitting_deaths
 }
+print(tot_rn)
 
 orphans_samples <- colSums(estimates_primary_orphans)
 formatted = sprintf("Primary orphans: %0.f [%0.f - %0.f]", 
