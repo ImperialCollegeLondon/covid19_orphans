@@ -2,7 +2,6 @@ library(matrixStats)
 library(tidyverse)
 library(cowplot)
 library(ggrepel)
-library(stats)
 
 calc_ratio <- function(alpha, beta, gamma, delta, tfr, europe){
   return(delta * (exp(alpha + beta * tfr + gamma * europe))/(1 + exp(alpha + beta * tfr + gamma * europe)))
@@ -13,8 +12,6 @@ error <- function(params, data){
 }
 
 source("global_age_analysis_2021/R/utils.R")
-
-base::set.seed(10)
 
 # Load in data
 joined <- readRDS("global_age_analysis_2021/data/tfr_covariates.RDS")
@@ -82,14 +79,18 @@ n = 1000
 estimates <- matrix(nrow = length(joined$country), ncol = n)
 estimates_orphans <- matrix(nrow = length(joined$country), ncol = n)
 
+base::set.seed(10)
 ratio_fit = NULL
+rn_tot = 0
 for (i in 1:n){
-  rn <- stats::rnorm(length(joined$country), mean = joined$tfr, sd = joined$sd)
+  rn <- rnorm(length(joined$country), mean = joined$tfr, sd = joined$sd)
+  rn_tot = rn_tot+sum(rn)
   estimates[, i] <- calc_ratio(output_ps$par[1], output_ps$par[2], output_ps$par[3], 
                                output_ps$par[4], rn, joined$europe)
   ratio_fit = cbind(ratio_fit,  estimates[, i])
   estimates_orphans[, i] <- estimates[, i] * joined$fitting_deaths
 }
+print(sprintf("rn total: %f", rn_tot))
 
 orphans_samples <- colSums(estimates_orphans)
 formatted <- sprintf("Primary and/or secondary orphans: %0.f [%0.f - %0.f]", 
@@ -192,7 +193,7 @@ print("Range loo")
 print(loo_combined[which(loo_combined$orphans == min(loo_combined$orphans)),])
 print(loo_combined[which(loo_combined$orphans == max(loo_combined$orphans)),])
 
-save(p_fit_ps_label, p_obs_pred_ps, p_loo_ps, file = "global_age_analysis_2021/data/extrapolate_primary_secondary.RData")
+save(p_fit_ps_label, p_obs_pred_ps, file = "global_age_analysis_2021/data/extrapolate_primary_secondary.RData")
 
 
 mae <- abs(loo_combined$orphans - all_country_fit)

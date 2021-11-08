@@ -2,7 +2,6 @@ library(matrixStats)
 library(tidyverse)
 library(cowplot)
 library(ggrepel)
-library(stats)
 
 calc_ratio <- function(alpha, beta, gamma, delta, tfr, europe){
   return(delta * (exp(alpha + beta * tfr + gamma * europe))/(1 + exp(alpha + beta * tfr + gamma * europe)))
