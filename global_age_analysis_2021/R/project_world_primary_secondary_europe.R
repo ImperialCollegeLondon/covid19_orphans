@@ -106,7 +106,7 @@ extrapolate_primary_secondary <- function(data = "covid"){
   rn2 = NULL
   ratio_fit = NULL
   for (i in 1:n){
-    rn <- rnorm(length(joined$country), mean = joined$tfr, sd = joined$sd)
+    rn <- stats::rnorm(length(joined$country), mean = joined$tfr, sd = joined$sd)
     rn2 = cbind(rn2, rn)
     estimates[, i] <- calc_ratio(output_ps$par[1], output_ps$par[2], output_ps$par[3], 
                                  output_ps$par[4], rn, joined$europe)

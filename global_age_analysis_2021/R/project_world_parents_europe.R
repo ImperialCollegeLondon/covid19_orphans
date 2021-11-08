@@ -74,7 +74,7 @@ estimates_parent <- matrix(nrow = length(joined$country), ncol = n)
 estimates_parent_orphans <- matrix(nrow = length(joined$country), ncol = n)
 
 for (i in 1:n){
-  rn <- rnorm(length(joined$country), mean = joined$tfr, sd = joined$sd)
+  rn <- stats::rnorm(length(joined$country), mean = joined$tfr, sd = joined$sd)
   estimates_parent[, i] <- calc_ratio(output_p$par[1], output_p$par[2], output_p$par[3], output_p$par[4], rn, joined$europe)
   estimates_parent_orphans[, i] <- estimates_parent[, i] * joined$fitting_deaths
 }
