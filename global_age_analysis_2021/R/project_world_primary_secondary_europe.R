@@ -15,6 +15,7 @@ error <- function(params, data){
 }
 
 extrapolate_primary_secondary <- function(data = "covid"){
+  base::set.seed(10)
   
   # Load in data
   if (data == "covid"){
@@ -104,7 +105,6 @@ extrapolate_primary_secondary <- function(data = "covid"){
   
   rn2 = NULL
   ratio_fit = NULL
-  base::set.seed(10)
   for (i in 1:n){
     rn <- rnorm(length(joined$country), mean = joined$tfr, sd = joined$sd)
     rn2 = cbind(rn2, rn)
