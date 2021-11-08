@@ -4,8 +4,6 @@ library(cowplot)
 library(ggrepel)
 library(stats)
 
-source("global_age_analysis_2021/R/utils.R")
-
 calc_ratio <- function(alpha, beta, gamma, delta, tfr, europe){
   return(delta * (exp(alpha + beta * tfr + gamma * europe))/(1 + exp(alpha + beta * tfr + gamma * europe)))
 } 
@@ -13,6 +11,10 @@ calc_ratio <- function(alpha, beta, gamma, delta, tfr, europe){
 error <- function(params, data){
   return(sum((calc_ratio(params[1], params[2], params[3], params[4], data$tfr, data$europe) - data$ratio)^2))
 }
+
+source("global_age_analysis_2021/R/utils.R")
+
+base::set.seed(10)
 
 # Load in data
 joined <- readRDS("global_age_analysis_2021/data/tfr_covariates.RDS")
@@ -79,7 +81,6 @@ joined$final_orphans <- ifelse(joined$all == 0, joined$calculated_orphans, joine
 n = 1000
 estimates <- matrix(nrow = length(joined$country), ncol = n)
 estimates_orphans <- matrix(nrow = length(joined$country), ncol = n)
-base::set.seed(10)
 
 ratio_fit = NULL
 for (i in 1:n){
