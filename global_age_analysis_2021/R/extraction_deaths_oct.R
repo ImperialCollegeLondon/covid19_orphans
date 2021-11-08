@@ -234,17 +234,14 @@ process_england_wales = function(uncertainty = FALSE){
   data = reshape2::melt(data, id.vars = c('Sex', 'Age group'), variable.name = 'week', value.name = 'value')
   setnames(data, 1:ncol(data), c('gender', 'age', 'week', 'value'))
   
-  #url = 'https://download.ons.gov.uk/downloads/datasets/weekly-deaths-age-sex/editions/covid-19/versions/40.csv'
-  #download.file(url, 'global_age_analysis_2021/data/UK/england_wales_deaths-v40.csv')
-  
-  #https://www.ons.gov.uk/datasets/weekly-deaths-age-sex/editions/covid-19/versions/52
-  data2 = read.csv("global_age_analysis_2021/data/UK/weekly-deaths-age-sex-covid-19-v52.csv")
+  #https://www.ons.gov.uk/datasets/weekly-deaths-age-sex/editions/covid-19/versions/55
+  data2 = read.csv("global_age_analysis_2021/data/UK/weekly-deaths-age-sex-covid-19-v55.csv")
   
    week_split <- function(x){
     return(as.double(strsplit(x, "-")[[1]][2]))
   }
   data2$week = sapply(as.character(data2$week.number), week_split)
-  data2 = data2[which(!(data2$calendar.years == "2021" & data2$week > 40)),]
+  data2 = data2[which(!(data2$calendar.years == "2021" & data2$week > 44)),]
   data2$week <- NULL
   setnames(data2, 1:ncol(data2), c('value', 'empty', 'year', 'time', 'geographiy', 'region', 'week_nb',
                                    'week', 'gender','Gender', 'age', 'age_group', 'deaths', 'Deaths'))
@@ -284,7 +281,7 @@ process_england_wales = function(uncertainty = FALSE){
   
   d_deaths$week = as.numeric(sapply(d_deaths$week, function(x) strsplit(x, " ")[[1]][2]))
   d_deaths = d_deaths[which((d_deaths$year == "2020" &  d_deaths$week >=10) | 
-                              (d_deaths$year == "2021" &  d_deaths$week <= 40)),]
+                              (d_deaths$year == "2021" &  d_deaths$week <= 43)),]
   d_merge = d_deaths %>% group_by(age, gender) %>% 
     mutate(nb_covid19 = sum(covid19_deaths),
            nb_excess = sum(excess_deaths)) %>% 
@@ -299,7 +296,7 @@ process_england_wales = function(uncertainty = FALSE){
 
 # France
 process_france = function(){
-  tmp = readxl::read_xlsx('global_age_analysis_2021/data/France/France_2021_10_07_Deaths_Covid_19.xlsx', sheet = 2)
+  tmp = readxl::read_xlsx('global_age_analysis_2021/data/France/France_2021_10_28_Deaths_Covid_19.xlsx', sheet = 2)
   data = tmp[7:16, c(1,c(8, 10, 13))]
   data = data.frame(data)
   names(data) = c('age', 'male', 'female', 'both')
@@ -334,7 +331,7 @@ process_france = function(){
   excess_death$gender = ifelse(excess_death$gender == 'M', 'Male', 'Female')
   
   excess_death = excess_death %>%
-    filter((year == 2020 & week >= 10)  | (year == 2021 & week <= 40)) %>%
+    filter((year == 2020 & week >= 10)  | (year == 2021 & week <= 43)) %>%
     group_by(age, gender) %>%
     summarise("excess_deaths" = sum(France))
   
@@ -357,7 +354,7 @@ process_france = function(){
 
 # Germany
 process_germany = function(){
-  tmp = readxl::read_xlsx('global_age_analysis_2021/data/Germany/Germany_2021_10_07_Deaths_Covid-19.xlsx', sheet = 2)
+  tmp = readxl::read_xlsx('global_age_analysis_2021/data/Germany/Germany_2021_10_28_Deaths_Covid-19.xlsx', sheet = 2)
   data = tmp[7:16, c(1,c(8,10,13))]
   data = data.frame(data)
   names(data) = c('age', 'male', 'female', 'both')
@@ -446,7 +443,7 @@ process_iran <- function(){
 
 # Italy
 process_italy = function(){
-  tmp = readxl::read_xlsx('global_age_analysis_2021/data/Italy/Italy_2021_10_07_Deaths_Covid-19.xlsx', sheet = 2)
+  tmp = readxl::read_xlsx('global_age_analysis_2021/data/Italy/Italy_2021_10_28_Deaths_Covid-19.xlsx', sheet = 2)
   data = tmp[7:16, c(1,c(8,10,13))]
   data = data.frame(data)
   names(data) = c('age', 'male', 'female', 'both')
@@ -489,7 +486,7 @@ process_italy = function(){
   excess_death$gender = ifelse(excess_death$gender == 'M', 'Male', 'Female')
   
   excess_death = excess_death %>%
-    filter((week >= 10 & year == "2020") | (week <= 40 & year == "2021")) %>%
+    filter((week >= 10 & year == "2020") | (week <= 43 & year == "2021")) %>%
     group_by(age, gender) %>%
     summarise("excess_deaths" = sum(excess_death))
   
@@ -573,7 +570,7 @@ process_mexico_covid19 = function(){
   
   data_combine$rate = data_combine$COVID19_deaths/sum(data_combine$COVID19_deaths)
   data_combine$deaths = round(data_combine$rate * total)
-  write_csv(data_combine %>% select(age, gender, deaths), path = 'global_age_analysis_2021/data/Mexico/covid19_deaths_oct.csv')
+  write_csv(data_combine %>% select(age, gender, deaths), file = 'global_age_analysis_2021/data/Mexico/covid19_deaths_oct.csv')
 }
 
 # Nigeria
@@ -589,7 +586,7 @@ process_nigeria_covid19 = function(){
   d_merge$date = '2021-10-31'
   d_merge$rate = d_merge$deaths/sum(d_merge$deaths)
   d_merge$deaths = round(d_merge$rate * total)
-  write_csv(d_merge %>% select(-rate), path = 'global_age_analysis_2021/data/Nigeria/covid19_deaths_oct.csv')
+  write_csv(d_merge %>% select(-rate), file = 'global_age_analysis_2021/data/Nigeria/covid19_deaths_oct.csv')
 }
 
 # Peru
@@ -606,17 +603,22 @@ process_peru_covid19 = function(){
   d_merge$deaths = round(d_merge$rate * total)
   setnames(d_merge, 'deaths', 'COVID19_deaths')
   
-  write_csv(d_merge %>% select(-rate), path = 'global_age_analysis_2021/data/Peru/covid19_deaths_oct.csv')
+  write_csv(d_merge %>% select(-rate), file = 'global_age_analysis_2021/data/Peru/covid19_deaths_oct.csv')
 }
 
 # Philippines 
 
 process_philippines = function(){
-  data_1 <- read_csv("global_age_analysis_2021/data/Philippines/data_drop/DOH COVID Data Drop_ 20211010 - 04 Case Information 2020.csv")
-  data_2 <- read_csv("global_age_analysis_2021/data/Philippines/data_drop/DOH COVID Data Drop_ 20211010 - 04 Case Information 2021_H1.csv")
-  data_3 <- read_csv("global_age_analysis_2021/data/Philippines/data_drop/DOH COVID Data Drop_ 20211010 - 04 Case Information 2021_Q3.csv")
-  data_4 <- read_csv("global_age_analysis_2021/data/Philippines/data_drop/DOH COVID Data Drop_ 20211010 - 04 Case Information 2021_Q4.csv")
-  data <- rbind(data_1, data_2, data_3, data_4)
+  #data_1 <- read_csv("global_age_analysis_2021/data/Philippines/data_drop/DOH COVID Data Drop_ 20211010 - 04 Case Information 2020.csv")
+  #data_2 <- read_csv("global_age_analysis_2021/data/Philippines/data_drop/DOH COVID Data Drop_ 20211010 - 04 Case Information 2021_H1.csv")
+  #data_3 <- read_csv("global_age_analysis_2021/data/Philippines/data_drop/DOH COVID Data Drop_ 20211010 - 04 Case Information 2021_Q3.csv")
+  #data_4 <- read_csv("global_age_analysis_2021/data/Philippines/data_drop/DOH COVID Data Drop_ 20211010 - 04 Case Information 2021_Q4.csv")
+  #data <- rbind(data_1, data_2, data_3, data_4)
+  data_1 <- read_csv("global_age_analysis_2021/data/Philippines/data_drop/DOH COVID Data Drop_ 20211104 - 04 Case Information_batch_0.csv")
+  data_2 <- read_csv("global_age_analysis_2021/data/Philippines/data_drop/DOH COVID Data Drop_ 20211104 - 04 Case Information_batch_1.csv")
+  data_3 <- read_csv("global_age_analysis_2021/data/Philippines/data_drop/DOH COVID Data Drop_ 20211104 - 04 Case Information_batch_2.csv")
+  data <- rbind(data_1, data_2, data_3)
+  
   data$DateDied <- as.Date(data$DateDied)
   
   data_sub <- data[which(data$RemovalType == 'DIED'),]
@@ -687,7 +689,7 @@ process_poland_covid19 = function(){
   excess_death$gender = ifelse(excess_death$gender == 'M', 'Male', 'Female')
   
   excess_death = excess_death %>%
-    filter((year == 2020 & week >= 10)  | (year == 2021 & week <= 40)) %>%
+    filter((year == 2020 & week >= 10)  | (year == 2021 & week <= 43)) %>%
     group_by(age, gender) %>%
     summarise("excess_deaths" = sum(Poland))
   
@@ -759,7 +761,7 @@ process_russia_excess = function(){
 
 # Spain
 process_spain = function(){
-  tmp = readxl::read_xlsx('global_age_analysis_2021/data/Spain/Spain_2021_10_07_Deaths_Covid-19.xlsx', sheet = 6)
+  tmp = readxl::read_xlsx('global_age_analysis_2021/data/Spain/Spain_2021_10_28_Deaths_Covid-19.xlsx', sheet = 6)
   data = tmp[7:15, c(1,c(8,10,13))]
   data = data.frame(data)
   names(data) = c('age', 'male', 'female', 'both')
@@ -787,7 +789,7 @@ process_spain = function(){
                                                                       ifelse(excess_death$age %in% c('70-74', '75-79'), '70-79',
                                                                                     '80+'))))))))
   excess_death = excess_death %>%  
-    filter((week >= 10 & year == "2020") | (week <= 40 & year == "2021")) %>%
+    filter((week >= 10 & year == "2020") | (week <= 43 & year == "2021")) %>%
     group_by(gender, week, age) %>%
     mutate(excess_death = sum(spain)) %>% select(-c(spain)) %>% ungroup() %>% distinct()
   excess_death$gender = as.character(excess_death$gender)
@@ -836,7 +838,7 @@ process_sa_covid19 = function(){
 
 # USA
 process_usa = function(){
-  tmp = readxl::read_xlsx('global_age_analysis_2021/data/USA/USA_2021_10_07_Deaths_Covid-19.xlsx', sheet = 2)
+  tmp = readxl::read_xlsx('global_age_analysis_2021/data/USA/USA_2021_10_28_Deaths_Covid-19.xlsx', sheet = 2)
   data = tmp[6:16, c(1,c(8, 10, 23))]
   data = data.frame(data)
   names(data) = c('age', 'male', 'female', 'both')
@@ -890,7 +892,7 @@ process_usa = function(){
                                                                ifelse(excess_death$age %in% c('80-84', '75-79'), '75-84',excess_death$age
                                                                )))))))
   excess_death = excess_death %>%  
-    filter((week >= 10 & year == "2020") | (week <= 40 & year == "2021")) %>%
+    filter((week >= 10 & year == "2020") | (week <= 43 & year == "2021")) %>%
     group_by(gender, week, age) %>%
     mutate(excess_death = sum(excess_deaths)) %>% 
     select(-c(excess_deaths)) %>% ungroup() %>% distinct()

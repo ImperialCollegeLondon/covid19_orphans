@@ -304,7 +304,7 @@ pop_gender_f = pop_gender
 pop_gender_f$gender = "Female"
 pop_gender_m = pop_gender
 pop_gender_m$gender = "Male"
-pop_gender = rbind(pop_gender_f,pop_gender_m)
+pop_gender_comb = rbind(pop_gender_f,pop_gender_m)
 
 dat_cat = percentages
 dat_cat$category <- ifelse(dat_cat$category == "[0-5)", "0-4", 
@@ -318,10 +318,14 @@ rates_samples$category <- ifelse(rates_samples$category == "[0-5)", "0-4",
 rates_samples$category <- factor(rates_samples$category, levels = c("0-4", "5-9", "10-17"))
 rates_samples_categories <- rates_samples %>% group_by(category, country, sample) %>% summarise(raw = sum(orphans))
 rates_samples_gender <- rates_samples %>% group_by(gender, country, sample) %>% summarise(raw = sum(orphans))
+rates_samples_all <- rates_samples %>% group_by(country, sample) %>% summarise(raw = sum(orphans))
 rates_samples_cat <- rates_samples_categories %>% group_by(category, country) %>% 
   summarise(li = quantile(raw, probs = 0.025),
             ui = quantile(raw, probs = 0.975))
 rates_samples_gen <- rates_samples_gender %>% group_by(gender, country) %>% 
+  summarise(li = quantile(raw, probs = 0.025),
+            ui = quantile(raw, probs = 0.975))
+rates_samples_all <- rates_samples_all %>% group_by(country) %>% 
   summarise(li = quantile(raw, probs = 0.025),
             ui = quantile(raw, probs = 0.975))
 
@@ -329,6 +333,8 @@ rates_categories <- dat_cat %>% group_by(category, country, who_region) %>% summ
 rates_categories <- left_join(rates_categories, rates_samples_cat, by = c("category", "country"))
 rates_gender <- dat_cat %>% group_by(gender, country, who_region) %>% summarise(raw = sum(raw))
 rates_gender <- left_join(rates_gender, rates_samples_gen, by = c("gender", "country"))
+rates_all <- dat_cat %>% group_by(country, who_region) %>% summarise(raw = sum(raw))
+rates_all <- left_join(rates_all, rates_samples_all, by = c("country"))
 
 rates_categories <- left_join(rates_categories, pop_categories, by = c("country"="Country.Area.Name", "category"))
 rates_categories$raw_pop <- rates_categories$raw / rates_categories$population * 1000
@@ -338,13 +344,19 @@ rates_categories$category <- factor(rates_categories$category, levels = c("0-4",
 tmp_cat <- rates_categories[which(rates_categories$category == "10-17"),]
 rates_categories$country <- factor(rates_categories$country, levels = tmp_cat$country[order(tmp_cat$raw_pop)])
 
-rates_gender <- left_join(rates_gender, pop_gender, by = c("country"="Country.Area.Name", "gender"))
+rates_gender <- left_join(rates_gender, pop_gender_comb, by = c("country"="Country.Area.Name", "gender"))
 rates_gender$gender <- ifelse(rates_gender$gender == "Male", "Paternal", "Maternal")
 rates_gender$raw_pop <- rates_gender$raw / rates_gender$population * 1000
 rates_gender$raw_pop_li <- rates_gender$li / rates_gender$population * 1000
 rates_gender$raw_pop_ui <- rates_gender$ui / rates_gender$population * 1000
 tmp_gender <- rates_gender[which(rates_gender$gender == "Paternal"),]
 rates_gender$country <- factor(rates_gender$country, levels = tmp_gender$country[order(tmp_gender$raw_pop)])
+
+rates_all <- left_join(rates_all, pop_gender, by = c("country"="Country.Area.Name"))
+rates_all$raw_pop <- rates_all$raw / rates_all$population * 1000
+rates_all$raw_pop_li <- rates_all$li / rates_all$population * 1000
+rates_all$raw_pop_ui <- rates_all$ui / rates_all$population * 1000
+rates_all$country <- factor(rates_all$country, levels = rates_all$country[order(rates_all$raw_pop)])
 
 # Plot rates  ----------------------------------------------
 
@@ -364,11 +376,19 @@ p_gender <- ggplot(rates_gender) +
   theme_bw()  + theme(legend.title = element_blank(),
                       axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
                       plot.margin = margin(0.5, 0.5, 0.5, 0.5, "cm")) +
-  xlab("") + ylab("Rate of orphans per 1000 childrenr")
+  xlab("") + ylab("Rate of orphans per 1000 children")
 
-p <- ggarrange(p_cat, p_gender, labels = "AUTO", ncol = 1, common.legend = TRUE, legend = "bottom")
+p_all <- ggplot(rates_all) +
+  geom_bar(aes(country, raw_pop, fill = who_region), stat = "identity") +
+  geom_errorbar(aes(x=country, ymin =  raw_pop_li, ymax = raw_pop_ui)) + 
+  theme_bw()  + theme(legend.title = element_blank(),
+                      axis.text.x = element_text(angle = 45, vjust = 1, hjust=1),
+                      plot.margin = margin(0.5, 0.5, 0.5, 0.5, "cm")) +
+  xlab("") + ylab("Rate of orphans per 1000 children")
 
-ggsave(paste0("global_age_analysis_2021/figures/fig_2_orphanhood_rates_age", month, ".pdf"),  p, height = 10,  width = 10)
+p <- ggarrange(p_all, p_gender, p_cat, labels = "AUTO", ncol = 1, common.legend = TRUE, legend = "bottom")
+
+ggsave(paste0("global_age_analysis_2021/figures/fig_2_orphanhood_rates_age", month, ".pdf"),  p, height = 14,  width = 10)
 
 
 # Time varying figure ----------------------------------------------
