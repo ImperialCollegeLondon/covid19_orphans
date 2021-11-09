@@ -60,6 +60,8 @@ run_age_analysis <- function(month = "_oct"){
   
   arg$country = "Argentina"
   
+  saveRDS(arg, paste0("global_age_analysis_2021/data/age_outputs/Argentina", month, ".RDS"))
+  
   # Brazil -----------------------------------------------------------------
   cat(sprintf("Running Brazil======\n"))
   cat(sprintf("Calculating central estimate\n"))
@@ -97,6 +99,7 @@ run_age_analysis <- function(month = "_oct"){
   print(end_time - start_time)
   
   bra$country = "Brazil"
+  saveRDS(bra, paste0("global_age_analysis_2021/data/age_outputs/Brazil", month, ".RDS"))
   
   # Colombia -----------------------------------------------------------------
   cat(sprintf("Running Colombia======\n"))
@@ -134,6 +137,7 @@ run_age_analysis <- function(month = "_oct"){
   print(end_time - start_time)
   
   col$country = "Colombia"
+  saveRDS(col, paste0("global_age_analysis_2021/data/age_outputs/Colombia", month, ".RDS"))
   
   # England and Wales -----------------------------------------------------------------
   cat(sprintf("Running England and Wales======\n"))
@@ -172,6 +176,8 @@ run_age_analysis <- function(month = "_oct"){
   
   eng$country = "England & Wales"
   
+  saveRDS(eng, paste0("global_age_analysis_2021/data/age_outputs/England", month, ".RDS"))
+  
   # France -----------------------------------------------------------------
   cat(sprintf("Running France ======\n"))
   cat(sprintf("Calculating central estimate\n"))
@@ -209,6 +215,8 @@ run_age_analysis <- function(month = "_oct"){
   
   fra$country = "France"
   
+  saveRDS(fra, paste0("global_age_analysis_2021/data/age_outputs/France", month, ".RDS"))
+  
   # Germany -----------------------------------------------------------------
   cat(sprintf("Running Germany ======\n"))
   cat(sprintf("Calculating central estimate\n"))
@@ -245,6 +253,7 @@ run_age_analysis <- function(month = "_oct"){
   print(end_time - start_time)
   
   ger$country = "Germany"
+  saveRDS(ger, paste0("global_age_analysis_2021/data/age_outputs/Germany", month, ".RDS"))
   
   # India -----------------------------------------------------------------
   cat(sprintf("Running India ======\n"))
@@ -283,6 +292,8 @@ run_age_analysis <- function(month = "_oct"){
   
   ind$country = "India"
   
+  saveRDS(ind, paste0("global_age_analysis_2021/data/age_outputs/India", month, ".RDS"))
+  
   # Iran -----------------------------------------------------------------
   cat(sprintf("Running Iran ======\n"))
   cat(sprintf("Calculating central estimate\n"))
@@ -319,6 +330,7 @@ run_age_analysis <- function(month = "_oct"){
   print(end_time - start_time)
   
   ira$country = "Iran (Islamic Republic of)"
+  saveRDS(ira, paste0("global_age_analysis_2021/data/age_outputs/Iran", month, ".RDS"))
   
   # Italy -----------------------------------------------------------------
   cat(sprintf("Running Italy ======\n"))
@@ -356,6 +368,7 @@ run_age_analysis <- function(month = "_oct"){
   print(end_time - start_time)
   
   ita$country = "Italy"
+  saveRDS(ita, paste0("global_age_analysis_2021/data/age_outputs/Italy", month, ".RDS"))
   
   # Kenya -----------------------------------------------------------------
   cat(sprintf("Running Kenya ======\n"))
@@ -393,6 +406,7 @@ run_age_analysis <- function(month = "_oct"){
   print(end_time - start_time)
   
   ken$country = "Kenya"
+  saveRDS(ken, paste0("global_age_analysis_2021/data/age_outputs/Kenya", month, ".RDS"))
   
   # Malawi -----------------------------------------------------------------
   cat(sprintf("Running Malawi ======\n"))
@@ -430,6 +444,7 @@ run_age_analysis <- function(month = "_oct"){
   print(end_time - start_time)
   
   mal$country = "Malawi"
+  saveRDS(mal, paste0("global_age_analysis_2021/data/age_outputs/Malawi", month, ".RDS"))
   
   # Mexico -----------------------------------------------------------------
   cat(sprintf("Running Mexico ======\n"))
@@ -467,6 +482,7 @@ run_age_analysis <- function(month = "_oct"){
   print(end_time - start_time)
   
   mex$country = "Mexico"
+  saveRDS(mex, paste0("global_age_analysis_2021/data/age_outputs/Mexico", month, ".RDS"))
   
   # Nigeria -----------------------------------------------------------------
   cat(sprintf("Running Nigeria ======\n"))
@@ -504,6 +520,7 @@ run_age_analysis <- function(month = "_oct"){
   print(end_time - start_time)
   
   nig$country = "Nigeria"
+  saveRDS(nig, paste0("global_age_analysis_2021/data/age_outputs/Nigeria", month, ".RDS"))
   
   # Peru -----------------------------------------------------------------
   cat(sprintf("Running Peru ======\n"))
@@ -541,6 +558,7 @@ run_age_analysis <- function(month = "_oct"){
   print(end_time - start_time)
   
   per$country = "Peru"
+  saveRDS(per, paste0("global_age_analysis_2021/data/age_outputs/Peru", month, ".RDS"))
   
   # Philippines -----------------------------------------------------------------
   cat(sprintf("Running Philippines ======\n"))
@@ -578,6 +596,7 @@ run_age_analysis <- function(month = "_oct"){
   print(end_time - start_time)
   
   phi$country = "Philippines"
+  saveRDS(phi, paste0("global_age_analysis_2021/data/age_outputs/Philippines", month, ".RDS"))
   
   # Poland -----------------------------------------------------------------
   cat(sprintf("Running Poland ======\n"))
@@ -615,6 +634,8 @@ run_age_analysis <- function(month = "_oct"){
   print(end_time - start_time)
   
   pol$country = "Poland"
+  
+  saveRDS(pol, paste0("global_age_analysis_2021/data/age_outputs/Poland", month, ".RDS"))
   
   # Russia
   # Not doing russia
@@ -655,6 +676,7 @@ run_age_analysis <- function(month = "_oct"){
   print(end_time - start_time)
   
   spa$country = "Spain"
+  saveRDS(spa, paste0("global_age_analysis_2021/data/age_outputs/Spain", month, ".RDS"))
   
   # South Africa -----------------------------------------------------------------
   cat(sprintf("Running South Africa ======\n"))
@@ -692,6 +714,7 @@ run_age_analysis <- function(month = "_oct"){
   print(end_time - start_time)
   
   sa$country = "South Africa"
+  saveRDS(sa, paste0("global_age_analysis_2021/data/age_outputs/SouthAfrica", month, ".RDS"))
   
   # USA -----------------------------------------------------------------
   cat(sprintf("Running USA ======\n"))
@@ -729,6 +752,7 @@ run_age_analysis <- function(month = "_oct"){
   print(end_time - start_time)
   
   usa$country = "USA"
+  saveRDS(usa, paste0("global_age_analysis_2021/data/age_outputs/USA", month, ".RDS"))
   
   # Zimbabwe -----------------------------------------------------------------
   cat(sprintf("Running Zimbabwe ======\n"))
@@ -766,6 +790,7 @@ run_age_analysis <- function(month = "_oct"){
   print(end_time - start_time)
   
   zim$country = "Zimbabwe"
+  saveRDS(zim, paste0("global_age_analysis_2021/data/age_outputs/Zimbabwe", month, ".RDS"))
   
   
   # Formatting the data ----------------------------------------------
