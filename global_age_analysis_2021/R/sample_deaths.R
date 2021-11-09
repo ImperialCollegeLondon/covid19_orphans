@@ -131,6 +131,7 @@ sample_deaths_mexico <- function(month = ""){
 # Nigeria
 sample_deaths_nigeria <- function(month = ""){
   d_merge = read.csv(paste0('global_age_analysis_2021/data/Nigeria/covid19_deaths', month, '.csv'), stringsAsFactors = FALSE)
+  d_merge$deaths[which(d_merge$deaths< 0)] = 0
   d_merge$deaths <- rpois(length(d_merge$deaths), d_merge$deaths)
   
   write.csv(d_merge, paste0('global_age_analysis_2021/data/Nigeria/covid19_deaths', month, '_un.csv'))
