@@ -2,6 +2,7 @@ library(matrixStats)
 library(tidyverse)
 library(cowplot)
 library(ggrepel)
+library(stats)
 
 calc_ratio <- function(alpha, beta, gamma, delta, tfr, europe){
   return(delta * (exp(alpha + beta * tfr + gamma * europe))/(1 + exp(alpha + beta * tfr + gamma * europe)))
@@ -40,21 +41,6 @@ output_p = stats::optim(pars, error_parent, data=subset, control = c(abstol = 1e
 print(output_p$par)
 saveRDS(output_p$par, "global_age_analysis_2021/data/shiny/parent_coefficients.RDS")
 
-x = seq(0, 5, 0.01)
-line_all = data.frame(x = x, 
-                      y0 = calc_ratio(output_p$par[1], output_p$par[2], 
-                                     output_p$par[3], output_p$par[4], x, 0),
-                      y1 = calc_ratio(output_p$par[1], output_p$par[2], 
-                                      output_p$par[3], output_p$par[4], x, 1))
-p_fit_pa <- ggplot(subset) + 
-  geom_point(aes(tfr, parent_ratio)) + 
-  geom_line(data = line_all, aes(x, y0), col = 'black') + 
-  geom_line(data = line_all, aes(x, y1), col = 'red') + 
-  xlab("Total fertility rate") + ylab("Ratio of children orphaned to deaths") + 
-  theme_bw()
-p_fit_pa_label <- p_fit_pa + geom_text_repel(aes(x = tfr, y = parent_ratio, label = country), size = 3, max.overlaps = 100)
-print(p_fit_pa_label)
-
 # Calculate deterministic number of orphans
 joined$calculated_parent_ratio <- calc_ratio(output_p$par[1], output_p$par[2], 
                                               output_p$par[3], output_p$par[4], 
@@ -72,12 +58,19 @@ saveRDS(ratio_dat, "global_age_analysis_2021/data/orphanhood_ratios.RDS")
 n = 1000
 estimates_parent <- matrix(nrow = length(joined$country), ncol = n)
 estimates_parent_orphans <- matrix(nrow = length(joined$country), ncol = n)
-
+tot_rn = 0
+mean_tot = 0 
+sd_tot = 0 
+base::set.seed(10)
 for (i in 1:n){
-  rn <- stats::rnorm(length(joined$country), mean = joined$tfr, sd = joined$sd)
+  rn <- rnorm(length(joined$country), mean = joined$tfr, sd = joined$sd)
+  tot_rn <- tot_rn + sum(rn)
+  mean_tot = mean_tot + sum(joined$tfr)
+  sd_tot = sd_tot + sum(joined$sd)
   estimates_parent[, i] <- calc_ratio(output_p$par[1], output_p$par[2], output_p$par[3], output_p$par[4], rn, joined$europe)
   estimates_parent_orphans[, i] <- estimates_parent[, i] * joined$fitting_deaths
 }
+print(sprintf("rn total: %f, %f, %f", tot_rn, mean_tot, sd_tot))
 
 orphans_samples <- colSums(estimates_parent_orphans)
 formatted = sprintf("Parent orphans: %0.f [%0.f - %0.f]", 
@@ -100,6 +93,22 @@ orphanhood_country$country <- ratio_dat$country
 saveRDS(orphanhood_country, "global_age_analysis_2021/data/orphanhood_samples.RDS")
 
 all_country_fit <- sum(joined$final_parent_orphans)
+
+x = seq(0, 5, 0.01)
+line_all = data.frame(x = x, 
+                      y0 = calc_ratio(output_p$par[1], output_p$par[2], 
+                                      output_p$par[3], output_p$par[4], x, 0),
+                      y1 = calc_ratio(output_p$par[1], output_p$par[2], 
+                                      output_p$par[3], output_p$par[4], x, 1))
+p_fit_pa <- ggplot(subset) + 
+  geom_point(aes(tfr, parent_ratio)) + 
+  geom_line(data = line_all, aes(x, y0), col = 'black') + 
+  geom_line(data = line_all, aes(x, y1), col = 'red') + 
+  xlab("Total fertility rate") + ylab("Ratio of children orphaned to deaths") + 
+  theme_bw()
+p_fit_pa_label <- p_fit_pa + geom_text_repel(aes(x = tfr, y = parent_ratio, label = country), size = 3, max.overlaps = 100)
+print(p_fit_pa_label)
+
 
 # Separate out by regions
 mean = rowMeans(estimates_parent_orphans)

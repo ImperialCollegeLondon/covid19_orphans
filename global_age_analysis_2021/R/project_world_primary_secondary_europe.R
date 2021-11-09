@@ -2,6 +2,7 @@ library(matrixStats)
 library(tidyverse)
 library(cowplot)
 library(ggrepel)
+library(stats)
 
 calc_ratio <- function(alpha, beta, gamma, delta, tfr, europe){
   return(delta * (exp(alpha + beta * tfr + gamma * europe))/(1 + exp(alpha + beta * tfr + gamma * europe)))
@@ -13,6 +14,7 @@ error <- function(params, data){
 
 source("global_age_analysis_2021/R/utils.R")
 
+base::set.seed(10)
 # Load in data
 joined <- readRDS("global_age_analysis_2021/data/tfr_covariates.RDS")
 
@@ -35,7 +37,7 @@ print(sprintf("Pearsons r^2 primary and/or seconday: %f",
 
 # Fit primary and secondary
 pars = c(-7, 1, 1, 1)
-output_ps = stats::optim(pars, error, data=subset, control = c(abstol = 1e-12))
+output_ps = optim(pars, error, data=subset, control = c(abstol = 1e-12))
 joined$calculated_ratio <- calc_ratio(output_ps$par[1], output_ps$par[2], 
                                       output_ps$par[3], output_ps$par[4],
                                       joined$tfr, joined$europe)
@@ -48,23 +50,6 @@ ratio_dat$ratio <- NULL
 names(ratio_dat) <- c("country", "primary_secondary_ratio")
 
 saveRDS(ratio_dat, "global_age_analysis_2021/data/primary_secondary_ratios.RDS")
-
-
-x = seq(0, 5, 0.1)
-line_all = data.frame(x = x, 
-                      y0 = calc_ratio(output_ps$par[1], output_ps$par[2], 
-                                      output_ps$par[3], output_ps$par[4], x, 0),
-                      y1 = calc_ratio(output_ps$par[1], output_ps$par[2], 
-                                      output_ps$par[3], output_ps$par[4], x, 1))
-p_fit_ps <- ggplot(subset) + 
-  geom_point(aes(tfr, ratio)) + 
-  geom_line(data = line_all, aes(x, y0), col = 'black') + 
-  geom_line(data = line_all, aes(x, y1), col = 'red') + 
-  xlab("Total fertility rate") + 
-  ylab("Ratio of children orphaned and/or losing caregivers (primary or secondary) \nto deaths") + 
-  theme_bw()
-p_fit_ps_label <- p_fit_ps + geom_text_repel(aes(x = tfr, y = ratio, label = country), size = 3, max.overlaps = 100)
-print(p_fit_ps_label)
 
 # Calculate deterministic number of orphans
 joined$calculated_ratio <- calc_ratio(output_ps$par[1], output_ps$par[2], 
@@ -80,17 +65,20 @@ estimates <- matrix(nrow = length(joined$country), ncol = n)
 estimates_orphans <- matrix(nrow = length(joined$country), ncol = n)
 
 base::set.seed(10)
-ratio_fit = NULL
+
 rn_tot = 0
+mean_tot = 0 
+sd_tot = 0 
 for (i in 1:n){
-  rn <- rnorm(length(joined$country), mean = joined$tfr, sd = joined$sd)
+  rn <- stats::rnorm(length(joined$country), mean = joined$tfr, sd = joined$sd)
   rn_tot = rn_tot+sum(rn)
+  mean_tot = mean_tot + sum(joined$tfr)
+  sd_tot = sd_tot + sum(joined$sd)
   estimates[, i] <- calc_ratio(output_ps$par[1], output_ps$par[2], output_ps$par[3], 
                                output_ps$par[4], rn, joined$europe)
-  ratio_fit = cbind(ratio_fit,  estimates[, i])
   estimates_orphans[, i] <- estimates[, i] * joined$fitting_deaths
 }
-print(sprintf("rn total: %f", rn_tot))
+print(sprintf("rn total: %f, %f, %f", rn_tot, mean_tot, sd_tot))
 
 orphans_samples <- colSums(estimates_orphans)
 formatted <- sprintf("Primary and/or secondary orphans: %0.f [%0.f - %0.f]", 
@@ -108,7 +96,21 @@ saveRDS(sprintf("%s [%s - %s]",
                 format(round.choose(quantile(orphans_samples, probs = 0.975), 100, 1), big.mark = ",", trim = TRUE)), 
         file = "global_age_analysis_2021/data/formatted_primary_secondary.RDS")
 
-
+x = seq(0, 5, 0.1)
+line_all = data.frame(x = x, 
+                      y0 = calc_ratio(output_ps$par[1], output_ps$par[2], 
+                                      output_ps$par[3], output_ps$par[4], x, 0),
+                      y1 = calc_ratio(output_ps$par[1], output_ps$par[2], 
+                                      output_ps$par[3], output_ps$par[4], x, 1))
+p_fit_ps <- ggplot(subset) + 
+  geom_point(aes(tfr, ratio)) + 
+  geom_line(data = line_all, aes(x, y0), col = 'black') + 
+  geom_line(data = line_all, aes(x, y1), col = 'red') + 
+  xlab("Total fertility rate") + 
+  ylab("Ratio of children orphaned and/or losing caregivers (primary or secondary) \nto deaths") + 
+  theme_bw()
+p_fit_ps_label <- p_fit_ps + geom_text_repel(aes(x = tfr, y = ratio, label = country), size = 3, max.overlaps = 100)
+print(p_fit_ps_label)
 
 all_country_fit <- sum(joined$final_orphans)
 
