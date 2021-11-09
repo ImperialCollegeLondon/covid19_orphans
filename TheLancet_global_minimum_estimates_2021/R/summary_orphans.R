@@ -93,7 +93,7 @@ combine_orphans <- function(country, grand_parents, updated_coef = FALSE){
       factor = 0.766 #0.15
     } else {
       print("Using new factor")
-      factor = 1399489 / 3.97e6
+      factor = 399489 / 3.97e6
     }
     comb <- round(comb / factor)
     comb[4] <- sum(comb[1:3])
