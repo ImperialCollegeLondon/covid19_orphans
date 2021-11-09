@@ -891,15 +891,11 @@ process_usa = function(){
                                                         ifelse(excess_death$age %in% c('70-74', '65-69'), '65-74',
                                                                ifelse(excess_death$age %in% c('80-84', '75-79'), '75-84',excess_death$age
                                                                )))))))
-  excess_death = excess_death %>%  
-    filter((week >= 10 & year == "2020") | (week <= 43 & year == "2021")) %>%
-    group_by(gender, week, age) %>%
-    mutate(excess_death = sum(excess_deaths)) %>% 
-    select(-c(excess_deaths)) %>% ungroup() %>% distinct()
   
-  excess_death = excess_death %>%
-    group_by(age, gender) %>%
-    summarise("excess_deaths" = sum(excess_death))
+  excess_death = excess_death %>%  
+    filter((week >= 10 & year == "2020") | (week <= 43 & year == "2021")) %>% 
+    group_by(gender, age) %>%
+    summarise("excess_deaths" = sum(excess_deaths))
   
   data_covid$age <- ifelse(data_covid$age %in% c('0', '1-4', '5-14'), '0-14', data_covid$age)
   data_covid <- data_covid %>%
