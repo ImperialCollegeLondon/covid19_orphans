@@ -397,9 +397,9 @@ process_france_fertility = function(uncertainty  = FALSE){
                                                '80-84', '85-89', '90-94', '95-99', '100+'), '65+', data_pop$age)
     
     data_pop$pop = as.numeric(data_pop$pop)
-    data_pop = data_pop %>% group_by(age, year) %>% summarise(pop = sum(pop)) 
+    data_pop = data_pop %>% group_by(age, year, gender) %>% summarise(pop = sum(pop)) 
     
-    births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "country", "age"))
+    births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "age"))
     births$num_births =  round(births$fertility_rate/1000 * births$pop * 1000)
     
     births$sample_births = rpois(length(births$num_births), births$num_births)
@@ -545,9 +545,9 @@ process_germany_fertility = function(uncertainty = FALSE){
                                                '80-84', '85-89', '90-94', '95-99', '100+'), '65+', data_pop$age)
     
     data_pop$pop = as.numeric(data_pop$pop)
-    data_pop = data_pop %>% group_by(age, year) %>% summarise(pop = sum(pop))
+    data_pop = data_pop %>% group_by(age, year, gender) %>% summarise(pop = sum(pop))
     
-    births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "country", "age"))
+    births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "age"))
     births$num_births =  round(births$fertility_rate/1000 * births$pop * 1000)
     
     births$sample_births = rpois(length(births$num_births), births$num_births)
@@ -605,9 +605,9 @@ process_iran_fertility = function(uncertainty = FALSE){
                                                '80-84', '85-89', '90-94', '95-99', '100+'), '65+', data_pop$age)
     data_pop$pop = str_replace(data_pop$pop, " ", "")
     data_pop$pop = as.numeric(data_pop$pop)
-    data_pop = data_pop %>% group_by(age, year) %>% summarise(pop = sum(pop))
+    data_pop = data_pop %>% group_by(age, year, gender) %>% summarise(pop = sum(pop))
     
-    births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "country", "age"))
+    births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "age"))
     births$num_births =  round(births$fertility_rate/1000 * births$pop * 1000)
     
     births$sample_births = rpois(length(births$num_births), births$num_births)
@@ -785,9 +785,9 @@ process_italy_fertility = function(uncertainty = FALSE){
                                                '80-84', '85-89', '90-94', '95-99', '100+'), '65+', data_pop$age)
     
     data_pop$pop = as.numeric(data_pop$pop)
-    data_pop = data_pop %>% group_by(age, year) %>% summarise(pop = sum(pop))
+    data_pop = data_pop %>% group_by(age, year, gender) %>% summarise(pop = sum(pop))
     
-    births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "country", "age"))
+    births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "age"))
     births$num_births =  round(births$fertility_rate/1000 * births$pop * 1000)
     
     births$sample_births = rpois(length(births$num_births), births$num_births)
@@ -927,9 +927,9 @@ process_mexico_fertility = function(uncertainty = FALSE){
     
     
     data_pop$pop = as.numeric(data_pop$pop)
-    data_pop = data_pop %>% group_by(age, year) %>% summarise(pop = sum(pop))
+    data_pop = data_pop %>% group_by(age, year,gender) %>% summarise(pop = sum(pop))
     
-    births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "country", "age"))
+    births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "age"))
     births$num_births =  round(births$fertility_rate/1000 * births$pop * 1000)
     
     births$sample_births = rpois(length(births$num_births), births$num_births)
@@ -1090,9 +1090,9 @@ process_philippines_fertility = function(uncertainty = FALSE){
                                                '80-84', '85-89', '90-94', '95-99', '100+'), '65+', data_pop$age)
     
     data_pop$pop = as.numeric(data_pop$pop)
-    data_pop = data_pop %>% group_by(age, year) %>% summarise(pop = sum(pop))
+    data_pop = data_pop %>% group_by(age, year, gender) %>% summarise(pop = sum(pop))
     
-    births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "country", "age"))
+    births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "age"))
     births$num_births =  round(births$fertility_rate/1000 * births$pop * 1000)
     
     births$sample_births = rpois(length(births$num_births), births$num_births)
@@ -1255,9 +1255,9 @@ process_poland_fertility = function(uncertainty = FALSE){
     
     data_pop$age = ifelse(data_pop$age %in% c( '50-54', '55-59', '60-64', '65-69', '70-74', '75-79', 
                                                '80-84', '85-89', '90-94', '95-99', '100+'), '50+', data_pop$age)
-    data_pop = data_pop %>% group_by(age, year) %>% summarise(pop = sum(pop))
+    data_pop = data_pop %>% group_by(age, year, gender) %>% summarise(pop = sum(pop))
     
-    births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "country", "age"))
+    births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "age"))
     births$num_births =  round(births$fertility_rate/1000 * births$pop * 1000)
     
     births$sample_births = rpois(length(births$num_births), births$num_births)
@@ -1492,9 +1492,9 @@ process_spain_fertility = function(uncertainty = FALSE){
     
     
     data_pop$pop = as.numeric(data_pop$pop)
-    data_pop = data_pop %>% group_by(age, year) %>% summarise(pop = sum(pop))
+    data_pop = data_pop %>% group_by(age, year, gender) %>% summarise(pop = sum(pop))
     
-    births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "country", "age"))
+    births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "age"))
     births$num_births =  round(births$fertility_rate/1000 * births$pop * 1000)
     
     births$sample_births = rpois(length(births$num_births), births$num_births)
@@ -1649,9 +1649,9 @@ process_usa_fertility = function(uncertainty = FALSE){
                                                      '80-84', '85-89', '90-94', '95-99', '100+'), '55+',
                                  data_pop$age))
     data_pop$pop = as.numeric(data_pop$pop)
-    data_pop = data_pop %>% group_by(age, year) %>% summarise(pop = sum(pop))
+    data_pop = data_pop %>% group_by(age, year, gender) %>% summarise(pop = sum(pop))
     
-    births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "country", "age"))
+    births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "age"))
     births$num_births =  round(births$fertility_rate/1000 * births$pop * 1000)
     
     births$sample_births = rpois(length(births$num_births), births$num_births)
