@@ -113,8 +113,7 @@ process_number_children_colombia <- function(uncertainty = FALSE){
   data_f$date = data_f$year
   data_f$gender = 'M'
   
-  data_summary = data %>% group_by(age) %>% mutate(rate = mean(fertility_rate)) %>%
-    ungroup %>% select(-fertility_rate, -year) %>% distinct()
+  data_summary = data %>% group_by(age) %>% summarise(rate = mean(fertility_rate))
 
   if (uncertainty == TRUE){
     data_f = sample_fertility(data_f, "Colombia", "Male")

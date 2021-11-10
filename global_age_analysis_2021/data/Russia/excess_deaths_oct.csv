@@ -1,7 +1,7 @@
-sex,age,excess_deaths
-Female,15-44,8366
-Male,15-44,9350
-Female,45-64,61698
-Male,45-64,68942
-Female,65+,238080
-Male,65+,266038
+age,sex,excess_deaths
+15-44,Female,8366
+15-44,Male,9350
+45-64,Female,61698
+45-64,Male,68942
+65+,Female,238080
+65+,Male,266038

@@ -56,18 +56,17 @@ process_euro_excess_new = function(){
     dt = as.data.table(dt[which(df$year != '2011'),])
     df = dt 
     df = df[which(! df$year %in% c('2020', '2021')),]
-    df = df %>% group_by(week) %>% mutate(avg_spain = mean(Spain[!is.na(Spain)]), 
+    df = df %>% group_by(week) %>% summarise(avg_spain = mean(Spain[!is.na(Spain)]), 
                                           avg_france = mean(France[!is.na(France)]), 
                                           avg_italy = mean(Italy[!is.na(Italy)]), 
-                                          avg_poland = mean(Poland[!is.na(Poland)])) %>% ungroup() 
-    df = unique(df %>% select(-year,-Spain, -France, -Italy, -Poland))
+                                          avg_poland = mean(Poland[!is.na(Poland)]))
     df = as.data.table(df)
     dt = dt[which(dt$year %in% c('2020', '2021')),]
     dt = merge(dt, df,by = 'week')
-    dataset = dt %>% group_by(week) %>% mutate(spain = ifelse(is.na(Spain), NA, Spain - avg_spain),
+    dataset = dt %>% group_by(week) %>% summarise(spain = ifelse(is.na(Spain), NA, Spain - avg_spain),
                                                france = ifelse(is.na(France), NA, France - avg_france),
                                                italy = ifelse(is.na(Italy), NA, Italy - avg_italy),
-                                               poland = ifelse(is.na(Poland), NA, Poland - avg_poland)) %>% ungroup()
+                                               poland = ifelse(is.na(Poland), NA, Poland - avg_poland))
     
     dataset_summary = dataset %>% select(week, year, spain, france, italy, poland)
     dataset_summary = dataset_summary %>% group_by(week, year) %>%
@@ -101,8 +100,7 @@ process_argentina_covid19 = function(){
                         ifelse(data_pop$age %in% c('20-24', '25-29', '30-34', '35-39'),'20-39',
                                ifelse(data_pop$age %in% c('40-44', '45-49', '50-54', '55-59'), '40-59',
                                       '60+')))
-  data_pop = data_pop %>% group_by(age, gender) %>% mutate(pop = sum(pop)) %>% ungroup() %>% distinct() %>%
-    select(-year)
+  data_pop = data_pop %>% group_by(age, gender) %>% summarise(pop = sum(pop))
   data_pop$age <- as.character(data_pop$age)
   data_pop = as.data.table(data_pop)
   data = as.data.table(data)
@@ -115,7 +113,7 @@ process_argentina_covid19 = function(){
   total = arg$Deaths
   data_combine$date = '2021-10-09'
   
-  d_merge = data_combine%>% select(country, date,age, gender, COVID19_deaths)
+  d_merge = data_combine%>% select(date,age, gender, COVID19_deaths)
   d_merge$rate = d_merge$COVID19_deaths/sum(d_merge$COVID19_deaths)
   d_merge$deaths = round(d_merge$rate*total)
   
@@ -283,11 +281,8 @@ process_england_wales = function(uncertainty = FALSE){
   d_deaths = d_deaths[which((d_deaths$year == "2020" &  d_deaths$week >=10) | 
                               (d_deaths$year == "2021" &  d_deaths$week <= 43)),]
   d_merge = d_deaths %>% group_by(age, gender) %>% 
-    mutate(nb_covid19 = sum(covid19_deaths),
-           nb_excess = sum(excess_deaths)) %>% 
-    ungroup() %>% 
-    select(age, gender, nb_covid19, nb_excess) %>% 
-    distinct()
+    summarise(nb_covid19 = sum(covid19_deaths),
+           nb_excess = sum(excess_deaths))
   d_merge$deaths = ifelse(d_merge$nb_covid19 >= d_merge$nb_excess, d_merge$nb_covid19, d_merge$nb_excess)
   
   write_csv(file = 'global_age_analysis_2021/data/UK/deaths_all_england_wales_oct.csv', d_merge)
@@ -325,7 +320,7 @@ process_france = function(){
                                                                              ifelse(excess_death$age %in% c('80-84', '85-89'), '80-89',
                                                                                     '90+')))))))))
   excess_death = excess_death %>%  group_by(gender, year, week, age) %>%
-    mutate(France= sum(france)) %>% select(-c(france)) %>% ungroup() %>% distinct()
+    summarise(France= sum(france))
   excess_death$gender = as.character(excess_death$gender)
   excess_death =  excess_death[which(excess_death$gender != 'T'),]
   excess_death$gender = ifelse(excess_death$gender == 'M', 'Male', 'Female')
@@ -406,10 +401,7 @@ process_india_covid = function(){
                          ifelse(d_summary$age %in% c('20-29','30-39', '40-49'), '20-49',
                                 ifelse(d_summary$age %in% c("50-59","60-69"),'50-69', '70+')))
   d_summary = d_summary %>% group_by(age, sex) %>% 
-    mutate(covid_deaths = sum(deaths)) %>% 
-    ungroup() %>% 
-    select(-deaths) %>% 
-    distinct()
+    summarise(covid_deaths = sum(deaths))
   d_summary  = d_summary %>% arrange(age, sex) %>% filter(age != '0-19')
   write_csv(d_summary, path = 'global_age_analysis_2021/data/India/covid_deaths_oct.csv')
 }
@@ -476,10 +468,7 @@ process_italy = function(){
                                                                              ifelse(excess_death$age %in% c('80-84', '85-89'), '80-89',
                                                                                     '90+')))))))))
   excess_death = excess_death %>%  group_by(gender, week, year, age) %>%
-    mutate(excess_death = sum(italy)) %>% 
-    select(-c(italy)) %>% 
-    ungroup() %>% 
-    distinct()
+    summarise(excess_death = sum(italy)) 
   
   excess_death$gender = as.character(excess_death$gender)
   excess_death =  excess_death[which(excess_death$gender != 'T'),]
@@ -556,8 +545,7 @@ process_mexico_covid19 = function(){
   data_pop$age = as.character(data_pop$age)
   data_pop$pop = as.numeric(data_pop$pop)
   data_pop$age = ifelse(data_pop$age %in% c('80-84', '85-89', '90-94', '95-99', '100+'), '80+', data_pop$age)
-  data_pop = data_pop %>% group_by(age, gender) %>% mutate(pop = sum(pop)) %>% ungroup() %>% distinct() %>%
-    select(-year)
+  data_pop = data_pop %>% group_by(age, gender) %>% summarise(pop = sum(pop))
   data_pop = as.data.table(data_pop)
   data = as.data.table(data)
   data_combine= merge(data, data_pop, by = c('age', 'gender'))
@@ -683,7 +671,7 @@ process_poland_covid19 = function(){
                                                                              ifelse(excess_death$age %in% c('80-84', '85-89'), '80-89',
                                                                                     '90+')))))))))
   excess_death = excess_death %>%  group_by(gender, year, week, age) %>%
-    mutate(Poland= sum(poland)) %>% select(-c(poland)) %>% ungroup() %>% distinct()
+    summarise(Poland= sum(poland))
   excess_death$gender = as.character(excess_death$gender)
   excess_death =  excess_death[which(excess_death$gender != 'T'),]
   excess_death$gender = ifelse(excess_death$gender == 'M', 'Male', 'Female')
@@ -750,10 +738,7 @@ process_russia_excess = function(){
                          ifelse(d_summary$age %in% c('45-49','50-54', '55-59', '60-64'), '45-64',
                                 ifelse(d_summary$age %in% c("65-69","70-74","75-79","80-84","85-89" ,"90-94", "95-99", "100+" ),'65+', '15-44')))
   d_summary = d_summary %>% group_by(age, sex) %>% 
-    mutate(excess_deaths = sum(weighted_excess_deaths)) %>% 
-    ungroup() %>% 
-    select(-weighted_excess_deaths) %>% 
-    distinct()
+    summarise(excess_deaths = sum(weighted_excess_deaths))
   d_summary  = d_summary %>% arrange(age, sex) %>% filter(age != '0-14')
   write_csv(d_summary, path = 'global_age_analysis_2021/data/Russia/excess_deaths_oct.csv')
 }
@@ -791,7 +776,7 @@ process_spain = function(){
   excess_death = excess_death %>%  
     filter((week >= 10 & year == "2020") | (week <= 43 & year == "2021")) %>%
     group_by(gender, week, age) %>%
-    mutate(excess_death = sum(spain)) %>% select(-c(spain)) %>% ungroup() %>% distinct()
+    summarise(excess_death = sum(spain))
   excess_death$gender = as.character(excess_death$gender)
   excess_death =  excess_death[which(excess_death$gender != 'T'),]
   excess_death$gender = ifelse(excess_death$gender == 'M', 'Male', 'Female')
@@ -872,9 +857,7 @@ process_usa = function(){
   
   tmp_pre19 = data %>%filter(! year %in% c('2020', '2021')) %>% 
     group_by(week, gender, age) %>% 
-    mutate(avg_death = sum(value)/5) %>% 
-    select(-value, -year) %>% 
-    distinct()
+    summarise(avg_death = sum(value)/5)
   tmp_20 = data %>%filter(year %in% c('2020', '2021'))
   dataset = merge(tmp_20, tmp_pre19, by= c('week', 'gender', 'age'))
   dataset = as.data.table(dataset)
