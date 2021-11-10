@@ -690,8 +690,8 @@ process_poland_covid19 = function(){
   total = sum(pol$Deaths)
   
   rate = total/total_covid
-  data$date = '2021-10-09'
-  data$COVID19_deaths = data$COVID19_deaths * rate
+  d_merge$date = '2021-10-09'
+  d_merge$COVID19_deaths = d_merge$COVID19_deaths * rate
   
   d_merge$death = ifelse(d_merge$COVID19_deaths > d_merge$excess_deaths, d_merge$COVID19_deaths, d_merge$excess_deaths)
   d_merge = d_merge %>% select(age, gender, COVID19_deaths, excess_deaths, death)
