@@ -38,6 +38,7 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   arg <- NULL
   start_time <- Sys.time()
+  set.seed(3)
   for (i in 1:n){
     sample_deaths_argentina(month = month)
     process_number_children_colombia(uncertainty = TRUE)
@@ -78,6 +79,7 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   bra <- NULL
   start_time <- Sys.time()
+  set.seed(3)
   for (i in 1:n){
     sample_deaths_brazil(month = month)
     process_number_children_brazil(uncertainty = TRUE)
@@ -116,6 +118,7 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   col <- NULL
   start_time <- Sys.time()
+  set.seed(3)
   for (i in 1:n){
     sample_deaths_colombia(month = month)
     process_number_children_colombia(uncertainty = TRUE)
@@ -154,6 +157,7 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   eng <- NULL
   start_time <- Sys.time()
+  set.seed(3)
   for (i in 1:n){
     sample_deaths_england_wales(month = month)
     process_number_children_england_wales(uncertainty = TRUE)
@@ -193,6 +197,7 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   fra <- NULL
   start_time <- Sys.time()
+  set.seed(3)
   for (i in 1:n){
     sample_deaths_france(month = month)
     process_number_children_france(uncertainty = TRUE)
@@ -232,6 +237,7 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   ger <- NULL
   start_time <- Sys.time()
+  set.seed(3)
   for (i in 1:n){
     sample_deaths_germany(month = month)
     process_number_children_germany(uncertainty = TRUE)
@@ -270,6 +276,7 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   ind <- NULL
   start_time <- Sys.time()
+  set.seed(3)
   for (i in 1:n){
     sample_deaths_india(month = month)
     process_number_children_india(uncertainty = TRUE)
@@ -309,6 +316,7 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   ira <- NULL
   start_time <- Sys.time()
+  set.seed(3)
   for (i in 1:n){
     sample_deaths_iran(month = month)
     process_number_children_iran(uncertainty = TRUE)
@@ -347,6 +355,7 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   ita <- NULL
   start_time <- Sys.time()
+  set.seed(3)
   for (i in 1:n){
     sample_deaths_italy(month = month)
     process_number_children_italy(uncertainty = TRUE)
@@ -385,6 +394,7 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   ken <- NULL
   start_time <- Sys.time()
+  set.seed(3)
   for (i in 1:n){
     sample_deaths_kenya(month = month)
     process_number_children_kenya(uncertainty = TRUE)
@@ -423,6 +433,7 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   mal <- NULL
   start_time <- Sys.time()
+  set.seed(3)
   for (i in 1:n){
     sample_deaths_malawi(month = month)
     process_number_children_malawi(uncertainty = TRUE)
@@ -461,6 +472,7 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   mex <- NULL
   start_time <- Sys.time()
+  set.seed(3)
   for (i in 1:n){
     sample_deaths_mexico(month = month)
     process_number_children_mexico(uncertainty = TRUE)
@@ -499,6 +511,7 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   nig <- NULL
   start_time <- Sys.time()
+  set.seed(3)
   for (i in 1:n){
     sample_deaths_nigeria(month = month)
     process_number_children_nigeria(uncertainty = TRUE)
@@ -537,6 +550,7 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   per <- NULL
   start_time <- Sys.time()
+  set.seed(3)
   for (i in 1:n){
     sample_deaths_peru(month = month)
     process_number_children_peru(uncertainty = TRUE)
@@ -575,6 +589,7 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   phi <- NULL
   start_time <- Sys.time()
+  set.seed(3)
   for (i in 1:n){
     sample_deaths_philippines(month = month)
     process_number_children_philippines(uncertainty = TRUE)
@@ -613,6 +628,7 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   pol <- NULL
   start_time <- Sys.time()
+  set.seed(3)
   for (i in 1:n){
     sample_deaths_poland(month = month)
     process_number_children_poland(uncertainty = TRUE)
@@ -655,6 +671,7 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   spa <- NULL
   start_time <- Sys.time()
+  set.seed(3)
   for (i in 1:n){
     sample_deaths_spain(month = month)
     process_number_children_spain(uncertainty = TRUE)
@@ -693,6 +710,7 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   sa <- NULL
   start_time <- Sys.time()
+  set.seed(3)
   for (i in 1:n){
     sample_deaths_south_africa(month = month)
     process_number_children_south_africa(uncertainty = TRUE)
@@ -731,6 +749,7 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   usa <- NULL
   start_time <- Sys.time()
+  set.seed(3)
   for (i in 1:n){
     sample_deaths_usa(month = month)
     process_number_children_usa(uncertainty = TRUE)
@@ -769,6 +788,7 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   zim <- NULL
   start_time <- Sys.time()
+  set.seed(3)
   for (i in 1:n){
     sample_deaths_zimbabwe(month = month)
     process_number_children_zimbabwe(uncertainty = TRUE)
@@ -827,8 +847,8 @@ run_age_analysis <- function(month = "_oct"){
   
 }
 
-#run_age_analysis(month = "")
-run_age_analysis(month = "_oct")
-run_age_analysis(month = "_diff")
+run_age_analysis(month = "")
+#run_age_analysis(month = "_oct")
+#run_age_analysis(month = "_diff")
 
 

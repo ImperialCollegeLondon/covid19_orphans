@@ -114,7 +114,7 @@ process_fertility_all_countries = function(){
   all_combine = all_combine %>% arrange(country, date, gender, age)
   all_combine = all_combine %>% distinct(country, date, age,gender, .keep_all = TRUE)
   setnames(all_combine, 'date', 'year')
-  write_csv(path = "global_age_analysis_2021/data/fertility_update/parents_live_births.csv", all_combine)
+  write_csv(file = "global_age_analysis_2021/data/fertility_update/parents_live_births.csv", all_combine)
 }
 
 # England and Wales
@@ -244,16 +244,16 @@ process_england_wales_fertility = function(uncertainty = FALSE){
   if (uncertainty == FALSE){
     d_data[,rate := 1000* value /pop_nb]
     
-    write_csv(d_data, path = 'global_age_analysis_2021/data/UK/england_wales_fertility_f.csv')
+    write_csv(d_data, file = 'global_age_analysis_2021/data/UK/england_wales_fertility_f.csv')
     
     d_all = rbind(d_data %>% select(-pop_nb, -value), data_all)
-    write_csv(d_all, path = 'global_age_analysis_2021/data/UK/england_wales_fertility_all.csv')
+    write_csv(d_all, file = 'global_age_analysis_2021/data/UK/england_wales_fertility_all.csv')
     
   } else {
     d_data$value_sample = rpois(length(d_data$value), d_data$value)
     d_data[,rate := 1000* value_sample /pop_nb]
     
-    write_csv(d_data, path = 'global_age_analysis_2021/data/UK/england_wales_fertility_f_un.csv')
+    write_csv(d_data, file = 'global_age_analysis_2021/data/UK/england_wales_fertility_f_un.csv')
   }
   
   
@@ -303,9 +303,9 @@ process_france_fertility = function(uncertainty  = FALSE){
   data_combine[,fertility_rate := value / (pop)]
   # live births per 1000 male
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/France/fertility_m.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/France/fertility_m.csv', data_combine)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/France/fertility_m_un.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/France/fertility_m_un.csv', data_combine)
   }
   
   #data_combine = read.csv('global_age_analysis_2021/data/France/fertility_m.csv')
@@ -334,9 +334,9 @@ process_france_fertility = function(uncertainty  = FALSE){
   
   data_combine = data_combine %>% arrange(year, age)
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/France/france_fertility_m_all.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/France/france_fertility_m_all.csv', data_combine)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/France/france_fertility_m_all_un.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/France/france_fertility_m_all_un.csv', data_combine)
   }
   
   if (uncertainty == FALSE){
@@ -413,9 +413,9 @@ process_france_fertility = function(uncertainty  = FALSE){
   #  geom_point(data = d_wpp_long_rep, aes(age, fertility_rate, col = date), shape = 15) +
   #  facet_wrap(~date)
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/France/france_fertility_f.csv', d_wpp_long_rep)
+    write_csv(file = 'global_age_analysis_2021/data/France/france_fertility_f.csv', d_wpp_long_rep)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/France/france_fertility_f_un.csv', d_wpp_long_rep)
+    write_csv(file = 'global_age_analysis_2021/data/France/france_fertility_f_un.csv', d_wpp_long_rep)
   }
   
 }
@@ -464,9 +464,9 @@ process_germany_fertility = function(uncertainty = FALSE){
   data_combine[,fertility_rate := value / (pop)]
   # live births per 1000 male
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/Germany/germany_fertility_m.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/Germany/germany_fertility_m.csv', data_combine)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/Germany/germany_fertility_m_un.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/Germany/germany_fertility_m_un.csv', data_combine)
   }
 
   #data_combine = read.csv('global_age_analysis_2021/data/Germany/germany_fertility_m.csv')
@@ -501,16 +501,16 @@ process_germany_fertility = function(uncertainty = FALSE){
   data_combine = data_combine %>% arrange(year, age)
   
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/Germany/germany_fertility_m_all.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/Germany/germany_fertility_m_all.csv', data_combine)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/Germany/germany_fertility_m_all_un.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/Germany/germany_fertility_m_all_un.csv', data_combine)
   }
 
 
   
   # from WPP
   data = read_excel("global_age_analysis_2021/data/WPP2019_FERT_F07_AGE_SPECIFIC_FERTILITY.xlsx")
-  names(data) <- data[12,]
+  names(data) <- as.character(data[12,])
   data = data[which(data$`Region, subregion, country or area *` == "Germany"),]
   
   d_wpp <- select(data, Period, "15-19", "20-24", "25-29", "30-34", "35-39", "40-44",  "45-49")
@@ -558,9 +558,9 @@ process_germany_fertility = function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/Germany/germany_fertility_f.csv', d_wpp_long_rep)
+    write_csv(file = 'global_age_analysis_2021/data/Germany/germany_fertility_f.csv', d_wpp_long_rep)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/Germany/germany_fertility_f_un.csv', d_wpp_long_rep)
+    write_csv(file = 'global_age_analysis_2021/data/Germany/germany_fertility_f_un.csv', d_wpp_long_rep)
   }
  
 }
@@ -570,7 +570,7 @@ process_iran_fertility = function(uncertainty = FALSE){
 
   # from WPP
   data = read_excel("global_age_analysis_2021/data/WPP2019_FERT_F07_AGE_SPECIFIC_FERTILITY.xlsx")
-  names(data) <- data[12,]
+  names(data) <- as.character(data[12,])
   data = data[which(data$`Region, subregion, country or area *` == 'Iran (Islamic Republic of)'),]
   
   d_wpp <- select(data, Period, "15-19", "20-24", "25-29", "30-34", "35-39", "40-44",  "45-49")
@@ -618,9 +618,9 @@ process_iran_fertility = function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/Iran/iran_fertility_f.csv', d_wpp_long_rep)
+    write_csv(file = 'global_age_analysis_2021/data/Iran/iran_fertility_f.csv', d_wpp_long_rep)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/Iran/iran_fertility_f_un.csv', d_wpp_long_rep)
+    write_csv(file = 'global_age_analysis_2021/data/Iran/iran_fertility_f_un.csv', d_wpp_long_rep)
   }
   
   
@@ -647,9 +647,9 @@ process_iran_fertility = function(uncertainty = FALSE){
   m_iran$gender = "Male"
   
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/Iran/iran_fertility_m_all.csv', m_iran)
+    write_csv(file = 'global_age_analysis_2021/data/Iran/iran_fertility_m_all.csv', m_iran)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/Iran/iran_fertility_m_all_un.csv', m_iran)
+    write_csv(file = 'global_age_analysis_2021/data/Iran/iran_fertility_m_all_un.csv', m_iran)
   }
 
   
@@ -707,9 +707,9 @@ process_italy_fertility = function(uncertainty = FALSE){
   
   # live births per 1000 male
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/Italy/italy_fertility_m.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/Italy/italy_fertility_m.csv', data_combine)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/Italy/italy_fertility_m_un.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/Italy/italy_fertility_m_un.csv', data_combine)
   }
   
   
@@ -742,15 +742,15 @@ process_italy_fertility = function(uncertainty = FALSE){
   
   data_combine = data_combine %>% arrange(year, age)
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/Italy/italy_fertility_m_all.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/Italy/italy_fertility_m_all.csv', data_combine)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/Italy/italy_fertility_m_all_un.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/Italy/italy_fertility_m_all_un.csv', data_combine)
   }
   
   
   # from WPP
   data = read_excel("global_age_analysis_2021/data/WPP2019_FERT_F07_AGE_SPECIFIC_FERTILITY.xlsx")
-  names(data) <- data[12,]
+  names(data) <- as.character(data[12,])
   data = data[which(data$`Region, subregion, country or area *` == 'Italy'),]
   
   d_wpp <- select(data, Period, "15-19", "20-24", "25-29", "30-34", "35-39", "40-44",  "45-49")
@@ -798,9 +798,9 @@ process_italy_fertility = function(uncertainty = FALSE){
   }
   
   if(uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/Italy/italy_fertility_f.csv', d_wpp_long_rep)
+    write_csv(file = 'global_age_analysis_2021/data/Italy/italy_fertility_f.csv', d_wpp_long_rep)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/Italy/italy_fertility_f_un.csv', d_wpp_long_rep)
+    write_csv(file = 'global_age_analysis_2021/data/Italy/italy_fertility_f_un.csv', d_wpp_long_rep)
   }
 }
 
@@ -883,15 +883,15 @@ process_mexico_fertility = function(uncertainty = FALSE){
   
   data_combine = data_combine %>% arrange(year, age)
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/Mexico/mexico_fertility_m_all.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/Mexico/mexico_fertility_m_all.csv', data_combine)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/Mexico/mexico_fertility_m_all_un.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/Mexico/mexico_fertility_m_all_un.csv', data_combine)
   }
   
   
   # from WPP
   data = read_excel("global_age_analysis_2021/data/WPP2019_FERT_F07_AGE_SPECIFIC_FERTILITY.xlsx")
-  names(data) <- data[12,]
+  names(data) <- as.character(data[12,])
   data = data[which(data$`Region, subregion, country or area *` == 'Mexico'),]
   
   d_wpp <- select(data, Period, "15-19", "20-24", "25-29", "30-34", "35-39", "40-44",  "45-49")
@@ -940,9 +940,9 @@ process_mexico_fertility = function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/Mexico/mexico_fertility_f.csv', d_wpp_long_rep)
+    write_csv(file = 'global_age_analysis_2021/data/Mexico/mexico_fertility_f.csv', d_wpp_long_rep)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/Mexico/mexico_fertility_f_un.csv', d_wpp_long_rep)
+    write_csv(file = 'global_age_analysis_2021/data/Mexico/mexico_fertility_f_un.csv', d_wpp_long_rep)
   }
   
 }
@@ -1047,15 +1047,15 @@ process_philippines_fertility = function(uncertainty = FALSE){
   
   data_combine = data_combine %>% arrange(year, age)
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/Philippines/philippines_fertility_m_all.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/Philippines/philippines_fertility_m_all.csv', data_combine)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/Philippines/philippines_fertility_m_all_un.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/Philippines/philippines_fertility_m_all_un.csv', data_combine)
   }
   
   
   # from WPP
   data = read_excel("global_age_analysis_2021/data/WPP2019_FERT_F07_AGE_SPECIFIC_FERTILITY.xlsx")
-  names(data) <- data[12,]
+  names(data) <- as.character(data[12,])
   data = data[which(data$`Region, subregion, country or area *` == "Philippines"),]
   
   d_wpp <- select(data, Period, "15-19", "20-24", "25-29", "30-34", "35-39", "40-44",  "45-49")
@@ -1103,9 +1103,9 @@ process_philippines_fertility = function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/Philippines/philippines_fertility_f.csv', d_wpp_long_rep)
+    write_csv(file = 'global_age_analysis_2021/data/Philippines/philippines_fertility_f.csv', d_wpp_long_rep)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/Philippines/philippines_fertility_f_un.csv', d_wpp_long_rep)
+    write_csv(file = 'global_age_analysis_2021/data/Philippines/philippines_fertility_f_un.csv', d_wpp_long_rep)
   }
   
 }
@@ -1172,9 +1172,9 @@ process_poland_fertility = function(uncertainty = FALSE){
   
   # live births per 1000 male
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/Poland/poland_fertility_m.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/Poland/poland_fertility_m.csv', data_combine)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/Poland/poland_fertility_m_un.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/Poland/poland_fertility_m_un.csv', data_combine)
   }
  
   data_combine$year = as.character(data_combine$year)
@@ -1209,15 +1209,15 @@ process_poland_fertility = function(uncertainty = FALSE){
   
   data_combine = data_combine %>% arrange(year, age)
   if(uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/Poland/poland_fertility_m_all.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/Poland/poland_fertility_m_all.csv', data_combine)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/Poland/poland_fertility_m_all_un.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/Poland/poland_fertility_m_all_un.csv', data_combine)
   }
 
 
   # from WPP
   data = read_excel("global_age_analysis_2021/data/WPP2019_FERT_F07_AGE_SPECIFIC_FERTILITY.xlsx")
-  names(data) <- data[12,]
+  names(data) <- as.character(data[12,])
   data = data[which(data$`Region, subregion, country or area *` == 'Poland'),]
   
   d_wpp <- select(data, Period, "15-19", "20-24", "25-29", "30-34", "35-39", "40-44",  "45-49")
@@ -1268,9 +1268,9 @@ process_poland_fertility = function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/Poland/poland_fertility_f.csv', d_wpp_long_rep)
+    write_csv(file = 'global_age_analysis_2021/data/Poland/poland_fertility_f.csv', d_wpp_long_rep)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/Poland/poland_fertility_f_un.csv', d_wpp_long_rep)
+    write_csv(file = 'global_age_analysis_2021/data/Poland/poland_fertility_f_un.csv', d_wpp_long_rep)
   }
   
 }
@@ -1313,7 +1313,7 @@ process_russia_fertility = function(){
   data_combine= merge(data_fertility, data_pop, by = c('year', 'age', 'gender'))
   data_combine[,fertility_rate := value / (pop)]
   # live births per 1000 male
-  write_csv(path = 'global_age_analysis_2021/data/Russia/russia_fertility_m.csv', data_combine)
+  write_csv(file = 'global_age_analysis_2021/data/Russia/russia_fertility_m.csv', data_combine)
   
   data_combine = read.csv('global_age_analysis_2021/data/Russia/russia_fertility_m.csv')
   data_combine$year = as.character(data_combine$year)
@@ -1337,11 +1337,11 @@ process_russia_fertility = function(){
   
   
   data_combine = data_combine %>% arrange(year, age)
-  write_csv(path = 'global_age_analysis_2021/data/Russia/russia_fertility_m_all.csv', data_combine)
+  write_csv(file = 'global_age_analysis_2021/data/Russia/russia_fertility_m_all.csv', data_combine)
   
   # from WPP
   data = read_excel("global_age_analysis_2021/data/WPP2019_FERT_F07_AGE_SPECIFIC_FERTILITY.xlsx")
-  names(data) <- data[12,]
+  names(data) <- as.character(data[12,])
   data = data[which(data$`Region, subregion, country or area *` == 'Russian Federation'),]
   
   d_wpp <- select(data, Period, "15-19", "20-24", "25-29", "30-34", "35-39", "40-44",  "45-49")
@@ -1359,7 +1359,7 @@ process_russia_fertility = function(){
   
   d_wpp_long_rep$fertility_rate = as.numeric(d_wpp_long_rep$fertility_rate)
   
-  write_csv(path = 'global_age_analysis_2021/data/Russia/russia_fertility_f.csv', d_wpp_long_rep)
+  write_csv(file = 'global_age_analysis_2021/data/Russia/russia_fertility_f.csv', d_wpp_long_rep)
 }
 
 # Spain
@@ -1409,9 +1409,9 @@ process_spain_fertility = function(uncertainty = FALSE){
   # live births per 1000 male
   
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/Spain/spain_fertility_m.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/Spain/spain_fertility_m.csv', data_combine)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/Spain/spain_fertility_m_un.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/Spain/spain_fertility_m_un.csv', data_combine)
   }
   
   
@@ -1447,15 +1447,15 @@ process_spain_fertility = function(uncertainty = FALSE){
   
   data_combine = data_combine %>% arrange(year, age)
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/Spain/spain_fertility_m_all.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/Spain/spain_fertility_m_all.csv', data_combine)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/Spain/spain_fertility_m_all_un.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/Spain/spain_fertility_m_all_un.csv', data_combine)
   }
   
 
   # from WPP
   data = read_excel("global_age_analysis_2021/data/WPP2019_FERT_F07_AGE_SPECIFIC_FERTILITY.xlsx")
-  names(data) <- data[12,]
+  names(data) <- as.character(data[12,])
   data = data[which(data$`Region, subregion, country or area *` == 'Spain'),]
   
   d_wpp <- select(data, Period, "15-19", "20-24", "25-29", "30-34", "35-39", "40-44",  "45-49")
@@ -1505,9 +1505,9 @@ process_spain_fertility = function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/Spain/spain_fertility_f.csv', d_wpp_long_rep)
+    write_csv(file = 'global_age_analysis_2021/data/Spain/spain_fertility_f.csv', d_wpp_long_rep)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/Spain/spain_fertility_f_un.csv', d_wpp_long_rep)
+    write_csv(file = 'global_age_analysis_2021/data/Spain/spain_fertility_f_un.csv', d_wpp_long_rep)
   }
   
 }
@@ -1563,9 +1563,9 @@ process_usa_fertility = function(uncertainty = FALSE){
   data_combine[,fertility_rate := value / (pop)]
   # live births per 1000 male
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/USA/usa_fertility_m.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/USA/usa_fertility_m.csv', data_combine)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/USA/usa_fertility_m_un.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/USA/usa_fertility_m_un.csv', data_combine)
   }
   
   
@@ -1601,16 +1601,16 @@ process_usa_fertility = function(uncertainty = FALSE){
   
   data_combine = data_combine %>% arrange(year, age)
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/USA/usa_fertility_m_all.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/USA/usa_fertility_m_all.csv', data_combine)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/USA/usa_fertility_m_all_un.csv', data_combine)
+    write_csv(file = 'global_age_analysis_2021/data/USA/usa_fertility_m_all_un.csv', data_combine)
   }
   
   
 
   # from WPP
   data = read_excel("global_age_analysis_2021/data/WPP2019_FERT_F07_AGE_SPECIFIC_FERTILITY.xlsx")
-  names(data) <- data[12,]
+  names(data) <- as.character(data[12,])
   data = data[which(data$`Region, subregion, country or area *` == 'United States of America'),]
   
   d_wpp <- select(data, Period, "15-19", "20-24", "25-29", "30-34", "35-39", "40-44",  "45-49")
@@ -1662,9 +1662,9 @@ process_usa_fertility = function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(path = 'global_age_analysis_2021/data/USA/usa_fertility_f.csv', d_wpp_long_rep)
+    write_csv(file = 'global_age_analysis_2021/data/USA/usa_fertility_f.csv', d_wpp_long_rep)
   } else {
-    write_csv(path = 'global_age_analysis_2021/data/USA/usa_fertility_f_un.csv', d_wpp_long_rep)
+    write_csv(file = 'global_age_analysis_2021/data/USA/usa_fertility_f_un.csv', d_wpp_long_rep)
   }
   
 }

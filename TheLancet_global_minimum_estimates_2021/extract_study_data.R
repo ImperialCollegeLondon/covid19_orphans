@@ -70,7 +70,7 @@ extract_study_data <- function(updated_coef = FALSE){
   cat(sprintf("Processing number of children rates\n"))
   process_number_children_france()
   cat(sprintf("Compare French fertility sources\n"))
-  compare_fertility_france()
+  #compare_fertility_france()
   cat(sprintf("Processing number of orphans\n"))
   process_orphans_france()
   combine_orphans("France", process_france_skip_generation())

@@ -1,18 +1,18 @@
 # Complete age analysis
 
 # # Updates global numbers through 30th April with new india coefficient
-# source("TheLancet_global_minimum_estimates_2021/extract_study_data.R")
-# extract_study_data(updated_coef = TRUE)
-# source("global_age_analysis_2021/R/run_global_extrapolation_europe_april.R")
-# source("global_age_analysis_2021/R/format_update_results.R")
-# format_table("apr")
-# 
-# # Updates global numbers though 31st October
-# source("global_age_analysis_2021/R/extract_study_data_oct.R")
-# source("global_age_analysis_2021/R/run_global_extrapolation_europe.R")
-# source("global_age_analysis_2021/R/format_update_results.R")
-# format_table("oct")
-# combine_table()
+source("TheLancet_global_minimum_estimates_2021/extract_study_data.R")
+extract_study_data(updated_coef = TRUE)
+source("global_age_analysis_2021/R/run_global_extrapolation_europe_april.R")
+source("global_age_analysis_2021/R/format_update_results.R")
+format_table("apr")
+
+# Updates global numbers though 31st October
+source("global_age_analysis_2021/R/extract_study_data_oct.R")
+source("global_age_analysis_2021/R/run_global_extrapolation_europe.R")
+source("global_age_analysis_2021/R/format_update_results.R")
+format_table("oct")
+combine_table()
 # 
 # # Runs age analysis
 # source("global_age_analysis_2021/R/run_age_analysis_uncertainty.R")

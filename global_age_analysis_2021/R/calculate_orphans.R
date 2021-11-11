@@ -30,7 +30,7 @@ process_orphans_argentina = function(month = ""){
   d_summary = d_summary %>% group_by(age, gender) %>% 
     summarise(covid19_deaths = as.integer(round(sum(deaths))),
            nb_orphans = as.integer( round(sum(orphans))))
-  write_csv(path = 'global_age_analysis_2021/data/Argentina/all_data.csv', d_summary)
+  write_csv(file = 'global_age_analysis_2021/data/Argentina/all_data.csv', d_summary)
   
   d_summary %>% filter(age != '00-19') %>% group_by(gender) %>% 
     summarise(#excess1 = round(sum(excess)),
@@ -62,7 +62,7 @@ process_orphans_brazil = function(month = ""){
   d_m1$age = ifelse(d_m1$age == '100+', '99+', d_m1$age)
   d_m1 = d_m1%>% arrange(age) 
   
-  write_csv(path = paste0('global_age_analysis_2021/data/Brazil/orphans_all.csv'), d_m1)
+  write_csv(file = paste0('global_age_analysis_2021/data/Brazil/orphans_all.csv'), d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +
@@ -81,7 +81,7 @@ process_orphans_brazil = function(month = ""){
     summarise(#excess = sum(excess_death),
     covid19_deaths = as.integer(round(sum(deaths))),
     nb_orphans = as.integer(round( sum(orphans)))) %>% arrange(age)
-  write_csv(path = 'global_age_analysis_2021/data/Brazil/all_data.csv', d_summary)
+  write_csv(file = 'global_age_analysis_2021/data/Brazil/all_data.csv', d_summary)
   d_summary %>% filter(age != '0-14') %>% group_by(gender) %>% summarise(#excess = sum(excess_death),
     deaths= as.integer(sum(covid19_deaths)),
     orphans= as.integer( sum( nb_orphans)))
@@ -150,7 +150,7 @@ process_orphans_england_wales = function(month = ""){
   d_m1 = as.data.table(d_m1)
   
   d_m1[, orphans := deaths * nb_c]
-  write_csv(path = 'global_age_analysis_2021/data/UK/england_wales_orphans_all.csv', d_m1)
+  write_csv(file = 'global_age_analysis_2021/data/UK/england_wales_orphans_all.csv', d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +
@@ -173,7 +173,7 @@ process_orphans_england_wales = function(month = ""){
            nb_deaths = as.integer(round(sum(deaths))),
            nb_orphans = as.integer(round(sum(orphans))))
   
-  write_csv(path = 'global_age_analysis_2021/data/UK/england_wales_all_data.csv', d_summary)
+  write_csv(file = 'global_age_analysis_2021/data/UK/england_wales_all_data.csv', d_summary)
   
   d_summary = d_summary %>% 
     filter(age != '0-14') %>%
@@ -204,7 +204,7 @@ process_orphans_france = function(month = ""){
 
   d_m1 = d_m1%>% arrange(age) 
 
-  write_csv(path = paste0('global_age_analysis_2021/data/France/france_orphans_all.csv'), d_m1)
+  write_csv(file = paste0('global_age_analysis_2021/data/France/france_orphans_all.csv'), d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +
@@ -228,7 +228,7 @@ process_orphans_france = function(month = ""){
           nb_deaths = as.integer(round((sum(deaths)))),
            nb_orphans = as.integer(round(sum(orphans))))
   d_summary = select(d_summary, age, gender, nb_excess, nb_covid, nb_deaths, nb_orphans)
-  write_csv(path = 'global_age_analysis_2021/data/France/all_data.csv', d_summary)
+  write_csv(file = 'global_age_analysis_2021/data/France/all_data.csv', d_summary)
   d_summary %>% filter(age != '0-19') %>% 
     group_by(gender) %>% 
     summarise(total_excess = round(sum(nb_excess)),
@@ -254,7 +254,7 @@ process_orphans_germany = function(month = ""){
   d_m1$age = as.character(d_m1$age)
   #d_m1$age = ifelse(d_m1$age == '100+', '99+', d_m1$age)
   d_m1 = d_m1%>% arrange(age) 
-  write_csv(path = paste0('global_age_analysis_2021/data/Germany/orphans_all.csv'), d_m1)
+  write_csv(file = paste0('global_age_analysis_2021/data/Germany/orphans_all.csv'), d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +
@@ -274,7 +274,7 @@ process_orphans_germany = function(month = ""){
     summarise( COVID19_deaths = as.integer(round(sum(deaths))),
             nb_orphans = as.integer(round(sum(orphans)))) 
   
-  write_csv(path = 'global_age_analysis_2021/data/Germany/all_data.csv', d_summary)
+  write_csv(file = 'global_age_analysis_2021/data/Germany/all_data.csv', d_summary)
   d_summary %>% filter(age != '0-19') %>% group_by(gender) %>% 
     summarise(covid19 = round(sum(COVID19_deaths)),
            orphans= round( sum( nb_orphans)))
@@ -311,7 +311,7 @@ process_orphans_india = function(month = ""){
   d_m1$age = factor(d_m1$age, levels = c("00-04", "05-19", "20-29", "30-39", "40-49",  "50-59", "60-69", "70-79", "80+"))
   d_m1 = d_m1 %>% arrange(age) 
   
-  write_csv(path = paste0('global_age_analysis_2021/data/India/orphans_all.csv'), d_m1)
+  write_csv(file = paste0('global_age_analysis_2021/data/India/orphans_all.csv'), d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = sex)) +
     geom_bar(stat="identity", position=position_dodge()) +
@@ -330,7 +330,7 @@ process_orphans_india = function(month = ""){
     summarise(covid_deaths = as.integer(round(sum(deaths))),
            nb_orphans = as.integer(round( sum(orphans)))) %>%
     arrange(age)
-  write_csv(path = 'global_age_analysis_2021/data/India/all_data.csv', d_summary)
+  write_csv(file = 'global_age_analysis_2021/data/India/all_data.csv', d_summary)
   d_summary %>% filter(age != '0-19') %>% 
     group_by(sex) %>% 
     summarise(deaths= as.integer(sum(covid_deaths)),
@@ -352,7 +352,7 @@ process_orphans_iran = function(month = ""){
   d_m1 = as.data.table(d_m1)
   d_m1[, orphans := round(deaths * nb_c)]
   d_m1 = d_m1%>% arrange(age) 
-  write_csv(path = paste0('global_age_analysis_2021/data/Iran/iran_orphans_all.csv'), d_m1)
+  write_csv(file = paste0('global_age_analysis_2021/data/Iran/iran_orphans_all.csv'), d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +
@@ -372,7 +372,7 @@ process_orphans_iran = function(month = ""){
   d_summary = d_summary %>% group_by(age, gender) %>% 
     summarise(max_deaths = as.integer(round((sum(deaths)))),
            nb_orphans = as.integer(round(sum(orphans))))
-  write_csv(path = 'global_age_analysis_2021/data/Iran/all_data.csv', d_summary)
+  write_csv(file = 'global_age_analysis_2021/data/Iran/all_data.csv', d_summary)
   d_summary %>% filter(age != '0-19') %>% group_by(gender) %>% 
     summarise(total_deaths= round(sum(max_deaths)),
            orphans= round( sum( nb_orphans)))
@@ -392,7 +392,7 @@ process_orphans_italy = function(month = ""){
   d_m1 = as.data.table(d_m1)
   d_m1[, orphans := round(deaths * nb_c)]
   d_m1 = d_m1%>% arrange(age) 
-  write_csv(path = paste0('global_age_analysis_2021/data/Italy/italy_orphans_all.csv'), d_m1)
+  write_csv(file = paste0('global_age_analysis_2021/data/Italy/italy_orphans_all.csv'), d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +
@@ -414,7 +414,7 @@ process_orphans_italy = function(month = ""){
            nb_covid = round(sum(covid_deaths)),
            max_deaths = as.integer(round((sum(deaths)))),
            nb_orphans = as.integer(round(sum(orphans))))
-  write_csv(path = 'global_age_analysis_2021/data/Italy/all_data.csv', d_summary)
+  write_csv(file = 'global_age_analysis_2021/data/Italy/all_data.csv', d_summary)
   d_summary %>% filter(age != '0-19') %>% group_by(gender) %>% 
     summarise(total_excess = sum(nb_excess),
            total_covid = sum(nb_covid),
@@ -439,7 +439,7 @@ process_orphans_kenya = function(month = ""){
   d_m1[, orphans := round(deaths * nb_c)]
   d_m1$age = as.character(d_m1$age)
   d_m1 = d_m1%>% arrange(age) 
-  write_csv(path = paste0('global_age_analysis_2021/data/Kenya/orphans_all.csv'), d_m1)
+  write_csv(file = paste0('global_age_analysis_2021/data/Kenya/orphans_all.csv'), d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +
@@ -456,7 +456,7 @@ process_orphans_kenya = function(month = ""){
   d_summary = d_summary %>% group_by(age, gender) %>% 
     summarise( COVID19_deaths = round(sum(deaths)),
                nb_orphans = round(sum(orphans)))
-  write_csv(path = 'global_age_analysis_2021/data/Kenya/all_data.csv', d_summary)
+  write_csv(file = 'global_age_analysis_2021/data/Kenya/all_data.csv', d_summary)
   d_summary %>% filter(age != '0-19') %>% group_by(gender) %>% 
     summarise(covid19 = round(sum(COVID19_deaths)),
               orphans= round( sum( nb_orphans))) 
@@ -479,7 +479,7 @@ process_orphans_malawi = function(month = ""){
   d_m1[, orphans := round(deaths * nb_c)]
   d_m1$age = as.character(d_m1$age)
   d_m1 = d_m1%>% arrange(age)
-  write_csv(path = paste0('global_age_analysis_2021/data/Malawi/orphans_all.csv'), d_m1)
+  write_csv(file = paste0('global_age_analysis_2021/data/Malawi/orphans_all.csv'), d_m1)
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +
     theme_bw()+
@@ -497,7 +497,7 @@ process_orphans_malawi = function(month = ""){
   d_summary = d_summary %>% group_by(age, gender) %>%
     summarise( COVID19_deaths = as.integer(round(sum(deaths))),
             nb_orphans = as.integer(round(sum(orphans))))
-  write_csv(path = 'global_age_analysis_2021/data/Malawi/all_data.csv', d_summary)
+  write_csv(file = 'global_age_analysis_2021/data/Malawi/all_data.csv', d_summary)
   d_summary %>% filter(age != '0-19') %>% group_by(gender) %>%
     summarise(covid19 = round(sum(COVID19_deaths)),
            orphans= round( sum( nb_orphans)))
@@ -522,7 +522,7 @@ process_orphans_mexico = function(month = ""){
   d_m1$age = ifelse(d_m1$age == '0-4', '00-04', 
                     ifelse(d_m1$age == '5-9','05-09' ,d_m1$age))
   d_m1 = d_m1%>% arrange(age) 
-  write_csv(path = paste0('global_age_analysis_2021/data/Mexico/', country,'_orphans_all.csv'), d_m1)
+  write_csv(file = paste0('global_age_analysis_2021/data/Mexico/', country,'_orphans_all.csv'), d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +
@@ -541,7 +541,7 @@ process_orphans_mexico = function(month = ""){
   d_summary = d_summary %>% group_by(age, gender) %>% 
     summarise( COVID19_deaths = as.integer(round(sum(deaths))),
             nb_orphans = as.integer(round(sum(orphans)))) 
-  write_csv(path = 'global_age_analysis_2021/data/Mexico/all_data.csv', d_summary)
+  write_csv(file = 'global_age_analysis_2021/data/Mexico/all_data.csv', d_summary)
   d_summary %>% filter(age != '0-14') %>% group_by(gender) %>% 
     summarise(covid19 = round(sum(COVID19_deaths)),
            orphans= round( sum( nb_orphans)))
@@ -569,7 +569,7 @@ process_orphans_nigeria = function(month = ""){
   d_m1 = d_m1%>% arrange(age) 
   d_m1$age <- factor(d_m1$age, levels = c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39", "40-44", 
                                           "45-49", "50-54", "55-59", "60-64", "65-69", "70-74", "75-79", "80-84", "85+"))
-  write_csv(path = paste0('global_age_analysis_2021/data/Nigeria/orphans_all.csv'), d_m1)
+  write_csv(file = paste0('global_age_analysis_2021/data/Nigeria/orphans_all.csv'), d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +
@@ -588,7 +588,7 @@ process_orphans_nigeria = function(month = ""){
   d_summary = d_summary %>% group_by(age, gender) %>% 
     summarise( COVID19_deaths = as.integer(round(sum(deaths))),
             nb_orphans = as.integer(round(sum(orphans))))
-  write_csv(path = 'global_age_analysis_2021/data/Nigeria/all_data.csv', d_summary)
+  write_csv(file = 'global_age_analysis_2021/data/Nigeria/all_data.csv', d_summary)
   d_summary %>% filter(age != '0-19') %>% group_by(gender) %>% 
     summarise(covid19 = round(sum(COVID19_deaths)),
            orphans= round( sum( nb_orphans)))
@@ -614,7 +614,7 @@ process_orphans_peru = function(month = ""){
   d_m1$age = as.character(d_m1$age)
   d_m1 = d_m1%>% arrange(age) 
 
-  write_csv(path = paste0('global_age_analysis_2021/data/Peru/orphans_all.csv'), d_m1)
+  write_csv(file = paste0('global_age_analysis_2021/data/Peru/orphans_all.csv'), d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +
@@ -633,7 +633,7 @@ process_orphans_peru = function(month = ""){
   d_summary = d_summary %>% group_by(age, gender) %>% 
     summarise( COVID19_deaths = as.integer(round(sum(deaths))),
             nb_orphans = as.integer(round(sum(orphans))))
-  write_csv(path = 'global_age_analysis_2021/data/Peru/all_data.csv', d_summary)
+  write_csv(file = 'global_age_analysis_2021/data/Peru/all_data.csv', d_summary)
   d_summary %>% filter(age != '0-19') %>% group_by(gender) %>% 
     summarise(covid19 = round(sum(COVID19_deaths)),
            orphans= round( sum( nb_orphans)))
@@ -654,7 +654,7 @@ process_orphans_philippines= function(month = ""){
   d_m1 = as.data.table(d_m1)
   d_m1[, orphans := round(COVID19_deaths * nb_c)]
   d_m1 = d_m1%>% arrange(age) 
-  write_csv(path = paste0('global_age_analysis_2021/data/Philippines/orphans_all.csv'), d_m1)
+  write_csv(file = paste0('global_age_analysis_2021/data/Philippines/orphans_all.csv'), d_m1)
   
   d_m1$age <- factor(d_m1$age, levels = c("0-4", "5-9", "10-14", "15-19", "20-24", "25-29", "30-34", "35-39", "40-44", 
                                           "45-49", "50-54", "55-59", "60-64", "65-69", "70-74", "75-79", "80+"))
@@ -675,7 +675,7 @@ process_orphans_philippines= function(month = ""){
   d_summary = d_summary %>% group_by(age, gender) %>% 
     summarise(max_deaths = as.integer(round((sum(COVID19_deaths)))),
            nb_orphans = as.integer(round(sum(orphans))))
-  write_csv(path = 'global_age_analysis_2021/data/Philippines/all_data.csv', d_summary)
+  write_csv(file = 'global_age_analysis_2021/data/Philippines/all_data.csv', d_summary)
   d_summary %>% filter(age != '0-14') %>% group_by(gender) %>% 
     summarise(total_deaths= round(sum(max_deaths)),
            orphans= round( sum( nb_orphans)))
@@ -697,7 +697,7 @@ process_orphans_poland = function(month = ""){
   d_m1 = as.data.table(d_m1)
   d_m1[, orphans := round(death * nb_c)]
   d_m1 = d_m1%>% arrange(age) 
-  write_csv(path = paste0('global_age_analysis_2021/data/Poland/orphans_all.csv'), d_m1)
+  write_csv(file = paste0('global_age_analysis_2021/data/Poland/orphans_all.csv'), d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +
@@ -715,7 +715,7 @@ process_orphans_poland = function(month = ""){
   d_summary = d_summary %>% group_by(age, gender) %>% 
     summarise(max_deaths = as.integer(round((sum(death)))),
            nb_orphans = as.integer(round(sum(orphans))))
-  write_csv(path = 'global_age_analysis_2021/data/Poland/all_data.csv', d_summary)
+  write_csv(file = 'global_age_analysis_2021/data/Poland/all_data.csv', d_summary)
   d_summary %>% filter(age != '0-19') %>% group_by(gender) %>% 
     summarise(total_deaths= round(sum(max_deaths)),
            orphans= round( sum( nb_orphans)))
@@ -743,7 +743,7 @@ process_orphans_russia = function(month = ""){
                                          "50-54", "55-59", "60-64", "65-69", "70-74", "75-79", "80-84", "85-89", "90-94", 
                                          "95-99", "100+"))
   d_m1 <- d_m1 %>% arrange(age) 
-  write_csv(path = paste0('global_age_analysis_2021/data/Russia/orphans_all.csv'), d_m1)
+  write_csv(file = paste0('global_age_analysis_2021/data/Russia/orphans_all.csv'), d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = sex)) +
     geom_bar(stat="identity", position=position_dodge()) +
@@ -764,7 +764,7 @@ process_orphans_russia = function(month = ""){
   d_summary = d_summary %>% group_by(age, sex) %>% 
     summarise(max_deaths = as.integer(round((sum(deaths)))),
            nb_orphans = as.integer(round(sum(orphans))))
-  write_csv(path = 'global_age_analysis_2021/data/Russia/all_data.csv', d_summary)
+  write_csv(file = 'global_age_analysis_2021/data/Russia/all_data.csv', d_summary)
   d_summary %>% filter(age != '0-14') %>% 
     group_by(sex) %>% 
     summarise(total_deaths= round(sum(max_deaths)),
@@ -787,7 +787,7 @@ process_orphans_spain = function(month = ""){
   d_m1 = as.data.table(d_m1)
   d_m1[, orphans := round(deaths * nb_c)]
   d_m1 = d_m1%>% arrange(age) 
-  write_csv(path = paste0('global_age_analysis_2021/data/Spain/orphans_all.csv'), d_m1)
+  write_csv(file = paste0('global_age_analysis_2021/data/Spain/orphans_all.csv'), d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +
@@ -809,7 +809,7 @@ process_orphans_spain = function(month = ""){
            nb_covid = round(sum(covid_deaths)),
            max_deaths = as.integer(round((sum(deaths)))),
            nb_orphans = as.integer(round(sum(orphans))))
-  write_csv(path = 'global_age_analysis_2021/data/Spain/all_data.csv', d_summary)
+  write_csv(file = 'global_age_analysis_2021/data/Spain/all_data.csv', d_summary)
   as.data.frame(d_summary %>% filter(age != '0-19') %>% group_by(gender) %>% 
                   summarise(total_excess = round(sum(nb_excess)),
                          total_covid = round(sum(nb_covid)),
@@ -837,7 +837,7 @@ process_orphans_south_africa = function(month = ""){
   #d_m = merge(d_m1, f_ew, by = c('age', 'gender'))
   d_m1$age = as.character(d_m1$age)
   d_m1 = d_m1%>% arrange(age) 
-  write_csv(path = paste0('global_age_analysis_2021/data/SouthAfrica/orphans_all.csv'), d_m1)
+  write_csv(file = paste0('global_age_analysis_2021/data/SouthAfrica/orphans_all.csv'), d_m1)
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +
     theme_bw()+
@@ -856,7 +856,7 @@ process_orphans_south_africa = function(month = ""){
     covid19_deaths = as.integer(round(sum(deaths))),
     nb_orphans = as.integer(round( sum(orphans))))
   
-  write_csv(path = 'global_age_analysis_2021/data/SouthAfrica/all_data.csv', d_summary)
+  write_csv(file = 'global_age_analysis_2021/data/SouthAfrica/all_data.csv', d_summary)
   d_summary %>% filter(age != '0-19') %>% group_by(gender) %>% summarise(#excess = sum(excess_death),
     deaths= as.integer(sum(covid19_deaths)),
     orphans= as.integer( sum( nb_orphans))) 
@@ -880,7 +880,7 @@ process_orphans_usa = function(month = ""){
   d_m1 = as.data.table(d_m1)
   d_m1[, orphans := round(deaths * nb_c)]
   d_m1 = d_m1%>% arrange(age) 
-  write_csv(path = paste0('global_age_analysis_2021/data/USA/orphans_all.csv'), d_m1)
+  write_csv(file = paste0('global_age_analysis_2021/data/USA/orphans_all.csv'), d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +
@@ -904,7 +904,7 @@ process_orphans_usa = function(month = ""){
            max_deaths = as.integer(round((sum(deaths)))),
            nb_orphans = as.integer(round(sum(orphans)))) 
 
-  write_csv(path = 'global_age_analysis_2021/data/USA/all_data.csv', d_summary)
+  write_csv(file = 'global_age_analysis_2021/data/USA/all_data.csv', d_summary)
   as.data.frame(d_summary %>% filter(age != '0-14') %>% 
                   group_by(gender) %>% 
                   summarise(total_excess = sum(excess),
@@ -930,7 +930,7 @@ process_orphans_zimbabwe = function(month = ""){
   d_m1[, orphans := round(deaths * nb_c)]
   d_m1$age = as.character(d_m1$age)
   d_m1 = d_m1%>% arrange(age) 
-  write_csv(path = paste0('global_age_analysis_2021/data/Zimbabwe/orphans_all.csv'), d_m1)
+  write_csv(file = paste0('global_age_analysis_2021/data/Zimbabwe/orphans_all.csv'), d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +
@@ -949,7 +949,7 @@ process_orphans_zimbabwe = function(month = ""){
   d_summary = d_summary %>% group_by(age, gender) %>% 
     summarise( COVID19_deaths = as.integer(round(sum(deaths))),
             nb_orphans = as.integer(round(sum(orphans))))
-  write_csv(path = 'global_age_analysis_2021/data/Zimbabwe/all_data.csv', d_summary)
+  write_csv(file = 'global_age_analysis_2021/data/Zimbabwe/all_data.csv', d_summary)
   d_summary %>% filter(age != '1-20') %>% group_by(gender) %>% 
     summarise(covid19 = round(sum(COVID19_deaths)),
            orphans= round( sum( nb_orphans)))

@@ -48,19 +48,19 @@ format_tfr_europe <- function(orphans_path, deaths_path){
   
   # Read in covariates
   fertility = read_excel("global_age_analysis_2021/data/WPP2019_FERT_F04_TOTAL_FERTILITY.xlsx", sheet = 2)
-  names(fertility) <- fertility[12,]
+  names(fertility) <- as.character(fertility[12,])
   fertility <- fertility[13:length(fertility$Index), ]
   fertility = select(fertility, "Region, subregion, country or area *", "2020-2025" )
   names(fertility) = c("location_name", "tfr")
   
   fertility_l = read_excel("global_age_analysis_2021/data/WPP2019_FERT_F04_TOTAL_FERTILITY.xlsx", sheet = 4)
-  names(fertility_l) <- fertility_l[12,]
+  names(fertility_l) <- as.character(fertility_l[12,])
   fertility_l <- fertility_l[13:length(fertility_l$Index), ]
   fertility_l = select(fertility_l, "Region, subregion, country or area *", "2020-2025" )
   names(fertility_l) = c("location_name", "tfr_l")
   
   fertility_u = read_excel("global_age_analysis_2021/data/WPP2019_FERT_F04_TOTAL_FERTILITY.xlsx", sheet = 3)
-  names(fertility_u) <- fertility_u [12,]
+  names(fertility_u) <- as.character(fertility_u [12,])
   fertility_u <- fertility_u [13:length(fertility_u $Index), ]
   fertility_u = select(fertility_u , "Region, subregion, country or area *", "2020-2025" )
   names(fertility_u) = c("location_name", "tfr_u")
