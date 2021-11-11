@@ -116,7 +116,12 @@ combine_orphans <- function(country, grand_parents, updated_coef = FALSE){
     comb <- c(deaths, comb, comb[12]/deaths)
     
   } else if (country == "Peru"){# EM of 36,322. Meanwhile, there were only 9860 officially COVID-19 deaths (Stand June 30, 2020)
-    factor = 36322/9860
+    if (updated_coef == FALSE){
+      factor = 36322/9860
+    } else {
+      factor = 166701/61477
+    }
+    
     comb <- round(comb * factor)
     comb[4] <- sum(comb[1:3])
     comb[8] <- sum(comb[4:7])

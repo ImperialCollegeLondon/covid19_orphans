@@ -5,7 +5,7 @@ library(ggpubr)
 source("global_age_analysis_2021/R/utils.R")
 
 month = "_oct"
-n = 5
+n = 25
 percentages = readRDS(paste0("global_age_analysis_2021/data/age_outputs/age_data_scaled", month, ".RDS"))
 percentages_ = percentages
 samples <- readRDS(paste0("global_age_analysis_2021/data/age_outputs/samples_age_data_scaled", month, ".RDS"))
@@ -163,7 +163,7 @@ global_totals <- readRDS("global_age_analysis_2021/data/age_outputs/global_extra
 names(global_totals) <- names(tab_combined)
 tab_combined_ <- rbind(tab_combined, global_totals)
 
-write_csv(file = paste0("global_age_analysis_2021/age_table_1", month, ".csv"), tab_combined_)
+write_csv(file = paste0("global_age_analysis_2021/table_2_age_breakdown", month, ".csv"), tab_combined_)
 
 
 # Table 2: Percentages of ages and types ----------------------------------------------
@@ -176,13 +176,14 @@ pretty_table <- select(pretty_table, country, category, gender, raw_format)
 pretty_table_wide_raw <- pivot_wider(pretty_table, names_from = c(category, gender), values_from = c(raw_format))
 
 
-global_dat = read.csv("global_age_analysis_2021/data/age_outputs/global_age_percentages.csv")
-global_dat = global_dat[which(global_dat == "Global"),]
+#global_dat = read.csv("global_age_analysis_2021/data/age_outputs/global_age_percentages.csv")
+#global_dat = global_dat[which(global_dat == "Global"),]
+#names(global_dat) = c("country", "[0-5)_Female",  "[0-5)_Male", "[5-10)_Female", "[5-10)_Male", "[10-18)_Female", "[10-18)_Male"  )
+#pretty_table_wide_raw <- rbind(pretty_table_wide_raw, global_dat)
 
-names(global_dat) = c("country", "[0-5)_Female",  "[0-5)_Male", "[5-10)_Female", "[5-10)_Male", "[10-18)_Female", "[10-18)_Male"  )
-
-pretty_table_wide_raw <- rbind(pretty_table_wide_raw, global_dat)
-write_csv(file = paste0("global_age_analysis_2021/data/age_outputs/age_table_2", month, ".csv"), pretty_table_wide_raw)
+write_csv(file = paste0("global_age_analysis_2021/data/age_outputs/age_compostion", month, ".csv"), pretty_table_wide_raw)
+tab<-xtable(pretty_table_wide_raw)
+print(tab, include.rownames=FALSE)
 
 # Percentages pyramid ----------------------------------------------
 pyramid <- percentages
@@ -358,6 +359,7 @@ rates_all$raw_pop_li <- rates_all$li / rates_all$population * 1000
 rates_all$raw_pop_ui <- rates_all$ui / rates_all$population * 1000
 rates_all$country <- factor(rates_all$country, levels = rates_all$country[order(rates_all$raw_pop)])
 
+print(rates_all)
 # Plot rates  ----------------------------------------------
 
 p_cat <- ggplot(rates_categories) +

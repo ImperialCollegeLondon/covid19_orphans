@@ -162,7 +162,7 @@ p_region <- ggplot(df_region_long %>% filter(date >= "2020-03-01" & key != "Exce
   scale_colour_manual("", values  = c("darkorchid4", "deepskyblue2"))
 
 p <- ggarrange(p_global, p_region, ncol = 1, labels = "AUTO", common.legend = TRUE, legend= "bottom")
-ggsave("global_age_analysis_2021/figures/fig_1_time_series_line.pdf", p, width =  12,  height = 12)
+ggsave("global_age_analysis_2021/figures/time_series_line_no_excess.pdf", p, width =  12,  height = 12)
 
 
 p_global_excess <- ggplot(df_long %>% filter(date >= "2020-03-01" & date <= "2021-10-31")) +
@@ -172,10 +172,10 @@ p_global_excess <- ggplot(df_long %>% filter(date >= "2020-03-01" & date <= "202
   scale_y_continuous(expand  = expansion(0,0), limits = c(0, 11.5))  + 
   annotate("text", label = "COVID-19 deaths \n(millions)", y = 3.7, x = as.Date("2021-10-25"), size = 3, colour = "black", hjust=1) +
   annotate("text", label = "Orphanhood &/or caregiver loss \n(millions)", y = 6.1, x = as.Date("2021-10-25"), size = 3, colour = "black", hjust=1) +
-  annotate("text", label = "Excess deaths \n(millions)", y = 9.6, x = as.Date("2021-10-25"), size = 3, colour = "black", hjust=1) +
+  annotate("text", label = "Excess deaths \n(millions)", y = 9.3, x = as.Date("2021-10-25"), size = 3, colour = "black", hjust=1) +
   scale_x_date(expand  = expansion(0,0), date_breaks = "1 month", labels = date_format("%b-%Y")) +
   theme(legend.position = "bottom", axis.text.x = element_text(angle = 45, hjust=1)) +  
-  xlab("")  + ylab("Millions of people") + 
+  xlab("")  + ylab("Millions of people\n") + 
   scale_colour_manual("", values  = c("darkorchid3", "darkorchid4", "deepskyblue2")) 
 p_global_excess
 p_region_excess <- ggplot(df_region_long %>% filter(date >= "2020-03-01" & date <= "2021-10-31")) +
@@ -184,9 +184,19 @@ p_region_excess <- ggplot(df_region_long %>% filter(date >= "2020-03-01" & date 
   theme_bw() + 
   scale_x_date(expand  = expansion(0,0), date_breaks = "2 month", labels = date_format("%b-%Y")) +
   theme(legend.position = "bottom", axis.text.x = element_text(angle = 45, hjust=1)) +  
-  xlab("")  + ylab("Millions of people") + 
+  xlab("")  + ylab("Millions of people\n") + 
   facet_wrap(~region, scales = "free") + 
   scale_colour_manual("", values  = c("darkorchid3", "darkorchid4", "deepskyblue2"))
 
 p_excess <- ggarrange(p_global_excess, p_region_excess, ncol = 1, labels = "AUTO", common.legend = TRUE, legend= "bottom")
-ggsave("global_age_analysis_2021/figures/time_series_line_excess.pdf", p_excess, width =  12,  height = 12)
+ggsave("global_age_analysis_2021/figures/fig_1_time_series_line_excess.pdf", p_excess, width =  12,  height = 12)
+
+
+study_period = df_region_long[which(df_region_long$date == as.Date("2021-04-30") & df_region_long$key == "Orphanhood &/or caregiver loss"),]
+whole_period = df_region_long[which(df_region_long$date == as.Date("2021-10-31") & df_region_long$key == "Orphanhood &/or caregiver loss"),]
+
+difference_data = left_join(study_period, whole_period, by = c("region", "key"))
+difference_data$diff = difference_data$value.y - difference_data$value.x
+difference_data$percentage = difference_data$diff /difference_data$value.x * 100
+print(difference_data)
+  

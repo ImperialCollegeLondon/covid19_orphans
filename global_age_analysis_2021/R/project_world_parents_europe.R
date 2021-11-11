@@ -87,6 +87,9 @@ saveRDS(sprintf("%s [%s - %s]",
                 format(round.choose(quantile(orphans_samples, probs = 0.975), 100, 1), big.mark = ",", trim = TRUE)), 
         file = "global_age_analysis_2021/data/formatted_parents.RDS")
 
+saveRDS(c(sum(joined$final_parent_orphans), quantile(orphans_samples, probs = 0.025),  quantile(orphans_samples, probs = 0.975)), 
+        file = "global_age_analysis_2021/data/un_formatted_parents.RDS")
+
 
 orphanhood_country <- as.data.frame(estimates_parent_orphans)
 orphanhood_country$country <- ratio_dat$country

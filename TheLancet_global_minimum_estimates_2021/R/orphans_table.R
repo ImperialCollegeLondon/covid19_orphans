@@ -16,7 +16,7 @@ orphans_table <- function(updated_coef = FALSE){
   malawi = t(data.frame(combine_orphans("Malawi", process_malawi_skip_generation())))
   mexico = t(data.frame(combine_orphans("Mexico", process_mexico_skip_generation())))
   nigeria = t(data.frame(combine_orphans("Nigeria", process_nigeria_skip_generation())))
-  peru = t(data.frame(combine_orphans("Peru", process_peru_skip_generation())))
+  peru = t(data.frame(combine_orphans("Peru", process_peru_skip_generation(), updated_coef = updated_coef)))
   philippines = t(data.frame(combine_orphans("Philippines", process_philippines_skip_generation())))
   poland = t(data.frame(combine_orphans("Poland", process_poland_skip_generation())))
   russia = t(data.frame(combine_orphans("Russia", process_russia_skip_generation())))

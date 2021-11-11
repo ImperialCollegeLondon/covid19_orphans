@@ -172,7 +172,7 @@ extract_study_data <- function(updated_coef = FALSE){
   process_number_children_peru()
   cat(sprintf("Processing number of orphans\n"))
   process_orphans_peru()
-  combine_orphans("Peru", process_peru_skip_generation())
+  combine_orphans("Peru", process_peru_skip_generation(), updated_coef = updated_coef)
   
   
   #### Philippines #########################################################################################################
