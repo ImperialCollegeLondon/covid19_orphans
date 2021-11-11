@@ -50,7 +50,7 @@ combine_table <- function(){
                                        format(round.choose(oct_extrapolation$ui, 100, 1), big.mark = ",", trim = TRUE))
   extrapolation$percent_increase = sprintf("%.1f", 
                                            (oct_extrapolation$mean - apr_extrapolation$mean)/apr_extrapolation$mean * 100)
-  write.csv(extrapolation, file = "global_age_analysis_2021/table_1_extrapolation_increase.csv")
+  write.csv(extrapolation, file = "global_age_analysis_2021/table_1_extrapolation_increase.csv", row.names=FALSE)
   
   dat = left_join(apr, oct, by = c("country"))
   dat$diff_orphans = dat$orphans.y - dat$orphans.x

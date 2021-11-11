@@ -51,7 +51,7 @@ process_argentina_skip_generation = function(month = ""){
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
   
-  write_csv(file = 'global_age_analysis_2021/data/Argentina/skip_generation_argentina.csv', data)
+  write.csv(file = 'global_age_analysis_2021/data/Argentina/skip_generation_argentina.csv', data, row.names=FALSE)
   print(data)
 }
 
@@ -75,7 +75,7 @@ process_brazil_skip_generation = function(month = ""){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(file = 'global_age_analysis_2021/data/Brazil/skip_generation_brazil.csv', data)
+  write.csv(file = 'global_age_analysis_2021/data/Brazil/skip_generation_brazil.csv', data, row.names=FALSE)
   print(data)
 }
 
@@ -128,7 +128,7 @@ process_colombia_skip_generation = function(month = ""){
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
   
-  write_csv(file = 'global_age_analysis_2021/data/Colombia/skip_generation_colombia.csv', data)
+  write.csv(file = 'global_age_analysis_2021/data/Colombia/skip_generation_colombia.csv', data, row.names=FALSE)
   print(data)
 }
 
@@ -156,7 +156,7 @@ process_skip_generation_england_wales = function(month = "", max_excess_covid = 
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
   setnames(data, 'grand_deaths', '60+ deaths')
-  write_csv(file = 'global_age_analysis_2021/data/UK/skip_generation_england_wales.csv', data)
+  write.csv(file = 'global_age_analysis_2021/data/UK/skip_generation_england_wales.csv', data, row.names=FALSE)
 
   print(data)
 }
@@ -206,7 +206,7 @@ process_france_skip_generation = function(month = ""){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(file = paste0('global_age_analysis_2021/data/France/skip_generation_france.csv'), data)
+  write.csv(file = paste0('global_age_analysis_2021/data/France/skip_generation_france.csv'), data, row.names=FALSE)
   print(data)
 }
 
@@ -256,7 +256,7 @@ process_germany_skip_generation = function(month = ""){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(file = paste0('global_age_analysis_2021/data/Germany/skip_generation_', country,'.csv'), data)
+  write.csv(file = paste0('global_age_analysis_2021/data/Germany/skip_generation_', country,'.csv'), data, row.names=FALSE)
   print(data)
 }
 
@@ -302,7 +302,7 @@ process_india_skip_generation = function(month = ""){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(file = paste0('global_age_analysis_2021/data/India/skip_generation_', country,'.csv'), data)
+  write.csv(file = paste0('global_age_analysis_2021/data/India/skip_generation_', country,'.csv'), data, row.names=FALSE)
   print(data)
 }
 
@@ -347,7 +347,7 @@ process_iran_skip_generation = function(month = ""){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(file = paste0('global_age_analysis_2021/data/Iran/skip_generation_', country,'.csv'), data)
+  write.csv(file = paste0('global_age_analysis_2021/data/Iran/skip_generation_', country,'.csv'), data, row.names=FALSE)
   print(data)
 }
 
@@ -392,7 +392,7 @@ process_italy_skip_generation = function(month = ""){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(file = paste0('global_age_analysis_2021/data/Italy/skip_generation_', country,'.csv'), data)
+  write.csv(file = paste0('global_age_analysis_2021/data/Italy/skip_generation_', country,'.csv'), data, row.names=FALSE)
   print(data)
 }
 
@@ -429,7 +429,7 @@ process_kenya_skip_generation = function(month = ""){
   data$number = data$`older persons co-residing` * data$deaths/100 * 0.89
   data$number = round(data$number)
   data$value = round(data$value)
-  write_csv(file = paste0('global_age_analysis_2021/data/Kenya/skip_generation_', country,'.csv'), data)
+  write.csv(file = paste0('global_age_analysis_2021/data/Kenya/skip_generation_', country,'.csv'), data, row.names=FALSE)
   print(data)
 }
 
@@ -476,7 +476,7 @@ process_malawi_skip_generation = function(month = ""){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(file = paste0('global_age_analysis_2021/data/Malawi/skip_generation_', country,'.csv'), data)
+  write.csv(file = paste0('global_age_analysis_2021/data/Malawi/skip_generation_', country,'.csv'), data, row.names=FALSE)
   print(data)
 }
 
@@ -522,7 +522,7 @@ process_mexico_skip_generation = function(month = ""){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(file = paste0('global_age_analysis_2021/data/Mexico/skip_generation_', country,'.csv'), data)
+  write.csv(file = paste0('global_age_analysis_2021/data/Mexico/skip_generation_', country,'.csv'), data, row.names=FALSE)
   print(data)
 }
 
@@ -547,7 +547,7 @@ process_nigeria_skip_generation = function(month = ""){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(file = paste0('global_age_analysis_2021/data/Nigeria/skip_generation_', country,'.csv'), data)
+  write.csv(file = paste0('global_age_analysis_2021/data/Nigeria/skip_generation_', country,'.csv'), data, row.names=FALSE)
   print(data)
 }
 
@@ -594,7 +594,7 @@ process_peru_skip_generation = function(month = ""){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(file = paste0('global_age_analysis_2021/data/Peru/skip_generation_', country,'.csv'), data)
+  write.csv(file = paste0('global_age_analysis_2021/data/Peru/skip_generation_', country,'.csv'), data, row.names=FALSE)
   print(data)
 }
 
@@ -641,7 +641,7 @@ process_philippines_skip_generation = function(month = ""){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(file = paste0('global_age_analysis_2021/data/Philippines/skip_generation_', country,'.csv'), data)
+  write.csv(file = paste0('global_age_analysis_2021/data/Philippines/skip_generation_', country,'.csv'), data, row.names=FALSE)
   print(data)
 }
 
@@ -688,7 +688,7 @@ process_poland_skip_generation = function(month = ""){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(file = paste0('global_age_analysis_2021/data/Poland/skip_generation_', country,'.csv'), data)
+  write.csv(file = paste0('global_age_analysis_2021/data/Poland/skip_generation_', country,'.csv'), data, row.names=FALSE)
   print(data)
 }
 
@@ -713,7 +713,7 @@ process_russia_skip_generation = function(month = ""){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(file = paste0('global_age_analysis_2021/data/Russia/skip_generation_', country,'.csv'), data)
+  write.csv(file = paste0('global_age_analysis_2021/data/Russia/skip_generation_', country,'.csv'), data, row.names=FALSE)
   print(data)
 }
 
@@ -763,7 +763,7 @@ process_spain_skip_generation = function(month = ""){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(file = paste0('global_age_analysis_2021/data/Spain/skip_generation_', country,'.csv'), data)
+  write.csv(file = paste0('global_age_analysis_2021/data/Spain/skip_generation_', country,'.csv'), data, row.names=FALSE)
   print(data)
 }
 
@@ -812,7 +812,7 @@ process_south_africa_skip_generation = function(month = ""){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(file = 'global_age_analysis_2021/data/SouthAfrica/skip_generation_south_africa.csv', data)
+  write.csv(file = 'global_age_analysis_2021/data/SouthAfrica/skip_generation_south_africa.csv', data, row.names=FALSE)
   print(data)
 }
 
@@ -843,7 +843,7 @@ process_usa_skip_generation = function(month = ""){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(file = paste0('global_age_analysis_2021/data/USA/skip_generation_', country,'.csv'), data)
+  write.csv(file = paste0('global_age_analysis_2021/data/USA/skip_generation_', country,'.csv'), data, row.names=FALSE)
   print(data)
 }
 
@@ -889,6 +889,6 @@ process_zimbabwe_skip_generation = function(month = ""){
   data$number = round(data$number)
   data$grand_deaths = round(data$grand_deaths)
   data$value = round(data$value)
-  write_csv(file = paste0('global_age_analysis_2021/data/Zimbabwe/skip_generation_', country,'.csv'), data)
+  write.csv(file = paste0('global_age_analysis_2021/data/Zimbabwe/skip_generation_', country,'.csv'), data, row.names=FALSE)
   print(data)
 }

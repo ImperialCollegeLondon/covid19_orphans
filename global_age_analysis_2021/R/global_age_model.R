@@ -159,7 +159,7 @@ for (country in sample_percent_wide$country){
   prediction[which(prediction$country == country), 1:6] = sample_percent_wide[sample_percent_wide$country == country, 2:7]/100
 }
 
-write.csv(prediction, file = "global_age_analysis_2021/data/age_outputs/age_prediction.csv")
+write.csv(prediction, file = "global_age_analysis_2021/data/age_outputs/age_prediction.csv", row.names=FALSE)
 
 # Read in orphanhood samples
 samples <- readRDS("global_age_analysis_2021/data/orphanhood_samples.RDS")
@@ -188,7 +188,7 @@ data_save$`Maternal 5-9` = sprintf("%.1f%%", data_save$`Maternal 5-9` * 100)
 data_save$`Paternal 5-9` = sprintf("%.1f%%", data_save$`Paternal 5-9` * 100)
 data_save$`Maternal 10-17` = sprintf("%.1f%%", data_save$`Maternal 10-17` * 100)
 data_save$`Paternal 10-17` = sprintf("%.1f%%", data_save$`Paternal 10-17` * 100)
-write.csv(data_save, file = "global_age_analysis_2021/data/age_outputs/country_specific_totals.csv")
+write.csv(data_save, file = "global_age_analysis_2021/data/age_outputs/country_specific_totals.csv", row.names=FALSE)
 
 tab<-xtable(data_save)
 print(tab, include.rownames=FALSE)
@@ -393,7 +393,7 @@ tab_wide <- select(tab_wide, region, "0_4_female", "0_4_male", "5_9_female",
 tab_wide_global <- tab_wide[tab_wide$region == "Global",]
 tab_wide <- tab_wide[tab_wide$region != "Global",]
 tab_wide <- rbind(tab_wide, tab_wide_global)
-write_csv(tab_wide, "global_age_analysis_2021/data/age_outputs/global_age_percentages.csv")
+write_csv(tab_wide, "global_age_analysis_2021/data/age_outputs/global_age_percentages.csv", row.names=FALSE)
 
 tab<-xtable(tab_wide)
 print(tab, include.rownames=FALSE)

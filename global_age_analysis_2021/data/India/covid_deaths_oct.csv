@@ -1,7 +1,7 @@
-age,sex,covid_deaths
-20-49,Female,33868
-20-49,Male,58694
-50-69,Female,88903
-50-69,Male,175503
-70+,Female,40642
-70+,Male,51755
+"age","sex","covid_deaths"
+"20-49","Female",33868
+"20-49","Male",58694
+"50-69","Female",88903
+"50-69","Male",175503
+"70+","Female",40642
+"70+","Male",51755

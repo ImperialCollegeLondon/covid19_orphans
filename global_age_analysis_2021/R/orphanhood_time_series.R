@@ -8,7 +8,7 @@ library(ggpubr)
 source("global_age_analysis_2021/R/time_series_functions.R")
 
 #d <- read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv")
-#d <- write.csv(d, "global_age_analysis_2021/data/covid_timeseries.csv")
+#d <- write.csv(d, "global_age_analysis_2021/data/covid_timeseries.csv", row.names=FALSE)
 d <- read.csv("global_age_analysis_2021/data/covid_timeseries.csv")
 d2 <- select(d, -Long, -Lat, -Province.State)
 

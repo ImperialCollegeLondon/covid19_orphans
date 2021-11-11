@@ -15,7 +15,7 @@ add_child_mortality = function(is_child_mortality_needed, country, uncertainty =
       names(child_m_matrix) = paste0(seq(0:17)-1, 'years')
       child_and_m = as.matrix(children) * (1-as.matrix(child_m_matrix))
       child_and_m = as.data.frame(child_and_m)
-      write_csv(file = paste0('global_age_analysis_2021/data/', country, '/child_all_m.csv'), child_and_m)
+      write.csv(file = paste0('global_age_analysis_2021/data/', country, '/child_all_m.csv'), child_and_m, row.names=FALSE)
       
       plot_c_and_m = as.data.frame(as.numeric(as.character(unlist(child_and_m))))
       plot_c_and_m$father_age = rep(1:100,18)
@@ -30,15 +30,15 @@ add_child_mortality = function(is_child_mortality_needed, country, uncertainty =
       #   scale_fill_gradient2(low = "yellow", high = "red")
       
       plot_c_and_m$gender = 'male'
-      write_csv(file = paste0('global_age_analysis_2021/data/', country, '/child_all_list_m.csv'), plot_c_and_m)
+      write.csv(file = paste0('global_age_analysis_2021/data/', country, '/child_all_list_m.csv'), plot_c_and_m, row.names=FALSE)
     } else{
       child_and_m = copy(children)
       child_and_m = as.data.frame(child_and_m)
-      write_csv(file = paste0('global_age_analysis_2021/data/', country, '/child_all_m.csv'), child_and_m)
+      write.csv(file = paste0('global_age_analysis_2021/data/', country, '/child_all_m.csv'), child_and_m, row.names=FALSE)
       
       plot_c_and_m = copy(plot_c)
       plot_c_and_m$gender = 'male'
-      write_csv(file = paste0('global_age_analysis_2021/data/', country, '/child_all_list_m.csv'), plot_c_and_m)
+      write.csv(file = paste0('global_age_analysis_2021/data/', country, '/child_all_list_m.csv'), plot_c_and_m, row.names=FALSE)
       
     }
     child_and_m = read.csv(paste0('global_age_analysis_2021/data/', country, '/child_all_m.csv'))
@@ -46,7 +46,7 @@ add_child_mortality = function(is_child_mortality_needed, country, uncertainty =
     names(ddf) = 'children'
     ddf$gender = 'male'
     ddf$age = 1:100
-    write_csv(file = paste0('global_age_analysis_2021/data/', country, '/children_m.csv'),ddf)
+    write.csv(file = paste0('global_age_analysis_2021/data/', country, '/children_m.csv'),ddf, row.names=FALSE)
     
   } else {
     
@@ -62,7 +62,7 @@ add_child_mortality = function(is_child_mortality_needed, country, uncertainty =
       names(child_m_matrix) = paste0(seq(0:17)-1, 'years')
       child_and_m = as.matrix(children) * (1-as.matrix(child_m_matrix))
       child_and_m = as.data.frame(child_and_m)
-      write_csv(file = paste0('global_age_analysis_2021/data/', country, '/child_all_m_un.csv'), child_and_m)
+      write.csv(file = paste0('global_age_analysis_2021/data/', country, '/child_all_m_un.csv'), child_and_m, row.names=FALSE)
       
       plot_c_and_m = as.data.frame(as.numeric(as.character(unlist(child_and_m))))
       plot_c_and_m$father_age = rep(1:100,18)
@@ -70,15 +70,15 @@ add_child_mortality = function(is_child_mortality_needed, country, uncertainty =
       setnames(plot_c_and_m, 1, 'prob')
       
       plot_c_and_m$gender = 'male'
-      write_csv(file = paste0('global_age_analysis_2021/data/', country, '/child_all_list_m_un.csv'), plot_c_and_m)
+      write.csv(file = paste0('global_age_analysis_2021/data/', country, '/child_all_list_m_un.csv'), plot_c_and_m, row.names=FALSE)
     } else{
       child_and_m = copy(children)
       child_and_m = as.data.frame(child_and_m)
-      write_csv(file = paste0('global_age_analysis_2021/data/', country, '/child_all_m_un.csv'), child_and_m)
+      write.csv(file = paste0('global_age_analysis_2021/data/', country, '/child_all_m_un.csv'), child_and_m, row.names=FALSE)
       
       plot_c_and_m = copy(plot_c)
       plot_c_and_m$gender = 'male'
-      write_csv(file = paste0('global_age_analysis_2021/data/', country, '/child_all_list_m_un.csv'), plot_c_and_m)
+      write.csv(file = paste0('global_age_analysis_2021/data/', country, '/child_all_list_m_un.csv'), plot_c_and_m, row.names=FALSE)
       
     }
     child_and_m = read.csv(paste0('global_age_analysis_2021/data/', country, '/child_all_m_un.csv'))
@@ -86,7 +86,7 @@ add_child_mortality = function(is_child_mortality_needed, country, uncertainty =
     names(ddf) = 'children'
     ddf$gender = 'male'
     ddf$age = 1:100
-    write_csv(file = paste0('global_age_analysis_2021/data/', country, '/children_m_un.csv'),ddf)
+    write.csv(file = paste0('global_age_analysis_2021/data/', country, '/children_m_un.csv'),ddf, row.names=FALSE)
   }
   
 }
@@ -138,7 +138,7 @@ add_child_mortality = function(is_child_mortality_needed, country, uncertainty =
 #   d_merge$mortality = as.numeric(d_merge$value)/as.numeric(d_merge$pop)
 #   d_merge = d_merge %>% select(country, year, age, mortality)
 #   d_merge$country[which(d_merge$country == "Iran (Islamic Republic of)")] = 'Iran'
-#   write_csv(d_merge, file = 'global_age_analysis_2021/data/children/mortality_rate_all.csv')
+#   write.csv(d_merge, file = 'global_age_analysis_2021/data/children/mortality_rate_all.csv', row.names=FALSE)
 # }
 
 # Multiple countries
@@ -176,7 +176,7 @@ process_child_mortality = function(country, countries){
   child_m_matrix = as.data.frame(child_m_matrix)
   names(child_m_matrix) = paste0(seq(0:17)-1, 'years')
 
-  write_csv(file = paste0('global_age_analysis_2021/data/', country, '/child_mortality_rate.csv'), child_m_matrix)
+  write.csv(file = paste0('global_age_analysis_2021/data/', country, '/child_mortality_rate.csv'), child_m_matrix, row.names=FALSE)
 }  
 
 # England and Wales
@@ -220,7 +220,7 @@ process_children_mortality_england_wales = function(){
   data = reshape2::melt(data, id.vars = c('year'), variable.name =  'age', value.name = 'mortality')
   data$age = as.character(data$age)
   data$age = paste0(data$age, ' years')
-  write_csv(data, file = 'global_age_analysis_2021/data/UK/mortality_rate_england_wales.csv')
+  write.csv(data, file = 'global_age_analysis_2021/data/UK/mortality_rate_england_wales.csv', row.names=FALSE)
 }
 
 process_infant_mortality_england_wales = function(){
@@ -235,7 +235,7 @@ process_infant_mortality_england_wales = function(){
   data$mortality = as.numeric(as.character(data$mortality))/1e3 * 1e5
   data = rbind(as.data.table(data) %>% filter(year >= 2002) %>% select(year, age, mortality), child_m)
   data$mortality = as.numeric(data$mortality)
-  write_csv(data, file = 'global_age_analysis_2021/data/UK/mortality_rate_all_england_wales.csv')
+  write.csv(data, file = 'global_age_analysis_2021/data/UK/mortality_rate_all_england_wales.csv', row.names=FALSE)
 }
 
 # Makes child mortality matrix for E and W
@@ -276,7 +276,7 @@ process_child_mortality_england_wales = function(){
   
   child_m_matrix = as.data.frame(child_m_matrix)
   names(child_m_matrix) = paste0(seq(0:17)-1, 'years')
-  write_csv(file = 'global_age_analysis_2021/data/UK/child_mortality_rate.csv', child_m_matrix)
+  write.csv(file = 'global_age_analysis_2021/data/UK/child_mortality_rate.csv', child_m_matrix, row.names=FALSE)
 }  
 
 
@@ -303,7 +303,7 @@ process_child_mortality_russia = function(){
   data = rbind(data, data_19)
   data = data %>% arrange(year, age)
   data$mortality = data$mortality/1000
-  write_csv(data,file = paste0('global_age_analysis_2021/data/children/mortality_rate_all_russain_federation.csv'))
+  write.csv(data,file = paste0('global_age_analysis_2021/data/children/mortality_rate_all_russain_federation.csv'), row.names=FALSE)
   
 }
 

@@ -50,7 +50,7 @@ process_orphans_age_argentina = function(uncertainty = FALSE, month = ""){
   # p_male
   
   if (uncertainty == FALSE){
-    write_csv(file = paste0('global_age_analysis_2021/data/Argentina/argentina_orphans_age_all.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/Argentina/argentina_orphans_age_all.csv'), d_m1, row.names=FALSE)
   }
   
   
@@ -64,7 +64,7 @@ process_orphans_age_argentina = function(uncertainty = FALSE, month = ""){
   #ggsave("global_age_analysis_2021/figures/age_argentina.png", p)
   
   if (uncertainty == FALSE){
-    write_csv(file = 'global_age_analysis_2021/data/Argentina/all_data_age.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/Argentina/all_data_age.csv', d_summary, row.names=FALSE)
   }
   
   #print(d_summary)
@@ -139,7 +139,7 @@ process_orphans_age_brazil = function(uncertainty  = FALSE, month = ""){
   # p_male
   
   if (uncertainty == FALSE){
-    write_csv(file = paste0('global_age_analysis_2021/data/Brazil/brazil_orphans_age_all.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/Brazil/brazil_orphans_age_all.csv'), d_m1, row.names=FALSE)
   }
   
   d_summary = d_m1 %>% select(age, gender, COVID19_deaths, child_age, orphans) %>% 
@@ -153,7 +153,7 @@ process_orphans_age_brazil = function(uncertainty  = FALSE, month = ""){
   # ggsave("global_age_analysis_2021/figures/age_brazil.png", p)
   
   if (uncertainty == FALSE){
-    write_csv(file = 'global_age_analysis_2021/data/Brazil/all_data_age.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/Brazil/all_data_age.csv', d_summary, row.names=FALSE)
   }
   
   #print(d_summary)
@@ -233,7 +233,7 @@ process_orphans_age_colombia = function(uncertainty = FALSE, month = ""){
   # p_male
   
   if (uncertainty == FALSE){
-    write_csv(file = paste0('global_age_analysis_2021/data/Colombia/colombia_orphans_age_all.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/Colombia/colombia_orphans_age_all.csv'), d_m1, row.names=FALSE)
   }
 
   d_summary = d_m1 %>% select(age, gender, deaths, child_age, orphans) %>% 
@@ -247,7 +247,7 @@ process_orphans_age_colombia = function(uncertainty = FALSE, month = ""){
   # ggsave("global_age_analysis_2021/figures/age_colombia.png", p)
   
   if (uncertainty == FALSE){
-    write_csv(file = 'global_age_analysis_2021/data/Colombia/all_data_age.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/Colombia/all_data_age.csv', d_summary, row.names=FALSE)
   }
   
   #print(d_summary)
@@ -305,7 +305,7 @@ process_orphans_age_england_wales = function(uncertainty = FALSE, month = ""){
   print(sprintf("Total number of orphans %d:", sum(d_m1$orphans)))
   
   if (uncertainty == FALSE){
-    write_csv(file = paste0('global_age_analysis_2021/data/UK/england_wales_orphans_age_all.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/UK/england_wales_orphans_age_all.csv'), d_m1, row.names=FALSE)
   }
   
   d_summary = d_m1 %>% select(age, gender, deaths, child_age, orphans) %>% 
@@ -313,7 +313,7 @@ process_orphans_age_england_wales = function(uncertainty = FALSE, month = ""){
     summarise(orphans = sum(orphans))
   
   if (uncertainty == FALSE){
-    write_csv(file = 'global_age_analysis_2021/data/UK/all_data_age.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/UK/all_data_age.csv', d_summary, row.names=FALSE)
   }
   
   d_summary$category = ifelse(d_summary$child_age %in% c(0, 1, 2, 3, 4), "[0-5)",
@@ -379,7 +379,7 @@ process_orphans_age_france = function(uncertainty = FALSE, month = ""){
   # p_male
   
   if (uncertainty == FALSE){
-    write_csv(file = paste0('global_age_analysis_2021/data/France/france_orphans_age_all.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/France/france_orphans_age_all.csv'), d_m1, row.names=FALSE)
   }
   
   
@@ -394,7 +394,7 @@ process_orphans_age_france = function(uncertainty = FALSE, month = ""){
   # ggsave("global_age_analysis_2021/figures/age_france.png", p)
   # 
   if (uncertainty == FALSE){
-    write_csv(file = 'global_age_analysis_2021/data/France/all_data_age.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/France/all_data_age.csv', d_summary, row.names=FALSE)
   }
 
   #print(d_summary)
@@ -474,7 +474,7 @@ process_orphans_age_germany = function(uncertainty = FALSE, month = ""){
   # 
   
   if (uncertainty == FALSE){
-    write_csv(file = paste0('global_age_analysis_2021/data/Germany/germany_orphans_age_all.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/Germany/germany_orphans_age_all.csv'), d_m1, row.names=FALSE)
   }
 
   
@@ -489,7 +489,7 @@ process_orphans_age_germany = function(uncertainty = FALSE, month = ""){
   # ggsave("global_age_analysis_2021/figures/age_germany.png", p)
   # 
   if (uncertainty == FALSE){
-    write_csv(file = 'global_age_analysis_2021/data/Germany/all_data_age.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/Germany/all_data_age.csv', d_summary, row.names=FALSE)
   }
   #print(d_summary)
   
@@ -572,7 +572,7 @@ process_orphans_age_india = function(uncertainty = FALSE, month = ""){
   # p_male
   # 
   if (uncertainty == FALSE){
-    write_csv(file = paste0('global_age_analysis_2021/data/India/india_orphans_age_all.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/India/india_orphans_age_all.csv'), d_m1, row.names=FALSE)
   }
   
   
@@ -587,7 +587,7 @@ process_orphans_age_india = function(uncertainty = FALSE, month = ""){
   # ggsave("global_age_analysis_2021/figures/age_india.png", p)
   
   if (uncertainty == FALSE){
-    write_csv(file = 'global_age_analysis_2021/data/India/all_data_age.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/India/all_data_age.csv', d_summary, row.names=FALSE)
   }
   
   #print(d_summary)
@@ -660,7 +660,7 @@ process_orphans_age_iran = function(uncertainty = FALSE, month = ""){
   # p_male
   # 
   if (uncertainty == FALSE){
-    write_csv(file = paste0('global_age_analysis_2021/data/Iran/iran_orphans_age_all.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/Iran/iran_orphans_age_all.csv'), d_m1, row.names=FALSE)
   }
 
   d_summary = d_m1 %>% select(age, gender, deaths, child_age, orphans) %>% 
@@ -674,7 +674,7 @@ process_orphans_age_iran = function(uncertainty = FALSE, month = ""){
   # ggsave("global_age_analysis_2021/figures/age_iran.png", p)
   # 
   if (uncertainty == FALSE){
-    write_csv(file = 'global_age_analysis_2021/data/Iran/all_data_age.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/Iran/all_data_age.csv', d_summary, row.names=FALSE)
   }
 
   # print(d_summary)
@@ -747,7 +747,7 @@ process_orphans_age_italy = function(uncertainty = FALSE, month = ""){
   # p_male
   
   if (uncertainty == FALSE){
-    write_csv(file = paste0('global_age_analysis_2021/data/Italy/italy_orphans_age_all.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/Italy/italy_orphans_age_all.csv'), d_m1, row.names=FALSE)
   }
   
   d_summary = d_m1 %>% select(age, gender, deaths, child_age, orphans) %>% 
@@ -761,7 +761,7 @@ process_orphans_age_italy = function(uncertainty = FALSE, month = ""){
   # ggsave("global_age_analysis_2021/figures/age_italy.png", p)
   
   if (uncertainty == FALSE){
-    write_csv(file = 'global_age_analysis_2021/data/Italy/all_data_age.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/Italy/all_data_age.csv', d_summary, row.names=FALSE)
   }
   
   #print(d_summary)
@@ -832,7 +832,7 @@ process_orphans_age_kenya = function(uncertainty = FALSE, month = ""){
   # 
   
   if (uncertainty == FALSE){
-    write_csv(file = paste0('global_age_analysis_2021/data/Kenya/kenya_orphans_age_all.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/Kenya/kenya_orphans_age_all.csv'), d_m1, row.names=FALSE)
   }
   
   d_summary = d_m1 %>% select(age, gender, deaths, child_age, orphans) %>% 
@@ -846,7 +846,7 @@ process_orphans_age_kenya = function(uncertainty = FALSE, month = ""){
   # ggsave("global_age_analysis_2021/figures/age_kenya.png", p)
   
   if (uncertainty == FALSE){
-    write_csv(file = 'global_age_analysis_2021/data/Kenya/all_data_age.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/Kenya/all_data_age.csv', d_summary, row.names=FALSE)
   }
   
   #print(d_summary)
@@ -915,7 +915,7 @@ process_orphans_age_malawi = function(uncertainty = FALSE, month = ""){
   # p_male
   
   if (uncertainty == FALSE){
-    write_csv(file = paste0('global_age_analysis_2021/data/Malawi/malawi_orphans_age_all.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/Malawi/malawi_orphans_age_all.csv'), d_m1, row.names=FALSE)
   }
   
   
@@ -930,7 +930,7 @@ process_orphans_age_malawi = function(uncertainty = FALSE, month = ""){
   # ggsave("global_age_analysis_2021/figures/age_malawi.png", p)
   # 
   if (uncertainty == FALSE){
-    write_csv(file = 'global_age_analysis_2021/data/Malawi/all_data_age.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/Malawi/all_data_age.csv', d_summary, row.names=FALSE)
   }
   
   #print(d_summary)
@@ -1005,7 +1005,7 @@ process_orphans_age_mexico = function(uncertainty = FALSE, month = ""){
   # p_male
   # 
   if (uncertainty == FALSE){
-    write_csv(file = paste0('global_age_analysis_2021/data/Mexico/mexico_orphans_age_all.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/Mexico/mexico_orphans_age_all.csv'), d_m1, row.names=FALSE)
   }
   
   
@@ -1020,7 +1020,7 @@ process_orphans_age_mexico = function(uncertainty = FALSE, month = ""){
   # ggsave("global_age_analysis_2021/figures/age_mexico.png", p)
   
   if (uncertainty == FALSE){
-    write_csv(file = 'global_age_analysis_2021/data/Mexico/all_data_age.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/Mexico/all_data_age.csv', d_summary, row.names=FALSE)
   }
   
   #print(d_summary)
@@ -1097,7 +1097,7 @@ process_orphans_age_nigeria = function(uncertainty = FALSE, month = ""){
   # p_male
   
   if (uncertainty == FALSE){
-    write_csv(file = paste0('global_age_analysis_2021/data/Nigeria/nigeria_orphans_age_all.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/Nigeria/nigeria_orphans_age_all.csv'), d_m1, row.names=FALSE)
   }
   
   
@@ -1112,7 +1112,7 @@ process_orphans_age_nigeria = function(uncertainty = FALSE, month = ""){
   # ggsave("global_age_analysis_2021/figures/age_nigeria.png", p)
   # 
   if (uncertainty == FALSE){
-    write_csv(file = 'global_age_analysis_2021/data/Nigeria/all_data_age.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/Nigeria/all_data_age.csv', d_summary, row.names=FALSE)
   }
   
   #print(d_summary)
@@ -1184,7 +1184,7 @@ process_orphans_age_peru = function(uncertainty = FALSE, month = ""){
   # p_male
   # 
   if (uncertainty == FALSE){
-    write_csv(file = paste0('global_age_analysis_2021/data/Peru/peru_orphans_age_all.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/Peru/peru_orphans_age_all.csv'), d_m1, row.names=FALSE)
   }
   
   
@@ -1199,7 +1199,7 @@ process_orphans_age_peru = function(uncertainty = FALSE, month = ""){
   # ggsave("global_age_analysis_2021/figures/age_peru.png", p)
   
   if (uncertainty == FALSE){
-    write_csv(file = 'global_age_analysis_2021/data/Peru/all_data_age.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/Peru/all_data_age.csv', d_summary, row.names=FALSE)
   }
   
   #print(d_summary)
@@ -1275,7 +1275,7 @@ process_orphans_age_philippines = function(uncertainty = FALSE, month = ""){
   # p_male
   
   if (uncertainty == FALSE){
-    write_csv(file = paste0('global_age_analysis_2021/data/Philippines/philippines_orphans_age_all.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/Philippines/philippines_orphans_age_all.csv'), d_m1, row.names=FALSE)
   }
   
   d_summary = d_m1 %>% select(age, gender, COVID19_deaths, child_age, orphans) %>% 
@@ -1289,7 +1289,7 @@ process_orphans_age_philippines = function(uncertainty = FALSE, month = ""){
   # ggsave("global_age_analysis_2021/figures/age_philippines.png", p)
   
   if (uncertainty == FALSE){
-    write_csv(file = 'global_age_analysis_2021/data/Philippines/all_data_age.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/Philippines/all_data_age.csv', d_summary, row.names=FALSE)
   }
   
   #print(d_summary)
@@ -1363,9 +1363,9 @@ process_orphans_age_poland = function(uncertainty = FALSE, month = month){
   # 
   
   if (uncertainty == FALSE){
-    write_csv(file = paste0('global_age_analysis_2021/data/Poland/poland_orphans_age_all.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/Poland/poland_orphans_age_all.csv'), d_m1, row.names=FALSE)
   } else {
-    write_csv(file = paste0('global_age_analysis_2021/data/Poland/poland_orphans_age_all_un.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/Poland/poland_orphans_age_all_un.csv'), d_m1, row.names=FALSE)
   }
  
   
@@ -1380,9 +1380,9 @@ process_orphans_age_poland = function(uncertainty = FALSE, month = month){
   # ggsave("global_age_analysis_2021/figures/age_poland.png", p)
   
   if (uncertainty == FALSE){
-    write_csv(file = 'global_age_analysis_2021/data/Poland/all_data_age.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/Poland/all_data_age.csv', d_summary, row.names=FALSE)
   } else {
-    write_csv(file = 'global_age_analysis_2021/data/Poland/all_data_age_un.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/Poland/all_data_age_un.csv', d_summary, row.names=FALSE)
   }
   
   #print(d_summary)
@@ -1451,7 +1451,7 @@ process_orphans_age_russia = function(month = ""){
   #   geom_tile(aes(age, child_age, fill = orphans))
   # p_male
   
-  write_csv(file = paste0('global_age_analysis_2021/data/Russia/russia_orphans_age_all.csv'), d_m1)
+  write.csv(file = paste0('global_age_analysis_2021/data/Russia/russia_orphans_age_all.csv'), d_m1, row.names=FALSE)
   
   d_summary = d_m1 %>% select(age, gender, deaths, child_age, orphans) %>% 
     group_by(gender, child_age) %>%
@@ -1463,7 +1463,7 @@ process_orphans_age_russia = function(month = ""){
   # p
   # ggsave("global_age_analysis_2021/figures/age_russia.png", p)
   # 
-  write_csv(file = 'global_age_analysis_2021/data/Russia/all_data_age.csv', d_summary)
+  write.csv(file = 'global_age_analysis_2021/data/Russia/all_data_age.csv', d_summary, row.names=FALSE)
   #print(d_summary)
   
   d_summary$category = ifelse(d_summary$child_age %in% c(0, 1, 2, 3, 4), "[0-5)",
@@ -1537,7 +1537,7 @@ process_orphans_age_southafrica = function(uncertainty = FALSE, month = ""){
   # p_male
   
   if (uncertainty == FALSE){
-    write_csv(file = paste0('global_age_analysis_2021/data/SouthAfrica/southafrica_orphans_age_all.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/SouthAfrica/southafrica_orphans_age_all.csv'), d_m1, row.names=FALSE)
   }
   
   
@@ -1552,7 +1552,7 @@ process_orphans_age_southafrica = function(uncertainty = FALSE, month = ""){
   # ggsave("global_age_analysis_2021/figures/age_southafrica.png", p)
   
   if (uncertainty == FALSE){
-    write_csv(file = 'global_age_analysis_2021/data/SouthAfrica/all_data_age.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/SouthAfrica/all_data_age.csv', d_summary, row.names=FALSE)
   }
 
   #print(d_summary)
@@ -1625,7 +1625,7 @@ process_orphans_age_spain = function(uncertainty = FALSE, month = ""){
   # p_male
   
   if (uncertainty == FALSE){
-    write_csv(file = paste0('global_age_analysis_2021/data/Spain/spain_orphans_age_all.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/Spain/spain_orphans_age_all.csv'), d_m1, row.names=FALSE)
   }
   
   
@@ -1640,7 +1640,7 @@ process_orphans_age_spain = function(uncertainty = FALSE, month = ""){
   # ggsave("global_age_analysis_2021/figures/age_spain.png", p)
   
   if (uncertainty == FALSE){
-    write_csv(file = 'global_age_analysis_2021/data/Spain/all_data_age.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/Spain/all_data_age.csv', d_summary, row.names=FALSE)
   }
   
   #print(d_summary)
@@ -1720,7 +1720,7 @@ process_orphans_age_usa = function(uncertainty = FALSE, month = ""){
   # p_male
   
   if (uncertainty == FALSE){
-    write_csv(file = paste0('global_age_analysis_2021/data/USA/usa_orphans_age_all.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/USA/usa_orphans_age_all.csv'), d_m1, row.names=FALSE)
   }
   
   
@@ -1736,7 +1736,7 @@ process_orphans_age_usa = function(uncertainty = FALSE, month = ""){
   # 
   
   if (uncertainty == FALSE){
-    write_csv(file = 'global_age_analysis_2021/data/USA/all_data_age.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/USA/all_data_age.csv', d_summary, row.names=FALSE)
 }
   
   #print(d_summary)
@@ -1808,7 +1808,7 @@ process_orphans_age_zimbabwe = function(uncertainty = FALSE, month = ""){
   # p_male
   
   if (uncertainty == FALSE){
-    write_csv(file = paste0('global_age_analysis_2021/data/Zimbabwe/zimbabwe_orphans_age_all.csv'), d_m1)
+    write.csv(file = paste0('global_age_analysis_2021/data/Zimbabwe/zimbabwe_orphans_age_all.csv'), d_m1, row.names=FALSE)
   }
   
   
@@ -1823,7 +1823,7 @@ process_orphans_age_zimbabwe = function(uncertainty = FALSE, month = ""){
   # ggsave("global_age_analysis_2021/figures/age_zimbabwe.png", p)
   # 
   if (uncertainty == FALSE){
-    write_csv(file = 'global_age_analysis_2021/data/Zimbabwe/all_data_age.csv', d_summary)
+    write.csv(file = 'global_age_analysis_2021/data/Zimbabwe/all_data_age.csv', d_summary, row.names=FALSE)
   }
   
   #print(d_summary)

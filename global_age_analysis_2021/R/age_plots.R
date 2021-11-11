@@ -20,7 +20,7 @@ pa <- readRDS("global_age_analysis_2021/data/formatted_parents.RDS")
 dat <- data.frame(parents = pa,
                   primary = p,
                   primary_seconday = ps)
-write_csv(file = paste0("global_age_analysis_2021/data/age_outputs/updated_numbers", month, ".csv"), dat)
+write.csv(file = paste0("global_age_analysis_2021/data/age_outputs/updated_numbers", month, ".csv"), dat, row.names=FALSE)
 
 
 # Table 1: Children of different ages ----------------------------------------------
@@ -163,7 +163,7 @@ global_totals <- readRDS("global_age_analysis_2021/data/age_outputs/global_extra
 names(global_totals) <- names(tab_combined)
 tab_combined_ <- rbind(tab_combined, global_totals)
 
-write_csv(file = paste0("global_age_analysis_2021/table_2_age_breakdown", month, ".csv"), tab_combined_)
+write.csv(file = paste0("global_age_analysis_2021/table_2_age_breakdown", month, ".csv"), tab_combined_, row.names=FALSE)
 
 
 # Table 2: Percentages of ages and types ----------------------------------------------
@@ -181,7 +181,7 @@ pretty_table_wide_raw <- pivot_wider(pretty_table, names_from = c(category, gend
 #names(global_dat) = c("country", "[0-5)_Female",  "[0-5)_Male", "[5-10)_Female", "[5-10)_Male", "[10-18)_Female", "[10-18)_Male"  )
 #pretty_table_wide_raw <- rbind(pretty_table_wide_raw, global_dat)
 
-write_csv(file = paste0("global_age_analysis_2021/data/age_outputs/age_compostion", month, ".csv"), pretty_table_wide_raw)
+write.csv(file = paste0("global_age_analysis_2021/data/age_outputs/age_compostion", month, ".csv"), pretty_table_wide_raw, row.names=FALSE)
 tab<-xtable(pretty_table_wide_raw)
 print(tab, include.rownames=FALSE)
 

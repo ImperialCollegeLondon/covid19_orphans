@@ -117,7 +117,7 @@ process_argentina_covid19 = function(){
   d_merge$rate = d_merge$COVID19_deaths/sum(d_merge$COVID19_deaths)
   d_merge$deaths = round(d_merge$rate*total)
   
-  write_csv(file = 'global_age_analysis_2021/data/Argentina/covid19_deaths_oct.csv', d_merge)
+  write.csv(file = 'global_age_analysis_2021/data/Argentina/covid19_deaths_oct.csv', d_merge, row.names=FALSE)
   #d_merge
 }
 
@@ -163,8 +163,8 @@ process_brazil = function(age_range){
     dir.create(file.file('global_age_analysis_2021/data','Brazil'))
   }
   
-  #write_csv(file = paste0("global_age_analysis_2021/data/Brazil/","brazil.csv"),df_SIVEP)
-  #write_csv(file = paste0("global_age_analysis_2021/data/Brazil/","brazil_plot.csv"),df_SIVEP.plt)
+  #write.csv(file = paste0("global_age_analysis_2021/data/Brazil/","brazil.csv"),df_SIVEP, row.names=FALSE)
+  #write.csv(file = paste0("global_age_analysis_2021/data/Brazil/","brazil_plot.csv"),df_SIVEP.plt, row.names=FALSE)
   
   df = df_SIVEP.plt[order(-date, agesex),]
   df = df[which(df$date <= as.Date("2021-10-31")),]
@@ -175,7 +175,7 @@ process_brazil = function(age_range){
   }
   tmp$date = max(tmp$date)
   tmp = tmp[order(-gender, age),]
-  write_csv(file = paste0("global_age_analysis_2021/data/Brazil/","brazil_summary_oct.csv"),tmp)
+  write.csv(file = paste0("global_age_analysis_2021/data/Brazil/","brazil_summary_oct.csv"),tmp, row.names=FALSE)
   
   d_merge = tmp
   d_merge$date = as.Date(d_merge$date)
@@ -193,7 +193,7 @@ process_brazil = function(age_range){
   d_merge$rate = d_merge$deaths/sum(d_merge$deaths)
   d_merge$deaths = round(d_merge$rate * total)
   setnames(d_merge, 'deaths', 'COVID19_deaths')
-  write_csv(d_merge %>% select(-rate), file = 'global_age_analysis_2021/data/Brazil/covid19_deaths_oct.csv')
+  write.csv(d_merge %>% select(-rate), file = 'global_age_analysis_2021/data/Brazil/covid19_deaths_oct.csv', row.names=FALSE)
 }
 
 #Colombia
@@ -215,7 +215,7 @@ process_colombia_covid19 = function(){
   
   data$deaths = round(data$rate* total)
   data = data %>% select(-rate, -covid19_deaths)
-  write_csv(data, file = 'global_age_analysis_2021/data/Colombia/covid19_deaths_all_oct.csv')
+  write.csv(data, file = 'global_age_analysis_2021/data/Colombia/covid19_deaths_all_oct.csv', row.names=FALSE)
 }
 
 #England and wales
@@ -275,7 +275,7 @@ process_england_wales = function(uncertainty = FALSE){
   d_deaths[is.na(d_deaths)] <- 0
   setnames(d_deaths, c('deaths.x', 'deaths.y'), c('covid19_deaths', 'excess_deaths'))
   
-  write_csv(file = 'global_age_analysis_2021/data/UK/deaths_all_england_wales_oct.csv', d_deaths)
+  write.csv(file = 'global_age_analysis_2021/data/UK/deaths_all_england_wales_oct.csv', d_deaths, row.names=FALSE)
   
   d_deaths$week = as.numeric(sapply(d_deaths$week, function(x) strsplit(x, " ")[[1]][2]))
   d_deaths = d_deaths[which((d_deaths$year == "2020" &  d_deaths$week >=10) | 
@@ -285,7 +285,7 @@ process_england_wales = function(uncertainty = FALSE){
            nb_excess = sum(excess_deaths))
   d_merge$deaths = ifelse(d_merge$nb_covid19 >= d_merge$nb_excess, d_merge$nb_covid19, d_merge$nb_excess)
   
-  write_csv(file = 'global_age_analysis_2021/data/UK/deaths_all_england_wales_oct.csv', d_merge)
+  write.csv(file = 'global_age_analysis_2021/data/UK/deaths_all_england_wales_oct.csv', d_merge, row.names=FALSE)
   
 }
 
@@ -331,7 +331,7 @@ process_france = function(){
     summarise("excess_deaths" = sum(France))
   
   d_merge = left_join(data, excess_death, by = c('gender', 'age' = 'age'))
-  write_csv(file = paste0("global_age_analysis_2021/data/France/","france_all_oct.csv"),d_merge)
+  write.csv(file = paste0("global_age_analysis_2021/data/France/","france_all_oct.csv"),d_merge, row.names=FALSE)
   
   total_covid = sum(d_merge$covid_deaths)
   
@@ -344,7 +344,7 @@ process_france = function(){
   d_merge$covid_deaths = round(d_merge$covid_deaths * rate)
   d_merge$deaths = ifelse(d_merge$covid_deaths > d_merge$excess_deaths, d_merge$covid_deaths, d_merge$excess_deaths)
   d_merge = d_merge %>% select(age, gender, covid_deaths, excess_deaths, deaths)
-  write_csv(d_merge, file = 'global_age_analysis_2021/data/France/france_all_oct.csv')
+  write.csv(d_merge, file = 'global_age_analysis_2021/data/France/france_all_oct.csv', row.names=FALSE)
 }
 
 # Germany
@@ -373,7 +373,7 @@ process_germany = function(){
   data$deaths = round(data$deaths * rate)
   data$age = as.character(data$age)
   data$age = ifelse(data$age == '90-99', '90+', data$age)
-  write_csv(data, file = 'global_age_analysis_2021/data/Germany/covid19_deaths_oct.csv')
+  write.csv(data, file = 'global_age_analysis_2021/data/Germany/covid19_deaths_oct.csv', row.names=FALSE)
 }
 
 # India
@@ -396,14 +396,14 @@ process_india_covid = function(){
   data$deaths <- round(data$freq * total_deaths)
   
   d_summary <- select(data, sex, age, deaths)
-  write_csv(d_summary %>% arrange(age, sex), file = 'global_age_analysis_2021/data/India/all_covid_deaths_oct.csv')
+  write.csv(d_summary %>% arrange(age, sex), file = 'global_age_analysis_2021/data/India/all_covid_deaths_oct.csv', row.names=FALSE)
   d_summary$age = ifelse(d_summary$age %in% c('0-4', '5-19'), '0-19',
                          ifelse(d_summary$age %in% c('20-29','30-39', '40-49'), '20-49',
                                 ifelse(d_summary$age %in% c("50-59","60-69"),'50-69', '70+')))
   d_summary = d_summary %>% group_by(age, sex) %>% 
     summarise(covid_deaths = sum(deaths))
   d_summary  = d_summary %>% arrange(age, sex) %>% filter(age != '0-19')
-  write_csv(d_summary, file = 'global_age_analysis_2021/data/India/covid_deaths_oct.csv')
+  write.csv(d_summary, file = 'global_age_analysis_2021/data/India/covid_deaths_oct.csv', row.names=FALSE)
 }
 
 # Iran
@@ -430,7 +430,7 @@ process_iran <- function(){
   
   rate = total / total_covid
   covid_data$deaths = round(covid_data$deaths * rate)
-  write_csv(covid_data, file = 'global_age_analysis_2021/data/Iran/iran_all_oct.csv')
+  write.csv(covid_data, file = 'global_age_analysis_2021/data/Iran/iran_all_oct.csv', row.names=FALSE)
 }
 
 # Italy
@@ -480,7 +480,7 @@ process_italy = function(){
     summarise("excess_deaths" = sum(excess_death))
   
   d_merge = left_join(data, excess_death, by = c('gender', 'age' = 'age'))
-  write_csv(file = paste0("global_age_analysis_2021/data/Italy/","italy_all_oct.csv"),d_merge)
+  write.csv(file = paste0("global_age_analysis_2021/data/Italy/","italy_all_oct.csv"),d_merge, row.names=FALSE)
   
   total_covid = sum(d_merge$covid_deaths)
   
@@ -493,7 +493,7 @@ process_italy = function(){
   d_merge$covid_deaths = round(d_merge$covid_deaths * rate)
   d_merge$deaths = ifelse(d_merge$covid_deaths > d_merge$excess_deaths, d_merge$covid_deaths, d_merge$excess_deaths)
   d_merge = d_merge %>% select(age, gender, covid_deaths, excess_deaths, deaths)
-  write_csv(d_merge, file = 'global_age_analysis_2021/data/Italy/italy_all_oct.csv')
+  write.csv(d_merge, file = 'global_age_analysis_2021/data/Italy/italy_all_oct.csv', row.names=FALSE)
 }
 
 # Kenya
@@ -509,7 +509,7 @@ process_kenya_covid19 = function(){
   
   data$deaths = round(data$rate * total)
   data = data %>% select(-rate)
-  write_csv(data, file = 'global_age_analysis_2021/data/Kenya/covid19_deaths_oct.csv')
+  write.csv(data, file = 'global_age_analysis_2021/data/Kenya/covid19_deaths_oct.csv', row.names=FALSE)
 }
 
 # Malawi
@@ -526,7 +526,7 @@ process_malawi = function(){
   data$deaths = round(data$rate * total)
   data = data %>% select(-rate)
   names(data) <- c("age", "gender", "deaths")
-  write_csv(data, file = 'global_age_analysis_2021/data/Malawi/covid19_deaths_oct.csv')
+  write.csv(data, file = 'global_age_analysis_2021/data/Malawi/covid19_deaths_oct.csv', row.names=FALSE)
 }
 
 # Mexico
@@ -558,7 +558,7 @@ process_mexico_covid19 = function(){
   
   data_combine$rate = data_combine$COVID19_deaths/sum(data_combine$COVID19_deaths)
   data_combine$deaths = round(data_combine$rate * total)
-  write_csv(data_combine %>% select(age, gender, deaths), file = 'global_age_analysis_2021/data/Mexico/covid19_deaths_oct.csv')
+  write.csv(data_combine %>% select(age, gender, deaths), file = 'global_age_analysis_2021/data/Mexico/covid19_deaths_oct.csv', row.names=FALSE)
 }
 
 # Nigeria
@@ -574,7 +574,7 @@ process_nigeria_covid19 = function(){
   d_merge$date = '2021-10-31'
   d_merge$rate = d_merge$deaths/sum(d_merge$deaths)
   d_merge$deaths = round(d_merge$rate * total)
-  write_csv(d_merge %>% select(-rate), file = 'global_age_analysis_2021/data/Nigeria/covid19_deaths_oct.csv')
+  write.csv(d_merge %>% select(-rate), file = 'global_age_analysis_2021/data/Nigeria/covid19_deaths_oct.csv', row.names=FALSE)
 }
 
 # Peru
@@ -591,7 +591,7 @@ process_peru_covid19 = function(){
   d_merge$deaths = round(d_merge$rate * total)
   setnames(d_merge, 'deaths', 'COVID19_deaths')
   
-  write_csv(d_merge %>% select(-rate), file = 'global_age_analysis_2021/data/Peru/covid19_deaths_oct.csv')
+  write.csv(d_merge %>% select(-rate), file = 'global_age_analysis_2021/data/Peru/covid19_deaths_oct.csv', row.names=FALSE)
 }
 
 # Philippines 
@@ -633,11 +633,11 @@ process_philippines = function(){
     d$deaths = round(d$rate * total)
     setnames(d, 'deaths', 'COVID19_deaths')
     
-    write_csv(d, file = 'global_age_analysis_2021/data/Philippines/covid19_deaths_oct.csv')
+    write.csv(d, file = 'global_age_analysis_2021/data/Philippines/covid19_deaths_oct.csv', row.names=FALSE)
   } else {
     
     setnames(d, 'deaths', 'COVID19_deaths')
-    write_csv(d, file = 'global_age_analysis_2021/data/Philippines/covid19_deaths_oct.csv')
+    write.csv(d, file = 'global_age_analysis_2021/data/Philippines/covid19_deaths_oct.csv', row.names=FALSE)
   }
 }
 
@@ -649,10 +649,10 @@ process_poland_covid19 = function(){
   data$country = 'Poland'
   data$date = '2020/10/09'
   data =  reshape2::melt(data, id.vars = c('country','date', 'age'), variable.name =  'gender', value.name = 'COVID19_deaths')
-  write_csv(data, file = 'global_age_analysis_2021/data/Poland/covid19_deaths_oct.csv')
+  write.csv(data, file = 'global_age_analysis_2021/data/Poland/covid19_deaths_oct.csv', row.names=FALSE)
   
   data$COVID19_deaths = as.numeric(data$COVID19_deaths)
-  write_csv(file = paste0("global_age_analysis_2021/data/Poland/","poland_deaths_oct.csv"),data)  
+  write.csv(file = paste0("global_age_analysis_2021/data/Poland/","poland_deaths_oct.csv"),data, row.names=FALSE)  
   total_covid = sum(data$COVID19_deaths)
   
   excess_death = read.csv('global_age_analysis_2021/data/euro_excess_oct.csv')
@@ -682,7 +682,7 @@ process_poland_covid19 = function(){
     summarise("excess_deaths" = sum(Poland))
   
   d_merge = left_join(data, excess_death, by = c('gender', 'age' = 'age'))
-  write_csv(file = paste0("global_age_analysis_2021/data/Poland/","poland_all_oct.csv"),d_merge)
+  write.csv(file = paste0("global_age_analysis_2021/data/Poland/","poland_all_oct.csv"),d_merge, row.names=FALSE)
   
   # Selects deaths from JHU
   deaths_data = read.csv("global_age_analysis_2021/data/10-31-2021.csv")
@@ -695,7 +695,7 @@ process_poland_covid19 = function(){
   
   d_merge$death = ifelse(d_merge$COVID19_deaths > d_merge$excess_deaths, d_merge$COVID19_deaths, d_merge$excess_deaths)
   d_merge = d_merge %>% select(age, gender, COVID19_deaths, excess_deaths, death)
-  write_csv(d_merge, file = 'global_age_analysis_2021/data/Poland/poland_all_oct.csv')
+  write.csv(d_merge, file = 'global_age_analysis_2021/data/Poland/poland_all_oct.csv', row.names=FALSE)
 
 }
 
@@ -733,14 +733,14 @@ process_russia_excess = function(){
   
   
   d_summary <- select(data_pop_sex, sex, age, weighted_excess_deaths)
-  write_csv(d_summary %>% arrange(age, sex), file = 'global_age_analysis_2021/data/Russia/all_excess_deaths_oct.csv')
+  write.csv(d_summary %>% arrange(age, sex), file = 'global_age_analysis_2021/data/Russia/all_excess_deaths_oct.csv', row.names=FALSE)
   d_summary$age = ifelse(d_summary$age %in% c('0-4', '5-9', '10-14'), '0-14',
                          ifelse(d_summary$age %in% c('45-49','50-54', '55-59', '60-64'), '45-64',
                                 ifelse(d_summary$age %in% c("65-69","70-74","75-79","80-84","85-89" ,"90-94", "95-99", "100+" ),'65+', '15-44')))
   d_summary = d_summary %>% group_by(age, sex) %>% 
     summarise(excess_deaths = sum(weighted_excess_deaths))
   d_summary  = d_summary %>% arrange(age, sex) %>% filter(age != '0-14')
-  write_csv(d_summary, file = 'global_age_analysis_2021/data/Russia/excess_deaths_oct.csv')
+  write.csv(d_summary, file = 'global_age_analysis_2021/data/Russia/excess_deaths_oct.csv', row.names=FALSE)
 }
 
 
@@ -786,7 +786,7 @@ process_spain = function(){
     summarise("excess_deaths" = sum(excess_death))
   
   d_merge = left_join(data, excess_death, by = c('gender', 'age' = 'age'))
-  write_csv(file = paste0("global_age_analysis_2021/data/Spain/","spain_all_oct.csv"),d_merge)
+  write.csv(file = paste0("global_age_analysis_2021/data/Spain/","spain_all_oct.csv"),d_merge, row.names=FALSE)
   
   total_covid = sum(d_merge$covid_deaths)
   
@@ -799,7 +799,7 @@ process_spain = function(){
   d_merge$covid_deaths = round(d_merge$covid_deaths * rate)
   d_merge$deaths = ifelse(d_merge$covid_deaths > d_merge$excess_deaths, d_merge$covid_deaths, d_merge$excess_deaths)
   d_merge = d_merge %>% select(age, gender, covid_deaths, excess_deaths, deaths)
-  write_csv(d_merge, file = 'global_age_analysis_2021/data/Spain/spain_all_oct.csv')
+  write.csv(d_merge, file = 'global_age_analysis_2021/data/Spain/spain_all_oct.csv', row.names=FALSE)
 }
 
 # South Africa
@@ -818,7 +818,7 @@ process_sa_covid19 = function(){
   ####  add 
   d_merge$age = as.character(d_merge$age)
   d_merge$age = ifelse(d_merge$age == 'Oct-19', '10-19', d_merge$age)
-  write_csv(d_merge %>% select(-rate), file = 'global_age_analysis_2021/data/SouthAfrica/covid19_deaths_oct.csv')
+  write.csv(d_merge %>% select(-rate), file = 'global_age_analysis_2021/data/SouthAfrica/covid19_deaths_oct.csv', row.names=FALSE)
 }
 
 # USA
@@ -864,7 +864,7 @@ process_usa = function(){
   dataset[,excess_deaths := value- avg_death]
   dataset = dataset %>% select(week, year, gender, age, excess_deaths) %>%
     arrange(week, age, desc(gender))
-  write_csv(file = ("global_age_analysis_2021/data/USA/excess_deaths_oct.csv"),dataset)
+  write.csv(file = ("global_age_analysis_2021/data/USA/excess_deaths_oct.csv"),dataset, row.names=FALSE)
   excess_death = copy(dataset)
   excess_death$age = ifelse(excess_death$age %in% c('20-24', '15-19'), '15-24',
                             ifelse(excess_death$age %in% c('30-34', '25-29'), '25-34',
@@ -885,7 +885,7 @@ process_usa = function(){
     group_by(age, gender) %>%
     summarise(covid_deaths = sum(covid_deaths))
   d_merge = left_join(data_covid, excess_death, by = c('gender', 'age' = 'age'))
-  write_csv(file = paste0("global_age_analysis_2021/data/USA/","usa_all_oct.csv"),d_merge)
+  write.csv(file = paste0("global_age_analysis_2021/data/USA/","usa_all_oct.csv"),d_merge, row.names=FALSE)
   
   total_covid = sum(d_merge$covid_deaths)
   
@@ -899,7 +899,7 @@ process_usa = function(){
   d_merge$deaths = ifelse(d_merge$covid_deaths > d_merge$excess_deaths, d_merge$covid_deaths, d_merge$excess_deaths)
   #d_merge$deaths = d_merge$excess_deaths
   d_merge = d_merge %>% select(age, gender, excess_deaths,covid_deaths, deaths)
-  write_csv(d_merge, file = 'global_age_analysis_2021/data/USA/usa_all_oct.csv')
+  write.csv(d_merge, file = 'global_age_analysis_2021/data/USA/usa_all_oct.csv', row.names=FALSE)
 }
 
 # Zimbabwe
@@ -917,6 +917,6 @@ process_zimbabwe = function(){
   data$deaths = round(data$rate * total / 100)
   data = data %>% select(-rate)
   names(data) <- c("age", "gender", "deaths")
-  write_csv(data, file = 'global_age_analysis_2021/data/Zimbabwe/covid19_deaths_oct.csv')
+  write.csv(data, file = 'global_age_analysis_2021/data/Zimbabwe/covid19_deaths_oct.csv', row.names=FALSE)
 }
 

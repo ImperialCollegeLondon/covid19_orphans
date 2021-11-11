@@ -35,9 +35,9 @@ process_number_children_brazil <- function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Brazil/brazil_fertility_m_all.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Brazil/brazil_fertility_m_all.csv'), row.names=FALSE)
   } else {
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Brazil/brazil_fertility_m_all_un.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Brazil/brazil_fertility_m_all_un.csv'), row.names=FALSE)
   }
   
   process_children_father_80_plus("Brazil", data_f, uncertainty = uncertainty)
@@ -73,9 +73,9 @@ process_number_children_brazil <- function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Brazil/brazil_fertility_f.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Brazil/brazil_fertility_f.csv'), row.names=FALSE)
   } else {
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Brazil/brazil_fertility_f_un.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Brazil/brazil_fertility_f_un.csv'), row.names=FALSE)
   }
  
   is_child_mortality_needed = 0
@@ -120,9 +120,9 @@ process_number_children_colombia <- function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Colombia/colombia_fertility_m_all.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Colombia/colombia_fertility_m_all.csv'), row.names=FALSE)
   } else {
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Colombia/colombia_fertility_m_all_un.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Colombia/colombia_fertility_m_all_un.csv'), row.names=FALSE)
   }
   
   process_children_father_80_plus("Colombia", data_f, uncertainty = uncertainty)
@@ -157,9 +157,9 @@ process_number_children_colombia <- function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Colombia/colombia_fertility_f.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Colombia/colombia_fertility_f.csv'), row.names=FALSE)
   } else {
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Colombia/colombia_fertility_f_un.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Colombia/colombia_fertility_f_un.csv'), row.names=FALSE)
   }
   
   is_child_mortality_needed = 0
@@ -353,9 +353,9 @@ process_number_children_india <- function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/India/india_fertility_m_all.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/India/india_fertility_m_all.csv'), row.names=FALSE)
   } else {
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/India/india_fertility_m_all_un.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/India/india_fertility_m_all_un.csv'), row.names=FALSE)
   }
   
   process_children_father_80_plus("India", data_f, uncertainty = uncertainty)
@@ -391,9 +391,9 @@ process_number_children_india <- function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/India/india_fertility_f.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/India/india_fertility_f.csv'), row.names=FALSE)
   } else {
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/India/india_fertility_f_un.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/India/india_fertility_f_un.csv'), row.names=FALSE)
   }
 
   process_children_all("India", is_child_mortality_needed, data_f, uncertainty = uncertainty)
@@ -528,9 +528,9 @@ process_number_children_kenya <- function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Kenya/kenya_fertility_m_all.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Kenya/kenya_fertility_m_all.csv'), row.names=FALSE)
   } else {
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Kenya/kenya_fertility_m_all_un.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Kenya/kenya_fertility_m_all_un.csv'), row.names=FALSE)
   }
   
   process_children_father_80_plus("Kenya", data_f, uncertainty = uncertainty)
@@ -566,9 +566,9 @@ process_number_children_kenya <- function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Kenya/kenya_fertility_f.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Kenya/kenya_fertility_f.csv'), row.names=FALSE)
   } else {
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Kenya/kenya_fertility_f_un.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Kenya/kenya_fertility_f_un.csv'), row.names=FALSE)
   }
   
   is_child_mortality_needed = 0
@@ -611,9 +611,9 @@ process_number_children_malawi <- function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Malawi/malawi_fertility_m_all.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Malawi/malawi_fertility_m_all.csv'), row.names=FALSE)
   } else {
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Malawi/malawi_fertility_m_all_un.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Malawi/malawi_fertility_m_all_un.csv'), row.names=FALSE)
   }
   
   process_children_father_80_plus("Malawi", data_f, uncertainty = uncertainty)
@@ -647,9 +647,9 @@ process_number_children_malawi <- function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Malawi/malawi_fertility_f.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Malawi/malawi_fertility_f.csv'), row.names=FALSE)
   } else {
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Malawi/malawi_fertility_f_un.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Malawi/malawi_fertility_f_un.csv'), row.names=FALSE)
   }
   
   is_child_mortality_needed = 0
@@ -737,9 +737,9 @@ process_number_children_nigeria <- function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Nigeria/nigeria_fertility_m_all.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Nigeria/nigeria_fertility_m_all.csv'), row.names=FALSE)
   } else {
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Nigeria/nigeria_fertility_m_all_un.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Nigeria/nigeria_fertility_m_all_un.csv'), row.names=FALSE)
   }
   
   process_children_father_80_plus("Nigeria", data_f, uncertainty = uncertainty)
@@ -771,9 +771,9 @@ process_number_children_nigeria <- function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Nigeria/nigeria_fertility_f.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Nigeria/nigeria_fertility_f.csv'), row.names=FALSE)
   } else {
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Nigeria/nigeria_fertility_f_un.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Nigeria/nigeria_fertility_f_un.csv'), row.names=FALSE)
   }
   is_child_mortality_needed = 0
   process_children_all("Nigeria", is_child_mortality_needed, data_f, uncertainty = uncertainty)
@@ -817,9 +817,9 @@ process_number_children_peru <- function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Peru/peru_fertility_m_all.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Peru/peru_fertility_m_all.csv'), row.names=FALSE)
   } else {
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Peru/peru_fertility_m_all_un.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Peru/peru_fertility_m_all_un.csv'), row.names=FALSE)
   }
   process_children_father_80_plus("Peru", data_f, uncertainty = uncertainty)
   is_child_mortality_needed = 0
@@ -855,9 +855,9 @@ process_number_children_peru <- function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Peru/peru_fertility_f.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Peru/peru_fertility_f.csv'), row.names=FALSE)
   } else {
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Peru/peru_fertility_f_un.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Peru/peru_fertility_f_un.csv'), row.names=FALSE)
   }
   is_child_mortality_needed = 0
   process_children_all("Peru", is_child_mortality_needed, data_f, uncertainty = uncertainty)
@@ -1067,9 +1067,9 @@ process_number_children_south_africa <- function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/SouthAfrica/southafrica_fertility_m_all.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/SouthAfrica/southafrica_fertility_m_all.csv'), row.names=FALSE)
   } else {
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/SouthAfrica/southafrica_fertility_m_all_un.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/SouthAfrica/southafrica_fertility_m_all_un.csv'), row.names=FALSE)
   }
   process_children_father_80_plus('SouthAfrica', data_f, uncertainty = uncertainty)
   is_child_mortality_needed = 0
@@ -1102,9 +1102,9 @@ process_number_children_south_africa <- function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/SouthAfrica/southafrica_fertility_f.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/SouthAfrica/southafrica_fertility_f.csv'), row.names=FALSE)
   } else {
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/SouthAfrica/southafrica_fertility_f_un.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/SouthAfrica/southafrica_fertility_f_un.csv'), row.names=FALSE)
   }
   is_child_mortality_needed = 0
   process_children_all("SouthAfrica", is_child_mortality_needed, data_f, uncertainty = uncertainty)
@@ -1192,9 +1192,9 @@ process_number_children_zimbabwe<- function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Zimbabwe/zimbabwe_fertility_m_all.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Zimbabwe/zimbabwe_fertility_m_all.csv'), row.names=FALSE)
   } else {
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Zimbabwe/zimbabwe_fertility_m_all_un.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Zimbabwe/zimbabwe_fertility_m_all_un.csv'), row.names=FALSE)
   }
   process_children_father_80_plus("Zimbabwe", data_f, uncertainty = uncertainty)
   is_child_mortality_needed = 0
@@ -1227,9 +1227,9 @@ process_number_children_zimbabwe<- function(uncertainty = FALSE){
   }
   
   if (uncertainty == FALSE){
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Zimbabwe/zimbabwe_fertility_f.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Zimbabwe/zimbabwe_fertility_f.csv'), row.names=FALSE)
   } else {
-    write_csv(data_f, file = paste0('global_age_analysis_2021/data/Zimbabwe/zimbabwe_fertility_f_un.csv'))
+    write.csv(data_f, file = paste0('global_age_analysis_2021/data/Zimbabwe/zimbabwe_fertility_f_un.csv'), row.names=FALSE)
   }
   is_child_mortality_needed = 0
   process_children_all("Zimbabwe", is_child_mortality_needed, data_f, uncertainty = uncertainty)

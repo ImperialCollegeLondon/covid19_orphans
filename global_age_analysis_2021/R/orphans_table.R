@@ -51,7 +51,7 @@ df$country = countries
 # Table 1
 tab_1 <- select(df, "mother", "father", "both", "orphans", "sg_grandmother", "sg_grandfather", 
                 "sg_both", "primary_loss")
-write.csv(tab_1, file = "orphans_tab1.csv")
+write.csv(tab_1, file = "orphans_tab1.csv", row.names=FALSE)
 
 # Table 2
 child_pop <- read.csv("data/numbers_of_children.csv", stringsAsFactors = FALSE)
@@ -66,4 +66,4 @@ df$all_per_thousand = df$all/(df$total/1000)
 tab_2 <- select(df, country, orphans, orphans_per_thousand, primary_loss, 
                 primary_per_thousand, mg_grandmother, mg_grandfather, mg_both, 
                 all, all_per_thousand)
-write.csv(tab_2, file = "orphans_tab2.csv")
+write.csv(tab_2, file = "orphans_tab2.csv", row.names=FALSE)

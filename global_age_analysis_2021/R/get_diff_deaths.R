@@ -19,7 +19,7 @@ get_diff_deaths <- function(file_a, file_b, file_c, country = ""){
   
   deaths$deaths = deaths$deaths / mult
   
-  write.csv(deaths, file_c)
+  write.csv(deaths, file_c, row.names=FALSE)
 }
 
 get_diff_COVID19_deaths <- function(file_a, file_b, file_c, country = ""){
@@ -44,7 +44,7 @@ get_diff_COVID19_deaths <- function(file_a, file_b, file_c, country = ""){
   
   deaths$COVID19_deaths =  deaths$COVID19_deaths / mult
   
-  write.csv(deaths, file_c)
+  write.csv(deaths, file_c, row.names=FALSE)
 }
 
 get_diff_deaths_colombia <- function(file_a, file_b, file_c, country = ""){
@@ -74,7 +74,7 @@ get_diff_deaths_colombia <- function(file_a, file_b, file_c, country = ""){
   deaths$deaths <- deaths$deaths.y - deaths$deaths.x
   deaths$deaths = deaths$deaths / mult
   
-  write.csv(deaths, file_c)
+  write.csv(deaths, file_c, row.names=FALSE)
 }
 
 get_diff_deaths_india <- function(file_a, file_b, file_c, country = ""){
@@ -92,7 +92,7 @@ get_diff_deaths_india <- function(file_a, file_b, file_c, country = ""){
   deaths <- left_join(deaths_a, deaths_b, by = c("age", "sex"))
   deaths$deaths <- deaths$deaths.y - deaths$deaths.x
   deaths$deaths <- deaths$deaths / ind
-  write.csv(deaths, file_c)
+  write.csv(deaths, file_c, row.names=FALSE)
 }
 
 get_diff_death <- function(file_a, file_b, file_c, country = ""){
@@ -116,5 +116,5 @@ get_diff_death <- function(file_a, file_b, file_c, country = ""){
   deaths$death <- deaths$death.y - deaths$death.x
   deaths$death = deaths$death / mult
   
-  write.csv(deaths, file_c)
+  write.csv(deaths, file_c, row.names=FALSE)
 }

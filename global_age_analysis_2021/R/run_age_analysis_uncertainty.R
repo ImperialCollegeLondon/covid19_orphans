@@ -8,12 +8,14 @@
 # 4) sample from death data
 # 5) Calculate orphans.
 
+data.table::setDTthreads(1)
+
 source("global_age_analysis_2021/R/sample_deaths.R")
 source("global_age_analysis_2021/R/number_orphans_age.R")
 source("global_age_analysis_2021/R/process_number_children.R")
 source("global_age_analysis_2021/R/get_diff_deaths.R")
 
-n = 5
+n = 2
 
 run_age_analysis <- function(month = "_oct"){
   if (month != "_diff"){
@@ -845,13 +847,13 @@ run_age_analysis <- function(month = "_oct"){
   saveRDS(percentages, paste0("global_age_analysis_2021/data/age_outputs/age_data_scaled", month, ".RDS"))
   saveRDS(samples, paste0("global_age_analysis_2021/data/age_outputs/samples_age_data_scaled", month, ".RDS"))
   
-  write.csv(percentages, file = paste0("global_age_analysis_2021/data/age_outputs/age_data_scaled", month, ".csv"))
-  write.csv(samples, file = paste0("global_age_analysis_2021/data/age_outputs/samples_age_data_scaled", month, ".csv"))
+  write.csv(percentages, file = paste0("global_age_analysis_2021/data/age_outputs/age_data_scaled", month, ".csv"), row.names=FALSE)
+  write.csv(samples, file = paste0("global_age_analysis_2021/data/age_outputs/samples_age_data_scaled", month, ".csv"), row.names=FALSE)
   
 }
 
 run_age_analysis(month = "")
-#run_age_analysis(month = "_oct")
-#run_age_analysis(month = "_diff")
+run_age_analysis(month = "_oct")
+run_age_analysis(month = "_diff")
 
 
