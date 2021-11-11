@@ -603,7 +603,7 @@ process_children_all = function(country, is_child_mortality_needed, data_f, unce
   children = as.data.frame(children)
   names(children) = paste0(seq(0:17)-1, ' years')
   if (uncertainty == FALSE){
-    write_csv(path = paste0('global_age_analysis_2021/data/', country, '/child_raw_f.csv'), children)
+    write_csv(file = paste0('global_age_analysis_2021/data/', country, '/child_raw_f.csv'), children)
   }
  
   
@@ -1403,13 +1403,13 @@ process_children_father_england_wales = function(data_f, uncertainty = FALSE){
   names(children) = paste0(seq(0:17)-1, ' years')
   
   if (uncertainty == FALSE){
-    write_csv(path = paste0('global_age_analysis_2021/data/UK/child_raw_m.csv'), children)
+    write_csv(file = paste0('global_age_analysis_2021/data/UK/child_raw_m.csv'), children)
     plot_c = as.data.frame(as.numeric(as.character(unlist(children))))
     plot_c$father_age = rep(1:100,18)
     plot_c$child_age =sort(rep(seq(18)-1, 100))
     setnames(plot_c, 1, 'prob')
   } else {
-    write_csv(path = paste0('global_age_analysis_2021/data/UK/child_raw_m_un.csv'), children)
+    write_csv(file = paste0('global_age_analysis_2021/data/UK/child_raw_m_un.csv'), children)
   }
 
 }
@@ -2264,13 +2264,13 @@ process_children_father_80_plus = function(country, data_f, uncertainty = FALSE)
   #plot(apply(children, 1, sum), xlab = "Age of father", ylab = "Number of children")
   
   if (uncertainty == FALSE){
-    write_csv(path = paste0('global_age_analysis_2021/data/', country, '/child_raw_m.csv'), children)
+    write_csv(file = paste0('global_age_analysis_2021/data/', country, '/child_raw_m.csv'), children)
     plot_c = as.data.frame(as.numeric(as.character(unlist(children))))
     plot_c$father_age = rep(1:100,18)
     plot_c$child_age =sort(rep(seq(18)-1, 100))
     setnames(plot_c, 1, 'prob')
   } else {
-    write_csv(path = paste0('global_age_analysis_2021/data/', country, '/child_raw_m_un.csv'), children)
+    write_csv(file = paste0('global_age_analysis_2021/data/', country, '/child_raw_m_un.csv'), children)
   }
 
 
@@ -3023,13 +3023,13 @@ process_children_father_55_plus = function(country, data_f, uncertainty = FALSE)
   #plot(apply(children, 1, sum), xlab = "Age of father", ylab = "Number of children")
   
   if (uncertainty == FALSE){
-    write_csv(path = paste0('global_age_analysis_2021/data/', country, '/child_raw_m.csv'), children)
+    write_csv(file = paste0('global_age_analysis_2021/data/', country, '/child_raw_m.csv'), children)
     plot_c = as.data.frame(as.numeric(as.character(unlist(children))))
     plot_c$father_age = rep(1:100,18)
     plot_c$child_age =sort(rep(seq(18)-1, 100))
     setnames(plot_c, 1, 'prob')
   } else {
-    write_csv(path = paste0('global_age_analysis_2021/data/', country, '/child_raw_m_un.csv'), children)
+    write_csv(file = paste0('global_age_analysis_2021/data/', country, '/child_raw_m_un.csv'), children)
   }
 
   
@@ -3819,7 +3819,7 @@ process_children_father_60_plus = function(country, data_f){
   
   plot(apply(children, 1, sum), xlab = "Age of father", ylab = "Number of children")
   
-  write_csv(path = paste0('global_age_analysis_2021/data/Russia/child_raw_m.csv'), children)
+  write_csv(file = paste0('global_age_analysis_2021/data/Russia/child_raw_m.csv'), children)
   plot_c = as.data.frame(as.numeric(as.character(unlist(children))))
   plot_c$father_age = rep(1:100,18)
   plot_c$child_age =sort(rep(seq(18)-1, 100))
@@ -4579,13 +4579,13 @@ process_children_father_50_plus = function(country, data_f, uncertainty){
   #plot(apply(children, 1, sum), xlab = "Age of father", ylab = "Number of children")
   
   if (uncertainty == FALSE){
-    write_csv(path = paste0('global_age_analysis_2021/data/', country, '/child_raw_m.csv'), children)
+    write_csv(file = paste0('global_age_analysis_2021/data/', country, '/child_raw_m.csv'), children)
     plot_c = as.data.frame(as.numeric(as.character(unlist(children))))
     plot_c$father_age = rep(1:100,18)
     plot_c$child_age =sort(rep(seq(18)-1, 100))
     setnames(plot_c, 1, 'prob')
   } else {
-    write_csv(path = paste0('global_age_analysis_2021/data/', country, '/child_raw_m_un.csv'), children) 
+    write_csv(file = paste0('global_age_analysis_2021/data/', country, '/child_raw_m_un.csv'), children) 
   }
   
 
@@ -5401,13 +5401,13 @@ process_children_father_65_plus = function(country, data_f, uncertainty = FALSE)
   #plot(apply(children, 1, sum), xlab = "Age of father", ylab = "Number of children")
   
   if (uncertainty == FALSE){
-    write_csv(path = paste0('global_age_analysis_2021/data/', country, '/child_raw_m.csv'), children)
+    write_csv(file = paste0('global_age_analysis_2021/data/', country, '/child_raw_m.csv'), children)
     plot_c = as.data.frame(as.numeric(as.character(unlist(children))))
     plot_c$father_age = rep(1:100,18)
     plot_c$child_age =sort(rep(seq(18)-1, 100))
     setnames(plot_c, 1, 'prob')
   } else {
-    write_csv(path = paste0('global_age_analysis_2021/data/', country, '/child_raw_m_un.csv'), children)
+    write_csv(file = paste0('global_age_analysis_2021/data/', country, '/child_raw_m_un.csv'), children)
   }
 
   

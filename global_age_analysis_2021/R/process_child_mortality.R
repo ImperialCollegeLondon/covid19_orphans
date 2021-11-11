@@ -138,7 +138,7 @@ add_child_mortality = function(is_child_mortality_needed, country, uncertainty =
 #   d_merge$mortality = as.numeric(d_merge$value)/as.numeric(d_merge$pop)
 #   d_merge = d_merge %>% select(country, year, age, mortality)
 #   d_merge$country[which(d_merge$country == "Iran (Islamic Republic of)")] = 'Iran'
-#   write_csv(d_merge, path = 'global_age_analysis_2021/data/children/mortality_rate_all.csv')
+#   write_csv(d_merge, file = 'global_age_analysis_2021/data/children/mortality_rate_all.csv')
 # }
 
 # Multiple countries
@@ -176,7 +176,7 @@ process_child_mortality = function(country, countries){
   child_m_matrix = as.data.frame(child_m_matrix)
   names(child_m_matrix) = paste0(seq(0:17)-1, 'years')
 
-  write_csv(path = paste0('global_age_analysis_2021/data/', country, '/child_mortality_rate.csv'), child_m_matrix)
+  write_csv(file = paste0('global_age_analysis_2021/data/', country, '/child_mortality_rate.csv'), child_m_matrix)
 }  
 
 # England and Wales
@@ -235,7 +235,7 @@ process_infant_mortality_england_wales = function(){
   data$mortality = as.numeric(as.character(data$mortality))/1e3 * 1e5
   data = rbind(as.data.table(data) %>% filter(year >= 2002) %>% select(year, age, mortality), child_m)
   data$mortality = as.numeric(data$mortality)
-  write_csv(data, path = 'global_age_analysis_2021/data/UK/mortality_rate_all_england_wales.csv')
+  write_csv(data, file = 'global_age_analysis_2021/data/UK/mortality_rate_all_england_wales.csv')
 }
 
 # Makes child mortality matrix for E and W
@@ -276,7 +276,7 @@ process_child_mortality_england_wales = function(){
   
   child_m_matrix = as.data.frame(child_m_matrix)
   names(child_m_matrix) = paste0(seq(0:17)-1, 'years')
-  write_csv(path = 'global_age_analysis_2021/data/UK/child_mortality_rate.csv', child_m_matrix)
+  write_csv(file = 'global_age_analysis_2021/data/UK/child_mortality_rate.csv', child_m_matrix)
 }  
 
 
@@ -303,7 +303,7 @@ process_child_mortality_russia = function(){
   data = rbind(data, data_19)
   data = data %>% arrange(year, age)
   data$mortality = data$mortality/1000
-  write_csv(data,path = paste0('global_age_analysis_2021/data/children/mortality_rate_all_russain_federation.csv'))
+  write_csv(data,file = paste0('global_age_analysis_2021/data/children/mortality_rate_all_russain_federation.csv'))
   
 }
 
