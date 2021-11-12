@@ -1,4 +1,5 @@
 # Complete age analysis
+data.table::setDTthreads(1)
 
 # # Updates global numbers through 30th April with new india coefficient
 source("TheLancet_global_minimum_estimates_2021/extract_study_data.R")
