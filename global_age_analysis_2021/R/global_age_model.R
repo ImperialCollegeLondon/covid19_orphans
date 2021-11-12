@@ -141,8 +141,8 @@ response_wide$response <- with(response_wide,
                                      `[5-10)_Male`, `[10-18)_Female`, `[10-18)_Male`))
 formula = response | trials(N) ~ parents + old_parents + grandparents + 
   pre_school + primary_school + secondary_school + gdp
-#mod = joint_fit(all_data = data, data = response_wide, formula, plot = TRUE, loo = FALSE)
-#saveRDS(mod, "global_age_analysis_2021/data/age_outputs/global_age_fit.RDS")
+mod = joint_fit(all_data = data, data = response_wide, formula, plot = TRUE, loo = FALSE)
+saveRDS(mod, "global_age_analysis_2021/data/age_outputs/global_age_fit.RDS")
 mod = readRDS("global_age_analysis_2021/data/age_outputs/global_age_fit.RDS")
 
 # Out of sample prediction
@@ -393,7 +393,7 @@ tab_wide <- select(tab_wide, region, "0_4_female", "0_4_male", "5_9_female",
 tab_wide_global <- tab_wide[tab_wide$region == "Global",]
 tab_wide <- tab_wide[tab_wide$region != "Global",]
 tab_wide <- rbind(tab_wide, tab_wide_global)
-write_csv(tab_wide, "global_age_analysis_2021/data/age_outputs/global_age_percentages.csv", row.names=FALSE)
+write.csv(tab_wide, "global_age_analysis_2021/data/age_outputs/global_age_percentages.csv", row.names=FALSE)
 
 tab<-xtable(tab_wide)
 print(tab, include.rownames=FALSE)
