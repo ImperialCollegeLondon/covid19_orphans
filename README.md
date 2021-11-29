@@ -32,21 +32,6 @@ https://data.cdc.gov/NCHS/AH-Quarterly-Excess-Deaths-by-State-Sex-Age-and-Ra/jqg
 Save the data with the file path name:
 data/USA/AH_Quarterly_Excess_Deaths_by_State__Sex__Age__and_Race_Q2_2021.csv
 
-The following R packages are necessary for running analysis and producing figures:
-- readxl
-- data.table
-- tidyverse
-- rjson
-- reshape2
-- lubridate
-- repr
-- ggpubr
-- scales
-- usmap
-- RColorBrewer
-- ggsci
-- geofacet
-
 ## R packages
 The following R packages are necessary:
 - readxl
