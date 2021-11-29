@@ -393,7 +393,7 @@ tab_wide <- select(tab_wide, region, "0_4_female", "0_4_male", "5_9_female",
 tab_wide_global <- tab_wide[tab_wide$region == "Global",]
 tab_wide <- tab_wide[tab_wide$region != "Global",]
 tab_wide <- rbind(tab_wide, tab_wide_global)
-write_csv(tab_wide, "global_age_analysis_2021/data/age_outputs/global_age_percentages.csv", row.names=FALSE)
+write.csv(tab_wide, "global_age_analysis_2021/data/age_outputs/global_age_percentages.csv", row.names=FALSE)
 
 tab<-xtable(tab_wide)
 print(tab, include.rownames=FALSE)
