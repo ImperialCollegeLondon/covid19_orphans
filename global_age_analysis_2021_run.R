@@ -14,7 +14,7 @@ source("global_age_analysis_2021/R/run_global_extrapolation_europe.R")
 source("global_age_analysis_2021/R/format_update_results.R")
 format_table("oct")
 combine_table()
-#
+
 # # Runs age analysis
 source("global_age_analysis_2021/R/run_age_analysis_uncertainty.R")
 
