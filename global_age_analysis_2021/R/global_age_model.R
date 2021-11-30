@@ -13,7 +13,7 @@ library(ggpubr)
 source("global_age_analysis_2021/R/brms_joint_fit.R")
 source("global_age_analysis_2021/R/utils.R")
 
-set.seed = 1
+set.seed(1)
 
 month = "_oct"
 data = readRDS(paste0("global_age_analysis_2021/data/age_outputs/age_data_scaled", month, ".RDS"))
@@ -149,7 +149,6 @@ mod = readRDS("global_age_analysis_2021/data/age_outputs/global_age_fit.RDS")
 newdat = all_data
 newdat$N = 1
 
-set.seed(3)
 prediction <- as.data.frame(predict(mod, newdata = newdat)[, 1, ])
 prediction$country = all_data$country
 
