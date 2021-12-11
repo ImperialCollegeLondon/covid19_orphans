@@ -70,16 +70,20 @@ for (i in 1:length(dates)){
   c_data[,dates[i]][is.na(c_data[,dates[i]])] <- 0
   names(c_data) <- c("country", "tfr", "tfr_l", "tfr_u", "sd",  "who_region", "europe", "total_deaths")
   ps_children <- calculate_all_orphans_time_series(c_data, dates[i])
-
+  
   ps_children_all <- rbind(ps_children_all, ps_children)
 }
 
-children <- ps_children_all %>% select(country, date, central) %>%
-  group_by(date) %>% summarise(total = sum(central))
+children <- ps_children_all %>% select(country, date, central, lower, upper) %>%
+  group_by(date) %>% summarise(total = sum(central),
+                               lower = sum(lower),
+                               upper = sum(upper))
 
 ps_children_all$region = ifelse(ps_children_all$region == "Eastern European", "European", ps_children_all$region)
-children_region <- ps_children_all %>% select(country, region, date, central) %>%
-  group_by(date, region) %>% summarise(total = sum(central))
+children_region <- ps_children_all %>% select(country, region, date, central, lower, upper) %>%
+  group_by(date, region) %>% summarise(total = sum(central),
+                                       lower = sum(lower),
+                                       upper = sum(upper))
 
 deaths_jhu = d2 %>% select(-Country.Region, -X) %>% summarise_all(sum) 
 deaths_excess = deaths_country %>% select(-Country.Region, -X) %>% summarise_all(sum) 
@@ -111,6 +115,9 @@ dats <- as.Date(dats, format = "%m.%d.%y")
 
 df <- data.frame(date = as.Date(dats), 
                  orphans = children$total)
+df2 <- data.frame(date = as.Date(dats), 
+                  lower = children$lower,
+                  upper = children$upper)
 df <- df[order(df$date),]
 df$covid = unlist(deaths_jhu)
 df$excess = unlist(deaths_excess)
@@ -120,11 +127,14 @@ children_region$date <- str_remove(children_region$date,  "X")
 children_region$date <- as.Date(children_region$date, format = "%m.%d.%y")
 
 df_region <- children_region
-names(df_region)  <- c("date", "region", "orphans")
+names(df_region)  <- c("date", "region", "orphans", "lower", "upper")
 df_region <- df_region[order(df_region$date),]
 
 df_region = left_join(df_region, deaths_jhu_region_long,  by = c("region"= "who_region", "date"))
 df_region = left_join(df_region, deaths_excess_region_long,  by = c("region"= "who_region", "date"))
+
+df_region_2 = select(df_region, date, region, lower, upper)
+df_region = select(df_region, date, region, orphans, covid, excess)
 
 saveRDS(df,file = "global_age_analysis_2021/data/age_outputs/orphanhoodtime_series.RDS")
 df = readRDS(file = "global_age_analysis_2021/data/age_outputs/orphanhoodtime_series.RDS")
@@ -138,6 +148,7 @@ df_long$key = factor(df_long$key, levels = c("excess", "covid", "orphans"),
 p_global <- ggplot(df_long %>% filter(date >= "2020-03-01" & key != "Excess deaths" & date <= "2021-10-31")) +
   geom_line(aes(date, value/1e6, col = key)) + 
   geom_vline(xintercept = as.Date("2021-04-30"), linetype = "dashed") + 
+  geom_ribbon(data = df2, aes(x = date, ymin= lower/1e6, ymax = upper/1e6), fill = "deepskyblue2", alpha = 0.25) + 
   theme_bw() + 
   scale_y_continuous(expand  = expansion(0,0), limits = c(0, 6.0))  + 
   annotate("text", label = "COVID-19 deaths \n(millions)", y = 4.1, x = as.Date("2021-10-15"), size = 3, colour = "black", hjust=1) +
@@ -146,23 +157,26 @@ p_global <- ggplot(df_long %>% filter(date >= "2020-03-01" & key != "Excess deat
   theme(legend.position = "bottom", axis.text.x = element_text(angle = 45, hjust=1)) +  
   xlab("")  + ylab("Millions of people") + 
   scale_colour_manual("", values  = c("darkorchid4", "deepskyblue2")) 
+p_global
 
 df_region_long <- gather(df_region, key = key, value = value, -date, -region)
 df_region_long$key = factor(df_region_long$key, levels = c("excess", "covid", "orphans"),
-                     labels = c("Excess deaths", "COVID-19 deaths", "Orphanhood &/or caregiver loss"))
+                            labels = c("Excess deaths", "COVID-19 deaths", "Orphanhood &/or caregiver loss"))
 df_region_long <- df_region_long[order(df_region_long$date),]
 p_region <- ggplot(df_region_long %>% filter(date >= "2020-03-01" & key != "Excess deaths" & date <= "2021-10-31")) +
   geom_line(aes(date, value/1e6, col = key)) + 
   geom_vline(xintercept = as.Date("2021-04-30"), linetype = "dashed") + 
+  geom_ribbon(data = df_region_2, aes(x = date, ymin= lower/1e6, ymax = upper/1e6), fill = "deepskyblue2", alpha = 0.25) + 
   theme_bw() + 
   scale_x_date(expand  = expansion(0,0), date_breaks = "2 month", labels = date_format("%b-%Y")) +
   theme(legend.position = "bottom", axis.text.x = element_text(angle = 45, hjust=1)) +  
   xlab("")  + ylab("Millions of people") + 
   facet_wrap(~region, scales = "free") + 
   scale_colour_manual("", values  = c("darkorchid4", "deepskyblue2"))
+p_region
 
 p <- ggarrange(p_global, p_region, ncol = 1, labels = "AUTO", common.legend = TRUE, legend= "bottom")
-ggsave("global_age_analysis_2021/figures/time_series_line_no_excess.pdf", p, width =  12,  height = 12)
+ggsave("global_age_analysis_2021/figures/fig_1_time_series_line_no_excess.pdf", p, width =  12,  height = 12)
 
 
 p_global_excess <- ggplot(df_long %>% filter(date >= "2020-03-01" & date <= "2021-10-31")) +
@@ -189,7 +203,7 @@ p_region_excess <- ggplot(df_region_long %>% filter(date >= "2020-03-01" & date 
   scale_colour_manual("", values  = c("darkorchid3", "darkorchid4", "deepskyblue2"))
 
 p_excess <- ggarrange(p_global_excess, p_region_excess, ncol = 1, labels = "AUTO", common.legend = TRUE, legend= "bottom")
-ggsave("global_age_analysis_2021/figures/fig_1_time_series_line_excess.pdf", p_excess, width =  12,  height = 12)
+ggsave("global_age_analysis_2021/figures/time_series_line_excess.pdf", p_excess, width =  12,  height = 12)
 
 
 study_period = df_region_long[which(df_region_long$date == as.Date("2021-04-30") & df_region_long$key == "Orphanhood &/or caregiver loss"),]
@@ -199,4 +213,4 @@ difference_data = left_join(study_period, whole_period, by = c("region", "key"))
 difference_data$diff = difference_data$value.y - difference_data$value.x
 difference_data$percentage = difference_data$diff /difference_data$value.x * 100
 print(difference_data)
-  
+
