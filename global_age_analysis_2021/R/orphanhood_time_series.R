@@ -214,3 +214,7 @@ difference_data$diff = difference_data$value.y - difference_data$value.x
 difference_data$percentage = difference_data$diff /difference_data$value.x * 100
 print(difference_data)
 
+whole_period$value[whole_period$region == "South-East Asia"]/sum(whole_period$value) * 100
+
+
+
