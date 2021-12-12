@@ -15,7 +15,7 @@ source("global_age_analysis_2021/R/number_orphans_age.R")
 source("global_age_analysis_2021/R/process_number_children.R")
 source("global_age_analysis_2021/R/get_diff_deaths.R")
 
-n = 1000
+n = 2
 
 run_age_analysis <- function(month = "_oct"){
   if (month != "_diff"){
@@ -627,6 +627,8 @@ run_age_analysis <- function(month = "_oct"){
   process_number_children_poland(uncertainty = FALSE)
   pol_central = process_orphans_age_poland(uncertainty = FALSE, month = month)
   
+  print(pol_central)
+  
   cat(sprintf("Doing bootstrap\n"))
   pol <- NULL
   start_time <- Sys.time()
@@ -830,7 +832,7 @@ run_age_analysis <- function(month = "_oct"){
   # Including the excess deaths ----------------------------------------------
   multipliers <- read.csv("global_age_analysis_2021/data/multipliers.csv", header = FALSE)
   names(multipliers) <- c("country", "multiplier")
-  multipliers <- multipliers[which(! multipliers$country %in% c("England & Wales", "France", "Italy", "Peru",
+  multipliers <- multipliers[which(! multipliers$country %in% c("England & Wales", "France", "Italy", "Peru", "Poland",
                                                                 "Russian Federation", "Spain", "United States of America")),]
   
   percentages <- left_join(percentages, multipliers, by = "country")
@@ -850,10 +852,11 @@ run_age_analysis <- function(month = "_oct"){
   write.csv(percentages, file = paste0("global_age_analysis_2021/data/age_outputs/age_data_scaled", month, ".csv"), row.names=FALSE)
   write.csv(samples, file = paste0("global_age_analysis_2021/data/age_outputs/samples_age_data_scaled", month, ".csv"), row.names=FALSE)
   
+  print(pol)
 }
 
-run_age_analysis(month = "")
+#run_age_analysis(month = "")
 run_age_analysis(month = "_oct")
-run_age_analysis(month = "_diff")
+#run_age_analysis(month = "_diff")
 
 
