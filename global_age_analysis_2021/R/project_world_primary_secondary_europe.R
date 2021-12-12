@@ -98,6 +98,10 @@ saveRDS(sprintf("%s [%s - %s]",
 saveRDS(c(sum(joined$final_orphans), quantile(orphans_samples, probs = 0.025),  quantile(orphans_samples, probs = 0.975)), 
         file = "global_age_analysis_2021/data/un_formatted_primary_secondary.RDS")
 
+orphanhood_country <- as.data.frame(estimates_orphans)
+orphanhood_country$country <- ratio_dat$country
+saveRDS(orphanhood_country, "global_age_analysis_2021/data/ps_samples.RDS")
+
 x = seq(0, 5, 0.1)
 line_all = data.frame(x = x, 
                       y0 = calc_ratio(output_ps$par[1], output_ps$par[2], 

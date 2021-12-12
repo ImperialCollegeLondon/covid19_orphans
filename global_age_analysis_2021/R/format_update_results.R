@@ -24,6 +24,25 @@ format_table <- function(date){
                                    li = c(pa_extrapolation[2], p_extrapolation[2], ps_extrapolation[2]),
                                    ui = c(pa_extrapolation[3], p_extrapolation[3], ps_extrapolation[3]))
   save(data, extrapolation_data, file=paste0("global_age_analysis_2021/data/age_outputs/formated_update_", date, ".RData"))
+  
+  if (date == "oct"){
+    p = readRDS("global_age_analysis_2021/data/p_samples.RDS")
+    p_sum = colSums(p[,1:1000])
+    ps = readRDS("global_age_analysis_2021/data/ps_samples.RDS")
+    ps_sum = colSums(ps[,1:1000])
+    
+    print(sprintf("Primary: %s [%s - %s]", format(round(p_extrapolation[1], -2), big.mark = ",", trim = TRUE), 
+                  format(round.choose(quantile(p_sum, probs = 0.025), 100, 0), big.mark = ",", trim = TRUE), 
+                  format(round.choose(quantile(p_sum, probs = 0.975), 100, 1), big.mark = ",", trim = TRUE)))
+    
+    diff = ps_sum - p_sum
+    
+    print(sprintf("Diff: %s [%s - %s]", 
+            format(round(ps_extrapolation[1] - p_extrapolation[1], -2), big.mark = ",", trim = TRUE), 
+            format(round.choose(quantile(diff, probs = 0.025), 100, 0), big.mark = ",", trim = TRUE), 
+            format(round.choose(quantile(diff, probs = 0.975), 100, 1), big.mark = ",", trim = TRUE)))
+    
+  }
 }
 
 combine_table <- function(){
@@ -48,9 +67,12 @@ combine_table <- function(){
                                        format(round(oct_extrapolation$mean, -2), big.mark = ",", trim = TRUE), 
                                        format(round.choose(oct_extrapolation$li, 100, 0), big.mark = ",", trim = TRUE), 
                                        format(round.choose(oct_extrapolation$ui, 100, 1), big.mark = ",", trim = TRUE))
-  extrapolation$percent_increase = sprintf("%.1f", 
-                                           (oct_extrapolation$mean - apr_extrapolation$mean)/apr_extrapolation$mean * 100)
+  extrapolation$percent_increase = sprintf("%.1f%% [%.1f%% - %.1f%%]", 
+                                           (oct_extrapolation$mean - apr_extrapolation$mean)/apr_extrapolation$mean * 100,
+                                           (oct_extrapolation$li - apr_extrapolation$li)/apr_extrapolation$li * 100,
+                                           (oct_extrapolation$ui - apr_extrapolation$ui)/apr_extrapolation$ui * 100)
   write.csv(extrapolation, file = "global_age_analysis_2021/table_1_extrapolation_increase.csv", row.names=FALSE)
+  
   
   dat = left_join(apr, oct, by = c("country"))
   dat$diff_orphans = dat$orphans.y - dat$orphans.x
