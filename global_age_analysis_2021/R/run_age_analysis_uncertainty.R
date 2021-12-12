@@ -824,8 +824,6 @@ run_age_analysis <- function(month = "_oct"){
   samples =  rbind(arg, bra, col, eng, fra, ger, ind, ira, ita, ken, mal, mex, nig, per, phi, 
                    pol, sa, spa, usa, zim)
   
-  print(pol_quantiles)
-  print(pol)
   saveRDS(percentages, paste0("global_age_analysis_2021/data/age_outputs/age_data", month, ".RDS"))
   saveRDS(samples, paste0("global_age_analysis_2021/data/age_outputs/samples_age_data", month, ".RDS"))
   
