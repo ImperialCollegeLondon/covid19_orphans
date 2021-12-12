@@ -147,74 +147,156 @@ mod = readRDS("global_age_analysis_2021/data/age_outputs/global_age_fit.RDS")
 
 # Out of sample prediction
 newdat = all_data
-newdat$N = 1
+samples <- readRDS("global_age_analysis_2021/data/orphanhood_samples.RDS")
+samples <- samples[samples$country %in% all_data$country,]
 
-prediction <- as.data.frame(predict(mod, newdata = newdat)[, 1, ])
-prediction$country = all_data$country
+# Repeat number of samples for Russia from initial study
+joined <- readRDS("global_age_analysis_2021/data/tfr_covariates.RDS")
+joined <- joined$orphans[which(joined$country == "Russian Federation")]
+samples[17,1:1000] <- rep(joined,1000)
 
-# Exchange out of sample prediction for true values.
-sample_percent = select(data, country, category, gender, percent)
-sample_percent_wide = pivot_wider(sample_percent, names_from = c("category", "gender"), values_from = "percent")
-
-for (country in sample_percent_wide$country){
-  prediction[which(prediction$country == country), 1:6] = sample_percent_wide[sample_percent_wide$country == country, 2:7]/100
+num_samples = 1000
+combined_samples = vector(mode = "list", length = num_samples)
+for (i in 1:num_samples){
+  print(i)
+  newdat$N = round(samples[,i])
+  combined_samples[[i]] = posterior_predict(mod, newdata = newdat, ndraws = 1)[1,,]
 }
 
-write.csv(prediction, file = "global_age_analysis_2021/data/age_outputs/age_prediction.csv", row.names=FALSE)
+samples_array = array(as.numeric(unlist(combined_samples)), dim = c(length(newdat$N), 6, num_samples))
+write.csv(samples_array, file = "global_age_analysis_2021/data/age_outputs/age_prediction_before_switching.csv", row.names=FALSE)
 
-# Read in orphanhood samples
-samples <- readRDS("global_age_analysis_2021/data/orphanhood_samples.RDS")
-mean_values <- readRDS("global_age_analysis_2021/data/country_estimates_pa.RDS")
-#print(sprintf("Global sum of read in data: %f", sum(mean_values$mean)))
-mean_values_format <- select(mean_values, country, text_pa)
-mean_values <- select(mean_values, country, mean)
+# Exchange out of sample prediction for bootstrapped samples for study countries
+study_samples = read.csv(paste0("global_age_analysis_2021/data/age_outputs/samples_age_data_scaled", month, ".csv"))
+study_samples_sub = select(study_samples, -orphans_percent)
+study_samples_sub$sample = rep(1:1000, each = 6)
+study_samples_wide = pivot_wider(study_samples_sub, names_from = c("category", "gender"), values_from = "orphans")
+study_samples_wide = study_samples_wide %>% mutate(totals = study_samples_wide$`[0-5)_Female` + study_samples_wide$`[0-5)_Male` + 
+                                                     study_samples_wide$`[5-10)_Female` + study_samples_wide$`[5-10)_Male` + 
+                                                     study_samples_wide$`[10-18)_Female` + study_samples_wide$`[10-18)_Male`)
+for (j in 1:num_samples){
+  study_samples_wide_sub = study_samples_wide[which(study_samples_wide$sample == j),]
+  samples_array[c(1:16, 18:21), , j]  <- as.matrix(study_samples_wide_sub[,3:8])
+}
 
-totals_tmp = colSums(samples[,1:1000])
+write.csv(samples_array, file = "global_age_analysis_2021/data/age_outputs/age_prediction.csv", row.names=FALSE)
+
+samples_array_reorder = aperm(samples_array, c(3,1,2))
+country_totals = rowSums(samples_array_reorder, dims = 2) # have already exchanged country data
+
+# Checks where sampled orphans are different to orphans from age model <- shows difference only occurs in study countries where
+# expected
+# diff = t(country_totals) - as.matrix(samples[,1:1000])
+# diff[diff<1]<-0
+
+# Calculates percentages of different ages
+sample_percents = samples_array_reorder
+for (k in 1:6){
+  sample_percents[,,k] = samples_array_reorder[,,k] / country_totals
+}
+
+# Calculates means
+sample_percents_reorder = aperm(sample_percents, c(2,3,1))
+sample_percents_mean = rowMeans(sample_percents_reorder, dims = 2, na.rm = TRUE)
+
+# Switch out sample means here to be the number of samples in deterministic case
+mean_data = read.csv(file = paste0("global_age_analysis_2021/data/age_outputs/age_data_scaled", month, ".csv"))
+mean_data_sub = select(mean_data, country, category, gender, percent)
+study_category_means = pivot_wider(mean_data_sub, names_from = c("category", "gender"), values_from = "percent")
+sample_percents_mean[c(1:16, 18:21),] <- matrix(unlist(study_category_means[,2:7]), ncol = 6)/100
+
+lower = NULL
+upper = NULL
+for (c in 1:length(newdat$country)){
+  lower = rbind(lower, colQuantiles(sample_percents[,c,], probs = c(0.025), na.rm = TRUE))
+  upper = rbind(upper, colQuantiles(sample_percents[,c,], probs = c(0.975), na.rm = TRUE))
+}
+
+# Check mean is within intervals
+#sum(sample_percents_mean > upper & sample_percents_mean < lower)
+
+# Format table for SM
+percent_format = NULL
+for(i in 1:6){
+  percent_format = cbind(percent_format, sprintf("%.1f%% [%.1f%% - %.1f%%]", 
+                                                sample_percents_mean[,i] * 100,
+                                                round.choose(lower[,i]*100, 0.1, 0),
+                                                round.choose(upper[,i]*100, 0.1, 1)))
+}
+
+means = data.frame(country = newdat$country,
+                   mean_sample = colMeans(country_totals))
+
+# Change out means of estimated orphans for the study countries
+mean_data = read.csv(file = paste0("global_age_analysis_2021/data/age_outputs/age_data_scaled", month, ".csv"))
+mean_data_sub = select(mean_data, country, category, gender, raw)
+mean_data_sub = mean_data_sub %>% group_by(country) %>% summarise(mean = sum(raw))
+
+means = left_join(means, mean_data_sub, by = "country")
+means$mean_sample = ifelse(is.na(means$mean), means$mean_sample, means$mean)
+
 g_tot <- sprintf("%s [%s - %s]", 
-                 format(round(sum(mean_values$mean), -2), big.mark = ",", trim = TRUE), 
-                 format(round.choose(quantile(totals_tmp, probs = 0.025), 100, 0), big.mark = ",", trim = TRUE), 
-                 format(round.choose(quantile(totals_tmp, probs = 0.975), 100, 1), big.mark = ",", trim = TRUE))
-print(g_tot)
+                 format(round(means$mean_sample, -2), big.mark = ",", trim = TRUE), 
+                 format(round.choose(colQuantiles(country_totals, probs = 0.025), 100, 0), big.mark = ",", trim = TRUE), 
+                 format(round.choose(colQuantiles(country_totals, probs = 0.975), 100, 1), big.mark = ",", trim = TRUE))
 
-dat <- left_join(prediction, samples, by = c("country"))
-dat_mean <- left_join(prediction, mean_values, by = c("country"))
+percent_format = data.frame(country = newdat$country, 
+                            total = g_tot,
+                            percent_format)
+names(percent_format) <- c("Country", "Total Orphans", "Maternal 0-4", "Paternal 0-4", "Maternal 5-9", "Paternal 5-9",
+             "Maternal 10-17", "Paternal 10-17")
 
-
-data_save <- left_join(mean_values_format, prediction, by = c("country"))
-names(data_save) <- c("Country", "Total Orphans", "Maternal 0-4", "Paternal 0-4", "Maternal 5-9", "Paternal 5-9",
-                      "Maternal 10-17", "Paternal 10-17")
-data_save$`Maternal 0-4` = sprintf("%.1f%%", data_save$`Maternal 0-4` * 100)
-data_save$`Paternal 0-4` = sprintf("%.1f%%", data_save$`Paternal 0-4` * 100)
-data_save$`Maternal 5-9` = sprintf("%.1f%%", data_save$`Maternal 5-9` * 100)
-data_save$`Paternal 5-9` = sprintf("%.1f%%", data_save$`Paternal 5-9` * 100)
-data_save$`Maternal 10-17` = sprintf("%.1f%%", data_save$`Maternal 10-17` * 100)
-data_save$`Paternal 10-17` = sprintf("%.1f%%", data_save$`Paternal 10-17` * 100)
+data_save = left_join(select(orphan, country), percent_format, by = c("country"="Country"))
 write.csv(data_save, file = "global_age_analysis_2021/data/age_outputs/country_specific_totals.csv", row.names=FALSE)
 
 tab<-xtable(data_save)
 print(tab, include.rownames=FALSE)
 
-totals = colSums(dat[,8:1007])
-#print(sprintf("Mean of column samples once changed the data: %f [%f - %f ]", mean(totals), 
-#              quantile(totals, probs = 0.025), quantile(totals, probs = 0.975)))
+# Working out global totals ----------------------------------------------------------------------------
+totals_samples = rowSums(country_totals) 
 
-# Weight samples by country specific percentages in different ages
-num_10_17_male <- dat$`[10-18)_Male` * dat[,8:1007]
-num_10_17_female <- dat$`[10-18)_Female` * dat[,8:1007]
-num_5_9_male <- dat$`[5-10)_Male` * dat[,8:1007]
-num_5_9_female <- dat$`[5-10)_Female` * dat[,8:1007]
-num_0_4_male <- dat$`[0-5)_Male` * dat[,8:1007]
-num_0_4_female <- dat$`[0-5)_Female` * dat[,8:1007]
+# Samples of number of children in each category
+num_10_17_male <- samples_array[,6,]
+num_10_17_female <- samples_array[,5,]
+num_5_9_male <- samples_array[,4,]
+num_5_9_female <- samples_array[,3,]
+num_0_4_male <- samples_array[,2,]
+num_0_4_female <- samples_array[,1,]
 
-# Weight mean samples by country specific percentages in different ages
-num_10_17_male_mean <- sum(dat_mean$`[10-18)_Male` * dat_mean$mean)
-num_10_17_female_mean <- sum(dat_mean$`[10-18)_Female` * dat_mean$mean)
-num_5_9_male_mean <- sum(dat_mean$`[5-10)_Male` * dat_mean$mean)
-num_5_9_female_mean <- sum(dat_mean$`[5-10)_Female` * dat_mean$mean)
-num_0_4_male_mean <- sum(dat_mean$`[0-5)_Male` * dat_mean$mean)
-num_0_4_female_mean <- sum(dat_mean$`[0-5)_Female` * dat_mean$mean)
+# Mean number of children in each age group
+num_10_17_male_mean <- rowMeans(num_10_17_male)
+num_10_17_female_mean <- rowMeans(num_10_17_female)
+num_5_9_male_mean <- rowMeans(num_5_9_male)
+num_5_9_female_mean <- rowMeans(num_5_9_female)
+num_0_4_male_mean <- rowMeans(num_0_4_male)
+num_0_4_female_mean <- rowMeans(num_0_4_female)
 
-# Work out global weighting
+# Need to replace study countries with deterministic number of children
+mean_data = read.csv(file = paste0("global_age_analysis_2021/data/age_outputs/age_data_scaled", month, ".csv"))
+mean_data_sub = select(mean_data, country, category, gender, raw)
+mean_data_sub_wide = pivot_wider(mean_data_sub, names_from = c("category", "gender"), values_from = "raw")
+# Here have more children that previous because we don't account for double orphans
+mean_data_sub_wide = mutate(mean_data_sub_wide,
+                            total = `[10-18)_Male` + `[10-18)_Female`+ `[5-10)_Male`+ `[5-10)_Female`+ `[0-5)_Male`+ `[0-5)_Female`)
+
+num_10_17_male_mean[c(1:16, 18:21)] <- mean_data_sub_wide$`[10-18)_Male`
+num_10_17_female_mean[c(1:16, 18:21)] <- mean_data_sub_wide$`[10-18)_Female`
+num_5_9_male_mean[c(1:16, 18:21)] <- mean_data_sub_wide$`[5-10)_Male`
+num_5_9_female_mean[c(1:16, 18:21)] <- mean_data_sub_wide$`[5-10)_Female`
+num_0_4_male_mean[c(1:16, 18:21)] <- mean_data_sub_wide$`[0-5)_Male`
+num_0_4_female_mean[c(1:16, 18:21)] <- mean_data_sub_wide$`[0-5)_Female`
+
+tots_country = num_10_17_male_mean + num_10_17_female_mean + num_5_9_male_mean + num_5_9_female_mean + num_0_4_male_mean + num_0_4_female_mean
+
+# Sum them up to get means
+num_10_17_male_mean_sum = sum(num_10_17_male_mean)
+num_10_17_female_mean_sum = sum(num_10_17_female_mean)
+num_5_9_male_mean_sum = sum(num_5_9_male_mean)
+num_5_9_female_mean_sum = sum(num_5_9_female_mean)
+num_0_4_male_mean_sum = sum(num_0_4_male_mean)
+num_0_4_female_mean_sum = sum(num_0_4_female_mean)
+
+# Samples of global summed
 global_10_17_male <- colSums(num_10_17_male)
 global_10_17_female <- colSums(num_10_17_female)
 global_5_9_male <- colSums(num_5_9_male)
@@ -234,8 +316,8 @@ for (j in 1:ncol(global)){
 }
 li = rowQuantiles(global_percent, probs = 0.025)
 ui = rowQuantiles(global_percent, probs = 0.975)
-mean = c(num_10_17_male_mean, num_10_17_female_mean, num_5_9_male_mean, num_5_9_female_mean, 
-         num_0_4_male_mean, num_0_4_female_mean)
+mean = c(num_10_17_male_mean_sum, num_10_17_female_mean_sum, num_5_9_male_mean_sum, num_5_9_female_mean_sum, 
+         num_0_4_male_mean_sum, num_0_4_female_mean_sum)
 mean_percent = mean / sum(mean)
 
 li_0_4 <- quantile(global_0_4_female + global_0_4_male, probs = 0.025)
@@ -249,63 +331,64 @@ ui_maternal <- quantile(global_0_4_female + global_5_9_female + global_10_17_fem
 li_paternal <- quantile(global_0_4_male + global_5_9_male + global_10_17_male, probs = 0.025)
 ui_paternal <- quantile(global_0_4_male + global_5_9_male + global_10_17_male, probs = 0.975)
 
-li_0_4_percent <- quantile((global_0_4_female + global_0_4_male)/totals, probs = 0.025)
-ui_0_4_percent <- quantile((global_0_4_female + global_0_4_male)/totals, probs = 0.975)
-li_5_9_percent <- quantile((global_5_9_female + global_5_9_male)/totals, probs = 0.025)
-ui_5_9_percent <- quantile((global_5_9_female + global_5_9_male)/totals, probs = 0.975)
-li_10_17_percent <- quantile((global_10_17_female + global_10_17_male)/totals, probs = 0.025)
-ui_10_17_percent <- quantile((global_10_17_female + global_10_17_male)/totals, probs = 0.975)
-li_maternal_percent <- quantile((global_0_4_female + global_5_9_female + global_10_17_female)/totals, probs = 0.025)
-ui_maternal_percent <- quantile((global_0_4_female + global_5_9_female + global_10_17_female)/totals, probs = 0.975)
-li_paternal_percent <- quantile((global_0_4_male + global_5_9_male + global_10_17_male)/totals, probs = 0.025)
-ui_paternal_percent <- quantile((global_0_4_male + global_5_9_male + global_10_17_male)/totals, probs = 0.975)
+li_0_4_percent <- quantile((global_0_4_female + global_0_4_male)/totals_samples, probs = 0.025)
+ui_0_4_percent <- quantile((global_0_4_female + global_0_4_male)/totals_samples, probs = 0.975)
+li_5_9_percent <- quantile((global_5_9_female + global_5_9_male)/totals_samples, probs = 0.025)
+ui_5_9_percent <- quantile((global_5_9_female + global_5_9_male)/totals_samples, probs = 0.975)
+li_10_17_percent <- quantile((global_10_17_female + global_10_17_male)/totals_samples, probs = 0.025)
+ui_10_17_percent <- quantile((global_10_17_female + global_10_17_male)/totals_samples, probs = 0.975)
+li_maternal_percent <- quantile((global_0_4_female + global_5_9_female + global_10_17_female)/totals_samples, probs = 0.025)
+ui_maternal_percent <- quantile((global_0_4_female + global_5_9_female + global_10_17_female)/totals_samples, probs = 0.975)
+li_paternal_percent <- quantile((global_0_4_male + global_5_9_male + global_10_17_male)/totals_samples, probs = 0.025)
+ui_paternal_percent <- quantile((global_0_4_male + global_5_9_male + global_10_17_male)/totals_samples, probs = 0.975)
 
+# Calculate global totals
 global_totals = data.frame("country" = "Global extrapolation",
                            "[0-5)" = sprintf("%s [%s - %s]",
-                                             format(round(num_0_4_male_mean + num_0_4_female_mean, -2),  big.mark = ",", trim = TRUE),
+                                             format(round(num_0_4_male_mean_sum + num_0_4_female_mean_sum, -2),  big.mark = ",", trim = TRUE),
                                              format(round.choose(li_0_4, 100, 0), big.mark = ",", trim = TRUE),
                                              format(round.choose(ui_0_4, 100, 1), big.mark = ",", trim = TRUE)), 
                            "[5-10)" = sprintf("%s [%s - %s]",
-                                              format(round(num_5_9_male_mean + num_5_9_female_mean, -2),  big.mark = ",", trim = TRUE),
+                                              format(round(num_5_9_male_mean_sum + num_5_9_female_mean_sum, -2),  big.mark = ",", trim = TRUE),
                                               format(round.choose(li_5_9, 100, 0), big.mark = ",", trim = TRUE),
                                               format(round.choose(ui_5_9, 100, 1), big.mark = ",", trim = TRUE)), 
                            "[10-18)" = sprintf("%s [%s - %s]",
-                                               format(round(num_10_17_male_mean + num_10_17_female_mean, -2),  big.mark = ",", trim = TRUE),
+                                               format(round(num_10_17_male_mean_sum + num_10_17_female_mean_sum, -2),  big.mark = ",", trim = TRUE),
                                                format(round.choose(li_10_17, 100, 0), big.mark = ",", trim = TRUE),
                                                format(round.choose(ui_10_17, 100, 1), big.mark = ",", trim = TRUE)),
                            "Total" = sprintf("%s [%s - %s]",
                                            format(round(sum(mean),-2),  big.mark = ",", trim = TRUE),
-                                           format(round.choose(quantile(totals, probs = 0.025), 100, 0), big.mark = ",", trim = TRUE),
-                                           format(round.choose(quantile(totals, probs = 0.975), 100, 1), big.mark = ",", trim = TRUE)),
+                                           format(round.choose(quantile(totals_samples, probs = 0.025), 100, 0), big.mark = ",", trim = TRUE),
+                                           format(round.choose(quantile(totals_samples, probs = 0.975), 100, 1), big.mark = ",", trim = TRUE)),
                            "Maternal" = sprintf("%s [%s - %s]",
-                                              format(round(num_0_4_female_mean + num_5_9_female_mean + num_10_17_female_mean, -2),  big.mark = ",", trim = TRUE),
+                                              format(round(num_0_4_female_mean_sum + num_5_9_female_mean_sum + num_10_17_female_mean_sum, -2),  big.mark = ",", trim = TRUE),
                                               format(round.choose(li_maternal, 100, 0), big.mark = ",", trim = TRUE),
                                               format(round.choose(ui_maternal, 100, 1), big.mark = ",", trim = TRUE)),
                            "Paternal" = sprintf("%s [%s - %s]",
-                                              format(round(num_0_4_male_mean + num_5_9_male_mean + num_10_17_male_mean, -2),  big.mark = ",", trim = TRUE),
+                                              format(round(num_0_4_male_mean_sum + num_5_9_male_mean_sum + num_10_17_male_mean_sum, -2),  big.mark = ",", trim = TRUE),
                                               format(round.choose(li_paternal, 100, 0), big.mark = ",", trim = TRUE),
                                               format(round.choose(ui_paternal, 100, 1), big.mark = ",", trim = TRUE)))
 
 global_totals_2 = data.frame("country" = "Global extrapolation percentages",
                            "[0-5)" = sprintf("%s%% [%s%% - %s%%]",
-                                             format(round(100*(num_0_4_male_mean + num_0_4_female_mean)/sum(mean), 1),  big.mark = ",", trim = TRUE),
+                                             format(round(100*(num_0_4_male_mean_sum + num_0_4_female_mean_sum)/sum(mean), 1),  big.mark = ",", trim = TRUE),
                                              format(round.choose(100*li_0_4_percent, 0.1, 0), big.mark = ",", trim = TRUE),
                                              format(round.choose(100*ui_0_4_percent, 0.1, 1), big.mark = ",")), 
                            "[5-10)" = sprintf("%s%% [%s%% - %s%%]",
-                                              format(round(100*(num_5_9_male_mean + num_5_9_female_mean)/sum(mean), 1),  big.mark = ",", trim = TRUE),
+                                              format(round(100*(num_5_9_male_mean_sum + num_5_9_female_mean_sum)/sum(mean), 1),  big.mark = ",", trim = TRUE),
                                               format(round.choose(100*li_5_9_percent, 0.1, 0), big.mark = ",", trim = TRUE),
                                               format(round.choose(100*ui_5_9_percent, 0.1, 1), big.mark = ",", trim = TRUE)), 
                            "[10-18)" = sprintf("%s%% [%s%% - %s%%]",
-                                               format(round(100*(num_10_17_male_mean + num_10_17_female_mean)/sum(mean), 1),  big.mark = ",", trim = TRUE),
+                                               format(round(100*(num_10_17_male_mean_sum + num_10_17_female_mean_sum)/sum(mean), 1),  big.mark = ",", trim = TRUE),
                                                format(round.choose(100*li_10_17_percent, 0.1, 0), big.mark = ",", trim = TRUE),
                                                format(round.choose(100*ui_10_17_percent, 0.1, 1), big.mark = ",", trim = TRUE)),
                            "Total" = sprintf("-"),
                            "Maternal" = sprintf("%s%% [%s%% - %s%%]",
-                                                format(round(100*(num_0_4_female_mean + num_5_9_female_mean + num_10_17_female_mean)/sum(mean), 1),  big.mark = ",", trim = TRUE),
+                                                format(round(100*(num_0_4_female_mean_sum + num_5_9_female_mean_sum + num_10_17_female_mean_sum)/sum(mean), 1),  big.mark = ",", trim = TRUE),
                                                 format(round.choose(100*li_maternal_percent, 0.1, 0), big.mark = ",", trim = TRUE),
                                                 format(round.choose(100*ui_maternal_percent, 0.1, 1), big.mark = ",", trim = TRUE)),
                            "Paternal" = sprintf("%s%% [%s%% - %s%%]",
-                                                format(round(100*(num_0_4_male_mean + num_5_9_male_mean + num_10_17_male_mean)/sum(mean), 1),  big.mark = ",", trim = TRUE),
+                                                format(round(100*(num_0_4_male_mean_sum + num_5_9_male_mean_sum + num_10_17_male_mean_sum)/sum(mean), 1),  big.mark = ",", trim = TRUE),
                                                 format(round.choose(100*li_paternal_percent, 0.1, 0), big.mark = ",", trim = TRUE),
                                                 format(round.choose(100*ui_paternal_percent, 0.1, 1), big.mark = ",", trim = TRUE)))
 saveRDS(rbind(global_totals, global_totals_2), 
@@ -324,17 +407,17 @@ global_percent_summary$format <- sprintf("%.1f%% [%.1f%% - %.1f%%]",
 global_percent_summary$region <- "Global"
 global_percent_summary$category <- rownames(global_percent_summary)
 
+
+#  Regions calculations --------------------------------
 # Work out regional percentages
 regions <- select(all_data, country, who_region)
 
 # Combine europe
 regions$who_region[which(regions$who_region == "Eastern European")] <- "European"
-dat <- left_join(dat, regions, by = "country")
-dat_mean <- left_join(dat_mean, regions, by = "country")
 
 reg_percent_summary <- NULL
 for (r in unique(regions$who_region)){
-  idx_reg <- which(dat$who_region == r)
+  idx_reg <- which(regions$who_region == r)
 
   reg_10_17_male <- colSums(num_10_17_male[idx_reg,])
   reg_10_17_female <- colSums(num_10_17_female[idx_reg,])
@@ -343,16 +426,17 @@ for (r in unique(regions$who_region)){
   reg_0_4_male <- colSums(num_0_4_male[idx_reg,])
   reg_0_4_female <- colSums(num_0_4_female[idx_reg,])
 
+  # Samples for each category in specified region
   reg <- rbind(reg_10_17_male, reg_10_17_female,
                   reg_5_9_male, reg_5_9_female,
                   reg_0_4_male, reg_0_4_female)
 
-  reg_10_17_male_mean <- sum(dat_mean$`[10-18)_Male`[idx_reg] * dat_mean$mean[idx_reg])
-  reg_10_17_female_mean <- sum(dat_mean$`[10-18)_Female`[idx_reg] * dat_mean$mean[idx_reg])
-  reg_5_9_male_mean <- sum(dat_mean$`[5-10)_Male`[idx_reg] * dat_mean$mean[idx_reg])
-  reg_5_9_female_mean <- sum(dat_mean$`[5-10)_Female`[idx_reg] * dat_mean$mean[idx_reg])
-  reg_0_4_male_mean <- sum(dat_mean$`[0-5)_Male`[idx_reg] * dat_mean$mean[idx_reg])
-  reg_0_4_female_mean <- sum(dat_mean$`[0-5)_Female`[idx_reg] * dat_mean$mean[idx_reg])
+  reg_10_17_male_mean <- sum(num_10_17_male_mean[idx_reg])
+  reg_10_17_female_mean <- sum(num_10_17_female_mean[idx_reg])
+  reg_5_9_male_mean <- sum(num_5_9_male_mean[idx_reg])
+  reg_5_9_female_mean <- sum(num_5_9_female_mean[idx_reg])
+  reg_0_4_male_mean <- sum(num_0_4_male_mean[idx_reg])
+  reg_0_4_female_mean <- sum(num_0_4_female_mean[idx_reg])
   
   reg_percent <- reg
   for (j in 1:ncol(reg)){
@@ -434,20 +518,20 @@ ggsave("global_age_analysis_2021/figures/fig_4_global_orphans_percentage.pdf", p
 # ---------- Calculating total numbers of 10-17s
 adolescents = global[1,] + global[2,]
 print(sprintf("Adolescent orphans: %s [%s - %s]", 
-              format(round(num_10_17_male_mean + num_10_17_female_mean, -2), big.mark = ",", trim = TRUE), 
+              format(round(num_10_17_male_mean_sum + num_10_17_female_mean_sum, -2), big.mark = ",", trim = TRUE), 
               format(round.choose(quantile(adolescents, probs = 0.025), 100, 0), big.mark = ",", trim = TRUE),
               format(round.choose(quantile(adolescents, probs = 0.975), 100, 1), big.mark = ",", trim = TRUE)))
 
 
 # --------- Fertility sensitivity
-pre_school = num_0_4_male_mean + num_0_4_female_mean
+pre_school = num_0_4_male_mean_sum + num_0_4_female_mean_sum
 under_one = pre_school * 0.2
 under_one_2021 = under_one * 0.5
 under_one_2021_reduced = under_one_2021 * 0.2
 
 pre_school_reduced = pre_school - under_one_2021_reduced
-tot_reduced = pre_school_reduced + num_5_9_male_mean + num_10_17_male_mean + num_5_9_female_mean + num_10_17_female_mean
-tot = num_0_4_male_mean + num_5_9_male_mean + num_10_17_male_mean + num_0_4_female_mean + num_5_9_female_mean + num_10_17_female_mean
+tot_reduced = pre_school_reduced + num_5_9_male_mean_sum + num_10_17_male_mean_sum + num_5_9_female_mean_sum + num_10_17_female_mean_sum
+tot = num_0_4_male_mean_sum + num_5_9_male_mean_sum + num_10_17_male_mean_sum + num_0_4_female_mean_sum + num_5_9_female_mean_sum + num_10_17_female_mean_sum
 
 li_0_4_reduced <- quantile((global_0_4_female + global_0_4_male) * 0.2 * 0.5 * 0.2, probs = 0.025)
 ui_0_4_reduced <- quantile((global_0_4_female + global_0_4_male) * 0.2 * 0.5 * 0.2, probs = 0.975)

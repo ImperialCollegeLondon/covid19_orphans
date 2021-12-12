@@ -168,7 +168,7 @@ write.csv(file = paste0("global_age_analysis_2021/table_2_age_breakdown", month,
 
 # Table 2: Percentages of ages and types ----------------------------------------------
 pretty_table <- percentages_
-pretty_table$raw_format <- sprintf("%.1f%% [%.1f%% - %.1f%%]", round(pretty_table$percent, digits = 1),
+pretty_table$raw_format <- sprintf("%.1f%% [%.1f%% - %.1f%%]", pretty_table$percent,
                                    round.choose(pretty_table$li_percent, 0.1, 0), round.choose(pretty_table$ui_percent, 0.1, 1))
 
 pretty_table <- select(pretty_table, country, category, gender, raw_format)
@@ -239,9 +239,9 @@ n2 <- ggplot(pyramid) +
   geom_bar(data = subset(pyramid, gender == "Paternal"), stat = "identity", aes(x = category, y = percent/100, fill = gender)) + 
   geom_bar(data = subset(pyramid, gender == "Maternal"), stat = "identity", aes(x = category, y = percent/100, fill = gender)) + 
   geom_bar(data = subset(children_numbers_long, gender == "Paternal"), stat = "identity", 
-           aes(x = category, y = children, fill = gender), colour="black", alpha = 0.5) + 
+           aes(x = category, y = children, fill = gender), colour="black", alpha = 0) + 
   geom_bar(data = subset(children_numbers_long, gender == "Maternal"), stat = "identity", 
-           aes(x = category, y = children, fill = gender, alpha = 0.5), colour="black", alpha = 0.5) + 
+           aes(x = category, y = children, fill = gender), colour="black", alpha = 0) + 
   scale_y_continuous(breaks = seq(-0.6, 0.6, 0.2), 
                      labels = paste0(as.character(c(seq(60, 0, -20), seq(20, 60, 20))), "%")) + 
   xlab("") + ylab("Percent of children") +

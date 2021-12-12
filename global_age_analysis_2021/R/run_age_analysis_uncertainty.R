@@ -627,8 +627,6 @@ run_age_analysis <- function(month = "_oct"){
   process_number_children_poland(uncertainty = FALSE)
   pol_central = process_orphans_age_poland(uncertainty = FALSE, month = month)
   
-  print(pol_central)
-  
   cat(sprintf("Doing bootstrap\n"))
   pol <- NULL
   start_time <- Sys.time()
@@ -826,6 +824,8 @@ run_age_analysis <- function(month = "_oct"){
   samples =  rbind(arg, bra, col, eng, fra, ger, ind, ira, ita, ken, mal, mex, nig, per, phi, 
                    pol, sa, spa, usa, zim)
   
+  print(pol_quantiles)
+  print(pol)
   saveRDS(percentages, paste0("global_age_analysis_2021/data/age_outputs/age_data", month, ".RDS"))
   saveRDS(samples, paste0("global_age_analysis_2021/data/age_outputs/samples_age_data", month, ".RDS"))
   
@@ -851,8 +851,6 @@ run_age_analysis <- function(month = "_oct"){
   
   write.csv(percentages, file = paste0("global_age_analysis_2021/data/age_outputs/age_data_scaled", month, ".csv"), row.names=FALSE)
   write.csv(samples, file = paste0("global_age_analysis_2021/data/age_outputs/samples_age_data_scaled", month, ".csv"), row.names=FALSE)
-  
-  print(pol)
 }
 
 run_age_analysis(month = "")
