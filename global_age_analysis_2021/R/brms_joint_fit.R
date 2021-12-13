@@ -1,9 +1,10 @@
 # Joint fitting
 joint_fit <- function(all_data, data, formula, plot = FALSE, loo = FALSE){
   # Fit model
+  set.seed(1)
   mod_full <- brm(formula, data = data, 
                   control = list(max_treedepth = 16),
-                  family = multinomial(), seed = 1,
+                  family = multinomial(), seed = 1, iter = 50, 
                   cores = getOption("mc.cores", parallel::detectCores()))
   
   # Format data for analysis
