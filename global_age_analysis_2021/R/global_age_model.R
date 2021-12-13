@@ -142,7 +142,6 @@ response_wide$response <- with(response_wide,
 formula = response | trials(N) ~ parents + old_parents + grandparents + 
   pre_school + primary_school + secondary_school + gdp
 mod = joint_fit(all_data = data, data = response_wide, formula, plot = TRUE, loo = FALSE)
-saveRDS(mod, "global_age_analysis_2021/data/age_outputs/global_age_fit.RDS")
 mod = readRDS("global_age_analysis_2021/data/age_outputs/global_age_fit.RDS")
 
 # Out of sample prediction
