@@ -16,7 +16,7 @@ format_table("oct")
 combine_table()
 
 # # Runs age analysis
-#source("global_age_analysis_2021/R/run_age_analysis_uncertainty.R")
+source("global_age_analysis_2021/R/run_age_analysis_uncertainty.R")
 
 # Run global age model
 source("global_age_analysis_2021/R/global_age_model.R")
