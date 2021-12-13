@@ -6,7 +6,7 @@ joint_fit <- function(all_data, data, formula, plot = FALSE, loo = FALSE){
                   control = list(max_treedepth = 16),
                   family = multinomial(), 
                   cores = 4,
-                  file_refit = "always", 
+                  file_refit = "on_change", 
                   file = "global_age_analysis_2021/data/age_outputs/global_age_fit.RDS")
 
   # Format data for analysis
