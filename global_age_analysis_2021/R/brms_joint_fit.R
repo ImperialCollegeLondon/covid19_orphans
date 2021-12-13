@@ -5,7 +5,7 @@ joint_fit <- function(all_data, data, formula, plot = FALSE, loo = FALSE){
   mod_full <- brm(formula, data = data, 
                   control = list(max_treedepth = 16),
                   family = multinomial(), seed = 1, iter = 50, 
-                  cores = getOption("mc.cores", parallel::detectCores()))
+                  cores = 2)
   
   # Format data for analysis
   newdat = data
