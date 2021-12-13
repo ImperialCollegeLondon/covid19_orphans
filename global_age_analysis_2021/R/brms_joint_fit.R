@@ -5,7 +5,7 @@ joint_fit <- function(all_data, data, formula, plot = FALSE, loo = FALSE){
   mod_full <- brm(formula, data = data, 
                   control = list(max_treedepth = 16),
                   family = multinomial(), seed = 1, iter = 50, 
-                  cores = 2)
+                  cores = 2, file = "global_age_analysis_2021/data/age_outputs/mod_fit.rds")
   
   # Format data for analysis
   newdat = data
