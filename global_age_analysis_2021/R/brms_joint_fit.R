@@ -2,10 +2,11 @@
 joint_fit <- function(all_data, data, formula, plot = FALSE, loo = FALSE){
   # Fit model
   set.seed(1)
-  mod_full <- brm(formula, data = data, 
+  mod_full <- brm(formula, data = data, seed = 2,
                   control = list(max_treedepth = 16),
-                  family = multinomial(), seed = 1, iter = 50, 
-                  cores = 2, file_refit = "on_change", 
+                  family = multinomial(), 
+                  cores = 4,
+                  file_refit = "always", 
                   file = "global_age_analysis_2021/data/age_outputs/mod_fit.rds")
   saveRDS(mod_full, "global_age_analysis_2021/data/age_outputs/global_age_fit.RDS")
   # Format data for analysis
