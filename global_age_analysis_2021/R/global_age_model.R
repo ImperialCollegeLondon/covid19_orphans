@@ -160,7 +160,7 @@ combined_samples = vector(mode = "list", length = num_samples)
 for (i in 1:num_samples){
   print(i)
   newdat$N = round(samples[,i])
-  combined_samples[[i]] = posterior_predict(mod, newdata = newdat, ndraws = 1, seed = 1)[1,,]
+  combined_samples[[i]] = posterior_predict(mod, newdata = newdat, ndraws = 1, seed = i)[1,,]
 }
 
 samples_array = array(as.numeric(unlist(combined_samples)), dim = c(length(newdat$N), 6, num_samples))
