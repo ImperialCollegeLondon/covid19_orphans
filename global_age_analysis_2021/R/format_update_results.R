@@ -1,4 +1,5 @@
 source("global_age_analysis_2021/R/utils.R")
+library(xtable)
 
 format_table <- function(date){
   # Read in a format orphans data
