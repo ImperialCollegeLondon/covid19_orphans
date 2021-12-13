@@ -7,8 +7,8 @@ joint_fit <- function(all_data, data, formula, plot = FALSE, loo = FALSE){
                   family = multinomial(), 
                   cores = 4,
                   file_refit = "always", 
-                  file = "global_age_analysis_2021/data/age_outputs/mod_fit.rds")
-  saveRDS(mod_full, "global_age_analysis_2021/data/age_outputs/global_age_fit.RDS")
+                  file = "global_age_analysis_2021/data/age_outputs/global_age_fit.RDS")
+
   # Format data for analysis
   newdat = data
   newdat$N = 1
