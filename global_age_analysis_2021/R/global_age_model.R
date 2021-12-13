@@ -141,8 +141,8 @@ response_wide$response <- with(response_wide,
                                      `[5-10)_Male`, `[10-18)_Female`, `[10-18)_Male`))
 formula = response | trials(N) ~ parents + old_parents + grandparents + 
   pre_school + primary_school + secondary_school + gdp
-mod = joint_fit(all_data = data, data = response_wide, formula, plot = TRUE, loo = FALSE)
-saveRDS(mod, "global_age_analysis_2021/data/age_outputs/global_age_fit.RDS")
+#mod = joint_fit(all_data = data, data = response_wide, formula, plot = TRUE, loo = FALSE)
+#saveRDS(mod, "global_age_analysis_2021/data/age_outputs/global_age_fit.RDS")
 mod = readRDS("global_age_analysis_2021/data/age_outputs/global_age_fit.RDS")
 
 # Out of sample prediction
@@ -160,7 +160,7 @@ combined_samples = vector(mode = "list", length = num_samples)
 for (i in 1:num_samples){
   print(i)
   newdat$N = round(samples[,i])
-  combined_samples[[i]] = posterior_predict(mod, newdata = newdat, ndraws = 1)[1,,]
+  combined_samples[[i]] = posterior_predict(mod, newdata = newdat, ndraws = 1, seed = 1)[1,,]
 }
 
 samples_array = array(as.numeric(unlist(combined_samples)), dim = c(length(newdat$N), 6, num_samples))
