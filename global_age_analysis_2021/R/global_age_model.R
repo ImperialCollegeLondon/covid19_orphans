@@ -142,7 +142,6 @@ response_wide$response <- with(response_wide,
 formula = response | trials(N) ~ parents + old_parents + grandparents + 
   pre_school + primary_school + secondary_school + gdp
 mod = joint_fit(all_data = data, data = response_wide, formula, plot = TRUE, loo = FALSE)
-saveRDS(mod, "global_age_analysis_2021/data/age_outputs/global_age_fit.RDS")
 mod = readRDS("global_age_analysis_2021/data/age_outputs/global_age_fit.RDS")
 
 # Out of sample prediction
@@ -160,7 +159,7 @@ combined_samples = vector(mode = "list", length = num_samples)
 for (i in 1:num_samples){
   print(i)
   newdat$N = round(samples[,i])
-  combined_samples[[i]] = posterior_predict(mod, newdata = newdat, ndraws = 1)[1,,]
+  combined_samples[[i]] = posterior_predict(mod, newdata = newdat, ndraws = 1, seed = 2)[1,,]
 }
 
 samples_array = array(as.numeric(unlist(combined_samples)), dim = c(length(newdat$N), 6, num_samples))
@@ -454,7 +453,7 @@ for (r in unique(regions$who_region)){
   reg_percent_summary_tmp <- data.frame(mean = reg_mean_percent * 100,
                                        li = li * 100,
                                        ui = ui * 100)
-  reg_percent_summary_tmp$format <- sprintf("%.1f [%.1f - %.1f]",
+  reg_percent_summary_tmp$format <- sprintf("%.1f%% [%.1f%% - %.1f%%]",
                                            round(reg_percent_summary_tmp$mean, digits = 1),
                                            round.choose(reg_percent_summary_tmp$li, 0.1, 0),
                                            round.choose(reg_percent_summary_tmp$ui, 0.1, 1))
@@ -484,6 +483,14 @@ tab<-xtable(tab_wide)
 print(tab, include.rownames=FALSE)
 
 
+reg_percent_summary$gender = c("male", "female")
+reg_percent_summary$age = c("old", "middle", "young")
+
+dat = reg_percent_summary %>% group_by(age, region) %>% 
+  summarise(mean = sum(mean),
+            li = sum(li), 
+            ui = sum(ui))
+print(dat)
 reg_percent_summary$region <- factor(reg_percent_summary$region,
                                      levels = c("African ", "Americas", "Eastern Mediterranean",
                                                 "European",  "South-East Asia",  "Western Pacific", "Global"))
@@ -547,7 +554,7 @@ ui = quantile(((global_0_4_female + global_0_4_male) - (global_0_4_female + glob
 print(sprintf("All orphans under one: %s [%s - %s]", 
               format(round(under_one_2021, -2), big.mark = ",", trim = TRUE),
               format(round.choose(quantile((global_0_4_female + global_0_4_male) * 0.2 * 0.5, probs = 0.025), 100, 0), big.mark = ",", trim = TRUE),
-              format(round.choose(quantile((global_0_4_female + global_0_4_male) * 0.2 * 0.5, probs = 0.025), 100, 1), big.mark = ",", trim = TRUE)))
+              format(round.choose(quantile((global_0_4_female + global_0_4_male) * 0.2 * 0.5, probs = 0.975), 100, 1), big.mark = ",", trim = TRUE)))
 
 print(sprintf("Reduced orphans: %s [%s - %s]", 
       format(round(under_one_2021_reduced, -2), big.mark = ",", trim = TRUE),
