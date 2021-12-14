@@ -871,8 +871,8 @@ run_age_analysis <- function(month = "_oct"){
   write.csv(samples, file = paste0("global_age_analysis_2021/data/age_outputs/samples_age_data_scaled", month, ".csv"), row.names=FALSE)
 }
 
-run_age_analysis(month = "")
+#run_age_analysis(month = "")
 run_age_analysis(month = "_oct")
-run_age_analysis(month = "_diff")
+#run_age_analysis(month = "_diff")
 
 
