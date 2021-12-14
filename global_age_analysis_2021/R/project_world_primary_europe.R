@@ -89,6 +89,8 @@ saveRDS(sprintf("%s [%s - %s]",
 saveRDS(c(sum(joined$final_primary_orphans), quantile(orphans_samples, probs = 0.025),  quantile(orphans_samples, probs = 0.975)), 
         file = "global_age_analysis_2021/data/un_formatted_primary.RDS")
 
+saveRDS(orphans_samples, "global_age_analysis_2021/data/p_total_samples.RDS")
+
 all_country_fit <- sum(joined$final_primary_orphans)
 
 orphanhood_country <- as.data.frame(estimates_primary_orphans)

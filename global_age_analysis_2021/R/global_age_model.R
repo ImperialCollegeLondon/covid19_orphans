@@ -484,13 +484,14 @@ print(tab, include.rownames=FALSE)
 
 
 reg_percent_summary$gender = c("male", "female")
-reg_percent_summary$age = c("old", "middle", "young")
+reg_percent_summary$age = rep(c("old", "middle", "young"), each = 2)
 
 dat = reg_percent_summary %>% group_by(age, region) %>% 
   summarise(mean = sum(mean),
             li = sum(li), 
             ui = sum(ui))
 print(dat)
+
 reg_percent_summary$region <- factor(reg_percent_summary$region,
                                      levels = c("African ", "Americas", "Eastern Mediterranean",
                                                 "European",  "South-East Asia",  "Western Pacific", "Global"))

@@ -44,6 +44,16 @@ format_table <- function(date){
             format(round.choose(quantile(diff, probs = 0.975), 100, 1), big.mark = ",", trim = TRUE)))
     
   }
+  
+  # Saves global samples with which date it is
+  ps_total <- readRDS("global_age_analysis_2021/data/ps_total_samples.RDS")
+  saveRDS(ps_total, paste0("global_age_analysis_2021/data/ps_total_samples_", date, ".RDS"))
+  
+  p_total <- readRDS("global_age_analysis_2021/data/p_total_samples.RDS")
+  saveRDS(p_total, paste0("global_age_analysis_2021/data/p_total_samples_", date, ".RDS"))
+  
+  pa_total <- readRDS("global_age_analysis_2021/data/pa_total_samples.RDS")
+  saveRDS(pa_total, paste0("global_age_analysis_2021/data/pa_total_samples_", date, ".RDS"))
 }
 
 combine_table <- function(){
@@ -53,6 +63,19 @@ combine_table <- function(){
   load("global_age_analysis_2021/data/age_outputs/formated_update_oct.RData")
   oct = data
   oct_extrapolation = extrapolation_data
+  
+  # Work out percentage change.
+  oct_ps = readRDS("global_age_analysis_2021/data/ps_total_samples_oct.RDS")
+  april_ps = readRDS("global_age_analysis_2021/data/ps_total_samples_apr.RDS")
+  diff_ps = quantile((oct_ps - april_ps) / april_ps, probs = c(0.025, 0.975))
+  
+  oct_p = readRDS("global_age_analysis_2021/data/p_total_samples_oct.RDS")
+  april_p = readRDS("global_age_analysis_2021/data/p_total_samples_apr.RDS")
+  diff_p = quantile((oct_p - april_p) / april_p,  probs = c(0.025, 0.975))
+  
+  oct_pa = readRDS("global_age_analysis_2021/data/pa_total_samples_oct.RDS")
+  april_pa= readRDS("global_age_analysis_2021/data/pa_total_samples_apr.RDS")
+  diff_pa = quantile((oct_pa - april_pa) / april_pa,  probs = c(0.025, 0.975))
   
   # Make extrapolation table.
   extrapolation = data.frame(type = c("orphan", "primary", "primary_secondary"))
@@ -70,8 +93,8 @@ combine_table <- function(){
                                        format(round.choose(oct_extrapolation$ui, 100, 1), big.mark = ",", trim = TRUE))
   extrapolation$percent_increase = sprintf("%.1f%% [%.1f%% - %.1f%%]", 
                                            (oct_extrapolation$mean - apr_extrapolation$mean)/apr_extrapolation$mean * 100,
-                                           (oct_extrapolation$li - apr_extrapolation$li)/apr_extrapolation$li * 100,
-                                           (oct_extrapolation$ui - apr_extrapolation$ui)/apr_extrapolation$ui * 100)
+                                           c(diff_pa[1], diff_p[1], diff_ps[1]) * 100,
+                                           c(diff_pa[2], diff_p[2], diff_ps[2]) * 100)
   write.csv(extrapolation, file = "global_age_analysis_2021/table_1_extrapolation_increase.csv", row.names=FALSE)
   
   
