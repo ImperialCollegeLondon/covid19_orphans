@@ -40,9 +40,10 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   arg <- NULL
   start_time <- Sys.time()
-  set.seed(3)
   for (i in 1:n){
+    set.seed(i)
     sample_deaths_argentina(month = month)
+    set.seed(i)
     process_number_children_colombia(uncertainty = TRUE)
     arg <- rbind(arg, process_orphans_age_argentina(uncertainty = TRUE, month = month))
   }
@@ -81,9 +82,10 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   bra <- NULL
   start_time <- Sys.time()
-  set.seed(3)
   for (i in 1:n){
+    set.seed(i)
     sample_deaths_brazil(month = month)
+    set.seed(i)
     process_number_children_brazil(uncertainty = TRUE)
     bra <- rbind(bra, process_orphans_age_brazil(uncertainty = TRUE, month = month))
   }
@@ -120,9 +122,10 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   col <- NULL
   start_time <- Sys.time()
-  set.seed(3)
   for (i in 1:n){
+    set.seed(i)
     sample_deaths_colombia(month = month)
+    set.seed(i)
     process_number_children_colombia(uncertainty = TRUE)
     col <- rbind(col, process_orphans_age_colombia(uncertainty = TRUE, month = month))
   }
@@ -159,9 +162,10 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   eng <- NULL
   start_time <- Sys.time()
-  set.seed(3)
   for (i in 1:n){
+    set.seed(i)
     sample_deaths_england_wales(month = month)
+    set.seed(i)
     process_number_children_england_wales(uncertainty = TRUE)
     eng <- rbind(eng, process_orphans_age_england_wales(uncertainty = TRUE, month = month))
   }
@@ -199,9 +203,10 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   fra <- NULL
   start_time <- Sys.time()
-  set.seed(3)
   for (i in 1:n){
+    set.seed(i)
     sample_deaths_france(month = month)
+    set.seed(i)
     process_number_children_france(uncertainty = TRUE)
     fra <- rbind(fra, process_orphans_age_france(uncertainty = TRUE, month = month))
   }
@@ -239,9 +244,10 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   ger <- NULL
   start_time <- Sys.time()
-  set.seed(3)
   for (i in 1:n){
+    set.seed(i)
     sample_deaths_germany(month = month)
+    set.seed(i)
     process_number_children_germany(uncertainty = TRUE)
     ger <- rbind(ger, process_orphans_age_germany(uncertainty = TRUE, month = month))
   }
@@ -278,9 +284,10 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   ind <- NULL
   start_time <- Sys.time()
-  set.seed(3)
   for (i in 1:n){
+    set.seed(i)
     sample_deaths_india(month = month)
+    set.seed(i)
     process_number_children_india(uncertainty = TRUE)
     ind <- rbind(ind, process_orphans_age_india(uncertainty = TRUE, month = month))
   }
@@ -318,9 +325,10 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   ira <- NULL
   start_time <- Sys.time()
-  set.seed(3)
   for (i in 1:n){
+    set.seed(i)
     sample_deaths_iran(month = month)
+    set.seed(i)
     process_number_children_iran(uncertainty = TRUE)
     ira <- rbind(ira, process_orphans_age_iran(uncertainty = TRUE, month = month))
   }
@@ -357,9 +365,10 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   ita <- NULL
   start_time <- Sys.time()
-  set.seed(3)
   for (i in 1:n){
+    set.seed(i)
     sample_deaths_italy(month = month)
+    set.seed(i)
     process_number_children_italy(uncertainty = TRUE)
     ita <- rbind(ita, process_orphans_age_italy(uncertainty = TRUE, month = month))
   }
@@ -396,9 +405,10 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   ken <- NULL
   start_time <- Sys.time()
-  set.seed(3)
   for (i in 1:n){
+    set.seed(i)
     sample_deaths_kenya(month = month)
+    set.seed(i)
     process_number_children_kenya(uncertainty = TRUE)
     ken <- rbind(ken, process_orphans_age_kenya(uncertainty = TRUE, month = month))
   }
@@ -435,9 +445,10 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   mal <- NULL
   start_time <- Sys.time()
-  set.seed(3)
   for (i in 1:n){
+    set.seed(i)
     sample_deaths_malawi(month = month)
+    set.seed(i)
     process_number_children_malawi(uncertainty = TRUE)
     mal <- rbind(mal, process_orphans_age_malawi(uncertainty = TRUE, month = month))
   }
@@ -474,9 +485,10 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   mex <- NULL
   start_time <- Sys.time()
-  set.seed(3)
   for (i in 1:n){
+    set.seed(i)
     sample_deaths_mexico(month = month)
+    set.seed(i)
     process_number_children_mexico(uncertainty = TRUE)
     mex <- rbind(mex, process_orphans_age_mexico(uncertainty = TRUE, month = month))
   }
@@ -513,9 +525,10 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   nig <- NULL
   start_time <- Sys.time()
-  set.seed(3)
   for (i in 1:n){
+    set.seed(i)
     sample_deaths_nigeria(month = month)
+    set.seed(i)
     process_number_children_nigeria(uncertainty = TRUE)
     nig <- rbind(nig, process_orphans_age_nigeria(uncertainty = TRUE, month = month))
   }
@@ -552,9 +565,10 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   per <- NULL
   start_time <- Sys.time()
-  set.seed(3)
   for (i in 1:n){
+    set.seed(i)
     sample_deaths_peru(month = month)
+    set.seed(i)
     process_number_children_peru(uncertainty = TRUE)
     per <- rbind(per, process_orphans_age_peru(uncertainty = TRUE, month = month))
   }
@@ -591,9 +605,10 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   phi <- NULL
   start_time <- Sys.time()
-  set.seed(3)
   for (i in 1:n){
+    set.seed(i)
     sample_deaths_philippines(month = month)
+    set.seed(i)
     process_number_children_philippines(uncertainty = TRUE)
     phi <- rbind(phi, process_orphans_age_philippines(uncertainty = TRUE, month = month))
   }
@@ -630,9 +645,10 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   pol <- NULL
   start_time <- Sys.time()
-  set.seed(3)
   for (i in 1:n){
+    set.seed(i)
     sample_deaths_poland(month = month)
+    set.seed(i)
     process_number_children_poland(uncertainty = TRUE)
     pol <- rbind(pol, process_orphans_age_poland(uncertainty = TRUE, month = month))
   }
@@ -673,9 +689,10 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   spa <- NULL
   start_time <- Sys.time()
-  set.seed(3)
   for (i in 1:n){
+    set.seed(i)
     sample_deaths_spain(month = month)
+    set.seed(i)
     process_number_children_spain(uncertainty = TRUE)
     spa <- rbind(spa, process_orphans_age_spain(uncertainty = TRUE, month = month))
   }
@@ -712,9 +729,10 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   sa <- NULL
   start_time <- Sys.time()
-  set.seed(3)
   for (i in 1:n){
+    set.seed(i)
     sample_deaths_south_africa(month = month)
+    set.seed(i)
     process_number_children_south_africa(uncertainty = TRUE)
     sa <- rbind(sa, process_orphans_age_southafrica(uncertainty = TRUE, month = month))
   }
@@ -751,9 +769,10 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   usa <- NULL
   start_time <- Sys.time()
-  set.seed(3)
   for (i in 1:n){
+    set.seed(i)
     sample_deaths_usa(month = month)
+    set.seed(i)
     process_number_children_usa(uncertainty = TRUE)
     usa <- rbind(usa, process_orphans_age_usa(uncertainty = TRUE, month = month))
   }
@@ -790,9 +809,10 @@ run_age_analysis <- function(month = "_oct"){
   cat(sprintf("Doing bootstrap\n"))
   zim <- NULL
   start_time <- Sys.time()
-  set.seed(3)
   for (i in 1:n){
+    set.seed(i)
     sample_deaths_zimbabwe(month = month)
+    set.seed(i)
     process_number_children_zimbabwe(uncertainty = TRUE)
     zim <- rbind(zim, process_orphans_age_zimbabwe(uncertainty = TRUE, month = month))
   }
@@ -851,8 +871,8 @@ run_age_analysis <- function(month = "_oct"){
   write.csv(samples, file = paste0("global_age_analysis_2021/data/age_outputs/samples_age_data_scaled", month, ".csv"), row.names=FALSE)
 }
 
-run_age_analysis(month = "")
+#run_age_analysis(month = "")
 run_age_analysis(month = "_oct")
-run_age_analysis(month = "_diff")
+#run_age_analysis(month = "_diff")
 
 

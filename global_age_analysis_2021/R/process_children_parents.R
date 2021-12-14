@@ -3813,11 +3813,11 @@ process_children_father_60_plus = function(country, data_f){
                         data_f$fertility_rate[which(data_f$age == "15-19" & data_f$date == 2020)])
   
   children[15,1] <- data_f$fertility_rate[which(data_f$age == "15-19" & data_f$date == 2020)]
-  plot(apply(children, 1, sum), xlab = "Age of father", ylab = "Number of children")
+  #plot(apply(children, 1, sum), xlab = "Age of father", ylab = "Number of children")
   children = as.data.frame(children)
   names(children) = paste0(seq(0:17)-1, ' years')
   
-  plot(apply(children, 1, sum), xlab = "Age of father", ylab = "Number of children")
+  #plot(apply(children, 1, sum), xlab = "Age of father", ylab = "Number of children")
   
   write.csv(file = paste0('global_age_analysis_2021/data/Russia/child_raw_m.csv'), children, row.names=FALSE)
   plot_c = as.data.frame(as.numeric(as.character(unlist(children))))
