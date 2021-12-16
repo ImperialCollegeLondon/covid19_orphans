@@ -4,7 +4,7 @@ source(file.path("global_age_analysis_2021/R","process_child_mortality.R"))
 source(file.path("global_age_analysis_2021/R","sample_fertility.R"))
 
 # Brazil
-process_number_children_brazil <- function(uncertainty = FALSE){
+process_number_children_brazil <- function(uncertainty = FALSE, seed = NA){
   # Calculate number of children from different aged fathers
   cat(sprintf("Processing number of children of fathers\n"))
   data = readRDS('global_age_analysis_2021/data/Brazil/male_fertility.RDS')
@@ -31,7 +31,7 @@ process_number_children_brazil <- function(uncertainty = FALSE){
   data_f$gender = 'M'
   
   if (uncertainty == TRUE){
-    data_f = sample_fertility(data_f, "Brazil", "Male")
+    data_f = sample_fertility(data_f, "Brazil", "Male", seed)
   }
   
   if (uncertainty == FALSE){
@@ -69,7 +69,7 @@ process_number_children_brazil <- function(uncertainty = FALSE){
   data_f$gender = 'F'  
   
   if (uncertainty == TRUE){
-    data_f = sample_fertility(data_f, "Brazil", "Female")
+    data_f = sample_fertility(data_f, "Brazil", "Female", seed)
   }
   
   if (uncertainty == FALSE){
@@ -88,7 +88,7 @@ process_number_children_brazil <- function(uncertainty = FALSE){
 }
 
 # Colombia
-process_number_children_colombia <- function(uncertainty = FALSE){
+process_number_children_colombia <- function(uncertainty = FALSE, seed = NA){
   # Calculate number of children from different aged fathers
   cat(sprintf("Processing number of children of fathers\n"))
   data = readRDS('global_age_analysis_2021/data/Colombia/male_fertility.RDS')
@@ -116,7 +116,7 @@ process_number_children_colombia <- function(uncertainty = FALSE){
   data_summary = data %>% group_by(age) %>% summarise(rate = mean(fertility_rate))
 
   if (uncertainty == TRUE){
-    data_f = sample_fertility(data_f, "Colombia", "Male")
+    data_f = sample_fertility(data_f, "Colombia", "Male", seed)
   }
   
   if (uncertainty == FALSE){
@@ -153,7 +153,7 @@ process_number_children_colombia <- function(uncertainty = FALSE){
   data_f$gender = 'F'
   
   if (uncertainty == TRUE){
-    data_f = sample_fertility(data_f, "Colombia", "Female")
+    data_f = sample_fertility(data_f, "Colombia", "Female", seed)
   }
   
   if (uncertainty == FALSE){
@@ -173,10 +173,10 @@ process_number_children_colombia <- function(uncertainty = FALSE){
 }
 
 # England and wales
-process_number_children_england_wales <- function(uncertainty = FALSE){
+process_number_children_england_wales <- function(uncertainty = FALSE, seed = NA){
   
   # Calculating fertility rates
-  process_england_wales_fertility(uncertainty = uncertainty)
+  process_england_wales_fertility(uncertainty = uncertainty, seed)
   
   # Adapting fertility with infant mortality
   cat(sprintf("Processing child mortality rates\n"))
@@ -232,10 +232,10 @@ process_number_children_england_wales <- function(uncertainty = FALSE){
 }
 
 # France
-process_number_children_france <- function(uncertainty = FALSE){
+process_number_children_france <- function(uncertainty = FALSE, seed = NA){
   # fertility
   cat(sprintf("Processing Fertility rates\n"))
-  process_france_fertility(uncertainty = uncertainty)
+  process_france_fertility(uncertainty = uncertainty, seed)
 
   # child mortality
   cat(sprintf("Processing child mortality rates\n"))
@@ -277,10 +277,10 @@ process_number_children_france <- function(uncertainty = FALSE){
 }
 
 # Germany
-process_number_children_germany <- function(uncertainty = FALSE){
+process_number_children_germany <- function(uncertainty = FALSE, seed = NA){
   # fertility
   cat(sprintf("Processing Fertility rates\n"))
-  process_germany_fertility(uncertainty = uncertainty)
+  process_germany_fertility(uncertainty = uncertainty, seed)
   # child mortality
   cat(sprintf("Processing child mortality rates\n"))
   process_child_mortality('Germany', 'Germany')
@@ -324,7 +324,7 @@ process_number_children_germany <- function(uncertainty = FALSE){
 }
 
 # India
-process_number_children_india <- function(uncertainty = FALSE){
+process_number_children_india <- function(uncertainty = FALSE, seed = NA){
   cat(sprintf("Processing number of children of fathers\n"))
   data = readRDS('global_age_analysis_2021/data/India/male_fertility.RDS')
   data$y2016 = data$y2015
@@ -349,7 +349,7 @@ process_number_children_india <- function(uncertainty = FALSE){
   data_f$gender = 'M'
   
   if (uncertainty == TRUE){
-    data_f = sample_fertility(data_f, "India", "Male")
+    data_f = sample_fertility(data_f, "India", "Male", seed)
   }
   
   if (uncertainty == FALSE){
@@ -387,7 +387,7 @@ process_number_children_india <- function(uncertainty = FALSE){
   data_f = data_f[which(data_f$age != "80+-NA" ),]
   
   if (uncertainty == TRUE){
-    data_f = sample_fertility(data_f, "India", "Female")
+    data_f = sample_fertility(data_f, "India", "Female", seed)
   }
   
   if (uncertainty == FALSE){
@@ -405,10 +405,10 @@ process_number_children_india <- function(uncertainty = FALSE){
 }
 
 # Iran
-process_number_children_iran <- function(uncertainty = FALSE){
+process_number_children_iran <- function(uncertainty = FALSE, seed = NA){
   # fertility
   cat(sprintf("Processing Fertility rates\n"))
-  process_iran_fertility(uncertainty = uncertainty)
+  process_iran_fertility(uncertainty = uncertainty, seed)
   # child mortality
   cat(sprintf("Processing child mortality rates\n"))
   process_child_mortality('Iran', 'Iran')
@@ -451,10 +451,10 @@ process_number_children_iran <- function(uncertainty = FALSE){
 
 
 # Italy
-process_number_children_italy <- function(uncertainty = FALSE){
+process_number_children_italy <- function(uncertainty = FALSE, seed = NA){
   # fertility
   cat(sprintf("Processing Fertility rates\n"))
-  process_italy_fertility(uncertainty = uncertainty)
+  process_italy_fertility(uncertainty = uncertainty, seed)
   # child mortality
   cat(sprintf("Processing child mortality rates\n"))
   process_child_mortality('Italy', 'Italy')
@@ -497,7 +497,7 @@ process_number_children_italy <- function(uncertainty = FALSE){
 }
 
 # Kenya
-process_number_children_kenya <- function(uncertainty = FALSE){
+process_number_children_kenya <- function(uncertainty = FALSE, seed = NA){
   # fathers
   cat(sprintf("Processing number of children of fathers\n"))
   data = readRDS('global_age_analysis_2021/data/Kenya/male_fertility.RDS')
@@ -524,7 +524,7 @@ process_number_children_kenya <- function(uncertainty = FALSE){
   data_f$gender = 'M'
   
   if (uncertainty == TRUE){
-    data_f = sample_fertility(data_f, "Kenya", "Male")
+    data_f = sample_fertility(data_f, "Kenya", "Male", seed)
   }
   
   if (uncertainty == FALSE){
@@ -562,7 +562,7 @@ process_number_children_kenya <- function(uncertainty = FALSE){
   data_f$gender = 'F'
   
   if (uncertainty == TRUE){
-    data_f = sample_fertility(data_f, "Kenya", "Female")
+    data_f = sample_fertility(data_f, "Kenya", "Female", seed)
   }
   
   if (uncertainty == FALSE){
@@ -581,7 +581,7 @@ process_number_children_kenya <- function(uncertainty = FALSE){
 }
 
 # Malawi
-process_number_children_malawi <- function(uncertainty = FALSE){
+process_number_children_malawi <- function(uncertainty = FALSE, seed = NA){
   # fathers
   cat(sprintf("Processing number of children of fathers\n"))
   
@@ -607,7 +607,7 @@ process_number_children_malawi <- function(uncertainty = FALSE){
   data_f$date = data_f$year
   data_f$gender = 'M'
   if (uncertainty == TRUE){
-    data_f = sample_fertility(data_f, "Malawi", "Male")
+    data_f = sample_fertility(data_f, "Malawi", "Male", seed)
   }
   
   if (uncertainty == FALSE){
@@ -643,7 +643,7 @@ process_number_children_malawi <- function(uncertainty = FALSE){
   data_f$date = data_f$year
   data_f$gender = 'F'
   if (uncertainty == TRUE){
-    data_f = sample_fertility(data_f, "Malawi", "Female")
+    data_f = sample_fertility(data_f, "Malawi", "Female", seed)
   }
   
   if (uncertainty == FALSE){
@@ -662,10 +662,10 @@ process_number_children_malawi <- function(uncertainty = FALSE){
 }
 
 # Mexico
-process_number_children_mexico <- function(uncertainty = FALSE){
+process_number_children_mexico <- function(uncertainty = FALSE, seed = NA){
   # fertility
   cat(sprintf("Processing Fertility rates\n"))
-  process_mexico_fertility(uncertainty = uncertainty)
+  process_mexico_fertility(uncertainty = uncertainty, seed)
   # child mortality
   cat(sprintf("Processing child mortality rates\n"))
   process_child_mortality('Mexico', 'Mexico')
@@ -709,7 +709,7 @@ process_number_children_mexico <- function(uncertainty = FALSE){
 }
 
 # Nigeria
-process_number_children_nigeria <- function(uncertainty = FALSE){
+process_number_children_nigeria <- function(uncertainty = FALSE, seed = NA){
   # fathers
   cat(sprintf("Processing number of children of fathers\n"))
 
@@ -733,7 +733,7 @@ process_number_children_nigeria <- function(uncertainty = FALSE){
   data_f$gender = 'M'
   
   if (uncertainty == TRUE){
-    data_f = sample_fertility(data_f, "Nigeria", "Male")
+    data_f = sample_fertility(data_f, "Nigeria", "Male", seed)
   }
   
   if (uncertainty == FALSE){
@@ -767,7 +767,7 @@ process_number_children_nigeria <- function(uncertainty = FALSE){
   data_f$date = data_f$year
   data_f$gender = 'F'
   if (uncertainty == TRUE){
-    data_f = sample_fertility(data_f, "Nigeria", "Female")
+    data_f = sample_fertility(data_f, "Nigeria", "Female", seed)
   }
   
   if (uncertainty == FALSE){
@@ -785,7 +785,7 @@ process_number_children_nigeria <- function(uncertainty = FALSE){
 }
 
 # Peru
-process_number_children_peru <- function(uncertainty = FALSE){
+process_number_children_peru <- function(uncertainty = FALSE, seed = NA){
   # fathers
   cat(sprintf("Processing number of children of fathers\n"))
   data = readRDS('global_age_analysis_2021/data/Peru/male_fertility.RDS')
@@ -813,7 +813,7 @@ process_number_children_peru <- function(uncertainty = FALSE){
   data_f$date = data_f$year
   data_f$gender = 'M'  
   if (uncertainty == TRUE){
-    data_f = sample_fertility(data_f, "Peru", "Male")
+    data_f = sample_fertility(data_f, "Peru", "Male", seed)
   }
   
   if (uncertainty == FALSE){
@@ -851,7 +851,7 @@ process_number_children_peru <- function(uncertainty = FALSE){
   data_f$date = data_f$year
   data_f$gender = 'F'
   if (uncertainty == TRUE){
-    data_f = sample_fertility(data_f, "Peru", "Female")
+    data_f = sample_fertility(data_f, "Peru", "Female", seed)
   }
   
   if (uncertainty == FALSE){
@@ -869,10 +869,10 @@ process_number_children_peru <- function(uncertainty = FALSE){
 }
 
 # Philippines
-process_number_children_philippines <- function(uncertainty = FALSE){
+process_number_children_philippines <- function(uncertainty = FALSE, seed = NA){
   # fertility
   cat(sprintf("Processing Fertility rates\n"))
-  process_philippines_fertility(uncertainty = uncertainty)
+  process_philippines_fertility(uncertainty = uncertainty, seed)
   # child mortality
   cat(sprintf("Processing child mortality rates\n"))
   process_child_mortality('Philippines', 'Philippines')
@@ -914,10 +914,10 @@ process_number_children_philippines <- function(uncertainty = FALSE){
 }
 
 # Poland
-process_number_children_poland <- function(uncertainty = FALSE){
+process_number_children_poland <- function(uncertainty = FALSE, seed){
   # fertility
   cat(sprintf("Processing Fertility rates\n"))
-  process_poland_fertility(uncertainty = uncertainty)
+  process_poland_fertility(uncertainty = uncertainty, seed)
   # child mortality
   cat(sprintf("Processing child mortality rates\n"))
   process_child_mortality('Poland', 'Poland')
@@ -994,9 +994,9 @@ process_number_children_russia <- function(){
 }
 
 # Spain
-process_number_children_spain <- function(uncertainty = FALSE){
+process_number_children_spain <- function(uncertainty = FALSE, seed = NA){
   cat(sprintf("Processing Fertility rates\n"))
-  process_spain_fertility(uncertainty = uncertainty)
+  process_spain_fertility(uncertainty = uncertainty, seed)
   # child mortality
   cat(sprintf("Processing child mortality rates\n"))
   process_child_mortality('Spain', 'Spain')
@@ -1039,7 +1039,7 @@ process_number_children_spain <- function(uncertainty = FALSE){
 }
 
 # South Africa
-process_number_children_south_africa <- function(uncertainty = FALSE){
+process_number_children_south_africa <- function(uncertainty = FALSE, seed = NA){
   # fathers
   cat(sprintf("Processing number of children of fathers\n"))
   data = readRDS('global_age_analysis_2021/data/SouthAfrica/male_fertility.RDS')
@@ -1063,7 +1063,7 @@ process_number_children_south_africa <- function(uncertainty = FALSE){
   data_f$date = data_f$year
   data_f$gender = 'M'
   if (uncertainty == TRUE){
-    data_f = sample_fertility(data_f, "South Africa", "Male")
+    data_f = sample_fertility(data_f, "South Africa", "Male", seed)
   }
   
   if (uncertainty == FALSE){
@@ -1098,7 +1098,7 @@ process_number_children_south_africa <- function(uncertainty = FALSE){
   data_f$date = data_f$year
   data_f$gender = 'F'
   if (uncertainty == TRUE){
-    data_f = sample_fertility(data_f, "South Africa", "Female")
+    data_f = sample_fertility(data_f, "South Africa", "Female", seed)
   }
   
   if (uncertainty == FALSE){
@@ -1116,9 +1116,9 @@ process_number_children_south_africa <- function(uncertainty = FALSE){
 }
 
 # USA
-process_number_children_usa <- function(uncertainty = FALSE){
+process_number_children_usa <- function(uncertainty = FALSE, seed = NA){
   cat(sprintf("Processing Fertility rates\n"))
-  process_usa_fertility(uncertainty = uncertainty)
+  process_usa_fertility(uncertainty = uncertainty, seed)
 
   # child mortality
   cat(sprintf("Processing child mortality rates\n"))
@@ -1162,7 +1162,7 @@ process_number_children_usa <- function(uncertainty = FALSE){
 }
 
 # Zimbabwe
-process_number_children_zimbabwe<- function(uncertainty = FALSE){
+process_number_children_zimbabwe<- function(uncertainty = FALSE, seed = NA){
   # fathers
   cat(sprintf("Processing number of children of fathers\n"))
   
@@ -1188,7 +1188,7 @@ process_number_children_zimbabwe<- function(uncertainty = FALSE){
   data_f$date = data_f$year
   data_f$gender = 'M'
   if (uncertainty == TRUE){
-    data_f = sample_fertility(data_f, "Zimbabwe", "Male")
+    data_f = sample_fertility(data_f, "Zimbabwe", "Male", seed)
   }
   
   if (uncertainty == FALSE){
@@ -1223,7 +1223,7 @@ process_number_children_zimbabwe<- function(uncertainty = FALSE){
   data_f$date = data_f$year
   data_f$gender = 'F'
   if (uncertainty == TRUE){
-    data_f = sample_fertility(data_f, "Zimbabwe", "Female")
+    data_f = sample_fertility(data_f, "Zimbabwe", "Female", seed)
   }
   
   if (uncertainty == FALSE){

@@ -119,7 +119,7 @@ process_fertility_all_countries = function(){
 }
 
 # England and Wales
-process_england_wales_fertility = function(uncertainty = FALSE){
+process_england_wales_fertility = function(uncertainty = FALSE, seed){
   # url = 'https://www.ons.gov.uk/file?uri=%2fpeoplepopulationandcommunity%2fbirthsdeathsandmarriages%2flivebirths%2fdatasets%2fbirthsbyparentscharacteristics%2f2018/parentscharacteristics2018workbook.xls'
   #download.file(url, 'global_age_analysis_2021/data/fertility/england_wales_births.xls')
   data = readxl::read_xls('global_age_analysis_2021/data/UK/england_wales_births.xls', sheet = 11)
@@ -182,6 +182,7 @@ process_england_wales_fertility = function(uncertainty = FALSE){
   if (uncertainty == FALSE){
     dd_data[, rate := 1000* births/pop_nb]
   } else {
+    set.seed(seed)
     dd_data$births_sample = rpois(length(dd_data$births), round(dd_data$births))
     dd_data[, rate := 1000* births_sample/pop_nb]
   }
@@ -251,6 +252,7 @@ process_england_wales_fertility = function(uncertainty = FALSE){
     write.csv(d_all, file = 'global_age_analysis_2021/data/UK/england_wales_fertility_all.csv', row.names=FALSE)
     
   } else {
+    set.seed(i)
     d_data$value_sample = rpois(length(d_data$value), d_data$value)
     d_data[,rate := 1000* value_sample /pop_nb]
     
@@ -262,7 +264,7 @@ process_england_wales_fertility = function(uncertainty = FALSE){
 }
 
 # France
-process_france_fertility = function(uncertainty  = FALSE){
+process_france_fertility = function(uncertainty  = FALSE, seed){
   data_fertility = read.csv('global_age_analysis_2021/data/fertility/unsd_live_births.csv')
   data_fertility = data_fertility %>% filter(country == 'France',
                                              age != 'Unknown - Inconnu',
@@ -299,6 +301,7 @@ process_france_fertility = function(uncertainty  = FALSE){
   data_combine = merge(data_fertility, data_pop, by = c('year', 'age', 'gender'))
   
   if (uncertainty == TRUE){
+    set.seed(i)
     data_combine$value  =  rpois(length(data_combine$value), data_combine$value)
   }
   data_combine[,fertility_rate := value / (pop)]
@@ -403,6 +406,7 @@ process_france_fertility = function(uncertainty  = FALSE){
     births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "age"))
     births$num_births =  round(births$fertility_rate/1000 * births$pop * 1000)
     
+    set.seed(i)
     births$sample_births = rpois(length(births$num_births), births$num_births)
     
     births$fertility_rate <- births$sample_births / births$pop
@@ -422,7 +426,7 @@ process_france_fertility = function(uncertainty  = FALSE){
 }
 
 # Germany
-process_germany_fertility = function(uncertainty = FALSE){
+process_germany_fertility = function(uncertainty = FALSE, seed){
   data_fertility = read.csv('global_age_analysis_2021/data/fertility/unsd_live_births.csv')
   data_fertility = data_fertility %>% filter(country == 'Germany',
                                              age != 'Unknown - Inconnu',
@@ -459,6 +463,7 @@ process_germany_fertility = function(uncertainty = FALSE){
   data_combine= merge(data_fertility, data_pop, by = c('year', 'age', 'gender'))
   
   if (uncertainty == TRUE){
+    set.seed(i)
     data_combine$value  =  rpois(length(data_combine$value), data_combine$value)
   }
   
@@ -551,6 +556,7 @@ process_germany_fertility = function(uncertainty = FALSE){
     births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "age"))
     births$num_births =  round(births$fertility_rate/1000 * births$pop * 1000)
     
+    set.seed(i)
     births$sample_births = rpois(length(births$num_births), births$num_births)
     
     births$fertility_rate <- births$sample_births / births$pop
@@ -567,7 +573,7 @@ process_germany_fertility = function(uncertainty = FALSE){
 }
 
 # Iran
-process_iran_fertility = function(uncertainty = FALSE){
+process_iran_fertility = function(uncertainty = FALSE, seed){
 
   # from WPP
   data = read_excel("global_age_analysis_2021/data/WPP2019_FERT_F07_AGE_SPECIFIC_FERTILITY.xlsx")
@@ -611,6 +617,7 @@ process_iran_fertility = function(uncertainty = FALSE){
     births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "age"))
     births$num_births =  round(births$fertility_rate/1000 * births$pop * 1000)
     
+    set.seed(i)
     births$sample_births = rpois(length(births$num_births), births$num_births)
     
     births$fertility_rate <- births$sample_births / births$pop
@@ -661,7 +668,7 @@ process_iran_fertility = function(uncertainty = FALSE){
 }
 
 # Italy
-process_italy_fertility = function(uncertainty = FALSE){
+process_italy_fertility = function(uncertainty = FALSE, seed){
   data_fertility = read.csv('global_age_analysis_2021/data/fertility/unsd_live_births.csv')
   data_fertility = data_fertility %>% filter(country == 'Italy',
                                              age != 'Unknown - Inconnu',
@@ -703,6 +710,7 @@ process_italy_fertility = function(uncertainty = FALSE){
   data_combine[,fertility_rate := value / (pop)]
   
   if (uncertainty == TRUE){
+    set.seed(i)
     data_combine$value  =  rpois(length(data_combine$value), data_combine$value)
   }
   
@@ -791,6 +799,7 @@ process_italy_fertility = function(uncertainty = FALSE){
     births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "age"))
     births$num_births =  round(births$fertility_rate/1000 * births$pop * 1000)
     
+    set.seed(i)
     births$sample_births = rpois(length(births$num_births), births$num_births)
     
     births$fertility_rate <- births$sample_births / births$pop
@@ -806,7 +815,7 @@ process_italy_fertility = function(uncertainty = FALSE){
 }
 
 # Mexico
-process_mexico_fertility = function(uncertainty = FALSE){
+process_mexico_fertility = function(uncertainty = FALSE, seed){
   data_fertility = read.csv('global_age_analysis_2021/data/fertility/unsd_live_births.csv')
   data_fertility = data_fertility %>% filter(country == 'Mexico',
                                              age != 'Unknown - Inconnu',
@@ -846,6 +855,7 @@ process_mexico_fertility = function(uncertainty = FALSE){
   data_combine= merge(data_fertility, data_pop, by = c('year', 'age', 'gender'))
   
   if (uncertainty == TRUE){
+    set.seed(i)
     data_combine$value  =  rpois(length(data_combine$value), data_combine$value)
   }
   data_combine[,fertility_rate := value / (pop)]
@@ -933,6 +943,7 @@ process_mexico_fertility = function(uncertainty = FALSE){
     births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "age"))
     births$num_births =  round(births$fertility_rate/1000 * births$pop * 1000)
     
+    set.seed(i)
     births$sample_births = rpois(length(births$num_births), births$num_births)
     
     births$fertility_rate <- births$sample_births / births$pop
@@ -948,7 +959,7 @@ process_mexico_fertility = function(uncertainty = FALSE){
   
 }
 
-process_philippines_fertility = function(uncertainty = FALSE){
+process_philippines_fertility = function(uncertainty = FALSE, seed){
   data_fertility = read.csv('global_age_analysis_2021/data/fertility/unsd_live_births.csv', stringsAsFactors = FALSE)
   data_fertility = data_fertility %>% filter(country == 'Philippines',
                                              age != 'Unknown - Inconnu',
@@ -984,6 +995,7 @@ process_philippines_fertility = function(uncertainty = FALSE){
   data_fertility$value = as.numeric(data_fertility$value)
   data_combine= merge(data_fertility, data_pop, by = c('year', 'age', 'gender'))
   if (uncertainty == TRUE){
+    set.seed(i)
     data_combine$value  =  rpois(length(data_combine$value), data_combine$value)
   }
   
@@ -1096,6 +1108,7 @@ process_philippines_fertility = function(uncertainty = FALSE){
     births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "age"))
     births$num_births =  round(births$fertility_rate/1000 * births$pop * 1000)
     
+    set.seed(i)
     births$sample_births = rpois(length(births$num_births), births$num_births)
     
     births$fertility_rate <- births$sample_births / births$pop
@@ -1112,7 +1125,7 @@ process_philippines_fertility = function(uncertainty = FALSE){
 }
 
 # Poland
-process_poland_fertility = function(uncertainty = FALSE){
+process_poland_fertility = function(uncertainty = FALSE, seed){
   data_fertility = read.csv('global_age_analysis_2021/data/fertility/unsd_live_births.csv')
   data_fertility = data_fertility %>% filter(country == 'Poland',
                                              age != 'Unknown - Inconnu',
@@ -1166,6 +1179,7 @@ process_poland_fertility = function(uncertainty = FALSE){
   data_combine = data.table(data_combine)
   
   if (uncertainty == TRUE){
+    set.seed(i)
     data_combine$value  =  rpois(length(data_combine$value), data_combine$value)
   }
   
@@ -1261,6 +1275,7 @@ process_poland_fertility = function(uncertainty = FALSE){
     births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "age"))
     births$num_births =  round(births$fertility_rate/1000 * births$pop * 1000)
     
+    set.seed(i)
     births$sample_births = rpois(length(births$num_births), births$num_births)
     
     births$fertility_rate <- births$sample_births / births$pop
@@ -1364,7 +1379,7 @@ process_russia_fertility = function(){
 }
 
 # Spain
-process_spain_fertility = function(uncertainty = FALSE){
+process_spain_fertility = function(uncertainty = FALSE, seed){
   data_fertility = read.csv('global_age_analysis_2021/data/fertility/unsd_live_births.csv')
   data_fertility = data_fertility %>% filter(country == 'Spain',
                                              age != 'Unknown - Inconnu',
@@ -1403,6 +1418,7 @@ process_spain_fertility = function(uncertainty = FALSE){
   data_combine= merge(data_fertility, data_pop, by = c('year', 'age', 'gender'))
   
   if (uncertainty == TRUE){
+    set.seed(i)
     data_combine$value  =  rpois(length(data_combine$value), data_combine$value)
   }
   
@@ -1497,7 +1513,7 @@ process_spain_fertility = function(uncertainty = FALSE){
     
     births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "age"))
     births$num_births =  round(births$fertility_rate/1000 * births$pop * 1000)
-    
+    set.seed(i)
     births$sample_births = rpois(length(births$num_births), births$num_births)
     
     births$fertility_rate <- births$sample_births / births$pop
@@ -1514,7 +1530,7 @@ process_spain_fertility = function(uncertainty = FALSE){
 }
 
 # USA
-process_usa_fertility = function(uncertainty = FALSE){
+process_usa_fertility = function(uncertainty = FALSE, seed){
   data_fertility = read.csv('global_age_analysis_2021/data/fertility/unsd_live_births.csv')
   data_fertility = data_fertility %>% filter(country == 'United States of America',
                                              age != 'Unknown - Inconnu',
@@ -1559,6 +1575,7 @@ process_usa_fertility = function(uncertainty = FALSE){
   data_fertility = as.data.table(data_fertility)
   data_combine= merge(data_fertility, data_pop, by = c('year', 'age', 'gender'))
   if (uncertainty == TRUE){
+    set.seed(i)
     data_combine$value  =  rpois(length(data_combine$value), data_combine$value)
   }
   data_combine[,fertility_rate := value / (pop)]
@@ -1654,7 +1671,7 @@ process_usa_fertility = function(uncertainty = FALSE){
     
     births = left_join(d_wpp_long_rep, data_pop, c("date" = 'year', "gender", "age"))
     births$num_births =  round(births$fertility_rate/1000 * births$pop * 1000)
-    
+    set.seed(i)
     births$sample_births = rpois(length(births$num_births), births$num_births)
     
     births$fertility_rate <- births$sample_births / births$pop

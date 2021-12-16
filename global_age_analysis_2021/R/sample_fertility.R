@@ -1,4 +1,4 @@
-sample_fertility <- function(data, country, gender){
+sample_fertility <- function(data, country, gender, seed){
   
   # Extract population
   data_pop = readxl::read_xlsx('global_age_analysis_2021/data/fertility/pop.xlsx', sheet = 2)
@@ -31,6 +31,7 @@ sample_fertility <- function(data, country, gender){
   
   births$num_births =  round(births$fertility_rate/1000 * births$pop * 1000)
   
+  set.seed(seed)
   births$sample_births = rpois(length(births$num_births), births$num_births)
   
   births$fertility_rate <- births$sample_births / births$pop

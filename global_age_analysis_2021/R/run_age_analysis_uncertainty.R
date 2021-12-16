@@ -15,7 +15,7 @@ source("global_age_analysis_2021/R/number_orphans_age.R")
 source("global_age_analysis_2021/R/process_number_children.R")
 source("global_age_analysis_2021/R/get_diff_deaths.R")
 
-n = 1000
+n = 2
 
 run_age_analysis <- function(month = "_oct"){
   if (month != "_diff"){
@@ -41,10 +41,8 @@ run_age_analysis <- function(month = "_oct"){
   arg <- NULL
   start_time <- Sys.time()
   for (i in 1:n){
-    set.seed(i)
-    sample_deaths_argentina(month = month)
-    set.seed(i)
-    process_number_children_colombia(uncertainty = TRUE)
+    sample_deaths_argentina(month = month, seed = i)
+    process_number_children_colombia(uncertainty = TRUE, seed = i)
     arg <- rbind(arg, process_orphans_age_argentina(uncertainty = TRUE, month = month))
   }
   
@@ -83,10 +81,8 @@ run_age_analysis <- function(month = "_oct"){
   bra <- NULL
   start_time <- Sys.time()
   for (i in 1:n){
-    set.seed(i)
-    sample_deaths_brazil(month = month)
-    set.seed(i)
-    process_number_children_brazil(uncertainty = TRUE)
+    sample_deaths_brazil(month = month, seed = i)
+    process_number_children_brazil(uncertainty = TRUE, seed = i)
     bra <- rbind(bra, process_orphans_age_brazil(uncertainty = TRUE, month = month))
   }
   
@@ -123,10 +119,8 @@ run_age_analysis <- function(month = "_oct"){
   col <- NULL
   start_time <- Sys.time()
   for (i in 1:n){
-    set.seed(i)
-    sample_deaths_colombia(month = month)
-    set.seed(i)
-    process_number_children_colombia(uncertainty = TRUE)
+    sample_deaths_colombia(month = month, seed = i)
+    process_number_children_colombia(uncertainty = TRUE, seed = i)
     col <- rbind(col, process_orphans_age_colombia(uncertainty = TRUE, month = month))
   }
   
@@ -163,10 +157,8 @@ run_age_analysis <- function(month = "_oct"){
   eng <- NULL
   start_time <- Sys.time()
   for (i in 1:n){
-    set.seed(i)
-    sample_deaths_england_wales(month = month)
-    set.seed(i)
-    process_number_children_england_wales(uncertainty = TRUE)
+    sample_deaths_england_wales(month = month, seed = i)
+    process_number_children_england_wales(uncertainty = TRUE, seed = i)
     eng <- rbind(eng, process_orphans_age_england_wales(uncertainty = TRUE, month = month))
   }
   
@@ -204,10 +196,8 @@ run_age_analysis <- function(month = "_oct"){
   fra <- NULL
   start_time <- Sys.time()
   for (i in 1:n){
-    set.seed(i)
-    sample_deaths_france(month = month)
-    set.seed(i)
-    process_number_children_france(uncertainty = TRUE)
+    sample_deaths_france(month = month, seed = i)
+    process_number_children_france(uncertainty = TRUE, seed = i)
     fra <- rbind(fra, process_orphans_age_france(uncertainty = TRUE, month = month))
   }
   
@@ -245,10 +235,8 @@ run_age_analysis <- function(month = "_oct"){
   ger <- NULL
   start_time <- Sys.time()
   for (i in 1:n){
-    set.seed(i)
-    sample_deaths_germany(month = month)
-    set.seed(i)
-    process_number_children_germany(uncertainty = TRUE)
+    sample_deaths_germany(month = month, seed = i)
+    process_number_children_germany(uncertainty = TRUE, seed = i)
     ger <- rbind(ger, process_orphans_age_germany(uncertainty = TRUE, month = month))
   }
   
@@ -285,10 +273,8 @@ run_age_analysis <- function(month = "_oct"){
   ind <- NULL
   start_time <- Sys.time()
   for (i in 1:n){
-    set.seed(i)
-    sample_deaths_india(month = month)
-    set.seed(i)
-    process_number_children_india(uncertainty = TRUE)
+    sample_deaths_india(month = month, seed = i)
+    process_number_children_india(uncertainty = TRUE, seed = i)
     ind <- rbind(ind, process_orphans_age_india(uncertainty = TRUE, month = month))
   }
   
@@ -326,10 +312,8 @@ run_age_analysis <- function(month = "_oct"){
   ira <- NULL
   start_time <- Sys.time()
   for (i in 1:n){
-    set.seed(i)
-    sample_deaths_iran(month = month)
-    set.seed(i)
-    process_number_children_iran(uncertainty = TRUE)
+    sample_deaths_iran(month = month, seed = i)
+    process_number_children_iran(uncertainty = TRUE, seed = i)
     ira <- rbind(ira, process_orphans_age_iran(uncertainty = TRUE, month = month))
   }
   
@@ -366,10 +350,8 @@ run_age_analysis <- function(month = "_oct"){
   ita <- NULL
   start_time <- Sys.time()
   for (i in 1:n){
-    set.seed(i)
-    sample_deaths_italy(month = month)
-    set.seed(i)
-    process_number_children_italy(uncertainty = TRUE)
+    sample_deaths_italy(month = month, seed = i)
+    process_number_children_italy(uncertainty = TRUE, seed = i)
     ita <- rbind(ita, process_orphans_age_italy(uncertainty = TRUE, month = month))
   }
   
@@ -406,10 +388,8 @@ run_age_analysis <- function(month = "_oct"){
   ken <- NULL
   start_time <- Sys.time()
   for (i in 1:n){
-    set.seed(i)
-    sample_deaths_kenya(month = month)
-    set.seed(i)
-    process_number_children_kenya(uncertainty = TRUE)
+    sample_deaths_kenya(month = month, seed = i)
+    process_number_children_kenya(uncertainty = TRUE, seed = i)
     ken <- rbind(ken, process_orphans_age_kenya(uncertainty = TRUE, month = month))
   }
   
@@ -446,10 +426,8 @@ run_age_analysis <- function(month = "_oct"){
   mal <- NULL
   start_time <- Sys.time()
   for (i in 1:n){
-    set.seed(i)
-    sample_deaths_malawi(month = month)
-    set.seed(i)
-    process_number_children_malawi(uncertainty = TRUE)
+    sample_deaths_malawi(month = month, seed = i)
+    process_number_children_malawi(uncertainty = TRUE, seed = i)
     mal <- rbind(mal, process_orphans_age_malawi(uncertainty = TRUE, month = month))
   }
   
@@ -486,10 +464,8 @@ run_age_analysis <- function(month = "_oct"){
   mex <- NULL
   start_time <- Sys.time()
   for (i in 1:n){
-    set.seed(i)
-    sample_deaths_mexico(month = month)
-    set.seed(i)
-    process_number_children_mexico(uncertainty = TRUE)
+    sample_deaths_mexico(month = month, seed = i)
+    process_number_children_mexico(uncertainty = TRUE, seed = i)
     mex <- rbind(mex, process_orphans_age_mexico(uncertainty = TRUE, month = month))
   }
   
@@ -526,10 +502,8 @@ run_age_analysis <- function(month = "_oct"){
   nig <- NULL
   start_time <- Sys.time()
   for (i in 1:n){
-    set.seed(i)
-    sample_deaths_nigeria(month = month)
-    set.seed(i)
-    process_number_children_nigeria(uncertainty = TRUE)
+    sample_deaths_nigeria(month = month, seed = i)
+    process_number_children_nigeria(uncertainty = TRUE, seed = i)
     nig <- rbind(nig, process_orphans_age_nigeria(uncertainty = TRUE, month = month))
   }
   
@@ -566,10 +540,8 @@ run_age_analysis <- function(month = "_oct"){
   per <- NULL
   start_time <- Sys.time()
   for (i in 1:n){
-    set.seed(i)
-    sample_deaths_peru(month = month)
-    set.seed(i)
-    process_number_children_peru(uncertainty = TRUE)
+    sample_deaths_peru(month = month, seed = i)
+    process_number_children_peru(uncertainty = TRUE, seed = i)
     per <- rbind(per, process_orphans_age_peru(uncertainty = TRUE, month = month))
   }
   
@@ -606,10 +578,8 @@ run_age_analysis <- function(month = "_oct"){
   phi <- NULL
   start_time <- Sys.time()
   for (i in 1:n){
-    set.seed(i)
-    sample_deaths_philippines(month = month)
-    set.seed(i)
-    process_number_children_philippines(uncertainty = TRUE)
+    sample_deaths_philippines(month = month, seed = i)
+    process_number_children_philippines(uncertainty = TRUE, seed = i)
     phi <- rbind(phi, process_orphans_age_philippines(uncertainty = TRUE, month = month))
   }
   
@@ -646,10 +616,8 @@ run_age_analysis <- function(month = "_oct"){
   pol <- NULL
   start_time <- Sys.time()
   for (i in 1:n){
-    set.seed(i)
-    sample_deaths_poland(month = month)
-    set.seed(i)
-    process_number_children_poland(uncertainty = TRUE)
+    sample_deaths_poland(month = month, seed = i)
+    process_number_children_poland(uncertainty = TRUE, seed = i)
     pol <- rbind(pol, process_orphans_age_poland(uncertainty = TRUE, month = month))
   }
   
@@ -690,10 +658,8 @@ run_age_analysis <- function(month = "_oct"){
   spa <- NULL
   start_time <- Sys.time()
   for (i in 1:n){
-    set.seed(i)
-    sample_deaths_spain(month = month)
-    set.seed(i)
-    process_number_children_spain(uncertainty = TRUE)
+    sample_deaths_spain(month = month, seed = i)
+    process_number_children_spain(uncertainty = TRUE, seed = i)
     spa <- rbind(spa, process_orphans_age_spain(uncertainty = TRUE, month = month))
   }
   
@@ -730,10 +696,8 @@ run_age_analysis <- function(month = "_oct"){
   sa <- NULL
   start_time <- Sys.time()
   for (i in 1:n){
-    set.seed(i)
-    sample_deaths_south_africa(month = month)
-    set.seed(i)
-    process_number_children_south_africa(uncertainty = TRUE)
+    sample_deaths_south_africa(month = month, seed = i)
+    process_number_children_south_africa(uncertainty = TRUE, seed = i)
     sa <- rbind(sa, process_orphans_age_southafrica(uncertainty = TRUE, month = month))
   }
   
@@ -770,10 +734,8 @@ run_age_analysis <- function(month = "_oct"){
   usa <- NULL
   start_time <- Sys.time()
   for (i in 1:n){
-    set.seed(i)
-    sample_deaths_usa(month = month)
-    set.seed(i)
-    process_number_children_usa(uncertainty = TRUE)
+    sample_deaths_usa(month = month, seed = i)
+    process_number_children_usa(uncertainty = TRUE, seed = i)
     usa <- rbind(usa, process_orphans_age_usa(uncertainty = TRUE, month = month))
   }
   
@@ -810,10 +772,8 @@ run_age_analysis <- function(month = "_oct"){
   zim <- NULL
   start_time <- Sys.time()
   for (i in 1:n){
-    set.seed(i)
-    sample_deaths_zimbabwe(month = month)
-    set.seed(i)
-    process_number_children_zimbabwe(uncertainty = TRUE)
+    sample_deaths_zimbabwe(month = month, seed = i)
+    process_number_children_zimbabwe(uncertainty = TRUE, seed = i)
     zim <- rbind(zim, process_orphans_age_zimbabwe(uncertainty = TRUE, month = month))
   }
   

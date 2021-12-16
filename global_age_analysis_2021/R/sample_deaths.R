@@ -1,7 +1,8 @@
 library(tidyverse)
 
 # Argentina
-sample_deaths_argentina <- function(month = ""){
+sample_deaths_argentina <- function(month = "", seed){
+  set.seed(seed)
   d_merge = read.csv(paste0('global_age_analysis_2021/data/Argentina/covid19_deaths', month, '.csv'), stringsAsFactors = FALSE)
   d_merge$deaths <- rpois(length(d_merge$deaths), d_merge$deaths)
   
@@ -9,7 +10,8 @@ sample_deaths_argentina <- function(month = ""){
 }
 
 # Brazil
-sample_deaths_brazil <- function(month = ""){
+sample_deaths_brazil <- function(month = "", seed){
+  set.seed(seed)
   d_merge = read.csv(paste0('global_age_analysis_2021/data/Brazil/covid19_deaths', month, '.csv'), stringsAsFactors = FALSE)
   d_merge$COVID19_deaths <- rpois(length(d_merge$COVID19_deaths), d_merge$COVID19_deaths)
   
@@ -17,7 +19,8 @@ sample_deaths_brazil <- function(month = ""){
 }
 
 # Colombia
-sample_deaths_colombia <- function(month = ""){
+sample_deaths_colombia <- function(month = "", seed){
+  set.seed(seed)
   d_merge = read.csv(paste0('global_age_analysis_2021/data/Colombia/covid19_deaths_all', month, '.csv'), stringsAsFactors = FALSE)
   d_merge$deaths <- rpois(length(d_merge$deaths), d_merge$deaths)
   
@@ -25,7 +28,8 @@ sample_deaths_colombia <- function(month = ""){
 }
 
 # England and Wales
-sample_deaths_england_wales <- function(month = ""){
+sample_deaths_england_wales <- function(month = "", seed){
+  set.seed(seed)
   d_deaths = read.csv(paste0('global_age_analysis_2021/data/UK/deaths_all_england_wales', month, '.csv'), stringsAsFactors = FALSE)
   d_merge = d_deaths
   
@@ -45,7 +49,8 @@ sample_deaths_england_wales <- function(month = ""){
 }
 
 # France
-sample_deaths_france <- function(month = ""){
+sample_deaths_france <- function(month = "", seed){
+  set.seed(seed)
   d_merge = read.csv(paste0('global_age_analysis_2021/data/France/france_all', month, '.csv'), stringsAsFactors = FALSE)
   if (month != "_diff"){
     d_merge$excess_deaths[which(d_merge$excess_deaths < 0)] <- 0
@@ -63,7 +68,8 @@ sample_deaths_france <- function(month = ""){
 }
 
 # Germany
-sample_deaths_germany <- function(month = ""){
+sample_deaths_germany <- function(month = "", seed){
+  set.seed(seed)
   d_merge = read.csv(paste0('global_age_analysis_2021/data/Germany/covid19_deaths', month, '.csv'), stringsAsFactors = FALSE)
   d_merge$deaths <- rpois(length(d_merge$deaths), d_merge$deaths)
   
@@ -71,7 +77,8 @@ sample_deaths_germany <- function(month = ""){
 }
 
 # India
-sample_deaths_india <- function(month = ""){
+sample_deaths_india <- function(month = "", seed){
+  set.seed(seed)
   d_merge = read.csv(paste0('global_age_analysis_2021/data/India/all_covid_deaths', month, '.csv'), stringsAsFactors = FALSE)
   d_merge$deaths <- rpois(length(d_merge$deaths), d_merge$deaths)
   
@@ -79,7 +86,8 @@ sample_deaths_india <- function(month = ""){
 }
 
 # Iran
-sample_deaths_iran <- function(month = ""){
+sample_deaths_iran <- function(month = "", seed){
+  set.seed(seed)
   d_merge = read.csv(paste0('global_age_analysis_2021/data/Iran/iran_all', month, '.csv'), stringsAsFactors = FALSE)
   d_merge$deaths <- rpois(length(d_merge$deaths), d_merge$deaths)
   
@@ -87,8 +95,9 @@ sample_deaths_iran <- function(month = ""){
 }
 
 # Italy
-sample_deaths_italy <- function(month = ""){
+sample_deaths_italy <- function(month = "", seed){
   d_merge = read.csv(paste0('global_age_analysis_2021/data/Italy/italy_all', month, '.csv'), stringsAsFactors = FALSE)
+  set.seed(seed)
   if (month != "_diff"){
     d_merge$excess_deaths[which(d_merge$excess_deaths < 0)] <- 0
     d_merge$nb_excess_sample <- rpois(length(d_merge$excess_deaths), d_merge$excess_deaths)
@@ -106,7 +115,8 @@ sample_deaths_italy <- function(month = ""){
 }
 
 # Kenya
-sample_deaths_kenya <- function(month = ""){
+sample_deaths_kenya <- function(month = "", seed){
+  set.seed(seed)
   d_merge = read.csv(paste0('global_age_analysis_2021/data/Kenya/covid19_deaths', month, '.csv'), stringsAsFactors = FALSE)
   d_merge$deaths <- rpois(length(d_merge$deaths), d_merge$deaths)
   
@@ -114,7 +124,8 @@ sample_deaths_kenya <- function(month = ""){
 }
 
 # Malawi
-sample_deaths_malawi <- function(month = ""){
+sample_deaths_malawi <- function(month = "", seed){
+  set.seed(seed)
   d_merge = read.csv(paste0('global_age_analysis_2021/data/Malawi/covid19_deaths', month, '.csv'), stringsAsFactors = FALSE)
   d_merge$deaths <- rpois(length(d_merge$deaths), d_merge$deaths)
   
@@ -122,14 +133,16 @@ sample_deaths_malawi <- function(month = ""){
 }
 
 # Mexico
-sample_deaths_mexico <- function(month = ""){
+sample_deaths_mexico <- function(month = "", seed){
+  set.seed(seed)
   d_merge = read.csv(paste0('global_age_analysis_2021/data/Mexico/covid19_deaths', month, '.csv'), stringsAsFactors = FALSE)
   d_merge$deaths <- rpois(length(d_merge$deaths), d_merge$deaths)
   write.csv(d_merge, paste0('global_age_analysis_2021/data/Mexico/covid19_deaths', month, '_un.csv'), row.names=FALSE)
 }
 
 # Nigeria
-sample_deaths_nigeria <- function(month = ""){
+sample_deaths_nigeria <- function(month = "", seed){
+  set.seed(seed)
   d_merge = read.csv(paste0('global_age_analysis_2021/data/Nigeria/covid19_deaths', month, '.csv'), stringsAsFactors = FALSE)
   d_merge$deaths[which(d_merge$deaths< 0)] = 0
   d_merge$deaths <- rpois(length(d_merge$deaths), d_merge$deaths)
@@ -138,7 +151,8 @@ sample_deaths_nigeria <- function(month = ""){
 }
 
 # Peru
-sample_deaths_peru <- function(month = ""){
+sample_deaths_peru <- function(month = "", seed){
+  set.seed(seed)
   d_merge = read.csv(paste0('global_age_analysis_2021/data/Peru/covid19_deaths', month, '.csv'), stringsAsFactors = FALSE)
   d_merge$COVID19_deaths <- rpois(length(d_merge$COVID19_deaths), d_merge$COVID19_deaths)
   
@@ -146,14 +160,16 @@ sample_deaths_peru <- function(month = ""){
 }
 
 # Philippines
-sample_deaths_philippines <- function(month = ""){
+sample_deaths_philippines <- function(month = "", seed){
+  set.seed(seed)
   d_merge = read.csv(paste0('global_age_analysis_2021/data/Philippines/covid19_deaths', month, '.csv'), stringsAsFactors = FALSE)
   d_merge$COVID19_deaths <- rpois(length(d_merge$COVID19_deaths), d_merge$COVID19_deaths)
   write.csv(d_merge, paste0('global_age_analysis_2021/data/Philippines/covid19_deaths', month, '_un.csv'), row.names=FALSE)
 }
 
 # Poland
-sample_deaths_poland <- function(month = ""){
+sample_deaths_poland <- function(month = "", seed){
+  set.seed(seed)
   d_merge = read.csv(paste0('global_age_analysis_2021/data/Poland/poland_all', month, '.csv'), stringsAsFactors = FALSE)
   d_merge$death[which(d_merge$death < 0)] <- 0
   d_merge$death <- rpois(length(d_merge$death), d_merge$death)
@@ -161,7 +177,8 @@ sample_deaths_poland <- function(month = ""){
 }
 
 # Spain
-sample_deaths_spain <- function(month = ""){
+sample_deaths_spain <- function(month = "", seed){
+  set.seed(seed)
   d_merge = read.csv(paste0('global_age_analysis_2021/data/Spain/spain_all', month, '.csv'), stringsAsFactors = FALSE)
   if (month != "_diff"){
     d_merge$excess_deaths[which(d_merge$excess_deaths < 0)] <- 0
@@ -180,14 +197,16 @@ sample_deaths_spain <- function(month = ""){
 }
 
 # South Africa
-sample_deaths_south_africa <- function(month = ""){
+sample_deaths_south_africa <- function(month = "", seed){
+  set.seed(seed)
   d_merge = read.csv(paste0('global_age_analysis_2021/data/SouthAfrica/covid19_deaths', month, '.csv'), stringsAsFactors = FALSE)
   d_merge$COVID19_deaths <- rpois(length(d_merge$COVID19_deaths), d_merge$COVID19_deaths)
   write.csv(d_merge, paste0('global_age_analysis_2021/data/SouthAfrica/covid19_deaths', month, '_un.csv'), row.names=FALSE)
 }
 
 # Usa
-sample_deaths_usa <- function(month = ""){
+sample_deaths_usa <- function(month = "", seed){
+  set.seed(seed)
   d_merge = read.csv(paste0('global_age_analysis_2021/data/USA/usa_all', month, '.csv'), stringsAsFactors = FALSE)
   if (month != "_diff"){
     d_merge$excess_deaths[which(d_merge$excess_deaths < 0)] <- 0
@@ -205,7 +224,8 @@ sample_deaths_usa <- function(month = ""){
 }
 
 # Zimbabwe
-sample_deaths_zimbabwe <- function(month = ""){
+sample_deaths_zimbabwe <- function(month = "", seed){
+  set.seed(seed)
   d_merge = read.csv(paste0('global_age_analysis_2021/data/Zimbabwe/covid19_deaths', month, '.csv'), stringsAsFactors = FALSE)
   d_merge$deaths <- rpois(length(d_merge$deaths), d_merge$deaths)
   write.csv(d_merge, paste0('global_age_analysis_2021/data/Zimbabwe/covid19_deaths', month, '_un.csv'), row.names=FALSE)
