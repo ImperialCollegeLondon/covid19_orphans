@@ -520,7 +520,7 @@ p_global_b <- ggplot(reg_percent_summary %>% filter(region != "Global")) +
 p_global <- ggarrange(p_global_a, p_global_b, common.legend = TRUE, 
                       labels = "AUTO", legend="bottom", widths = c(1, 3))
 print(p_global)
-ggsave("global_age_analysis_2021/figures/fig_4_global_orphans_percentage.pdf", p_global, height = 7)
+ggsave("global_age_analysis_2021/figures/fig_3_global_orphans_percentage.pdf", p_global, height = 7)
 
 
 # ---------- Calculating total numbers of 10-17s

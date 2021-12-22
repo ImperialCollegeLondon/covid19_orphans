@@ -253,7 +253,7 @@ n2 <- ggplot(pyramid) +
 p <- ggarrange(n1, n2, ncol = 1, labels = "AUTO", 
                common.legend = TRUE, legend = "bottom")
 
-ggsave(paste0("global_age_analysis_2021/figures/fig_3_age_composition", month, ".pdf"),  p, height = 14,  width = 14)
+ggsave(paste0("global_age_analysis_2021/figures/age_composition", month, ".pdf"),  p, height = 14,  width = 14)
 
 
 # Working out proportions  ----------------------------------------------
