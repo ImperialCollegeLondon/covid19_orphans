@@ -253,7 +253,7 @@ n2 <- ggplot(pyramid) +
 p <- ggarrange(n1, n2, ncol = 1, labels = "AUTO", 
                common.legend = TRUE, legend = "bottom")
 
-ggsave(paste0("global_age_analysis_2021/figures/age_composition", month, ".pdf"),  p, height = 14,  width = 14)
+ggsave(paste0("global_age_analysis_2021/figures/fig_2_age_composition", month, ".pdf"),  p, height = 14,  width = 14)
 
 
 # Working out proportions  ----------------------------------------------
@@ -390,7 +390,7 @@ p_all <- ggplot(rates_all) +
 
 p <- ggarrange(p_all, p_gender, p_cat, labels = "AUTO", ncol = 1, common.legend = TRUE, legend = "bottom")
 
-ggsave(paste0("global_age_analysis_2021/figures/fig_2_orphanhood_rates_age", month, ".pdf"),  p, height = 14,  width = 10)
+ggsave(paste0("global_age_analysis_2021/figures/orphanhood_rates_age", month, ".pdf"),  p, height = 14,  width = 10)
 
 
 # Time varying figure ----------------------------------------------

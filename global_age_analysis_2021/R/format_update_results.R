@@ -93,8 +93,8 @@ combine_table <- function(){
                                        format(round.choose(oct_extrapolation$ui, 100, 1), big.mark = ",", trim = TRUE))
   extrapolation$percent_increase = sprintf("%.1f%% [%.1f%% - %.1f%%]", 
                                            (oct_extrapolation$mean - apr_extrapolation$mean)/apr_extrapolation$mean * 100,
-                                           c(diff_pa[1], diff_p[1], diff_ps[1]) * 100,
-                                           c(diff_pa[2], diff_p[2], diff_ps[2]) * 100)
+                                           round.choose(c(diff_pa[1], diff_p[1], diff_ps[1]) * 100, 0.1, 0),
+                                           round.choose(c(diff_pa[2], diff_p[2], diff_ps[2]) * 100, 0.1, 1))
   write.csv(extrapolation, file = "global_age_analysis_2021/table_1_extrapolation_increase.csv", row.names=FALSE)
   
   
