@@ -66,15 +66,21 @@ combine_table <- function(){
   
   # Work out percentage change.
   oct_ps = readRDS("global_age_analysis_2021/data/ps_total_samples_oct.RDS")
+  oct_ps = sort(oct_ps)
   april_ps = readRDS("global_age_analysis_2021/data/ps_total_samples_apr.RDS")
+  april_ps = sort(april_ps)
   diff_ps = quantile((oct_ps - april_ps) / april_ps, probs = c(0.025, 0.975))
   
   oct_p = readRDS("global_age_analysis_2021/data/p_total_samples_oct.RDS")
+  oct_p = sort(oct_p)
   april_p = readRDS("global_age_analysis_2021/data/p_total_samples_apr.RDS")
+  april_p = sort(april_p)
   diff_p = quantile((oct_p - april_p) / april_p,  probs = c(0.025, 0.975))
   
   oct_pa = readRDS("global_age_analysis_2021/data/pa_total_samples_oct.RDS")
+  oct_pa = sort(oct_pa)
   april_pa= readRDS("global_age_analysis_2021/data/pa_total_samples_apr.RDS")
+  april_pa = sort(april_pa)
   diff_pa = quantile((oct_pa - april_pa) / april_pa,  probs = c(0.025, 0.975))
   
   # Make extrapolation table.
@@ -93,8 +99,8 @@ combine_table <- function(){
                                        format(round.choose(oct_extrapolation$ui, 100, 1), big.mark = ",", trim = TRUE))
   extrapolation$percent_increase = sprintf("%.1f%% [%.1f%% - %.1f%%]", 
                                            (oct_extrapolation$mean - apr_extrapolation$mean)/apr_extrapolation$mean * 100,
-                                           round.choose(c(diff_pa[1], diff_p[1], diff_ps[1]) * 100, 0.1, 0),
-                                           round.choose(c(diff_pa[2], diff_p[2], diff_ps[2]) * 100, 0.1, 1))
+                                           c(diff_pa[1], diff_p[1], diff_ps[1]) * 100,
+                                           c(diff_pa[2], diff_p[2], diff_ps[2]) * 100)
   write.csv(extrapolation, file = "global_age_analysis_2021/table_1_extrapolation_increase.csv", row.names=FALSE)
   
   
