@@ -6,7 +6,7 @@ require(data.table)
 
 home <- args$source_dir
 orphans <- readRDS("orphans_usa_allstates_0.RDS")
-codes <- data.table(read.csv('data/USA/state_codes.csv'))
+codes <- data.table(read.csv('data/state_codes.csv'))
 
 do <- data.table(orphans)
 do <- subset(do,race.eth!='Unknown')
@@ -34,8 +34,8 @@ saveRDS(ans,file='tables/SM_table_states_primary_caregivers.RDS')
 # rates of orphanhood
 
 # load population data
-pop_m <- read.csv(file = 'data/USA/pop/usa_states_population_m.csv')
-pop_f <- read.csv(file = 'data/USA/pop/usa_states_population_f.csv')
+pop_m <- read.csv(file = 'data/pop/usa_states_population_m.csv')
+pop_f <- read.csv(file = 'data/pop/usa_states_population_f.csv')
 
 pop_m <- subset(pop_m,year==2019)
 pop_f <- subset(pop_f,year==2019)
@@ -49,7 +49,7 @@ pop_r <- pop_a[,list(pop_r=sum(population)),by=c('state','race.eth')]
 pop_r_us <- pop_a[,list(pop_r=sum(population)),by=c('race.eth')]
 # get population under 18
 
-pop_by_age <- data.table(read.csv('data/USA/pop_US_1y.csv'))
+pop_by_age <- data.table(read.csv('data/pop/pop_US_1y.csv'))
 pop_by_age[, pop:=Population*1000]
 pop_min <- sum(pop_by_age$pop[pop_by_age$Age<=17])
 
@@ -86,7 +86,7 @@ saveRDS(ans,file='tables/SM_table_states_primary_caregivers_rates.RDS')
 ########
 ## Plots of mortality data
 
-d_deaths <- data.table(read.csv('data/USA/usa_states.csv'))
+d_deaths <- data.table(read.csv('data/usa_states.csv'))
 
 dat <- d_deaths[,list(excess_deaths=sum(deaths),covid_deaths=sum(covid_deaths)),by=c('age','gender')]
 dat <- melt(dat,id.vars=c('age','gender'))
@@ -118,10 +118,11 @@ ggsave('figures/quarterly_excess_deaths_data_byrace.png',width=25,height=32)
 
 
 # summarise population data by age groupings
-data_pop_f = read.delim('data/USA/pop/pop_f_2003-2006.txt',header = TRUE, sep = "\t")
+data_pop_f = read.delim('data/pop/pop_f_2003-2006.txt',header = TRUE, sep = "\t")
 
-indir.pop <- file.path('data','USA','pop')
+indir.pop <- file.path('data','pop')
 infiles <- data.table(F=list.files(indir.pop, pattern='pop_f', full.names=TRUE, recursive=TRUE))
+infiles <- infiles[!grepl('singlerace',F)]
 
 for(i in 2:nrow(infiles)){
 	infile <- infiles[i,F]
@@ -154,9 +155,9 @@ data_pop_f_agec <- data_pop_f[, list(population=sum(population)),by=c('state','y
 																																			'age.cat', 'race.eth')]
 data_pop_f$gender <- 'female'
 #####
-data_pop_m = read.delim('data/USA/pop/pop_m_2016-2018.txt',header = TRUE, sep = "\t")
+data_pop_m = read.delim('data/pop/pop_m_2016-2018.txt',header = TRUE, sep = "\t")
 
-indir.pop <- file.path('data','USA','pop')
+indir.pop <- file.path('data','pop')
 infiles <- data.table(F=list.files(indir.pop, pattern='pop_m', full.names=TRUE, recursive=FALSE))
 
 for(i in 2:nrow(infiles)){
@@ -254,40 +255,40 @@ ggsave('figures/quarterly_excess_death_rate_data_byrace.png',width=25,height=32)
 # number of children plots
 
 country <- 'usa_Arizona_Non-HispanicWhite'
-ddf = read.csv(paste0('data/USA/', country,'_children_f.csv'))
-ddf_2 = read.csv(paste0('data/USA/', country,'_children_m.csv'))
+ddf = read.csv(paste0('data/children/', country,'_children_f.csv'))
+ddf_2 = read.csv(paste0('data/children/', country,'_children_m.csv'))
 # truncate fert for men for usa states analysis
 if(grepl('usa_',country)) ddf_2$children[ddf_2$age>77] <- 0
 dat1 = data.table(rbind(ddf, ddf_2))
 dat1[, race.eth:='Non-Hispanic White']
 
 country <- 'usa_Arizona_Hispanic'
-ddf = read.csv(paste0('data/USA/', country,'_children_f.csv'))
-ddf_2 = read.csv(paste0('data/USA/', country,'_children_m.csv'))
+ddf = read.csv(paste0('data/children/', country,'_children_f.csv'))
+ddf_2 = read.csv(paste0('data/children/', country,'_children_m.csv'))
 # truncate fert for men for usa states analysis
 if(grepl('usa_',country)) ddf_2$children[ddf_2$age>77] <- 0
 dat2 = data.table(rbind(ddf, ddf_2))
 dat2[, race.eth:='Hispanic']
 
 country <- 'usa_Arizona_Non-HispanicBlack'
-ddf = read.csv(paste0('data/USA/', country,'_children_f.csv'))
-ddf_2 = read.csv(paste0('data/USA/', country,'_children_m.csv'))
+ddf = read.csv(paste0('data/children/', country,'_children_f.csv'))
+ddf_2 = read.csv(paste0('data/children/', country,'_children_m.csv'))
 # truncate fert for men for usa states analysis
 if(grepl('usa_',country)) ddf_2$children[ddf_2$age>77] <- 0
 dat3 = data.table(rbind(ddf, ddf_2))
 dat3[, race.eth:='Non-Hispanic Black']
 
 country <- 'usa_Arizona_Non-HispanicAsian'
-ddf = read.csv(paste0('data/USA/', country,'_children_f.csv'))
-ddf_2 = read.csv(paste0('data/USA/', country,'_children_m.csv'))
+ddf = read.csv(paste0('data/children/', country,'_children_f.csv'))
+ddf_2 = read.csv(paste0('data/children/', country,'_children_m.csv'))
 # truncate fert for men for usa states analysis
 if(grepl('usa_',country)) ddf_2$children[ddf_2$age>77] <- 0
 dat4 = data.table(rbind(ddf, ddf_2))
 dat4[, race.eth:='Non-Hispanic Asian']
 
 country <- 'usa_Arizona_Non-HispanicAmericanIndianorAlaskaNative'
-ddf = read.csv(paste0('data/USA/', country,'_children_f.csv'))
-ddf_2 = read.csv(paste0('data/USA/', country,'_children_m.csv'))
+ddf = read.csv(paste0('data/children/', country,'_children_f.csv'))
+ddf_2 = read.csv(paste0('data/children/', country,'_children_m.csv'))
 # truncate fert for men for usa states analysis
 if(grepl('usa_',country)) ddf_2$children[ddf_2$age>77] <- 0
 dat5 = data.table(rbind(ddf, ddf_2))
@@ -320,8 +321,8 @@ ggsave(filename = 'figures/number_children_AZ_allraces.png', p, width = 16, heig
 ####
 # grandparents
 ## read in grandparent data
-dat <- read.csv('data/USA/ACSST5Y2019.S1002_grandparentdata_2021-03-24T054217.csv',header = T,stringsAsFactors = F)
-vars <- read.csv('data/USA/grandparents_variables.csv',stringsAsFactors = F)
+dat <- read.csv('data/ACSST5Y2019.S1002_grandparentdata_2021-03-24T054217.csv',header = T,stringsAsFactors = F)
+vars <- read.csv('data/grandparents_variables.csv',stringsAsFactors = F)
 
 pc <- subset(vars,group!='' & category=='primary caregiver')
 cr <- subset(vars,group!='' & category=='coresident')
@@ -389,7 +390,7 @@ dg <- dg[, list(sg_female=sum(sg_female,na.rm=T),sg_male=sum(sg_male,na.rm=T),
 
 # get population over 30
 # for men
-data_pop_m = read.delim('data/USA/pop/pop_m_2018-2019.txt',header = TRUE, sep = "\t")
+data_pop_m = read.delim('data/pop/pop_m_2018-2019.txt',header = TRUE, sep = "\t")
 data_pop_m <- data_pop_m[!is.na(data_pop_m$States.Code),]
 data_pop_m <- subset(data_pop_m,Yearly.July.1st.Estimates==2019)
 
@@ -410,7 +411,7 @@ data_pop_m_agec <- data_pop_m[, list(population_m=sum(population)),by=c('state',
 																																				'age', 'race.eth')]
 
 # women
-data_pop_f = read.delim('data/USA/pop_f_2019_singlerace.txt',header = TRUE, sep = "\t")
+data_pop_f = read.delim('data/pop/pop_f_2019_singlerace.txt',header = TRUE, sep = "\t")
 data_pop_f <- data_pop_f[!is.na(data_pop_f$States.Code),]
 
 data_pop_f <- data_pop_f %>%
@@ -476,8 +477,8 @@ ggsave('figures/grandparents_byrace.png',width=25,height=18)
 
 #### plot population structure
 # load population data
-pop_m <- data.table(read.csv(file = 'data/USA/pop/usa_states_population_m.csv'))
-pop_f <- data.table(read.csv(file = 'data/USA/pop/usa_states_population_f.csv'))
+pop_m <- data.table(read.csv(file = 'data/pop/usa_states_population_m.csv'))
+pop_f <- data.table(read.csv(file = 'data/pop/usa_states_population_f.csv'))
 
 pop_m <- subset(pop_m,year==2019)
 pop_f <- subset(pop_f,year==2019)
@@ -489,10 +490,11 @@ pop <- data.table(rbind(pop_m,pop_f))
 ####
 
 # summarise population data by age groupings
-data_pop_f = read.delim('data/USA/pop/pop_f_2003-2006.txt',header = TRUE, sep = "\t")
+data_pop_f = read.delim('data/pop/pop_f_2003-2006.txt',header = TRUE, sep = "\t")
 
-indir.pop <- file.path('data','USA','pop')
+indir.pop <- file.path('data','pop')
 infiles <- data.table(F=list.files(indir.pop, pattern='pop_f', full.names=TRUE, recursive=TRUE))
+infiles <- infiles[!grepl('singlerace',F)]
 
 for(i in 2:nrow(infiles)){
 	infile <- infiles[i,F]
@@ -519,9 +521,9 @@ data_pop_f_agec <- data_pop_f[, list(population=sum(population)),by=c('state','y
 																																			'age.cat', 'race.eth')]
 data_pop_f$gender <- 'Female'
 #####
-data_pop_m = read.delim('data/USA/pop/pop_m_2016-2018.txt',header = TRUE, sep = "\t")
+data_pop_m = read.delim('data/pop/pop_m_2016-2018.txt',header = TRUE, sep = "\t")
 
-indir.pop <- file.path('data','USA','pop')
+indir.pop <- file.path('data','pop')
 infiles <- data.table(F=list.files(indir.pop, pattern='pop_m', full.names=TRUE, recursive=FALSE))
 
 for(i in 2:nrow(infiles)){

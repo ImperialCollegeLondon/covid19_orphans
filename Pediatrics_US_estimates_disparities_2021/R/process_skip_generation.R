@@ -25,8 +25,8 @@ process_usa_bystate_skip_generation = function(country,s,r){
   data <- d_summary[, list(grand_deaths=sum(deaths)),by=c('age','gender')]
   
   ## read in grandparent data
-  dat <- read.csv('data/USA/ACSST5Y2019.S1002_grandparentdata_2021-03-24T054217.csv',header = T,stringsAsFactors = F)
-  vars <- read.csv('data/USA/grandparents_variables.csv',stringsAsFactors = F)
+  dat <- read.csv('data/ACSST5Y2019.S1002_grandparentdata_2021-03-24T054217.csv',header = T,stringsAsFactors = F)
+  vars <- read.csv('data/grandparents_variables.csv',stringsAsFactors = F)
   
   pc <- subset(vars,group!='' & category=='primary caregiver')
   cr <- subset(vars,group!='' & category=='coresident')
@@ -94,7 +94,7 @@ process_usa_bystate_skip_generation = function(country,s,r){
   
   # get population over 30
   # for men
-  data_pop_m = read.delim('data/USA/pop/pop_m_2018-2019.txt',header = TRUE, sep = "\t")
+  data_pop_m = read.delim('data/pop/pop_m_2018-2019.txt',header = TRUE, sep = "\t")
   data_pop_m <- data_pop_m[!is.na(data_pop_m$States.Code),]
   data_pop_m <- subset(data_pop_m,Yearly.July.1st.Estimates==2019)
   
@@ -115,7 +115,7 @@ process_usa_bystate_skip_generation = function(country,s,r){
                                                                           'age', 'race.eth')]
   
   # women
-  data_pop_f = read.delim('data/USA/pop_f_2019_singlerace.txt',header = TRUE, sep = "\t")
+  data_pop_f = read.delim('data/pop/pop_f_2019_singlerace.txt',header = TRUE, sep = "\t")
   data_pop_f <- data_pop_f[!is.na(data_pop_f$States.Code),]
   
   data_pop_f <- data_pop_f %>%

@@ -1,6 +1,6 @@
 
 combine_orphans <- function(country, grand_parents){
-  data <- read.csv( paste0('data/USA/all_data_',country,'.csv'))
+  data <- read.csv( paste0('data/all_data_',country,'.csv'))
   names(data) = c('age', "gender", "excess", "covid19_deaths", "deaths", "nb_orphans")
   data$gender <- tolower(data$gender)
 

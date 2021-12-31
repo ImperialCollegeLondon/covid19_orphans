@@ -611,7 +611,7 @@ process_children_all = function(country, is_child_mortality_needed, data_f){
   plot(apply(children, 1, sum), xlab = "Age of mother", ylab = "Number of children")
   children = as.data.frame(children)
   names(children) = paste0(seq(0:17)-1, ' years')
-  write_csv(path = paste0('data/USA/', country, '_child_raw_f.csv'), children)
+  write_csv(path = paste0('data/children/', country, '_child_raw_f.csv'), children)
   
   plot_c = as.data.frame(as.numeric(as.character(unlist(children))))
   plot_c$mother_age = rep(1:100,18)
@@ -621,10 +621,10 @@ process_children_all = function(country, is_child_mortality_needed, data_f){
   
   ###########  get the nb of children (considering the child mortality or not) ################
   if (is_child_mortality_needed){
-    child_m_matrix = read.csv(paste0('data/USA/','child_mortality_rate.csv'))
+    child_m_matrix = read.csv(paste0('data/','child_mortality_rate.csv'))
     child_and_m = as.matrix(children) * (1-as.matrix(child_m_matrix))
     child_and_m = as.data.frame(child_and_m)
-    write_csv(path = paste0('data/USA/', country, '_child_all_f.csv'), child_and_m)
+    write_csv(path = paste0('data/children/', country, '_child_all_f.csv'), child_and_m)
     
     plot_c_and_m = as.data.frame(as.numeric(as.character(unlist(child_and_m))))
     plot_c_and_m$mother_age = rep(1:100,18)
@@ -634,26 +634,26 @@ process_children_all = function(country, is_child_mortality_needed, data_f){
   } else {
     child_and_m = children
     plot_c_and_m = copy(plot_c)
-    write_csv(path = paste0('data/USA/', country, '_child_all_f.csv'), child_and_m)
+    write_csv(path = paste0('data/children/', country, '_child_all_f.csv'), child_and_m)
   }
   
   plot_c_and_m$gender = 'female'
-  write_csv(path = paste0('data/USA/', country, '_child_all_list_f.csv'), plot_c_and_m) 
+  write_csv(path = paste0('data/children/', country, '_child_all_list_f.csv'), plot_c_and_m) 
   setnames(plot_c_and_m, 'mother_age', 'parents_age')
-  plott = read.csv(paste0('data/USA/', country, '_child_all_list_m.csv')) 
+  plott = read.csv(paste0('data/children/', country, '_child_all_list_m.csv')) 
   setnames(plott, 'father_age', 'parents_age')
   plot_all = rbind(plot_c_and_m, plott)
-  write_csv(path = paste0('data/USA/', country, '_child_all_list_both_sex.csv'), plot_all) 
+  write_csv(path = paste0('data/children/', country, '_child_all_list_both_sex.csv'), plot_all) 
   
   ###  plot female and male
   ddf = as.data.frame(apply(child_and_m, 1, sum))
   names(ddf) = 'children'
   ddf$gender = 'female'
   ddf$age = 1:100
-  write_csv(path = paste0('data/USA/', country, '_children_f.csv'), ddf)
+  write_csv(path = paste0('data/children/', country, '_children_f.csv'), ddf)
   
-  ddf = read.csv(paste0('data/USA/', country, '_children_f.csv'))
-  ddf_2 = read.csv(paste0('data/USA/', country,'_children_m.csv'))
+  ddf = read.csv(paste0('data/children/', country, '_children_f.csv'))
+  ddf_2 = read.csv(paste0('data/children/', country,'_children_m.csv'))
   # truncate fert for men for usa states analysis
   if(grepl('usa_',country)) ddf_2$children[ddf_2$age>77] <- 0
   
@@ -665,7 +665,7 @@ process_children_all = function(country, is_child_mortality_needed, data_f){
     ylab('Number of Children')+
     guides(color=guide_legend(title="Sex of Parent"))
   ggsave(filename = paste0("figures/children_", tolower(country), ".pdf"), p, width = 6, height = 5)
-  write_csv(path = paste0('data/USA/', country,'_children.csv'), ddf)
+  write_csv(path = paste0('data/children/', country,'_children.csv'), ddf)
 }
 
 # Usa
@@ -1412,7 +1412,7 @@ process_children_father_55_plus = function(country, data_f){
   children = as.data.frame(children)
   names(children) = paste0(seq(0:17)-1, ' years')
   
-  write_csv(path = paste0('data/USA/', country, '_child_raw_m.csv'), children)
+  write_csv(path = paste0('data/children/', country, '_child_raw_m.csv'), children)
   plot_c = as.data.frame(as.numeric(as.character(unlist(children))))
   plot_c$father_age = rep(1:100,18)
   plot_c$child_age =sort(rep(seq(18)-1, 100))

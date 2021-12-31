@@ -16,12 +16,12 @@ Sys.setlocale("LC_TIME", "English")
 process_usa_state = function(rep=000){
   if(rep==000) set.seed(10)
   # url = https://data.cdc.gov/NCHS/AH-Quarterly-Excess-Deaths-by-State-Sex-Age-and-Ra/jqg8-ycmh
-  excess <- data.table(read.csv('data/USA/AH_Quarterly_Excess_Deaths_by_State__Sex__Age__and_Race_Q2_2021.csv'))
+  excess <- data.table(read.csv('data/AH_Quarterly_Excess_Deaths_by_State__Sex__Age__and_Race_Q2_2021.csv'))
 
   excess$End.Date <- as.Date(excess$End.Date,format=c("%m/%d/%Y"))
   excess$Start.Date <- as.Date(excess$Start.Date,format=c("%m/%d/%Y"))
   excess[StateName=='New York City',StateName:='New York']
-  excess <- subset(excess,AgeGroup!='0-14 Years' & AgeGroup!='50-54 Years' & AgeGroup!='All Ages' & AgeGroup!='Not stated' & 
+  excess <- subset(excess, AgeGroup!='50-54 Years' & AgeGroup!='All Ages' & AgeGroup!='Not stated' & 
                      Sex!='All Sexes' & RaceEthnicity!='All Race/Ethnicity Groups')
   setnames(excess,c('State','StateName','Deaths..weighted.','Number.above.average..weighted.','COVID19..weighted.','RaceEthnicity'),
            c('Statecode','State','deaths','excess_deaths','covid_deaths','Race.and.Hispanic.Origin.Group'))
@@ -74,6 +74,11 @@ process_usa_state = function(rep=000){
   excess[,deaths:= ifelse(covid_deaths > excess_deaths, covid_deaths, excess_deaths)]
   excess <- subset(excess,select=c('State', 'age', 'Race.and.Hispanic.Origin.Group', 'gender','covid_deaths', 'excess_deaths', 'deaths'))
   
-  write_csv(excess, path = 'data/USA/usa_states.csv')
+  # save deaths including children
+  write_csv(excess, path = 'data/usa_states_ALL.csv')
+  
+  # save deaths excluding children
+  excess <- subset(excess,age!='0-14')
+  write_csv(excess, path = 'data/usa_states.csv')
 }
 
