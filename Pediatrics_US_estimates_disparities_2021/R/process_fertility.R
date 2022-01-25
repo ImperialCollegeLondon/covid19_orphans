@@ -54,7 +54,7 @@ process_usa_states_fertility = function(rep=000){
   # Bridged-Race Population Estimates 1990-2019
   # https://wonder.cdc.gov/controller/datarequest/D163;jsessionid=2215DEF81E8899902B8456ABD15D
 
-  indir.pop <- file.path('data','USA','pop')
+  indir.pop <- file.path('data','pop')
   infiles <- data.table(F=list.files(indir.pop, pattern='pop_f', full.names=TRUE, recursive=TRUE))
   data_pop_f = read.delim(infiles[1,F],header = TRUE, sep = "\t")
   
@@ -90,11 +90,11 @@ process_usa_states_fertility = function(rep=000){
   data_pop_f_agec <- data_pop_f[, list(population=sum(population)),by=c('state','year',
                                                                         'age.cat', 'race.eth')]
   
-  write_csv(path = 'data/USA/pop/usa_states_population_f.csv', data_pop_f_agec)
+  write.csv(file = 'data/pop/usa_states_population_f.csv', data_pop_f_agec)
 
   # for men
 
-  indir.pop <- file.path('data','USA','pop')
+  indir.pop <- file.path('data','pop')
   infiles <- data.table(F=list.files(indir.pop, pattern='pop_m', full.names=TRUE, recursive=FALSE))
   data_pop_m = read.delim(infiles[1,F],header = TRUE, sep = "\t")
   
@@ -131,12 +131,12 @@ process_usa_states_fertility = function(rep=000){
   setnames(data_pop_m,c('States','Yearly.July.1st.Estimates','Race','Ethnicity','Population'),c('state','year','race','hispanic','population'))
   data_pop_m_agec <- data_pop_m[, list(population=sum(population)),by=c('state','year',
                                                                         'age.cat', 'race.eth')]
-  write_csv(path = 'data/USA/pop/usa_states_population_m.csv', data_pop_m_agec)
+  write.csv(file = 'data/pop/usa_states_population_m.csv', data_pop_m_agec)
   
   ## fertility data
   # from CDC wonder
   ## url: https://wonder.cdc.gov/wonder/help/natality.html
-  indir.bir <- file.path('data','USA')
+  indir.bir <- file.path('data')
   infiles <- data.table(F=list.files(indir.bir, pattern='fertility_women_', full.names=TRUE, recursive=FALSE))
   
   cat('Process',infiles[1,F],'\n')
@@ -193,15 +193,15 @@ process_usa_states_fertility = function(rep=000){
   }
   data_combine[,fertility_rate := births / (population)*1000]
   # fill in missing with means
-  do <- as.data.table(tidyr::crossing(state=unique(droplevels(data_combine$state)),year=seq(2003,2019,1),
+  do <- as.data.table(tidyr::crossing(state=unique(droplevels(as.factor(data_combine$state))),year=seq(2003,2019,1),
                                       age=unique(data_combine$age),race.eth=unique(data_combine$race.eth)))
   fert_f <- merge(data_combine,do,by=c('state','year','age','race.eth'),all=T)
   fert_f <- fert_f[fert_f$state!="",]
-  write_csv(path = 'data/fertility/usa_states_fertility_f.csv', fert_f)
+  write.csv(file = 'data/fertility/usa_states_fertility_f.csv', fert_f)
   
   
   ## for mens (nb. mens race category defined differently from women's)
-  data_fertility = data.table(read.delim('data/USA/fertility_men_2016-2019.txt',header = TRUE, sep = "\t"))
+  data_fertility = data.table(read.delim('data/fertility_men_2016-2019.txt',header = TRUE, sep = "\t"))
   data_fertility <- subset(data_fertility,!is.na(State.of.Residence.Code))
   data_fertility[, age:= gsub('([A-Za-z0-9]+) years*','\\1',data_fertility$Age.of.Father)]
   data_fertility[age=='Under 15',age:='0-14']
@@ -250,7 +250,7 @@ process_usa_states_fertility = function(rep=000){
   data_combine[,fertility_rate := births / (population) * 1000]
   data_combine <- subset(data_combine,age!='Unknown')
   # live births per 1000 men
-  write_csv(path = 'data/fertility/usa_states_fertility_m.csv', data_combine)
+  write.csv(file = 'data/fertility/usa_states_fertility_m.csv', data_combine)
  
   
   #### use relationship between year and fertility for women to obtain historical fertility of men
@@ -339,7 +339,7 @@ process_usa_states_fertility = function(rep=000){
   set(fert_f, NULL, c('intercept','yearhat','sexhat','nobs','fertility_rate_imp'), NULL)
   fert_f = fert_f %>% arrange(year, age)
   fert_f <- subset(fert_f,age!='0-14' & age!= '50-54' & race.eth!='Non-Hispanic More than one race' & race.eth!='Unknown')
-  write_csv(path = 'data/fertility/usa_states_fertility_f.csv', fert_f)
+  write.csv(file = 'data/fertility/usa_states_fertility_f.csv', fert_f)
   
   ## impute men
   # 50+ men - fit model to male data 2016-2018 (across states to ensure sufficient observations)
@@ -348,7 +348,7 @@ process_usa_states_fertility = function(rep=000){
                                                                                         yearhat=summary(glm(births~year+ offset(log(population+1)), family = poisson(link = "log"),maxit=100))$coefficients[2]),
                                                                                        by=c('age','race.eth')]
   do <- as.data.table(tidyr::crossing(state=unique(dt$state),
-                                      age=droplevels(unique(fifty$age)),race.eth=unique(fifty$race.eth)))
+                                      age=droplevels(unique(as.factor(fifty$age))),race.eth=unique(as.factor(fifty$race.eth))))
   fifty <- merge(fifty,do,by=c('age','race.eth'),all=T)
   
   dt <- merge(subset(dt,! age %in% c('50-54','50+','55+')),fifty,by=c('state','race.eth','age','intercept','yearhat'),all=T)
@@ -368,6 +368,6 @@ process_usa_states_fertility = function(rep=000){
   set(fert_m, NULL, c('births','population'), NULL)
   fert_m = fert_m %>% arrange(year, age)
   fert_m <- subset(fert_m,age!='0-14' & race.eth!='Non-Hispanic More than one race' & race.eth!='Unknown')
-  write_csv(path = 'data/fertility/usa_states_fertility_m_all.csv', fert_m)
+  write.csv(file = 'data/fertility/usa_states_fertility_m_all.csv', fert_m)
   
 }

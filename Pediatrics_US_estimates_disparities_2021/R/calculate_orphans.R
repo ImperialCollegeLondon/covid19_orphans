@@ -2,10 +2,10 @@
 # USA by state
 process_orphans_usa_bystate = function(country,s,r){
   #state = gsub('usa_([A-Za-z]+)_*','\\1',country)
-  d_deaths = read.csv('data/USA/usa_states.csv', stringsAsFactors = FALSE)
+  d_deaths = read.csv('data/usa_states.csv', stringsAsFactors = FALSE)
   d_merge <- subset(d_deaths,State==s & Race.and.Hispanic.Origin.Group==r)
 
-  d_children = read.csv(paste0('data/USA/', country,'_children.csv'), stringsAsFactors = FALSE)
+  d_children = read.csv(paste0('data/children/', country,'_children.csv'), stringsAsFactors = FALSE)
   d_children$age = ifelse(d_children$age %in% c(1:14), '0-14',
                           ifelse(d_children$age %in% c(15:29), '15-29',
                                  ifelse(d_children$age %in% c(30:49), '30-49',
@@ -28,7 +28,7 @@ process_orphans_usa_bystate = function(country,s,r){
   d_m1 = as.data.table(d_m1)
   d_m1[, orphans := round(deaths * nb_c)]
   d_m1 = d_m1%>% arrange(age) 
-  write_csv(path = paste0('data/USA/',country,'_orphans_all.csv'), d_m1)
+  write_csv(path = paste0('data/',country,'_orphans_all.csv'), d_m1)
   
   p <- ggplot(d_m1, aes(x = age, y = orphans, fill = gender)) +
     geom_bar(stat="identity", position=position_dodge()) +
@@ -54,7 +54,7 @@ process_orphans_usa_bystate = function(country,s,r){
     select(-orphans, -deaths, -excess_deaths, -covid_deaths) %>%
     distinct()
   
-  write_csv(path = paste0('data/USA/all_data_',country,'.csv'), d_summary)
+  write_csv(path = paste0('data/all_data_',country,'.csv'), d_summary)
   as.data.frame(d_summary %>% filter(age != '0-14') %>% 
                   group_by(gender) %>% 
                   mutate(total_excess = sum(excess),

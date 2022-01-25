@@ -139,8 +139,8 @@ write.csv(ans3,file=file.path(indir,'table1_CIs.csv'))
 `%notin%` <- Negate(`%in%`)
 
 # load population data
-pop_m <- read.csv(file = '~/git/covid19orphans/data/USA/pop/usa_states_population_m.csv')
-pop_f <- read.csv(file = '~/git/covid19orphans/data/USA/pop/usa_states_population_f.csv')
+pop_m <- read.csv(file = '~/git/covid19_orphans/data/pop/usa_states_population_m.csv')
+pop_f <- read.csv(file = '~/git/covid19_orphans/data/pop/usa_states_population_f.csv')
 
 pop_m <- subset(pop_m,year==2019)
 pop_f <- subset(pop_f,year==2019)
@@ -154,7 +154,7 @@ pop_a <-  subset(pop,age.cat %notin% c('0-14'))
 pop_r <- pop_a[,list(pop_r=sum(population)),by=c('state','race.eth')]
 
 # use population by 1-year age band to get population under 18
-pop_by_age <- data.table(read.csv('~/git/covid19orphans/data/USA/pop_US_1y.csv'))
+pop_by_age <- data.table(read.csv('~/git/covid19_orphans/data/pop_US_1y.csv'))
 pop_by_age[, pop:=Population*1000]
 pop_min <- sum(pop_by_age$pop[pop_by_age$Age<=17])
 
@@ -405,8 +405,8 @@ saveRDS(central,file='SM_table_states_primary_caregivers_withCIs.RDS')
 ### Table 2: rates
 
 # load population data
-pop_m <- read.csv(file = '/rds/general/user/ablenkin/home/git/covid19orphans/data/USA/pop/usa_states_population_m.csv')
-pop_f <- read.csv(file = '/rds/general/user/ablenkin/home/git/covid19orphans/data/USA/pop/usa_states_population_f.csv')
+pop_m <- read.csv(file = '~/git/covid19_orphans/data/pop/usa_states_population_m.csv')
+pop_f <- read.csv(file = '~/git/covid19_orphans/data/pop/usa_states_population_f.csv')
 
 pop_m <- subset(pop_m,year==2019)
 pop_f <- subset(pop_f,year==2019)
@@ -420,7 +420,7 @@ pop_r <- pop_a[,list(pop_r=sum(population)),by=c('state','race.eth')]
 pop_r_us <- pop_a[,list(pop_r=sum(population)),by=c('race.eth')]
 # get population under 18
 
-pop_by_age <- data.table(read.csv('/rds/general/user/ablenkin/home/git/covid19orphans/data/USA/pop_US_1y.csv'))
+pop_by_age <- data.table(read.csv('~/git/covid19_orphans/data/pop_US_1y.csv'))
 pop_by_age[, pop:=Population*1000]
 pop_min <- sum(pop_by_age$pop[pop_by_age$Age<=17])
 

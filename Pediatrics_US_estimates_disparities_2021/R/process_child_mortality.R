@@ -1,7 +1,7 @@
 # Process child & infant mortality
 
 add_child_mortality = function(is_child_mortality_needed, country){
-  children = read.csv(paste0('data/USA/', country, '_child_raw_m.csv'))
+  children = read.csv(paste0('data/children/', country, '_child_raw_m.csv'))
   plot_c = as.data.frame(as.numeric(as.character(unlist(children))))
   plot_c$father_age = rep(1:100,18)
   plot_c$child_age =sort(rep(seq(18)-1, 100))
@@ -9,11 +9,11 @@ add_child_mortality = function(is_child_mortality_needed, country){
   
   if (is_child_mortality_needed){
     
-    child_m_matrix = read.csv(paste0('data/USA/', 'child_mortality_rate.csv'))
+    child_m_matrix = read.csv(paste0('data/', 'child_mortality_rate.csv'))
     names(child_m_matrix) = paste0(seq(0:17)-1, 'years')
     child_and_m = as.matrix(children) * (1-as.matrix(child_m_matrix))
     child_and_m = as.data.frame(child_and_m)
-    write_csv(path = paste0('data/USA/', country, '_child_all_m.csv'), child_and_m)
+    write_csv(path = paste0('data/children/', country, '_child_all_m.csv'), child_and_m)
     
     plot_c_and_m = as.data.frame(as.numeric(as.character(unlist(child_and_m))))
     plot_c_and_m$father_age = rep(1:100,18)
@@ -27,29 +27,29 @@ add_child_mortality = function(is_child_mortality_needed, country){
       labs(x= "child age", y="father age") +
       scale_fill_gradient2(low = "yellow", high = "red")
     plot_c_and_m$gender = 'male'
-    write_csv(path = paste0('data/USA/', country, '_child_all_list_m.csv'), plot_c_and_m)
+    write_csv(path = paste0('data/children/', country, '_child_all_list_m.csv'), plot_c_and_m)
   } else{
     child_and_m = copy(children)
     child_and_m = as.data.frame(child_and_m)
-    write_csv(path = paste0('data/USA/', country, '_child_all_m.csv'), child_and_m)
+    write_csv(path = paste0('data/children/', country, '_child_all_m.csv'), child_and_m)
     
     plot_c_and_m = copy(plot_c)
     plot_c_and_m$gender = 'male'
-    write_csv(path = paste0('data/USA', country, '_child_all_list_m.csv'), plot_c_and_m)
+    write_csv(path = paste0('data/children/', country, '_child_all_list_m.csv'), plot_c_and_m)
     
   }
-  child_and_m = read.csv(paste0('data/USA/', country, '_child_all_m.csv'))
+  child_and_m = read.csv(paste0('data/children/', country, '_child_all_m.csv'))
   ddf = as.data.frame(apply(child_and_m, 1, sum))
   names(ddf) = 'children'
   ddf$gender = 'male'
   ddf$age = 1:100
-  write_csv(path = paste0('data/USA/', country, '_children_m.csv'),ddf)
+  write_csv(path = paste0('data/children/', country, '_children_m.csv'),ddf)
 }
 
 # Multiple countries
 process_child_mortality = function(country, countries){
   # rate per children 
-  child = read.csv(paste0('data/child_mortality_rate', '.csv'))
+  child = read.csv(paste0('data/mortality_rate_all.csv'))
   child = child %>% filter(country == countries)
     
   child_m_matrix = matrix(rep(0, 100*18), nrow = 100)
@@ -78,8 +78,8 @@ process_child_mortality = function(country, countries){
   child_m_matrix = as.data.frame(child_m_matrix)
   names(child_m_matrix) = paste0(seq(0:17)-1, 'years')
   
-  write_csv(path = paste0('data/USA/', 'child_mortality_rate.csv'), child_m_matrix)
-}  
+  write_csv(path = paste0('data/child_mortality_', country,'.csv'), child_m_matrix)
+}
 
 
 

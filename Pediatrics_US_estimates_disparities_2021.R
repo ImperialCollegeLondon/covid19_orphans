@@ -17,12 +17,12 @@ if(length(args_line) > 0)
 } 
 
 setwd(args$source_dir)
-source(file.path("Pediatrics_US_estimates_disparities_2021","R","extraction_excess.R"))
-source(file.path("Pediatrics_US_estimates_disparities_2021","R","process_fertility.R"))
-source(file.path("Pediatrics_US_estimates_disparities_2021","R","process_number_children.R"))
-source(file.path("Pediatrics_US_estimates_disparities_2021","R","calculate_orphans.R"))
-source(file.path("Pediatrics_US_estimates_disparities_2021","R","process_skip_generation.R"))
-source(file.path("Pediatrics_US_estimates_disparities_2021","R","summary_orphans.R"))
+source(file.path("R","extraction_excess.R"))
+source(file.path("R","process_fertility.R"))
+source(file.path("R","process_number_children.R"))
+source(file.path("R","calculate_orphans.R"))
+source(file.path("R","process_skip_generation.R"))
+source(file.path("R","summary_orphans.R"))
 
 
 ####  USA by state ########################################################################################################################
@@ -34,7 +34,7 @@ cat(sprintf("Processing number of children rates\n"))
 process_number_children_usa_bystate(args$rep)
 
 cat(sprintf("Processing number of orphans\n"))
-d_deaths = read.csv('data/USA/usa_states.csv', stringsAsFactors = FALSE)
+d_deaths = read.csv('data/usa_states.csv', stringsAsFactors = FALSE)
 states <- unique(d_deaths$State)
 states <- states[!(grepl("New York City",states) | grepl("Puerto Rico",states))]
 rcat <- unique(d_deaths$Race.and.Hispanic.Origin.Group)
@@ -63,7 +63,7 @@ df <- cbind(df, dlab)
 
 saveRDS(df, file = paste0('orphans_usa_allstates_',args$rep,'.RDS'))
 
-source(file.path("Pediatrics_US_estimates_disparities_2021","R","make-manuscript-figures.R"))
-source(file.path("Pediatrics_US_estimates_disparities_2021","R","make-manuscript-tables.R"))
-source(file.path("Pediatrics_US_estimates_disparities_2021","R","SM_figures_tables.R"))
+source(file.path("R","make-manuscript-figures.R"))
+source(file.path("R","make-manuscript-tables.R"))
+source(file.path("R","SM_figures_tables.R"))
 

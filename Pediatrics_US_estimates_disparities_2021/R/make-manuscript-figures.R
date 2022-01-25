@@ -10,7 +10,7 @@ require(geofacet)
 
 
 home <- file.path(args$source_dir,'figures')
-codes <- data.table(read.csv('data/USA/state_codes.csv'))
+codes <- data.table(read.csv('data/state_codes.csv'))
 
 ####################################################################################
 cat(paste0("Making figure 1: maps of orphans and cumulative orphans by state \n"))
@@ -233,8 +233,8 @@ cat(paste0("Making figure 2: map of composition of pop/deaths/orphans \n"))
 ####################################################################################
 
 # load population data
-pop_m <- read.csv(file = 'data/USA/pop/usa_states_population_m.csv')
-pop_f <- read.csv(file = 'data/USA/pop/usa_states_population_f.csv')
+pop_m <- read.csv(file = 'data/pop/usa_states_population_m.csv')
+pop_f <- read.csv(file = 'data/pop/usa_states_population_f.csv')
 
 pop_m <- subset(pop_m,year==2019)
 pop_f <- subset(pop_f,year==2019)
@@ -252,7 +252,7 @@ pop2 <- pop_r[, list(race=race.eth,pct=pop_r/sum(pop_r)),by=c('state')]
 pop2[pop2$state %in% c('Mississippi','Louisiana')]
 
 # get population under 18
-pop_by_age <- data.table(read.csv('data/USA/pop_US_1y.csv'))
+pop_by_age <- data.table(read.csv('data/pop/pop_US_1y.csv'))
 pop_by_age[, pop:=Population*1000]
 pop_min <- sum(pop_by_age$pop[pop_by_age$Age<=17])
 
@@ -275,7 +275,7 @@ do <- merge(do,pop_r,by=c('state','race.eth'),all=T)
 do <- merge(do,pop_kids,by=c('state'),all=T)
 
 # add death data for all population
-d_deaths = read.csv('data/USA/usa_states_ALL.csv', stringsAsFactors = FALSE)
+d_deaths = read.csv('data/usa_states_ALL.csv', stringsAsFactors = FALSE)
 dd <- data.table(d_deaths)
 dd <- dd[, list(deaths=sum(deaths)),by=c('State','Race.and.Hispanic.Origin.Group')]
 dd <- subset(dd,Race.and.Hispanic.Origin.Group!='Other')
@@ -383,13 +383,13 @@ library(ggsci)
 require(data.table)
 
 ## load death data
-d_deaths = read.csv('data/USA/usa_states.csv', stringsAsFactors = FALSE)
+d_deaths = read.csv('data/usa_states.csv', stringsAsFactors = FALSE)
 dd <- data.table(d_deaths)
 dd <- dd[, list(deaths=sum(deaths)),by=c('State','gender','Race.and.Hispanic.Origin.Group')]
 
 # load population data
-pop_m <- read.csv(file = 'data/USA/pop/usa_states_population_m.csv')
-pop_f <- read.csv(file = 'data/USA/pop/usa_states_population_f.csv')
+pop_m <- read.csv(file = 'data/pop/usa_states_population_m.csv')
+pop_f <- read.csv(file = 'data/pop/usa_states_population_f.csv')
 
 pop_m <- subset(pop_m,year==2019)
 pop_f <- subset(pop_f,year==2019)
@@ -403,7 +403,7 @@ pop_r <- pop_a[,list(pop_r=sum(population)),by=c('state','race.eth')]
 pop_r_us <- pop_a[,list(pop_r=sum(population)),by=c('race.eth')]
 
 # get population under 18
-pop_by_age <- data.table(read.csv('data/USA/pop_US_1y.csv'))
+pop_by_age <- data.table(read.csv('data/pop/pop_US_1y.csv'))
 pop_by_age[, pop:=Population*1000]
 pop_min <- sum(pop_by_age$pop[pop_by_age$Age<=17])
 
@@ -568,13 +568,13 @@ cat(paste0("Making figure 4: order states by four measures \n"))
 ####################################################################################
 
 ## load death data
-d_deaths = read.csv('data/USA/usa_states.csv', stringsAsFactors = FALSE)
+d_deaths = read.csv('data/usa_states.csv', stringsAsFactors = FALSE)
 dd <- data.table(d_deaths)
 dd <- dd[, list(deaths=sum(deaths)),by=c('State','gender','Race.and.Hispanic.Origin.Group')]
 
 # load population data
-pop_m <- read.csv(file = 'data/USA/pop/usa_states_population_m.csv')
-pop_f <- read.csv(file = 'data/USA/pop/usa_states_population_f.csv')
+pop_m <- read.csv(file = 'data/pop/usa_states_population_m.csv')
+pop_f <- read.csv(file = 'data/pop/usa_states_population_f.csv')
 
 pop_m <- subset(pop_m,year==2019)
 pop_f <- subset(pop_f,year==2019)
@@ -588,7 +588,7 @@ pop_r <- pop_a[,list(pop_r=sum(population)),by=c('state','race.eth')]
 pop_r_us <- pop_a[,list(pop_r=sum(population)),by=c('race.eth')]
 
 # get population under 18
-pop_by_age <- data.table(read.csv('data/USA/pop_US_1y.csv'))
+pop_by_age <- data.table(read.csv('data/pop/pop_US_1y.csv'))
 pop_by_age[, pop:=Population*1000]
 pop_min <- sum(pop_by_age$pop[pop_by_age$Age<=17])
 
@@ -659,8 +659,6 @@ dat2$race.eth <- factor(dat2$race.eth,levels=c("Hispanic","Non-Hispanic American
 ## plot
 pal <- c(pal_jama("default")(5)[2:5],"#D3D3D3")
 
-dat2[state %in% order[42:51] , flag:=1]
-dat2[flag==1 & race.eth=='Hispanic' & variable=='Excess deaths per 100k',bar:=450*1.1]
 bold <- c(rep('plain',41), rep('bold',10))
 box <- data.frame(xmin=order[41],xmax=Inf,ymin=3,ymax=460)
 g_deathr <- ggplot() +
@@ -683,9 +681,6 @@ dat5 <- dat5[order(orphans),]
 order_fig2 <- dat5$state
 dat2$state <- factor(dat2$state,levels=order_fig2)
 
-set(dat2,NULL,c('flag','bar'),NULL)
-dat2[state %in% order_fig2[42:51] , flag:=1]
-dat2[flag==1 & race.eth=='Hispanic' & variable=='Loss of primary caregiver per 100k children',bar:=450*1.1]
 box <- data.frame(xmin=order_fig2[41],xmax=Inf,ymin=3,ymax=340)
 g_orphr <- ggplot() +
   geom_bar(data=subset(dat2,variable=='Loss of primary caregiver per 100k children'),stat='identity',aes(x=state,y=value,fill=race.eth)) +
@@ -710,8 +705,6 @@ order_or <- dat5$state
 dat2$state <- factor(dat2$state,levels=order_or)
 dat2$race.eth <- factor(dat2$race.eth,levels=c("Hispanic","Non-Hispanic American Indian or Alaska Native",
                                                "Non-Hispanic Asian","Non-Hispanic Black","Non-Hispanic White"))
-dat2[state %in% order_or[42:51] , flag:=1]
-dat2[flag==1 & race.eth=='Hispanic' & variable=='Orphans',bar:=15500*1.1]
 box <- data.frame(xmin=order_or[41],xmax=Inf,ymin=100,ymax=16500)
 g_orphans <- ggplot() +
   geom_bar(data=subset(dat2,state!='US total' & variable=='Orphans'),stat='identity',aes(x=state,y=value,fill=race.eth)) +
@@ -758,13 +751,13 @@ order_fig3 <- dat5$state
 dat5$state <- factor(dat5$state,levels=order_fig3)
 
 ## load death data
-d_deaths = read.csv('data/USA/usa_states.csv', stringsAsFactors = FALSE)
+d_deaths = read.csv('data/usa_states.csv', stringsAsFactors = FALSE)
 dd <- data.table(d_deaths)
 dd <- dd[, list(deaths=sum(deaths)),by=c('State','gender','Race.and.Hispanic.Origin.Group')]
 
 # load population data
-pop_m <- read.csv(file = 'data/USA/pop/usa_states_population_m.csv')
-pop_f <- read.csv(file = 'data/USA/pop/usa_states_population_f.csv')
+pop_m <- read.csv(file = 'data/pop/usa_states_population_m.csv')
+pop_f <- read.csv(file = 'data/pop/usa_states_population_f.csv')
 
 pop_m <- subset(pop_m,year==2019)
 pop_f <- subset(pop_f,year==2019)
@@ -778,7 +771,7 @@ pop_r <- pop_a[,list(pop_r=sum(population)),by=c('state','race.eth')]
 pop_r_us <- pop_a[,list(pop_r=sum(population)),by=c('race.eth')]
 
 # get population under 18
-pop_by_age <- data.table(read.csv('data/USA/pop_US_1y.csv'))
+pop_by_age <- data.table(read.csv('data/pop/pop_US_1y.csv'))
 pop_by_age[, pop:=Population*1000]
 pop_min <- sum(pop_by_age$pop[pop_by_age$Age<=17])
 
@@ -831,9 +824,6 @@ order_fig3 <- dat5$state
 do2$race2 <- factor(do2$race2,levels=c("Non-Hispanic White","Hispanic or Non-White"))
 pal3 <- c(pal_jama("default")(1),"#D3D3D3")
 do2$state <- factor(do2$state,levels=order_fig3)
-
-do2[state %in% order_fig3[42:51] , flag:=1]
-do2[flag==1 ,bar:=6]
 
 box <- data.frame(xmin=order_fig3[41],xmax=Inf,ymin=-6,ymax=7)
 g_pyramid <- ggplot() + 

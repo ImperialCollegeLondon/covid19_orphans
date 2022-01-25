@@ -1,6 +1,6 @@
-source(file.path("Pediatrics_US_estimates_disparities_2021","R","process_children_function.R"))
-source(file.path("Pediatrics_US_estimates_disparities_2021","R","process_fertility.R"))
-source(file.path("Pediatrics_US_estimates_disparities_2021","R","process_child_mortality.R"))
+source(file.path("R","process_children_function.R"))
+source(file.path("R","process_fertility.R"))
+source(file.path("R","process_child_mortality.R"))
 
 # USA
 process_number_children_usa_bystate <- function(rep=000){

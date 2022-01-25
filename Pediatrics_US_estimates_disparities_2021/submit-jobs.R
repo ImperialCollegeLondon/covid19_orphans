@@ -5,7 +5,7 @@ require(data.table)
 if(1)
 {	
 	args <- data.table(			
-		source_dir= '~/git/covid19orphans',
+		source_dir= '~/git/covid19_orphans',
 		out_dir= '~/orphans',	
 		bs_reps = 1000,
 		job_tag = '1000_reps'

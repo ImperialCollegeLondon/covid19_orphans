@@ -2,7 +2,7 @@
 
 This repository includes code and data to recreate the following analyses:
 1) [Hillis, Unwin, Chen et al. (2021)](http://www.thelancet.com/journals/lancet/article/PIIS0140-6736(21)01253-8/fulltext) [![DOI](https://zenodo.org/badge/360452208.svg)](https://zenodo.org/badge/latestdoi/360452208),
-2) [Hillis, Blenkinsop et al. (2021)]()
+2) [Hillis, Blenkinsop, Villaveces et al. (2021)](https://publications.aap.org/pediatrics/article/148/6/e2021053760/183446/COVID-19-Associated-Orphanhood-and-Caregiver-Death)
 
 ## Global minimum estimates of children affected by COVID-19-associated orphanhood and deaths of caregivers: a modelling study
 
@@ -22,10 +22,15 @@ Please note all data necessary to run the analyses from scratch are not provided
 This repository includes the code and underlying data, where possible, to recreate the analyses in [Hillis, Blenkinsop, Villaveces et al. (2021)]( https://doi.org/10.1542/peds.2021-053760).  
 
 Two files need to be run to recreate the analysis:
-1) run_US.R
-2) submit-jobs.R.
+1) Pediatrics_US_estimates_disparities_2021.R
+2) Pediatrics_US_estimates_disparities_2021/submit-jobs.R.
 
-These methods use COVID-19 or excess deaths and fertility rates for US states, stratified by race and ethnicity. run_US.R runs the primary analysis and produces the manuscript tables and figures. submit-jobs.R generates a bash script to run the bootstrapped analysis and generates uncertainty intervals for the estimates, and is intended to run in a UNIX environment.
+These methods use COVID-19 or excess deaths and fertility rates for US states, stratified by race and ethnicity.
+
+Pediatrics_US_estimates_disparities_2021.R runs the primary analysis and produces the manuscript tables and figures. It can be run locally in R, or run through the command line from the local repository directory as follows:
+Rscript Pediatrics_US_estimates_disparities_2021.R -source_dir '~/git/covid19_orphans/Pediatrics_US_estimates_disparities_2021' -rep 0 
+
+Pediatrics_US_estimates_disparities_2021/submit-jobs.R generates a bash script to run the bootstrapped analysis and generates uncertainty intervals for the estimates, and is intended to run in a UNIX environment.
 
 Raw data is provided in the repository, with the exception of mortality data, which is too large to be added to the repository (75mb). To run the analysis, the data can be downloaded from :
 https://data.cdc.gov/NCHS/AH-Quarterly-Excess-Deaths-by-State-Sex-Age-and-Ra/jqg8-ycmh
