@@ -522,6 +522,21 @@ p_global <- ggarrange(p_global_a, p_global_b, common.legend = TRUE,
 print(p_global)
 ggsave("global_age_analysis_2021/figures/fig_3_global_orphans_percentage.pdf", p_global, height = 7)
 
+# --- Summarise 
+reg_age = reg_percent_summary %>%
+  select(region, age, mean) %>%
+  group_by(region, age) %>%
+  summarise(mean = sum(mean))
+reg_age_wide = spread(reg_age, key = region, value = mean)
+reg_age_wide$age = c("5-9", "10-17", "0-4")
+write.csv(file = paste0("global_age_analysis_2021/data/age_compostion_region.csv"), reg_age_wide, row.names=FALSE)
+
+reg_gender = reg_percent_summary %>%
+  select(region, gender, mean) %>%
+  group_by(region, gender) %>%
+  summarise(mean = sum(mean))
+reg_gender_wide = spread(reg_gender, key = region, value = mean)
+write.csv(file = paste0("global_age_analysis_2021/data/gender_compostion_region.csv"), reg_gender_wide, row.names=FALSE)
 
 # ---------- Calculating total numbers of 10-17s
 adolescents = global[1,] + global[2,]

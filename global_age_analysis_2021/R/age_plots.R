@@ -1,6 +1,7 @@
 library(ggplot2)
 library(tidyverse)
 library(ggpubr)
+library(xtable)
 
 source("global_age_analysis_2021/R/utils.R")
 
@@ -184,6 +185,20 @@ pretty_table_wide_raw <- pivot_wider(pretty_table, names_from = c(category, gend
 write.csv(file = paste0("global_age_analysis_2021/data/age_outputs/age_compostion", month, ".csv"), pretty_table_wide_raw, row.names=FALSE)
 tab<-xtable(pretty_table_wide_raw)
 print(tab, include.rownames=FALSE)
+
+percentages_gender <- percentages_ %>%
+  select(gender, percent, country) %>%
+  group_by(country, gender) %>%
+  summarise(percent = sum(percent))
+percentages_gender_wide = spread(percentages_gender, key = country, percent)
+write.csv(file = paste0("global_age_analysis_2021/data/gender_compostion.csv"), percentages_gender_wide, row.names=FALSE)
+
+percentages_age <- percentages_ %>%
+  select(category, percent, country) %>%
+  group_by(country, category) %>%
+  summarise(percent = sum(percent))
+percentages_age_wide = spread(percentages_age, key = country, percent)
+write.csv(file = paste0("global_age_analysis_2021/data/age_compostion.csv"), percentages_age_wide, row.names=FALSE)
 
 # Percentages pyramid ----------------------------------------------
 pyramid <- percentages
