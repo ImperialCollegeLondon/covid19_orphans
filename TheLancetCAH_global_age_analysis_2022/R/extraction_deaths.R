@@ -12,9 +12,9 @@ library(readxl)
 
 # Excess:
 process_euro_excess_new = function(){
-  list_excel = readxl::excel_sheets('global_age_analysis_2021/data/Six_euro_Mar_2021/DEMO_R_MWK_05_six_countries_2021.xlsx')
+  list_excel = readxl::excel_sheets('TheLancetCAH_global_age_analysis_2022/data/Six_euro_Mar_2021/DEMO_R_MWK_05_six_countries_2021.xlsx')
   list_excel = list_excel[3:length(list_excel)]
-  x <- lapply(list_excel, function(X) readxl::read_excel('global_age_analysis_2021/data/Six_euro_Mar_2021/DEMO_R_MWK_05_six_countries_2021.xlsx', sheet = X))
+  x <- lapply(list_excel, function(X) readxl::read_excel('TheLancetCAH_global_age_analysis_2022/data/Six_euro_Mar_2021/DEMO_R_MWK_05_six_countries_2021.xlsx', sheet = X))
   names(x) <- list_excel
   
   age_data = data.table()
@@ -83,15 +83,15 @@ process_euro_excess_new = function(){
     age_summary = rbind(age_summary, dataset_summary)  
     cat(paste0('=====>processed dataset for ', gender, ' at age ', age, ' dataset\n'))
   }
-  write.csv(age_summary, file = paste0("global_age_analysis_2021/data/Six_euro_Mar_2021/euro_excess.csv"), row.names = FALSE)
+  write.csv(age_summary, file = paste0("TheLancetCAH_global_age_analysis_2022/data/Six_euro_Mar_2021/euro_excess.csv"), row.names = FALSE)
 }
 
 # Process Argentina - covid only, updated to 31st dec
 process_argentina_covid19 = function(){
-  data = read.csv('global_age_analysis_2021/data/Argentina/Argentina - Deaths by age and sex (rates per 100,000)-apr.csv')
+  data = read.csv('TheLancetCAH_global_age_analysis_2022/data/Argentina/Argentina - Deaths by age and sex (rates per 100,000)-apr.csv')
   data =  reshape2::melt(data, id.vars = c('date', 'age'), variable.name =  'gender', value.name = 'rate')
   data$age <- as.character(data$age)
-  data_pop = readxl::read_xlsx('global_age_analysis_2021/data/fertility/pop.xlsx', sheet = 2)
+  data_pop = readxl::read_xlsx('TheLancetCAH_global_age_analysis_2022/data/fertility/pop.xlsx', sheet = 2)
   countries = c('Argentina')
   names(data_pop) = as.character(data_pop[1,])
   data_pop = as.data.table(data_pop) %>% filter(Location %in% countries, Time == '2020') %>% select(Location, Time, Age, Female, Male)
@@ -113,7 +113,7 @@ process_argentina_covid19 = function(){
   data_combine[,COVID19_deaths := rate * pop/100]
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/04-30-2021.csv")
+  deaths_data = read.csv("TheLancetCAH_global_age_analysis_2022/data/04-30-2021.csv")
   arg <- deaths_data[which(deaths_data$Country_Region == "Argentina"),]
   total = arg$Deaths
   data_combine$date = '2021-04-30'
@@ -122,7 +122,7 @@ process_argentina_covid19 = function(){
   d_merge$rate = d_merge$COVID19_deaths/sum(d_merge$COVID19_deaths)
   d_merge$deaths = round(d_merge$rate*total)
   
-  write.csv(file = 'global_age_analysis_2021/data/Argentina/covid19_deaths.csv', d_merge, row.names=FALSE)
+  write.csv(file = 'TheLancetCAH_global_age_analysis_2022/data/Argentina/covid19_deaths.csv', d_merge, row.names=FALSE)
   #d_merge
 }
 
@@ -134,8 +134,8 @@ process_brazil = function(age_range){
   url = 'https://s3-sa-east-1.amazonaws.com/ckan.saude.gov.br/SRAG/2020/INFLUD-10-05-2021.csv'
   file_name = strsplit(url, '/')
   file_name = file_name[[1]][length(file_name[[1]])]
-  download.file(url, file.path('global_age_analysis_2021/data/Brazil/', file_name))
-  df_SIVEP_ORIGINAL=read_csv2(file.path('global_age_analysis_2021/data/Brazil/', file_name))
+  download.file(url, file.path('TheLancetCAH_global_age_analysis_2022/data/Brazil/', file_name))
+  df_SIVEP_ORIGINAL=read_csv2(file.path('TheLancetCAH_global_age_analysis_2022/data/Brazil/', file_name))
   
   df_SIVEP_ORIGINAL->df_SIVEP
   df_SIVEP = df_SIVEP[which(df_SIVEP$CLASSI_FIN==5),]
@@ -168,8 +168,8 @@ process_brazil = function(age_range){
     dir.create(file.path('data','Brazil'))
   }
   
-  #write.csv(file= paste0("global_age_analysis_2021/data/Brazil/","brazil.csv"),df_SIVEP, row.names=FALSE)
-  #write.csv(file= paste0("global_age_analysis_2021/data/Brazil/","brazil_plot.csv"),df_SIVEP.plt, row.names=FALSE)
+  #write.csv(file= paste0("TheLancetCAH_global_age_analysis_2022/data/Brazil/","brazil.csv"),df_SIVEP, row.names=FALSE)
+  #write.csv(file= paste0("TheLancetCAH_global_age_analysis_2022/data/Brazil/","brazil_plot.csv"),df_SIVEP.plt, row.names=FALSE)
   
   df = df_SIVEP.plt[order(-date, agesex),]
   df = df[which(df$date <= as.Date("2021-04-30")),]
@@ -180,7 +180,7 @@ process_brazil = function(age_range){
   }
   tmp$date = max(tmp$date)
   tmp = tmp[order(-gender, age),]
-  write.csv(file= paste0("global_age_analysis_2021/data/Brazil/","brazil_summary.csv"),tmp, row.names=FALSE)
+  write.csv(file= paste0("TheLancetCAH_global_age_analysis_2022/data/Brazil/","brazil_summary.csv"),tmp, row.names=FALSE)
   
   d_merge = tmp
   d_merge$date = as.Date(d_merge$date)
@@ -189,7 +189,7 @@ process_brazil = function(age_range){
     select(date, gender, age, total_COVID19_deaths) 
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/04-30-2021.csv")
+  deaths_data = read.csv("TheLancetCAH_global_age_analysis_2022/data/04-30-2021.csv")
   bra <- deaths_data[which(deaths_data$Country_Region == "Brazil"),]
   total = sum(bra$Deaths)
   
@@ -198,12 +198,12 @@ process_brazil = function(age_range){
   d_merge$rate = d_merge$deaths/sum(d_merge$deaths)
   d_merge$deaths = round(d_merge$rate * total)
   setnames(d_merge, 'deaths', 'COVID19_deaths')
-  write.csv(d_merge %>% select(-rate), file= 'global_age_analysis_2021/data/Brazil/covid19_deaths.csv', row.names=FALSE)
+  write.csv(d_merge %>% select(-rate), file= 'TheLancetCAH_global_age_analysis_2022/data/Brazil/covid19_deaths.csv', row.names=FALSE)
 }
 
 #Colombia
 process_colombia_covid19 = function(){
-  data = readxl::read_xlsx('global_age_analysis_2021/data/Colombia/COVID19_Colombia_by_sex_and_age.xlsx')
+  data = readxl::read_xlsx('TheLancetCAH_global_age_analysis_2022/data/Colombia/COVID19_Colombia_by_sex_and_age.xlsx')
   data = reshape2::melt(data, id.vars = c('Week', 'sex 0=F 1=M'), variable.name = 'age', value.name = 'covid19_deaths')
   data = as.data.table(data)
   setnames(data, 2, 'gender')
@@ -215,21 +215,21 @@ process_colombia_covid19 = function(){
   data$rate = data$nb_deaths/sum(data$nb_deaths)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/04-30-2021.csv")
+  deaths_data = read.csv("TheLancetCAH_global_age_analysis_2022/data/04-30-2021.csv")
   col <- deaths_data[which(deaths_data$Country_Region == "Colombia"),]
   total = sum(col$Deaths)
   data$date = '2021-04-30'
   
   data$deaths = round(data$rate* total)
   data = data %>% select(-rate, -nb_deaths)
-  write.csv(data, file= 'global_age_analysis_2021/data/Colombia/covid19_deaths_all.csv', row.names=FALSE)
+  write.csv(data, file= 'TheLancetCAH_global_age_analysis_2022/data/Colombia/covid19_deaths_all.csv', row.names=FALSE)
 }
 
 #England and wales
 process_england_wales = function(uncertainty = FALSE){
   #url_previous = 'https://www.ons.gov.uk/file?uri=/peoplepopulationandcommunity/birthsdeathsandmarriages/deaths/adhocs/11485fiveyearaverageweeklydeathsbysexandagegroupenglandandwalesdeathsoccurringbetween2015and2019/fiveyearavgweeklydeaths2015to2019.xlsx'
-  #download.file(url_previous, 'global_age_analysis_2021/data/UK/england_wales_pre_deaths.xlsx')
-  data = readxl::read_xlsx('global_age_analysis_2021/data/UK/england_wales_pre_deaths.xlsx', sheet = 2)
+  #download.file(url_previous, 'TheLancetCAH_global_age_analysis_2022/data/UK/england_wales_pre_deaths.xlsx')
+  data = readxl::read_xlsx('TheLancetCAH_global_age_analysis_2022/data/UK/england_wales_pre_deaths.xlsx', sheet = 2)
   names(data) = as.character(data[2,])
   data = data[3:nrow(data),]
   data = data[which(!is.na(data$`Age group`)),]
@@ -240,8 +240,8 @@ process_england_wales = function(uncertainty = FALSE){
   setnames(data, 1:ncol(data), c('gender', 'age', 'week', 'value'))
   
   url = 'https://download.ons.gov.uk/downloads/datasets/weekly-deaths-age-sex/editions/covid-19/versions/30.csv'
-  #download.file(url, 'global_age_analysis_2021/data/UK/england_wales_deaths-v30.csv')
-  data2 = read.csv('global_age_analysis_2021/data/UK/england_wales_deaths-v30.csv')
+  #download.file(url, 'TheLancetCAH_global_age_analysis_2022/data/UK/england_wales_deaths-v30.csv')
+  data2 = read.csv('TheLancetCAH_global_age_analysis_2022/data/UK/england_wales_deaths-v30.csv')
   
    week_split <- function(x){
     return(as.double(strsplit(x, "-")[[1]][2]))
@@ -284,7 +284,7 @@ process_england_wales = function(uncertainty = FALSE){
   d_deaths[is.na(d_deaths)] <- 0
   setnames(d_deaths, c('deaths.x', 'deaths.y'), c('covid19_deaths', 'excess_deaths'))
   
-  write.csv(file= 'global_age_analysis_2021/data/UK/deaths_all_england_wales.csv', d_deaths, row.names=FALSE)
+  write.csv(file= 'TheLancetCAH_global_age_analysis_2022/data/UK/deaths_all_england_wales.csv', d_deaths, row.names=FALSE)
   
   # d_deaths$week = as.numeric(sapply(d_deaths$week, function(x) strsplit(x, " ")[[1]][2]))
   # d_deaths = d_deaths[which((d_deaths$year == "2020" &  d_deaths$week >=10) | 
@@ -297,7 +297,7 @@ process_england_wales = function(uncertainty = FALSE){
   #   distinct()
   # d_merge$deaths = ifelse(d_merge$nb_covid19 >= d_merge$nb_excess, d_merge$nb_covid19, d_merge$nb_excess)
   # 
-  # write.csv(file = 'global_age_analysis_2021/data/UK/deaths_all_england_wales.csv', d_merge, row.names=FALSE)
+  # write.csv(file = 'TheLancetCAH_global_age_analysis_2022/data/UK/deaths_all_england_wales.csv', d_merge, row.names=FALSE)
   
   d_deaths$week = as.numeric(sapply(d_deaths$week, function(x) strsplit(x, " ")[[1]][2]))
   d_deaths = d_deaths[which((d_deaths$year == "2020" &  d_deaths$week >=10) |
@@ -311,12 +311,12 @@ process_england_wales = function(uncertainty = FALSE){
   
   d_merge$deaths <- ifelse(d_merge$nb_excess > d_merge$nb_covid19, d_merge$nb_excess,  d_merge$nb_covid19)
   
-  write.csv(file = 'global_age_analysis_2021/data/UK/deaths_all_england_wales.csv', d_merge, row.names=FALSE)
+  write.csv(file = 'TheLancetCAH_global_age_analysis_2022/data/UK/deaths_all_england_wales.csv', d_merge, row.names=FALSE)
 }
 
 # France
 process_france = function(){
-  tmp = readxl::read_xlsx('global_age_analysis_2021/data/France/Deaths-Age-Sex_Covid-19_France_06-05.xlsx', sheet = 2)
+  tmp = readxl::read_xlsx('TheLancetCAH_global_age_analysis_2022/data/France/Deaths-Age-Sex_Covid-19_France_06-05.xlsx', sheet = 2)
   data = tmp[7:16, c(1,c(50, 52, 55))]
   data = data.frame(data)
   names(data) = c('age', 'male', 'female', 'both')
@@ -329,7 +329,7 @@ process_france = function(){
     gather(key = "gender", value = "covid_deaths", -age)
   data$gender = ifelse(data$gender  == 'male', 'Male', 'Female')
   
-  excess_death = read.csv('global_age_analysis_2021/data/euro_excess_oct.csv')
+  excess_death = read.csv('TheLancetCAH_global_age_analysis_2022/data/euro_excess_oct.csv')
   excess_death = as.data.table(excess_death) %>% select(week, year, france, age, gender)
   excess_death = excess_death[!is.na(excess_death$france),]
   excess_death$age = as.character(excess_death$age)
@@ -356,12 +356,12 @@ process_france = function(){
     summarise("excess_deaths" = sum(France))
   
   d_merge = left_join(data, excess_death, by = c('gender', 'age' = 'age'))
-  write.csv(file= paste0("global_age_analysis_2021/data/France/","france_all.csv"),d_merge, row.names=FALSE)
+  write.csv(file= paste0("TheLancetCAH_global_age_analysis_2022/data/France/","france_all.csv"),d_merge, row.names=FALSE)
   
   total_covid = sum(d_merge$covid_deaths)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/04-30-2021.csv")
+  deaths_data = read.csv("TheLancetCAH_global_age_analysis_2022/data/04-30-2021.csv")
   fra <- deaths_data[which(deaths_data$Country_Region == "France"),]
   total = sum(fra$Deaths)
   
@@ -369,12 +369,12 @@ process_france = function(){
   d_merge$covid_deaths = round(d_merge$covid_deaths * rate)
   d_merge$deaths = ifelse(d_merge$covid_deaths > d_merge$excess_deaths, d_merge$covid_deaths, d_merge$excess_deaths)
   d_merge = d_merge %>% select(age, gender, covid_deaths, excess_deaths, deaths)
-  write.csv(d_merge, file= 'global_age_analysis_2021/data/France/france_all.csv', row.names=FALSE)
+  write.csv(d_merge, file= 'TheLancetCAH_global_age_analysis_2022/data/France/france_all.csv', row.names=FALSE)
 }
 
 # Germany
 process_germany = function(){
-  tmp = readxl::read_xlsx('global_age_analysis_2021/data/Germany/Deaths-Age-Sex_Covid-19_Germany_06-05.xlsx', sheet = 2)
+  tmp = readxl::read_xlsx('TheLancetCAH_global_age_analysis_2022/data/Germany/Deaths-Age-Sex_Covid-19_Germany_06-05.xlsx', sheet = 2)
   data = tmp[7:16, c(1,c(15,17,20))]
   data = data.frame(data)
   names(data) = c('age', 'male', 'female', 'both')
@@ -390,7 +390,7 @@ process_germany = function(){
   total_covid = sum(data$deaths)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/04-30-2021.csv")
+  deaths_data = read.csv("TheLancetCAH_global_age_analysis_2022/data/04-30-2021.csv")
   ger <- deaths_data[which(deaths_data$Country_Region == "Germany"),]
   total = sum(ger$Deaths)
   
@@ -398,13 +398,13 @@ process_germany = function(){
   data$deaths = round(data$deaths * rate)
   data$age = as.character(data$age)
   data$age = ifelse(data$age == '90-99', '90+', data$age)
-  write.csv(data, file= 'global_age_analysis_2021/data/Germany/covid19_deaths.csv', row.names=FALSE)
+  write.csv(data, file= 'TheLancetCAH_global_age_analysis_2022/data/Germany/covid19_deaths.csv', row.names=FALSE)
 }
 
 # India
 process_india_covid = function(){
   total_deaths = 211839 # 30th April 162960 # 31st March 157194 # on 28th feb from https://www.covid19india.org
-  demog <- read_excel("global_age_analysis_2021/data/India/jghs-2-e17-i002.xlsx")
+  demog <- read_excel("TheLancetCAH_global_age_analysis_2022/data/India/jghs-2-e17-i002.xlsx")
   
   tot_deaths = data.frame(demog[c(13), c(3, 5)])
   colnames(tot_deaths) <- c("Male", "Female")
@@ -421,7 +421,7 @@ process_india_covid = function(){
   data$deaths <- round(data$freq * total_deaths)
   
   d_summary <- select(data, sex, age, deaths)
-  write.csv(d_summary %>% arrange(age, sex), file= 'global_age_analysis_2021/data/India/all_covid_deaths.csv', row.names=FALSE)
+  write.csv(d_summary %>% arrange(age, sex), file= 'TheLancetCAH_global_age_analysis_2022/data/India/all_covid_deaths.csv', row.names=FALSE)
   d_summary$age = ifelse(d_summary$age %in% c('0-4', '5-19'), '0-19',
                          ifelse(d_summary$age %in% c('20-29','30-39', '40-49'), '20-49',
                                 ifelse(d_summary$age %in% c("50-59","60-69"),'50-69', '70+')))
@@ -431,7 +431,7 @@ process_india_covid = function(){
     select(-deaths) %>% 
     distinct()
   d_summary  = d_summary %>% arrange(age, sex) %>% filter(age != '0-19')
-  write.csv(d_summary, file= 'global_age_analysis_2021/data/India/covid_deaths.csv', row.names=FALSE)
+  write.csv(d_summary, file= 'TheLancetCAH_global_age_analysis_2022/data/India/covid_deaths.csv', row.names=FALSE)
 }
 
 # Iran
@@ -452,18 +452,18 @@ process_iran <- function(){
   total_covid = sum(covid_data$deaths)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/04-30-2021.csv")
+  deaths_data = read.csv("TheLancetCAH_global_age_analysis_2022/data/04-30-2021.csv")
   iran <- deaths_data[which(deaths_data$Country_Region == "Iran"),]
   total = sum(iran$Deaths)
   
   rate = total / total_covid
   covid_data$deaths = round(covid_data$deaths * rate)
-  write.csv(covid_data, file = 'global_age_analysis_2021/data/Iran/iran_all.csv', row.names=FALSE)
+  write.csv(covid_data, file = 'TheLancetCAH_global_age_analysis_2022/data/Iran/iran_all.csv', row.names=FALSE)
 }
 
 # Italy
 process_italy = function(){
-  tmp = readxl::read_xlsx('global_age_analysis_2021/data/Italy/Deaths-Age-Sex_Covid-19_Italy_06-05.xlsx', sheet = 2)
+  tmp = readxl::read_xlsx('TheLancetCAH_global_age_analysis_2022/data/Italy/Deaths-Age-Sex_Covid-19_Italy_06-05.xlsx', sheet = 2)
   data = tmp[7:16, c(1,c(8,10,13))]
   data = data.frame(data)
   names(data) = c('age', 'male', 'female', 'both')
@@ -480,7 +480,7 @@ process_italy = function(){
     gather(key = "gender", value = "covid_deaths", -age)
   data$gender = ifelse(data$gender  == 'male', 'Male', 'Female')
   
-  excess_death = read.csv('global_age_analysis_2021/data/euro_excess.csv')
+  excess_death = read.csv('TheLancetCAH_global_age_analysis_2022/data/euro_excess.csv')
   excess_death = as.data.table(excess_death) %>% select(week, year, italy, age, gender)
   excess_death = excess_death[!is.na(excess_death$italy),]
   excess_death$age = as.character(excess_death$age)
@@ -511,12 +511,12 @@ process_italy = function(){
     summarise("excess_deaths" = sum(excess_death))
   
   d_merge = left_join(data, excess_death, by = c('gender', 'age' = 'age'))
-  write.csv(file= paste0("global_age_analysis_2021/data/Italy/","italy_all.csv"),d_merge, row.names=FALSE)
+  write.csv(file= paste0("TheLancetCAH_global_age_analysis_2022/data/Italy/","italy_all.csv"),d_merge, row.names=FALSE)
   
   total_covid = sum(d_merge$covid_deaths)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/04-30-2021.csv")
+  deaths_data = read.csv("TheLancetCAH_global_age_analysis_2022/data/04-30-2021.csv")
   ita <- deaths_data[which(deaths_data$Country_Region == "Italy"),]
   total = sum(ita$Deaths)
   
@@ -524,50 +524,50 @@ process_italy = function(){
   d_merge$covid_deaths = round(d_merge$covid_deaths * rate)
   d_merge$deaths = ifelse(d_merge$covid_deaths > d_merge$excess_deaths, d_merge$covid_deaths, d_merge$excess_deaths)
   d_merge = d_merge %>% select(age, gender, covid_deaths, excess_deaths, deaths)
-  write.csv(d_merge, file= 'global_age_analysis_2021/data/Italy/italy_all.csv', row.names=FALSE)
+  write.csv(d_merge, file= 'TheLancetCAH_global_age_analysis_2022/data/Italy/italy_all.csv', row.names=FALSE)
 }
 
 # Kenya
 process_kenya_covid19 = function(){
-  data = read.csv('global_age_analysis_2021/data/Kenya/covid19_deaths_raw.csv')
+  data = read.csv('TheLancetCAH_global_age_analysis_2022/data/Kenya/covid19_deaths_raw.csv')
   data$date = '2020-07-27'
   data$rate = data$deaths/sum(data$deaths)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/04-30-2021.csv")
+  deaths_data = read.csv("TheLancetCAH_global_age_analysis_2022/data/04-30-2021.csv")
   ken <- deaths_data[which(deaths_data$Country_Region == "Kenya"),]
   total = sum(ken$Deaths)
   
   data$deaths = round(data$rate * total)
   data = data %>% select(-rate)
-  write.csv(data, file= 'global_age_analysis_2021/data/Kenya/covid19_deaths.csv', row.names=FALSE)
+  write.csv(data, file= 'TheLancetCAH_global_age_analysis_2022/data/Kenya/covid19_deaths.csv', row.names=FALSE)
 }
 
 # Malawi
 process_malawi = function(){
-  data = read_xls('global_age_analysis_2021/data/Malawi/malawi.xls')
+  data = read_xls('TheLancetCAH_global_age_analysis_2022/data/Malawi/malawi.xls')
   data = gather(data, key = gender, value = deaths, -Age)
   data$rate = data$deaths/sum(data$deaths)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/04-30-2021.csv")
+  deaths_data = read.csv("TheLancetCAH_global_age_analysis_2022/data/04-30-2021.csv")
   mal <- deaths_data[which(deaths_data$Country_Region == "Malawi"),]
   total = sum(mal$Deaths)
   
   data$deaths = round(data$rate * total)
   data = data %>% select(-rate)
   names(data) <- c("age", "gender", "deaths")
-  write.csv(data, file = 'global_age_analysis_2021/data/Malawi/covid19_deaths.csv', row.names=FALSE)
+  write.csv(data, file = 'TheLancetCAH_global_age_analysis_2022/data/Malawi/covid19_deaths.csv', row.names=FALSE)
 }
 
 # Mexico
 process_mexico_covid19 = function(){
-  data = read.csv('global_age_analysis_2021/data/Mexico/Mexico - Deaths by age and sex (rates per 100,000)-apr.csv', fileEncoding="latin1")
+  data = read.csv('TheLancetCAH_global_age_analysis_2022/data/Mexico/Mexico - Deaths by age and sex (rates per 100,000)-apr.csv', fileEncoding="latin1")
   setnames(data, 1:2, c('date', 'age'))
   
   data =  reshape2::melt(data, id.vars = c('date', 'age'), variable.name =  'gender', value.name = 'rate')
   
-  data_pop = readxl::read_xlsx('global_age_analysis_2021/data/fertility/pop.xlsx', sheet = 2)
+  data_pop = readxl::read_xlsx('TheLancetCAH_global_age_analysis_2022/data/fertility/pop.xlsx', sheet = 2)
   countries = c('Mexico')
   names(data_pop) = as.character(data_pop[1,])
   data_pop = as.data.table(data_pop) %>% filter(Location %in% countries, Time == '2020') %>% select(Location, Time, Age, Female, Male)
@@ -584,37 +584,37 @@ process_mexico_covid19 = function(){
   data_combine[,COVID19_deaths := round(rate * pop/100)]
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/04-30-2021.csv")
+  deaths_data = read.csv("TheLancetCAH_global_age_analysis_2022/data/04-30-2021.csv")
   mex <- deaths_data[which(deaths_data$Country_Region == "Mexico"),]
   total = sum(mex$Deaths)
   
   data_combine$rate = data_combine$COVID19_deaths/sum(data_combine$COVID19_deaths)
   data_combine$deaths = round(data_combine$rate * total)
-  write.csv(data_combine %>% select(age, gender, deaths), file= 'global_age_analysis_2021/data/Mexico/covid19_deaths.csv', row.names=FALSE)
+  write.csv(data_combine %>% select(age, gender, deaths), file= 'TheLancetCAH_global_age_analysis_2022/data/Mexico/covid19_deaths.csv', row.names=FALSE)
 }
 
 # Nigeria
 process_nigeria_covid19 = function(){
-  d_merge = read.csv('global_age_analysis_2021/data/Nigeria/covid19_deaths_raw_apr.csv')
+  d_merge = read.csv('TheLancetCAH_global_age_analysis_2022/data/Nigeria/covid19_deaths_raw_apr.csv')
   setnames(d_merge, 'COVID19_deaths', 'deaths')
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/04-30-2021.csv")
+  deaths_data = read.csv("TheLancetCAH_global_age_analysis_2022/data/04-30-2021.csv")
   nig <- deaths_data[which(deaths_data$Country_Region == "Nigeria"),]
   total = sum(nig$Deaths)
   
   d_merge$date = '2021-04-30'
   d_merge$rate = d_merge$deaths/sum(d_merge$deaths)
   d_merge$deaths = round(d_merge$rate * total)
-  write.csv(d_merge %>% select(-rate), file= 'global_age_analysis_2021/data/Nigeria/covid19_deaths.csv', row.names=FALSE)
+  write.csv(d_merge %>% select(-rate), file= 'TheLancetCAH_global_age_analysis_2022/data/Nigeria/covid19_deaths.csv', row.names=FALSE)
 }
 
 # Peru
 process_peru_covid19 = function(){
-  d_merge = read.csv('global_age_analysis_2021/data/Peru/covid19_deaths_raw.csv')
+  d_merge = read.csv('TheLancetCAH_global_age_analysis_2022/data/Peru/covid19_deaths_raw.csv')
 
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/04-30-2021.csv")
+  deaths_data = read.csv("TheLancetCAH_global_age_analysis_2022/data/04-30-2021.csv")
   per <- deaths_data[which(deaths_data$Country_Region == "Peru"),]
   total = sum(per$Deaths)
   
@@ -623,14 +623,14 @@ process_peru_covid19 = function(){
   d_merge$deaths = round(d_merge$rate * total)
   setnames(d_merge, 'deaths', 'COVID19_deaths')
   
-  write.csv(d_merge %>% select(-rate), file= 'global_age_analysis_2021/data/Peru/covid19_deaths.csv', row.names=FALSE)
+  write.csv(d_merge %>% select(-rate), file= 'TheLancetCAH_global_age_analysis_2022/data/Peru/covid19_deaths.csv', row.names=FALSE)
 }
 
 # Philippines 
 
 process_philippines = function(){
-  data_1 <- read_csv("global_age_analysis_2021/data/Philippines/DOH COVID Data Drop_ 20210509 - 04 Case Information 2021.csv")
-  data_2 <- read_csv("global_age_analysis_2021/data/Philippines/DOH COVID Data Drop_ 20210509 - 04 Case Information 2020.csv")
+  data_1 <- read_csv("TheLancetCAH_global_age_analysis_2022/data/Philippines/DOH COVID Data Drop_ 20210509 - 04 Case Information 2021.csv")
+  data_2 <- read_csv("TheLancetCAH_global_age_analysis_2022/data/Philippines/DOH COVID Data Drop_ 20210509 - 04 Case Information 2020.csv")
   data <- rbind(data_1, data_2)
   data$DateDied <- as.Date(data$DateDied)
   
@@ -648,7 +648,7 @@ process_philippines = function(){
   d$gender <- ifelse(d$gender == "MALE", "male", "female")
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/04-30-2021.csv")
+  deaths_data = read.csv("TheLancetCAH_global_age_analysis_2022/data/04-30-2021.csv")
   phi <- deaths_data[which(deaths_data$Country_Region == "Philippines"),]
   total = sum(phi$Deaths)
   
@@ -658,30 +658,30 @@ process_philippines = function(){
     d$deaths = round(d$rate * total)
     setnames(d, 'deaths', 'COVID19_deaths')
     
-    write.csv(d %>% select(-rate), file= 'global_age_analysis_2021/data/Philippines/covid19_deaths.csv', row.names=FALSE)
+    write.csv(d %>% select(-rate), file= 'TheLancetCAH_global_age_analysis_2022/data/Philippines/covid19_deaths.csv', row.names=FALSE)
   } else {
     
     setnames(d, 'deaths', 'COVID19_deaths')
-    write.csv(d, file= 'global_age_analysis_2021/data/Philippines/covid19_deaths.csv', row.names=FALSE)
+    write.csv(d, file= 'TheLancetCAH_global_age_analysis_2022/data/Philippines/covid19_deaths.csv', row.names=FALSE)
   }
 }
 
 # Poland
 process_poland_covid19 = function(){
-  data = readxl::read_xlsx('global_age_analysis_2021/data/Poland/poland-2020-by-age-and-gender.xlsx', sheet = 2)
+  data = readxl::read_xlsx('TheLancetCAH_global_age_analysis_2022/data/Poland/poland-2020-by-age-and-gender.xlsx', sheet = 2)
   setnames(data, 1:3, c('age', 'Female', 'Male'))
   data = data[3:nrow(data),1:3]
   data$country = 'Poland'
   data$date = '2020/10/09'
   data =  reshape2::melt(data, id.vars = c('country','date', 'age'), variable.name =  'gender', value.name = 'COVID19_deaths')
-  write.csv(data, file= 'global_age_analysis_2021/data/Poland/covid19_deaths.csv', row.names=FALSE)
+  write.csv(data, file= 'TheLancetCAH_global_age_analysis_2022/data/Poland/covid19_deaths.csv', row.names=FALSE)
   
   data$COVID19_deaths = as.numeric(data$COVID19_deaths)
-  write.csv(file= paste0("global_age_analysis_2021/data/Poland/","poland_deaths.csv"),data, row.names=FALSE)  
+  write.csv(file= paste0("TheLancetCAH_global_age_analysis_2022/data/Poland/","poland_deaths.csv"),data, row.names=FALSE)  
   total_covid = sum(data$COVID19_deaths)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/04-30-2021.csv")
+  deaths_data = read.csv("TheLancetCAH_global_age_analysis_2022/data/04-30-2021.csv")
   pol <- deaths_data[which(deaths_data$Country_Region == "Poland"),]
   total = sum(pol$Deaths)
   
@@ -692,20 +692,20 @@ process_poland_covid19 = function(){
   data$death = data$COVID19_deaths
   data = select(data, age, gender, death)
   
-  write.csv(data, file= 'global_age_analysis_2021/data/Poland/poland_all.csv', row.names=FALSE)
+  write.csv(data, file= 'TheLancetCAH_global_age_analysis_2022/data/Poland/poland_all.csv', row.names=FALSE)
 }
 
 # Russia
 process_russia_excess = function(){
   # Need to weight by age before weight by sex
   total_excess = 403878
-  demog <- read_excel("global_age_analysis_2021/data/Russia/demo24.xls")
+  demog <- read_excel("TheLancetCAH_global_age_analysis_2022/data/Russia/demo24.xls")
   demog_2019 <- demog[33,]
   men <- sum(as.numeric(demog_2019[c(2,4,6,8,10,12)]))
   women <- sum(as.numeric(demog_2019[c(3,5,7,9,11,13)]))
   prop_excess_men <- men/(men + women)
   
-  data_pop = readxl::read_xlsx('global_age_analysis_2021/data/Russia/pop.xlsx', sheet = 2)
+  data_pop = readxl::read_xlsx('TheLancetCAH_global_age_analysis_2022/data/Russia/pop.xlsx', sheet = 2)
   ages <- data_pop[1, 5:25]
   data_pop = as.data.frame(data_pop[c(7,8),5:25])
   colnames(data_pop) = ages
@@ -729,7 +729,7 @@ process_russia_excess = function(){
   
   
   d_summary <- select(data_pop_sex, sex, age, weighted_excess_deaths)
-  write.csv(d_summary %>% arrange(age, sex), file= 'global_age_analysis_2021/data/Russia/all_excess_deaths.csv', row.names=FALSE)
+  write.csv(d_summary %>% arrange(age, sex), file= 'TheLancetCAH_global_age_analysis_2022/data/Russia/all_excess_deaths.csv', row.names=FALSE)
   d_summary$age = ifelse(d_summary$age %in% c('0-4', '5-9', '10-14'), '0-14',
                          ifelse(d_summary$age %in% c('45-49','50-54', '55-59', '60-64'), '45-64',
                                 ifelse(d_summary$age %in% c("65-69","70-74","75-79","80-84","85-89" ,"90-94", "95-99", "100+" ),'65+', '15-44')))
@@ -739,13 +739,13 @@ process_russia_excess = function(){
     select(-weighted_excess_deaths) %>% 
     distinct()
   d_summary  = d_summary %>% arrange(age, sex) %>% filter(age != '0-14')
-  write.csv(d_summary, file= 'global_age_analysis_2021/data/Russia/excess_deaths.csv', row.names=FALSE)
+  write.csv(d_summary, file= 'TheLancetCAH_global_age_analysis_2022/data/Russia/excess_deaths.csv', row.names=FALSE)
 }
 
 
 # Spain
 process_spain = function(){
-  tmp = readxl::read_xlsx('global_age_analysis_2021/data/Spain/Deaths-Age-Sex_Covid-19_Spain_06-05.xlsx', sheet = 6)
+  tmp = readxl::read_xlsx('TheLancetCAH_global_age_analysis_2022/data/Spain/Deaths-Age-Sex_Covid-19_Spain_06-05.xlsx', sheet = 6)
   data = tmp[7:15, c(1,c(43,45,48))]
   data = data.frame(data)
   names(data) = c('age', 'male', 'female', 'both')
@@ -758,7 +758,7 @@ process_spain = function(){
     gather(key = "gender", value = "covid_deaths", -age)
   data$gender = ifelse(data$gender  == 'male', 'Male', 'Female')
   
-  excess_death = read.csv('global_age_analysis_2021/data/euro_excess.csv')
+  excess_death = read.csv('TheLancetCAH_global_age_analysis_2022/data/euro_excess.csv')
   excess_death = as.data.table(excess_death) %>% select(week, year, spain, age, gender)
   excess_death = excess_death[!is.na(excess_death$spain),]
   excess_death$age = as.character(excess_death$age)
@@ -785,12 +785,12 @@ process_spain = function(){
     summarise("excess_deaths" = sum(excess_death))
   
   d_merge = left_join(data, excess_death, by = c('gender', 'age' = 'age'))
-  write.csv(file= paste0("global_age_analysis_2021/data/Spain/","spain_all.csv"),d_merge, row.names=FALSE)
+  write.csv(file= paste0("TheLancetCAH_global_age_analysis_2022/data/Spain/","spain_all.csv"),d_merge, row.names=FALSE)
   
   total_covid = sum(d_merge$covid_deaths)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/04-30-2021.csv")
+  deaths_data = read.csv("TheLancetCAH_global_age_analysis_2022/data/04-30-2021.csv")
   spa <- deaths_data[which(deaths_data$Country_Region == "Spain"),]
   total = sum(spa$Deaths)
   
@@ -798,15 +798,15 @@ process_spain = function(){
   d_merge$covid_deaths = round(d_merge$covid_deaths * rate)
   d_merge$deaths = ifelse(d_merge$covid_deaths > d_merge$excess_deaths, d_merge$covid_deaths, d_merge$excess_deaths)
   d_merge = d_merge %>% select(age, gender, covid_deaths, excess_deaths, deaths)
-  write.csv(d_merge, file= 'global_age_analysis_2021/data/Spain/spain_all.csv', row.names=FALSE)
+  write.csv(d_merge, file= 'TheLancetCAH_global_age_analysis_2022/data/Spain/spain_all.csv', row.names=FALSE)
 }
 
 # South Africa
 process_sa_covid19 = function(){
-  d_merge = read.csv('global_age_analysis_2021/data/SouthAfrica/covid19_deaths_raw_apr.csv')
+  d_merge = read.csv('TheLancetCAH_global_age_analysis_2022/data/SouthAfrica/covid19_deaths_raw_apr.csv')
 
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/04-30-2021.csv")
+  deaths_data = read.csv("TheLancetCAH_global_age_analysis_2022/data/04-30-2021.csv")
   sa <- deaths_data[which(deaths_data$Country_Region == "South Africa"),]
   total = sum(sa$Deaths)
   
@@ -817,12 +817,12 @@ process_sa_covid19 = function(){
   ####  add 
   d_merge$age = as.character(d_merge$age)
   d_merge$age = ifelse(d_merge$age == 'Oct-19', '10-19', d_merge$age)
-  write.csv(d_merge %>% select(-rate), file= 'global_age_analysis_2021/data/SouthAfrica/covid19_deaths.csv', row.names=FALSE)
+  write.csv(d_merge %>% select(-rate), file= 'TheLancetCAH_global_age_analysis_2022/data/SouthAfrica/covid19_deaths.csv', row.names=FALSE)
 }
 
 # USA
 process_usa = function(){
-  tmp = readxl::read_xlsx('global_age_analysis_2021/data/USA/Deaths-Age-Sex_Covid-19_USA_06.05.xlsx', sheet = 2)
+  tmp = readxl::read_xlsx('TheLancetCAH_global_age_analysis_2022/data/USA/Deaths-Age-Sex_Covid-19_USA_06.05.xlsx', sheet = 2)
   data = tmp[7:16, c(1,c(15, 17, 20))]
   data = data.frame(data)
   names(data) = c('age', 'male', 'female', 'both')
@@ -836,8 +836,8 @@ process_usa = function(){
   data_covid$gender = ifelse(data_covid$gender  == 'male', 'Male', 'Female')
   
   #url = 'https://data.cdc.gov/api/views/m74n-4hbs/rows.csv?accessType=DOWNLOAD'
-  #download.file(url, 'global_age_analysis_2021/data/USA/usa_excess_mortality_all_apr.csv')
-  data = read.csv('global_age_analysis_2021/data/USA/usa_excess_mortality_all_apr.csv')
+  #download.file(url, 'TheLancetCAH_global_age_analysis_2022/data/USA/usa_excess_mortality_all_apr.csv')
+  data = read.csv('TheLancetCAH_global_age_analysis_2022/data/USA/usa_excess_mortality_all_apr.csv')
   date = unique(data$AnalysisDate)
   data = as.data.table(data %>% filter(RaceEthnicity == 'All Race/Ethnicity Groups',
                                        Sex %in% c('Female (F)', 'Male (M)'),
@@ -865,7 +865,7 @@ process_usa = function(){
   dataset[,excess_deaths := value- avg_death]
   dataset = dataset %>% select(week, year, gender, age, excess_deaths) %>%
     arrange(week, age, desc(gender))
-  write.csv(file= ("global_age_analysis_2021/data/USA/excess_deaths.csv"),dataset, row.names=FALSE)
+  write.csv(file= ("TheLancetCAH_global_age_analysis_2022/data/USA/excess_deaths.csv"),dataset, row.names=FALSE)
   excess_death = copy(dataset)
   excess_death$age = ifelse(excess_death$age %in% c('20-24', '15-19'), '15-24',
                             ifelse(excess_death$age %in% c('30-34', '25-29'), '25-34',
@@ -890,12 +890,12 @@ process_usa = function(){
     group_by(age, gender) %>%
     summarise(covid_deaths = sum(covid_deaths))
   d_merge = left_join(data_covid, excess_death, by = c('gender', 'age' = 'age'))
-  write.csv(file= paste0("global_age_analysis_2021/data/USA/","usa_all.csv"),d_merge, row.names=FALSE)
+  write.csv(file= paste0("TheLancetCAH_global_age_analysis_2022/data/USA/","usa_all.csv"),d_merge, row.names=FALSE)
   
   total_covid = sum(d_merge$covid_deaths)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/04-30-2021.csv")
+  deaths_data = read.csv("TheLancetCAH_global_age_analysis_2022/data/04-30-2021.csv")
   us <- deaths_data[which(deaths_data$Country_Region == "US"),]
   total = sum(us$Deaths)
   
@@ -904,24 +904,24 @@ process_usa = function(){
   d_merge$deaths = ifelse(d_merge$covid_deaths > d_merge$excess_deaths, d_merge$covid_deaths, d_merge$excess_deaths)
   #d_merge$deaths = d_merge$excess_deaths
   d_merge = d_merge %>% select(age, gender, excess_deaths,covid_deaths, deaths)
-  write.csv(d_merge, file= 'global_age_analysis_2021/data/USA/usa_all.csv', row.names=FALSE)
+  write.csv(d_merge, file= 'TheLancetCAH_global_age_analysis_2022/data/USA/usa_all.csv', row.names=FALSE)
 }
 
 # Zimbabwe
 process_zimbabwe = function(){
-  data = read_xlsx('global_age_analysis_2021/data/Zimbabwe/zimbabwe_covid_raw.xlsx')
+  data = read_xlsx('TheLancetCAH_global_age_analysis_2022/data/Zimbabwe/zimbabwe_covid_raw.xlsx')
   data = data %>%
     select(Category, Male, Female) %>%
     gather( key = gender, value = rate, -Category)
   
   # Selects deaths from JHU
-  deaths_data = read.csv("global_age_analysis_2021/data/04-30-2021.csv")
+  deaths_data = read.csv("TheLancetCAH_global_age_analysis_2022/data/04-30-2021.csv")
   zim <- deaths_data[which(deaths_data$Country_Region == "Zimbabwe"),]
   total = sum(zim$Deaths)
   
   data$deaths = round(data$rate * total / 100)
   data = data %>% select(-rate)
   names(data) <- c("age", "gender", "deaths")
-  write.csv(data, file = 'global_age_analysis_2021/data/Zimbabwe/covid19_deaths.csv', row.names=FALSE)
+  write.csv(data, file = 'TheLancetCAH_global_age_analysis_2022/data/Zimbabwe/covid19_deaths.csv', row.names=FALSE)
 }
 

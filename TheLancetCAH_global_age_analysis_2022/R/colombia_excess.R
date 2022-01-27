@@ -1,7 +1,7 @@
 library(readxl)
 
 calculate_colombia_excess <- function(){
-  data = read_xlsx("global_age_analysis_2021/data/Colombia/colombia_excess_deaths.xlsx", sheet = 2)
+  data = read_xlsx("TheLancetCAH_global_age_analysis_2022/data/Colombia/colombia_excess_deaths.xlsx", sheet = 2)
   data = data[6:316, 1:3]
   colnames(data) <- c("year", "week", "deaths")
   data$deaths <- as.numeric(data$deaths)
