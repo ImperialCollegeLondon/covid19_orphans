@@ -2,7 +2,7 @@
 
 This repository includes code and data to recreate the following analyses:
 1) [Hillis, Unwin, Chen et al. (2021)](http://www.thelancet.com/journals/lancet/article/PIIS0140-6736(21)01253-8/fulltext) [![DOI](https://zenodo.org/badge/360452208.svg)](https://zenodo.org/badge/latestdoi/360452208),
-2) [Hillis, Blenkinsop et al. (2021)]()
+2) [Hillis, Blenkinsop, Villaveces et al. (2021)](https://publications.aap.org/pediatrics/article/148/6/e2021053760/183446/COVID-19-Associated-Orphanhood-and-Caregiver-Death)
 
 ## Global minimum estimates of children affected by COVID-19-associated orphanhood and deaths of caregivers: a modelling study
 
@@ -17,7 +17,25 @@ Please note all data necessary to run the analyses from scratch are not provided
 2) Raw data from Brazil is too large to be added to the repository.  Internet access is required to run the *process_brazil* function in [TheLancet_global_minimum_estimates_2021/extract_study_data.R](TheLancet_global_minimum_estimates_2021/extract_study_data.R) since it downloads this data.  We have commented out this line of code to reduce the processing time and so it can be run offline.
 3) Raw data from the Philippines is also too large to be added to the repository.  This can be downloaded from the [Philippines Department of Health](https://doh.gov.ph/covid19tracker) data drop. As this gets updated, additional cases may be added to our time frames of interest so numbers may change slightly.  We have therefore commented out the *process_philippines* function in [TheLancet_global_minimum_estimates_2021/extract_study_data.R](TheLancet_global_minimum_estimates_2021/extract_study_data.R) where the COVID-19 data is extracted and added our saved file where the age/sex disaggregated deaths for COVID-19 in the Philippines are pre calculated from the raw data.
 
-## Pediatrics paper
+## COVID-19-Associated Orphanhood and Caregiver Death in the United States
+
+This repository includes the code and underlying data, where possible, to recreate the analyses in [Hillis, Blenkinsop, Villaveces et al. (2021)]( https://doi.org/10.1542/peds.2021-053760).  
+
+Two files need to be run to recreate the analysis:
+1) Pediatrics_US_estimates_disparities_2021.R
+2) Pediatrics_US_estimates_disparities_2021/submit-jobs.R.
+
+These methods use COVID-19 or excess deaths and fertility rates for US states, stratified by race and ethnicity.
+
+Pediatrics_US_estimates_disparities_2021.R runs the primary analysis and produces the manuscript tables and figures. It can be run locally in R, or run through the command line from the local repository directory as follows:
+Rscript Pediatrics_US_estimates_disparities_2021.R -source_dir '~/git/covid19_orphans/Pediatrics_US_estimates_disparities_2021' -rep 0 
+
+Pediatrics_US_estimates_disparities_2021/submit-jobs.R generates a bash script to run the bootstrapped analysis and generates uncertainty intervals for the estimates, and is intended to run in a UNIX environment.
+
+Raw data is provided in the repository, with the exception of mortality data, which is too large to be added to the repository (75mb). To run the analysis, the data can be downloaded from :
+https://data.cdc.gov/NCHS/AH-Quarterly-Excess-Deaths-by-State-Sex-Age-and-Ra/jqg8-ycmh
+Save the data with the file path name:
+data/USA/AH_Quarterly_Excess_Deaths_by_State__Sex__Age__and_Race_Q2_2021.csv
 
 ## R packages
 The following R packages are necessary:
@@ -32,5 +50,14 @@ The following R packages are necessary:
 
 and rdhs for the DHS data.
 
+To run the analysis for the United States state results, the following packages are also needed:
+- scales
+- usmap
+- RColorBrewer
+- ggsci
+- geofacet
+
 ## Warranty
 Imperial makes no representation or warranty about the accuracy or completeness of the data nor that the results will not constitute in infringement of third-party rights. Imperial accepts no liability or responsibility for any use which may be made of any results, for the results, nor for any reliance which may be placed on any such work or results.
+
+
