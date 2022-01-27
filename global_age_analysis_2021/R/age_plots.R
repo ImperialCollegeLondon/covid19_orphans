@@ -216,7 +216,7 @@ pyramid$country = factor(pyramid$country, levels = unique(tmp_adolescents_patern
 n1 <- ggplot(pyramid) + 
   geom_bar(data = subset(pyramid, gender == "Paternal"), stat = "identity", aes(x = category, y = percent/100, fill = gender)) + 
   geom_bar(data = subset(pyramid, gender == "Maternal"), stat = "identity", aes(x = category, y = percent/100, fill = gender)) + 
-  geom_text(aes(x = category, y = percent/100, label = abs(round(percent))), 
+  geom_text(aes(x = category, y = percent/100, label = abs(round(percent, digits = 1))), 
             position = position_stack(vjust = 0.5)) +
   geom_errorbar(aes(x=category, ymin =  li_percent/100, ymax = ui_percent/100)) + 
   scale_y_continuous(breaks = seq(-0.6, 0.6, 0.2), 

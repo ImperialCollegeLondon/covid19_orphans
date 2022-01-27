@@ -161,6 +161,7 @@ reg_samples_ <- reg_samples %>%
 intervals = rowQuantiles(as.matrix(reg_samples_[,2:1000]), probs = c(0.025, 0.975))
 reg <- cbind(reg_mean, intervals)
 saveRDS(reg, "global_age_analysis_2021/data/age_outputs/reg_ps.RDS")
+saveRDS(reg_samples_, "global_age_analysis_2021/data/age_outputs/reg_ps_samples.RDS")
 
 # Make plots
 joined$colour = ifelse(joined$country == "I.R. Iran", 1, 0)

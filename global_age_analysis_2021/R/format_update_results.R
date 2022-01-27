@@ -54,6 +54,23 @@ format_table <- function(date){
   
   pa_total <- readRDS("global_age_analysis_2021/data/pa_total_samples.RDS")
   saveRDS(pa_total, paste0("global_age_analysis_2021/data/pa_total_samples_", date, ".RDS"))
+  
+  reg_ps = readRDS("global_age_analysis_2021/data/age_outputs/reg_ps_samples.RDS")
+  saveRDS(reg_ps, paste0("global_age_analysis_2021/data/age_outputs/reg_ps_samples_", date, ".RDS"))
+  
+  reg_p = readRDS("global_age_analysis_2021/data/age_outputs/reg_p_samples.RDS")
+  saveRDS(reg_p, paste0("global_age_analysis_2021/data/age_outputs/reg_p_samples_", date, ".RDS"))
+  
+  reg_pa = readRDS("global_age_analysis_2021/data/age_outputs/reg_pa_samples.RDS")
+  saveRDS(reg_pa, paste0("global_age_analysis_2021/data/age_outputs/reg_pa_samples_", date, ".RDS"))
+  
+  reg_ps_mean = readRDS("global_age_analysis_2021/data/age_outputs/reg_ps.RDS")
+  saveRDS(reg_ps_mean, paste0("global_age_analysis_2021/data/age_outputs/reg_ps_", date, ".RDS"))
+  reg_p_mean = readRDS("global_age_analysis_2021/data/age_outputs/reg_p.RDS")
+  saveRDS(reg_p_mean, paste0("global_age_analysis_2021/data/age_outputs/reg_p_", date, ".RDS"))
+  reg_pa_mean = readRDS("global_age_analysis_2021/data/age_outputs/reg_pa.RDS")
+  saveRDS(reg_pa_mean, paste0("global_age_analysis_2021/data/age_outputs/reg_pa_", date, ".RDS"))
+  
 }
 
 combine_table <- function(){
@@ -122,6 +139,98 @@ combine_table <- function(){
                       diff_orphans_format, diff_primary_loss_format, diff_all_format,
                       orphans_percent, primary_percent, all_percent)
   tab<-xtable(dat_subset)
+  print(tab, include.rownames=FALSE)
+  
+  
+  # secondary
+  secondary_oct = quantile(oct_ps - oct_p, probs = c(0.025, 0.975))
+  
+  
+  # Regional percentage increase table
+  reg_ps_oct = readRDS("global_age_analysis_2021/data/age_outputs/reg_ps_samples_oct.RDS")
+  reg_ps_oct[1, 2:1001] <- as.list(sort(unlist(reg_ps_oct[1, 2:1001])))
+  reg_ps_oct[2, 2:1001] <- as.list(sort(unlist(reg_ps_oct[2, 2:1001])))
+  reg_ps_oct[3, 2:1001] <- as.list(sort(unlist(reg_ps_oct[3, 2:1001])))
+  reg_ps_oct[4, 2:1001] <- as.list(sort(unlist(reg_ps_oct[4, 2:1001])))
+  reg_ps_oct[5, 2:1001] <- as.list(sort(unlist(reg_ps_oct[5, 2:1001])))
+  reg_ps_oct[6, 2:1001] <- as.list(sort(unlist(reg_ps_oct[6, 2:1001])))
+  reg_ps_apr = readRDS("global_age_analysis_2021/data/age_outputs/reg_ps_samples_apr.RDS")
+  reg_ps_apr[1, 2:1001] <- as.list(sort(unlist(reg_ps_apr[1, 2:1001])))
+  reg_ps_apr[2, 2:1001] <- as.list(sort(unlist(reg_ps_apr[2, 2:1001])))
+  reg_ps_apr[3, 2:1001] <- as.list(sort(unlist(reg_ps_apr[3, 2:1001])))
+  reg_ps_apr[4, 2:1001] <- as.list(sort(unlist(reg_ps_apr[4, 2:1001])))
+  reg_ps_apr[5, 2:1001] <- as.list(sort(unlist(reg_ps_apr[5, 2:1001])))
+  reg_ps_apr[6, 2:1001] <- as.list(sort(unlist(reg_ps_apr[6, 2:1001])))
+  
+  percent_reg = (reg_ps_oct[, 2:1001] - reg_ps_apr[, 2:1001]) / reg_ps_apr[, 2:1001] * 100
+  quantiles = rowQuantiles(as.matrix(percent_reg), probs = c(0.025, 0.975))
+  
+  mean_reg_ps_oct =  readRDS("global_age_analysis_2021/data/age_outputs/reg_ps_oct.RDS")
+  mean_reg_ps_apr =  readRDS("global_age_analysis_2021/data/age_outputs/reg_ps_apr.RDS")
+  
+  mean = (mean_reg_ps_oct$mean - mean_reg_ps_apr$mean) / mean_reg_ps_apr$mean * 100
+  
+  format_ps = sprintf("%.1f [%.1f%% - %.1f%%]", mean, 
+                      round.choose(quantiles[,1], 0.1, 0), round.choose(quantiles[,2], 0.1, 1))
+  
+  reg_p_oct = readRDS("global_age_analysis_2021/data/age_outputs/reg_p_samples_oct.RDS")
+  reg_p_oct[1, 2:1001] <- as.list(sort(unlist(reg_p_oct[1, 2:1001])))
+  reg_p_oct[2, 2:1001] <- as.list(sort(unlist(reg_p_oct[2, 2:1001])))
+  reg_p_oct[3, 2:1001] <- as.list(sort(unlist(reg_p_oct[3, 2:1001])))
+  reg_p_oct[4, 2:1001] <- as.list(sort(unlist(reg_p_oct[4, 2:1001])))
+  reg_p_oct[5, 2:1001] <- as.list(sort(unlist(reg_p_oct[5, 2:1001])))
+  reg_p_oct[6, 2:1001] <- as.list(sort(unlist(reg_p_oct[6, 2:1001])))
+  reg_p_apr = readRDS("global_age_analysis_2021/data/age_outputs/reg_p_samples_apr.RDS")
+  reg_p_apr[1, 2:1001] <- as.list(sort(unlist(reg_p_apr[1, 2:1001])))
+  reg_p_apr[2, 2:1001] <- as.list(sort(unlist(reg_p_apr[2, 2:1001])))
+  reg_p_apr[3, 2:1001] <- as.list(sort(unlist(reg_p_apr[3, 2:1001])))
+  reg_p_apr[4, 2:1001] <- as.list(sort(unlist(reg_p_apr[4, 2:1001])))
+  reg_p_apr[5, 2:1001] <- as.list(sort(unlist(reg_p_apr[5, 2:1001])))
+  reg_p_apr[6, 2:1001] <- as.list(sort(unlist(reg_p_apr[6, 2:1001])))
+  
+  percent_reg = (reg_p_oct[, 2:1001] - reg_p_apr[, 2:1001]) / reg_p_apr[, 2:1001] * 100
+  quantiles = rowQuantiles(as.matrix(percent_reg), probs = c(0.025, 0.975))
+  
+  mean_reg_p_oct =  readRDS("global_age_analysis_2021/data/age_outputs/reg_p_oct.RDS")
+  mean_reg_p_apr =  readRDS("global_age_analysis_2021/data/age_outputs/reg_p_apr.RDS")
+  
+  mean = (mean_reg_p_oct$mean - mean_reg_p_apr$mean) / mean_reg_p_apr$mean * 100
+  
+  format_p = sprintf("%.1f [%.1f%% - %.1f%%]", mean, 
+                      round.choose(quantiles[,1], 0.1, 0), round.choose(quantiles[,2], 0.1, 1))
+  
+  reg_pa_oct = readRDS("global_age_analysis_2021/data/age_outputs/reg_pa_samples_oct.RDS")
+  reg_pa_oct[1, 2:1001] <- as.list(sort(unlist(reg_pa_oct[1, 2:1001])))
+  reg_pa_oct[2, 2:1001] <- as.list(sort(unlist(reg_pa_oct[2, 2:1001])))
+  reg_pa_oct[3, 2:1001] <- as.list(sort(unlist(reg_pa_oct[3, 2:1001])))
+  reg_pa_oct[4, 2:1001] <- as.list(sort(unlist(reg_pa_oct[4, 2:1001])))
+  reg_pa_oct[5, 2:1001] <- as.list(sort(unlist(reg_pa_oct[5, 2:1001])))
+  reg_pa_oct[6, 2:1001] <- as.list(sort(unlist(reg_pa_oct[6, 2:1001])))
+  reg_pa_apr = readRDS("global_age_analysis_2021/data/age_outputs/reg_pa_samples_apr.RDS")
+  reg_pa_apr[1, 2:1001] <- as.list(sort(unlist(reg_pa_apr[1, 2:1001])))
+  reg_pa_apr[2, 2:1001] <- as.list(sort(unlist(reg_pa_apr[2, 2:1001])))
+  reg_pa_apr[3, 2:1001] <- as.list(sort(unlist(reg_pa_apr[3, 2:1001])))
+  reg_pa_apr[4, 2:1001] <- as.list(sort(unlist(reg_pa_apr[4, 2:1001])))
+  reg_pa_apr[5, 2:1001] <- as.list(sort(unlist(reg_pa_apr[5, 2:1001])))
+  reg_pa_apr[6, 2:1001] <- as.list(sort(unlist(reg_pa_apr[6, 2:1001])))
+  
+  percent_reg = (reg_pa_oct[, 2:1001] - reg_pa_apr[, 2:1001]) / reg_pa_apr[, 2:1001] * 100
+  quantiles = rowQuantiles(as.matrix(percent_reg), probs = c(0.025, 0.975))
+  
+  mean_reg_pa_oct =  readRDS("global_age_analysis_2021/data/age_outputs/reg_pa_oct.RDS")
+  mean_reg_pa_apr =  readRDS("global_age_analysis_2021/data/age_outputs/reg_pa_apr.RDS")
+  
+  mean = (mean_reg_pa_oct$mean - mean_reg_pa_apr$mean) / mean_reg_pa_apr$mean * 100
+  
+  format_pa = sprintf("%.1f%% [%.1f%% - %.1f%%]", mean, 
+                     round.choose(quantiles[,1], 0.1, 0), round.choose(quantiles[,2], 0.1, 1))
+  
+  df_percent = data.frame("Region" = mean_reg_pa_oct$who_region,
+                          "Orphanhood" = format_pa,
+                          "Primary caregiver loss" = format_p,
+                          "Primary &/or secondary caregiver loss" = format_ps)
+  
+  tab<-xtable(df_percent)
   print(tab, include.rownames=FALSE)
 }
   
