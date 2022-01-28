@@ -3,6 +3,7 @@
 This repository includes code and data to recreate the following analyses:
 1) [Hillis, Unwin, Chen et al. (2021)](http://www.thelancet.com/journals/lancet/article/PIIS0140-6736(21)01253-8/fulltext) [![DOI](https://zenodo.org/badge/360452208.svg)](https://zenodo.org/badge/latestdoi/360452208),
 2) [Hillis, Blenkinsop, Villaveces et al. (2021)](https://publications.aap.org/pediatrics/article/148/6/e2021053760/183446/COVID-19-Associated-Orphanhood-and-Caregiver-Death)
+3) [Unwin, Hillis et al. (2022)]()
 
 ## Global minimum estimates of children affected by COVID-19-associated orphanhood and deaths of caregivers: a modelling study
 
@@ -37,6 +38,12 @@ https://data.cdc.gov/NCHS/AH-Quarterly-Excess-Deaths-by-State-Sex-Age-and-Ra/jqg
 Save the data with the file path name:
 data/USA/AH_Quarterly_Excess_Deaths_by_State__Sex__Age__and_Race_Q2_2021.csv
 
+## xxxxx
+TheLancetCAH_global_age_analysis_2022.R script is used to recreate the analysis in this paper. It uses the same fertility data as the Hillis, Unwin, Chen et al. as described above.  Updates of the mortality data for Brazil and the Philippines can also be found from the same links as above.
+
+Please be warned the script "TheLancetCAH_global_age_analysis_2022/R/run_age_analysis_uncertainty.R" takes quite a while to run since it implements the bootstrapping for the uncertainty in the age calculation.  All necessary output is included in the repository so this step can be skipped if necessary. 
+
+
 ## R packages
 The following R packages are necessary:
 - readxl
@@ -56,6 +63,18 @@ To run the analysis for the United States state results, the following packages 
 - RColorBrewer
 - ggsci
 - geofacet
+
+To run the analysis for the global age predictions, the following packages are also needed:
+- brms
+- xtable
+- ggrepel
+- matrixStats
+- gridExtra
+- scales
+- ggsci
+- cowplot
+- RCurl
+- stringr
 
 ## Warranty
 Imperial makes no representation or warranty about the accuracy or completeness of the data nor that the results will not constitute in infringement of third-party rights. Imperial accepts no liability or responsibility for any use which may be made of any results, for the results, nor for any reliance which may be placed on any such work or results.
