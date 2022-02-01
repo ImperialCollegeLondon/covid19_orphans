@@ -94,7 +94,13 @@ process_orphans_colombia = function(month = ""){
   d_merge = read.csv(paste0('TheLancetCAH_global_age_analysis_2022/data/Colombia/covid19_deaths_all', month, '.csv'), stringsAsFactors = FALSE)
   d_children = read.csv(paste0('TheLancetCAH_global_age_analysis_2022/data/Colombia/children.csv'), stringsAsFactors = FALSE)
   d_children$age = paste0(d_children$age%/%5 * 5,'-',d_children$age %/% 5 *5+4)
-  d_children$age = ifelse(d_children$age %in% c('80-84', '85-89', '90-94', '95-99', '100-104'), '80+', d_children$age)
+  if (month == ""){
+  d_children$age = ifelse(d_children$age %in% c('80-84', '85-89', '90-94', '95-99', '100-104'), 
+                                  '80+', d_children$age)
+  } else {
+  d_children$age = ifelse(d_children$age %in% c('85-89', '90-94', '95-99', '100-104'), 
+                                  '85+', d_children$age)
+  }
   d_children = d_children %>% group_by(age, gender) %>% summarise(nb_c = mean(children))
   d_merge$gender = as.character(d_merge$gender)
   
