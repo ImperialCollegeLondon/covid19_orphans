@@ -32,7 +32,8 @@ deaths_country$Country.Region[which(deaths_country$Country.Region == "Moldova")]
 deaths_country$Country.Region[which(deaths_country$Country.Region == "Tanzania")] = "United Republic of Tanzania"
 deaths_country$Country.Region[which(deaths_country$Country.Region == "Korea, South")] = "Republic of Korea"
 deaths_country$Country.Region[which(deaths_country$Country.Region == "Laos")] = "Lao People's Democratic Republic"
-deaths_country$Country.Region[which(deaths_country$Country.Region == "US")] <- "USA" #United States of America"
+deaths_country$Country.Region[which(deaths_country$Country.Region == "US")] <- "United States of America"
+deaths_country$Country.Region[which(deaths_country$Country.Region == "I.R. Iran")] <- "Iran (Islamic Republic of)"
 deaths_country$Country.Region[which(deaths_country$Country.Region  == "Gambia")] <- "Gambia (Republic of The)"
 deaths_country$Country.Region[which(deaths_country$Country.Region == "Guinea-Bissau")] <- "Guinea Bissau"
 deaths_country$Country.Region[which(deaths_country$Country.Region  == "Czechia")] <- "Czech Republic"
@@ -50,6 +51,8 @@ deaths_country[, 2:(ncol(deaths_country)-1)] <- deaths_country[,2:(ncol(deaths_c
 
 # Join JHU with tfr data
 data = readRDS("TheLancetCAH_global_age_analysis_2022/data/tfr_covariates.RDS")
+data$country[which(data$country == "USA")] <- "United States of America"
+data$country[which(data$country == "I.R Iran")] <- "Iran (Islamic Republic of)"
 data$sd = (data$tfr_u-data$tfr_l)/(2*1.96)
 data$europe = ifelse(data$who_region == "European", 1, 0) 
 data = select(data, "country", "tfr", "tfr_l",  "tfr_u", "sd", "who_region", "europe")
