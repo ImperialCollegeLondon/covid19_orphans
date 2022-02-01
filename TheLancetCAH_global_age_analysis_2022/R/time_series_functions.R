@@ -31,8 +31,8 @@ calculate_orphans_time <- function(country_data, coeffs, study_ratios, date){
     estimated_orphans[, i] <- estimated_ratio[, i] * country_data$total_deaths
   }
   uq <- rowQuantiles(estimated_orphans, probs = c(0.025, 0.975))
- 
-    
+  
+  
   orphans <- data.frame(country = country_data$country,
                         region = country_data$who_region,
                         date = rep(date, length(country_data$country)),

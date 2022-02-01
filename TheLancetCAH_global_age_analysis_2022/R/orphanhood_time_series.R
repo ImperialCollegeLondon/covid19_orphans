@@ -41,6 +41,8 @@ deaths_country$Country.Region[which(deaths_country$Country.Region  == "United Ki
 deaths_country$Country.Region[which(deaths_country$Country.Region  == "West Bank and Gaza")] <- "Occupied Palestinian Territory"
 deaths_country$Country.Region[which(deaths_country$Country.Region  == "Micronesia")] <- "Micronesia (Federated States of)"
 
+print(sum(deaths_country[,3:652]))
+
 # Multiply study country deaths by multipliers
 multipliers <- read.csv('TheLancetCAH_global_age_analysis_2022/data/multipliers.csv', header = FALSE)
 names(multipliers) <- c("Country", "mult")
@@ -49,15 +51,17 @@ deaths_country <- left_join(deaths_country, multipliers, by = c("Country.Region"
 deaths_country$mult <- ifelse(is.na(deaths_country$mult), 1, deaths_country$mult)
 deaths_country[, 2:(ncol(deaths_country)-1)] <- deaths_country[,2:(ncol(deaths_country)-1)] * t(deaths_country[,ncol(deaths_country)]) 
 
+print(sum(deaths_country[,3:652]))
+
 # Join JHU with tfr data
 data = readRDS("TheLancetCAH_global_age_analysis_2022/data/tfr_covariates.RDS")
 data$country[which(data$country == "USA")] <- "United States of America"
-data$country[which(data$country == "I.R Iran")] <- "Iran (Islamic Republic of)"
+data$country[which(data$country == "I.R. Iran")] <- "Iran (Islamic Republic of)"
 data$sd = (data$tfr_u-data$tfr_l)/(2*1.96)
 data$europe = ifelse(data$who_region == "European", 1, 0) 
 data = select(data, "country", "tfr", "tfr_l",  "tfr_u", "sd", "who_region", "europe")
-
 combined_data <- left_join(data, deaths_country, by = c("country" = "Country.Region"))
+
 
 # Calculate orphans
 dates <- names(combined_data)
@@ -214,7 +218,7 @@ whole_period = df_region_long[which(df_region_long$date == as.Date("2021-10-31")
 difference_data = left_join(study_period, whole_period, by = c("region", "key"))
 difference_data$diff = difference_data$value.y - difference_data$value.x
 difference_data$percentage = difference_data$diff /difference_data$value.x * 100
-print(difference_data)
+#print(difference_data)
 
 whole_period$value[whole_period$region == "South-East Asia"]/sum(whole_period$value) * 100
 
