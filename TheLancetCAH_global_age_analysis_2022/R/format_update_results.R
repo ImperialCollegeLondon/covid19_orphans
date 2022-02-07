@@ -1,5 +1,6 @@
 source("TheLancetCAH_global_age_analysis_2022/R/utils.R")
 library(xtable)
+library(matrixStats)
 
 format_table <- function(date){
   # Read in a format orphans data
@@ -83,16 +84,37 @@ combine_table <- function(){
   
   # Work out percentage change.
   oct_ps = readRDS("TheLancetCAH_global_age_analysis_2022/data/ps_total_samples_oct.RDS")
-  oct_ps = sort(oct_ps)
   april_ps = readRDS("TheLancetCAH_global_age_analysis_2022/data/ps_total_samples_apr.RDS")
+  oct_p = readRDS("TheLancetCAH_global_age_analysis_2022/data/p_total_samples_oct.RDS")
+  april_p = readRDS("TheLancetCAH_global_age_analysis_2022/data/p_total_samples_apr.RDS")
+  
+  secondary_apr = april_ps - april_p
+  secondary_oct = oct_ps - oct_p
+  
+  apr_extrapolation = rbind(apr_extrapolation, data.frame(type = "secondary",
+                                                          mean = apr_extrapolation$mean[apr_extrapolation$type == "primary_secondary"] - 
+                                                            apr_extrapolation$mean[apr_extrapolation$type == "primary"] ,
+                                                          li = quantile(secondary_apr, probs = 0.025),
+                                                          ui = quantile(secondary_apr, probs = 0.975))) 
+  
+  oct_extrapolation = rbind(oct_extrapolation, data.frame(type = "secondary",
+                                                          mean = oct_extrapolation$mean[oct_extrapolation$type == "primary_secondary"] - 
+                                                            oct_extrapolation$mean[oct_extrapolation$type == "primary"] ,
+                                                          li = quantile(secondary_oct, probs = 0.025),
+                                                          ui = quantile(secondary_oct, probs = 0.975)))
+  
+  oct_ps = sort(oct_ps)
   april_ps = sort(april_ps)
   diff_ps = quantile((oct_ps - april_ps) / april_ps, probs = c(0.025, 0.975))
   
-  oct_p = readRDS("TheLancetCAH_global_age_analysis_2022/data/p_total_samples_oct.RDS")
   oct_p = sort(oct_p)
-  april_p = readRDS("TheLancetCAH_global_age_analysis_2022/data/p_total_samples_apr.RDS")
   april_p = sort(april_p)
   diff_p = quantile((oct_p - april_p) / april_p,  probs = c(0.025, 0.975))
+  
+  oct_s = sort(secondary_oct)
+  april_s = sort(secondary_apr)
+  diff_s = quantile((oct_s - april_s) / april_s,  probs = c(0.025, 0.975))
+  
   
   oct_pa = readRDS("TheLancetCAH_global_age_analysis_2022/data/pa_total_samples_oct.RDS")
   oct_pa = sort(oct_pa)
@@ -101,7 +123,7 @@ combine_table <- function(){
   diff_pa = quantile((oct_pa - april_pa) / april_pa,  probs = c(0.025, 0.975))
   
   # Make extrapolation table.
-  extrapolation = data.frame(type = c("orphan", "primary", "primary_secondary"))
+  extrapolation = data.frame(type = c("orphan", "primary", "primary_secondary", "secondary"))
   extrapolation$update_study = sprintf("%s [%s - %s]", 
                                        format(round(apr_extrapolation$mean, -2), big.mark = ",", trim = TRUE), 
                                        format(round.choose(apr_extrapolation$li, 100, 0), big.mark = ",", trim = TRUE), 
@@ -116,8 +138,8 @@ combine_table <- function(){
                                        format(round.choose(oct_extrapolation$ui, 100, 1), big.mark = ",", trim = TRUE))
   extrapolation$percent_increase = sprintf("%.1f%% [%.1f%% - %.1f%%]", 
                                            (oct_extrapolation$mean - apr_extrapolation$mean)/apr_extrapolation$mean * 100,
-                                           c(diff_pa[1], diff_p[1], diff_ps[1]) * 100,
-                                           c(diff_pa[2], diff_p[2], diff_ps[2]) * 100)
+                                           c(diff_pa[1], diff_p[1], diff_ps[1], diff_s[1]) * 100,
+                                           c(diff_pa[2], diff_p[2], diff_ps[2], diff_s[2]) * 100)
   write.csv(extrapolation, file = "TheLancetCAH_global_age_analysis_2022/table_1_extrapolation_increase.csv", row.names=FALSE)
   
   
@@ -144,7 +166,6 @@ combine_table <- function(){
   
   # secondary
   secondary_oct = quantile(oct_ps - oct_p, probs = c(0.025, 0.975))
-  
   
   # Regional percentage increase table
   reg_ps_oct = readRDS("TheLancetCAH_global_age_analysis_2022/data/age_outputs/reg_ps_samples_oct.RDS")
