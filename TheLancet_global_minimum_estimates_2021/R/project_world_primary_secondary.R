@@ -116,6 +116,11 @@ orphans_sample = orphans_sample[orphans_sample$mean > 0,]
 orphans_sample = orphans_sample[order(orphans_sample$region, orphans_sample$country),]
 saveRDS(orphans_sample, "TheLancet_global_minimum_estimates_2021/data/country_estimates_ps.RDS")
 
+estimates_orphans_swapped <- estimates_orphans
+estimates_orphans_swapped[1:21,] <- joined$final_orphans[1:21]
+orphans_samples_swapped <- colSums(estimates_orphans_swapped)
+saveRDS(orphans_samples_swapped, "TheLancetCAH_global_age_analysis_2022/data/original_ps_total_samples.RDS")
+
 # Make plots
 joined$colour = ifelse(joined$country == "I.R. Iran", 1, 0)
 joined$colour = factor(joined$colour)

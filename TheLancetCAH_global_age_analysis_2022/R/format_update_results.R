@@ -27,25 +27,6 @@ format_table <- function(date){
                                    ui = c(pa_extrapolation[3], p_extrapolation[3], ps_extrapolation[3]))
   save(data, extrapolation_data, file=paste0("TheLancetCAH_global_age_analysis_2022/data/age_outputs/formated_update_", date, ".RData"))
   
-  if (date == "oct"){
-    p = readRDS("TheLancetCAH_global_age_analysis_2022/data/p_samples.RDS")
-    p_sum = colSums(p[,1:1000])
-    ps = readRDS("TheLancetCAH_global_age_analysis_2022/data/ps_samples.RDS")
-    ps_sum = colSums(ps[,1:1000])
-    
-    print(sprintf("Primary: %s [%s - %s]", format(round(p_extrapolation[1], -2), big.mark = ",", trim = TRUE), 
-                  format(round.choose(quantile(p_sum, probs = 0.025), 100, 0), big.mark = ",", trim = TRUE), 
-                  format(round.choose(quantile(p_sum, probs = 0.975), 100, 1), big.mark = ",", trim = TRUE)))
-    
-    diff = ps_sum - p_sum
-    
-    print(sprintf("Diff: %s [%s - %s]", 
-            format(round(ps_extrapolation[1] - p_extrapolation[1], -2), big.mark = ",", trim = TRUE), 
-            format(round.choose(quantile(diff, probs = 0.025), 100, 0), big.mark = ",", trim = TRUE), 
-            format(round.choose(quantile(diff, probs = 0.975), 100, 1), big.mark = ",", trim = TRUE)))
-    
-  }
-  
   # Saves global samples with which date it is
   ps_total <- readRDS("TheLancetCAH_global_age_analysis_2022/data/ps_total_samples.RDS")
   saveRDS(ps_total, paste0("TheLancetCAH_global_age_analysis_2022/data/ps_total_samples_", date, ".RDS"))
@@ -255,3 +236,15 @@ combine_table <- function(){
   print(tab, include.rownames=FALSE)
 }
   
+calculate_original_diff <- function(){
+  p = readRDS("TheLancetCAH_global_age_analysis_2022/data/original_p_total_samples.RDS")
+  ps = readRDS("TheLancetCAH_global_age_analysis_2022/data/original_ps_total_samples.RDS")
+
+  diff = ps - p
+  
+  print(sprintf("Diff: %s [%s - %s]", 
+                format(round(mean(diff), -2), big.mark = ",", trim = TRUE), 
+                format(round.choose(quantile(diff, probs = 0.025), 100, 0), big.mark = ",", trim = TRUE), 
+                format(round.choose(quantile(diff, probs = 0.975), 100, 1), big.mark = ",", trim = TRUE)))
+  
+}
