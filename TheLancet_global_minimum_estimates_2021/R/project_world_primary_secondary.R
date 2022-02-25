@@ -22,8 +22,6 @@ round.choose <- function(x, roundTo, dir = 1) {
   }
 }
 
-set.seed(10)
-
 # Load in data
 joined <- readRDS("TheLancet_global_minimum_estimates_2021/data/tfr_covariates.RDS")
 
@@ -77,6 +75,8 @@ estimates_orphans <- matrix(nrow = length(joined$country), ncol = n)
 
 rn2 = NULL
 ratio_fit = NULL
+set.seed(10)
+
 for (i in 1:n){
   rn <- rnorm(length(joined$country), mean = joined$tfr, sd = joined$sd)
   rn2 = cbind(rn2, rn)
@@ -115,6 +115,11 @@ orphans_sample = orphans_sample[orphans_sample$mean > 0,]
 # Sort
 orphans_sample = orphans_sample[order(orphans_sample$region, orphans_sample$country),]
 saveRDS(orphans_sample, "TheLancet_global_minimum_estimates_2021/data/country_estimates_ps.RDS")
+
+estimates_orphans_swapped <- estimates_orphans
+estimates_orphans_swapped[1:21,] <- joined$final_orphans[1:21]
+orphans_samples_swapped <- colSums(estimates_orphans_swapped)
+saveRDS(orphans_samples_swapped, "TheLancetCAH_global_age_analysis_2022/data/original_ps_total_samples.RDS")
 
 # Make plots
 joined$colour = ifelse(joined$country == "I.R. Iran", 1, 0)

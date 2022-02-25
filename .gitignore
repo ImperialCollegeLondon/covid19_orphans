@@ -42,9 +42,14 @@ vignettes/*.pdf
 
 *.pdf
 *.png
+*.svg 
 
-TheLancet_global_minimum_estimates_2021/data/Brazil/INFLUD-19-04-2021.csv
-TheLancet_global_minimum_estimates_2021/data/Brazil/INFLUD-10-05-2021.csv
-TheLancet_global_minimum_estimates_2021/data/Philippines/DOH\ COVID\ Data\ Drop_\ 20210509\ -\ 04\ Case\ Information\ 2020.csv
-TheLancet_global_minimum_estimates_2021/data/Philippines/DOH\ COVID\ Data\ Drop_\ 20210509\ -\ 04\ Case\ Information\ 2021.csv
+*_un.csv
 
+*data/Brazil/INFLUD-19-04-2021.csv
+*/data/Brazil/INFLUD-25-10-2021.csv
+*data/Brazil/INFLUD-10-05-2021.csv
+*data/Philippines/DOH\ COVID\ Data\ Drop_\ 20210509\ -\ 04\ Case\ Information\ 2020.csv
+*data/Philippines/DOH\ COVID\ Data\ Drop_\ 20210509\ -\ 04\ Case\ Information\ 2021.csv
+*TheLancetCAH_global_age_analysis_2022/data/Philippines/data_drop/*
+TheLancetCAH_global_age_analysis_2022/data/Brazil/INFLUD-10-05-2021.csv

@@ -12,8 +12,6 @@ error_parent<- function(params, data){
   return(sum((calc_ratio(params[1], params[2], params[3], data$tfr) - data$parent_ratio)^2))
 }
 
-set.seed(10)
-
 # Load in data
 joined <- readRDS("TheLancet_global_minimum_estimates_2021/data/tfr_covariates.RDS")
 joined$all_parents = joined$mother + joined$father + joined$both
@@ -58,6 +56,7 @@ saveRDS(ratio_dat, "TheLancet_global_minimum_estimates_2021/data/orphanhood_rati
 n = 1000
 estimates_parent <- matrix(nrow = length(joined$country), ncol = n)
 estimates_parent_orphans <- matrix(nrow = length(joined$country), ncol = n)
+set.seed(10)
 
 for (i in 1:n){
   rn <- rnorm(length(joined$country), mean = joined$tfr, sd = joined$sd)

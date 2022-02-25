@@ -1,7 +1,7 @@
 source("TheLancet_global_minimum_estimates_2021/R/process_fertility.R") 
 source("TheLancet_global_minimum_estimates_2021/R/colombia_excess.R")
 
-combine_orphans <- function(country, grand_parents){
+combine_orphans <- function(country, grand_parents, updated_coef = FALSE){
   if (country == "EnglandWales"){
     data <- read.csv("TheLancet_global_minimum_estimates_2021/data/UK/england_wales_all_data.csv")
     names(data) = c('age', "gender", "excess", "covid19_deaths", "deaths", "nb_orphans")
@@ -89,7 +89,12 @@ combine_orphans <- function(country, grand_parents){
     comb <- c(deaths, comb, comb[12]/deaths)
 
   } else if (country == "India"){ # "15% of deaths were reported"
-    factor = 0.766 #0.15
+    if (updated_coef == FALSE){
+      factor = 0.766 #0.15
+    } else {
+      print("Using new factor")
+      factor = 399489 / 3.97e6
+    }
     comb <- round(comb / factor)
     comb[4] <- sum(comb[1:3])
     comb[8] <- sum(comb[4:7])
@@ -111,7 +116,12 @@ combine_orphans <- function(country, grand_parents){
     comb <- c(deaths, comb, comb[12]/deaths)
     
   } else if (country == "Peru"){# EM of 36,322. Meanwhile, there were only 9860 officially COVID-19 deaths (Stand June 30, 2020)
-    factor = 36322/9860
+    if (updated_coef == FALSE){
+      factor = 36322/9860
+    } else {
+      factor = 166701/61477
+    }
+    
     comb <- round(comb * factor)
     comb[4] <- sum(comb[1:3])
     comb[8] <- sum(comb[4:7])
