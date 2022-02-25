@@ -1,14 +1,9 @@
 # Minimum estimates of children affected by COVID-19-associated orphanhood and deaths of caregivers
 
 This repository includes code and data to recreate the following analyses:
-<<<<<<< HEAD
-1) [Hillis, Unwin, Chen et al. (2021)](http://www.thelancet.com/journals/lancet/article/PIIS0140-6736(21)01253-8/fulltext) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5595419.svg)](https://doi.org/10.5281/zenodo.5595419),
-2) [Hillis, Blenkinsop, Villaveces et al. (2021)](https://publications.aap.org/pediatrics/article/148/6/e2021053760/183446/COVID-19-Associated-Orphanhood-and-Caregiver-Death) [![DOI](https://zenodo.org/badge/360452208.svg)](https://zenodo.org/badge/latestdoi/360452208)
-=======
 1) [Hillis, Unwin, Chen et al. (2021)](http://www.thelancet.com/journals/lancet/article/PIIS0140-6736(21)01253-8/fulltext) [![DOI](https://zenodo.org/badge/360452208.svg)](https://zenodo.org/badge/latestdoi/360452208),
 2) [Hillis, Blenkinsop, Villaveces et al. (2021)](https://publications.aap.org/pediatrics/article/148/6/e2021053760/183446/COVID-19-Associated-Orphanhood-and-Caregiver-Death)
-3) [Unwin, Hillis et al. (2022)]()
->>>>>>> c0dd652c334c64d39730f791064619862d6f4fe8
+3) [Unwin, Hillis et al. (2022)](https://www.thelancet.com/journals/lanchi/article/PIIS2352-4642(22)00005-0/fulltext)
 
 ## Global minimum estimates of children affected by COVID-19-associated orphanhood and deaths of caregivers: a modelling study
 
@@ -43,7 +38,7 @@ https://data.cdc.gov/NCHS/AH-Quarterly-Excess-Deaths-by-State-Sex-Age-and-Ra/jqg
 Save the data with the file path name:
 data/USA/AH_Quarterly_Excess_Deaths_by_State__Sex__Age__and_Race_Q2_2021.csv
 
-## xxxxx
+## Global, regional, and national minimum estimates of children affected by COVID-19-associated orphanhood and caregiver death, by age and family circumstance up to Oct 31, 2021: an updated modelling study
 TheLancetCAH_global_age_analysis_2022.R script is used to recreate the analysis in this paper. It uses the same fertility data as the Hillis, Unwin, Chen et al. as described above.  Updates of the mortality data for Brazil and the Philippines can also be found from the same links as above.
 
 Please be warned the script "TheLancetCAH_global_age_analysis_2022/R/run_age_analysis_uncertainty.R" takes quite a while to run since it implements the bootstrapping for the uncertainty in the age calculation.  All necessary output is included in the repository so this step can be skipped if necessary. 
