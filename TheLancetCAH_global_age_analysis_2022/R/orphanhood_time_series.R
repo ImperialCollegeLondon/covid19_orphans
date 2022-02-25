@@ -95,16 +95,45 @@ deaths_jhu = d2 %>% select(-Country.Region, -X) %>% summarise_all(sum)
 deaths_excess = deaths_country %>% select(-Country.Region, -X) %>% summarise_all(sum) 
 deaths_excess$mult = NULL
 
+d2 = d2 %>% select(-X) %>%
+  group_by(Country.Region) %>%
+  summarise_all(sum) 
+
+d2 = d2[which(!d2$Country.Region %in% c("Diamond Princess", "Holy See", "MS Zaandam")),]
+d2$Country.Region[which(d2$Country.Region == "Taiwan*")] = "Taiwan"
+d2$Country.Region[which(d2$Country.Region == "Iran")] = "I.R. Iran"
+d2$Country.Region[which(d2$Country.Region == "Russia")] = "Russian Federation"
+d2$Country.Region[which(d2$Country.Region == "Bolivia")] = "Bolivia (Plurinational State of)"
+d2$Country.Region[which(d2$Country.Region == "Brunei")] = "Brunei Darussalam"
+d2$Country.Region[which(d2$Country.Region == "Burma")] = "Myanmar"
+d2$Country.Region[which(d2$Country.Region == "Congo (Brazzaville)")] = "Congo"
+d2$Country.Region[which(d2$Country.Region == "Congo (Kinshasa)")] = "Democratic Republic of the Congo"
+d2$Country.Region[which(d2$Country.Region == "Venezuela")] = "Venezuela (Bolivarian Republic of)"
+d2$Country.Region[which(d2$Country.Region == "Vietnam")] = "Viet Nam"
+d2$Country.Region[which(d2$Country.Region == "Syria")] = "Syrian Arab Republic"
+d2$Country.Region[which(d2$Country.Region == "Moldova")] = "Republic of Moldova"
+d2$Country.Region[which(d2$Country.Region == "Tanzania")] = "United Republic of Tanzania"
+d2$Country.Region[which(d2$Country.Region == "Korea, South")] = "Republic of Korea"
+d2$Country.Region[which(d2$Country.Region == "Laos")] = "Lao People's Democratic Republic"
+d2$Country.Region[which(d2$Country.Region == "US")] <- "United States of America"
+d2$Country.Region[which(d2$Country.Region == "I.R. Iran")] <- "Iran (Islamic Republic of)"
+d2$Country.Region[which(d2$Country.Region  == "Gambia")] <- "Gambia (Republic of The)"
+d2$Country.Region[which(d2$Country.Region == "Guinea-Bissau")] <- "Guinea Bissau"
+d2$Country.Region[which(d2$Country.Region  == "Czechia")] <- "Czech Republic"
+d2$Country.Region[which(d2$Country.Region  == "United Kingdom")] <- "England & Wales"
+d2$Country.Region[which(d2$Country.Region  == "West Bank and Gaza")] <- "Occupied Palestinian Territory"
+d2$Country.Region[which(d2$Country.Region  == "Micronesia")] <- "Micronesia (Federated States of)"
+
 d2_region <- left_join(d2, data, by = c("Country.Region"= "country"))
 d2_region <- d2_region[!d2_region$Country.Region %in%  c("Summer Olympics 2020", "Taiwan"),] 
 d2_region$who_region =  ifelse(d2_region$who_region == "Eastern European", "European", d2_region$who_region)
-deaths_jhu_region = d2_region %>% select(-Country.Region, -X, -tfr, -tfr_l, -tfr_u, -sd, -europe) %>% 
+deaths_jhu_region = d2_region %>% select(-Country.Region, -tfr, -tfr_l, -tfr_u, -sd, -europe) %>% 
   group_by(who_region) %>% summarise_all(sum) 
 
 deaths_country_region <- left_join(deaths_country, data, by = c("Country.Region"= "country"))
 deaths_country_region <- deaths_country_region[!deaths_country_region$Country.Region %in%  c("Summer Olympics 2020", "Taiwan"),]
 deaths_country_region$who_region =  ifelse(deaths_country_region$who_region == "Eastern European", "European", deaths_country_region$who_region)
-deaths_country_region_excess = deaths_country_region %>% select(-Country.Region, -X, -tfr, -tfr_l, -tfr_u, -sd, -europe) %>% 
+deaths_country_region_excess = deaths_country_region %>% select(-Country.Region, -tfr, -tfr_l, -tfr_u, -sd, -europe) %>% 
   group_by(who_region) %>% summarise_all(sum) 
 
 deaths_jhu_region_long <- gather(deaths_jhu_region, key = "date", value =  "covid", -who_region)
@@ -183,34 +212,6 @@ p_region
 
 p <- ggarrange(p_global, p_region, ncol = 1, labels = "AUTO", common.legend = TRUE, legend= "bottom")
 ggsave("TheLancetCAH_global_age_analysis_2022/figures/fig_1_time_series_line_no_excess.pdf", p, width =  12,  height = 12)
-
-
-p_global_excess <- ggplot(df_long %>% filter(date >= "2020-03-01" & date <= "2021-10-31")) +
-  geom_line(aes(date, value/1e6, col = key)) + 
-  geom_vline(xintercept = as.Date("2021-04-30"), linetype = "dashed") + 
-  theme_bw() + 
-  scale_y_continuous(expand  = expansion(0,0), limits = c(0, 11.5))  + 
-  annotate("text", label = "COVID-19 deaths \n(millions)", y = 3.7, x = as.Date("2021-10-25"), size = 3, colour = "black", hjust=1) +
-  annotate("text", label = "Orphanhood &/or caregiver loss \n(millions)", y = 6.1, x = as.Date("2021-10-25"), size = 3, colour = "black", hjust=1) +
-  annotate("text", label = "Excess deaths \n(millions)", y = 9.3, x = as.Date("2021-10-25"), size = 3, colour = "black", hjust=1) +
-  scale_x_date(expand  = expansion(0,0), date_breaks = "1 month", labels = date_format("%b-%Y")) +
-  theme(legend.position = "bottom", axis.text.x = element_text(angle = 45, hjust=1)) +  
-  xlab("")  + ylab("Millions of people\n") + 
-  scale_colour_manual("", values  = c("darkorchid3", "darkorchid4", "deepskyblue2")) 
-p_global_excess
-p_region_excess <- ggplot(df_region_long %>% filter(date >= "2020-03-01" & date <= "2021-10-31")) +
-  geom_line(aes(date, value/1e6, col = key)) + 
-  geom_vline(xintercept = as.Date("2021-04-30"), linetype = "dashed") + 
-  theme_bw() + 
-  scale_x_date(expand  = expansion(0,0), date_breaks = "2 month", labels = date_format("%b-%Y")) +
-  theme(legend.position = "bottom", axis.text.x = element_text(angle = 45, hjust=1)) +  
-  xlab("")  + ylab("Millions of people\n") + 
-  facet_wrap(~region, scales = "free") + 
-  scale_colour_manual("", values  = c("darkorchid3", "darkorchid4", "deepskyblue2"))
-
-p_excess <- ggarrange(p_global_excess, p_region_excess, ncol = 1, labels = "AUTO", common.legend = TRUE, legend= "bottom")
-ggsave("TheLancetCAH_global_age_analysis_2022/figures/time_series_line_excess.pdf", p_excess, width =  12,  height = 12)
-
 
 study_period = df_region_long[which(df_region_long$date == as.Date("2021-04-30") & df_region_long$key == "Orphanhood &/or caregiver loss"),]
 whole_period = df_region_long[which(df_region_long$date == as.Date("2021-10-31") & df_region_long$key == "Orphanhood &/or caregiver loss"),]

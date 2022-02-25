@@ -42,6 +42,7 @@ vignettes/*.pdf
 
 *.pdf
 *.png
+*.svg 
 
 *_un.csv
 
