@@ -79,7 +79,7 @@ deaths_country = rbind(deaths_country_who, deaths_country)
 
 # Countries with negative excess deaths
 deaths_country_negative <- deaths_country[which(deaths_country$total < 0),]
-write.csv(deaths_country_negative, "negative_excess_deaths_who.csv")
+write.csv(deaths_country_negative, "excess_deaths_update_2022/output/negative_excess_deaths_who.csv")
 
 # Remove data which is negative
 deaths_country =  deaths_country[which(deaths_country$total > 0),]

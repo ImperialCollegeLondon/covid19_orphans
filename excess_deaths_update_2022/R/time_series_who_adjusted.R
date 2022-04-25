@@ -131,17 +131,16 @@ for (i in 1:length(dates)){
 primary_secondary$country[primary_secondary$country == "England & Wales"] <- "United Kingdom"
 primary_secondary$date = sub('.', '', primary_secondary$date)
 primary_secondary$date <- as.Date(primary_secondary$date, format = "%m.%d.%y")
-write.csv(primary_secondary, "primary_seconday.csv")
+
 
 primary$country[primary$country == "England & Wales"] <- "United Kingdom"
 primary$date = sub('.', '', primary$date)
 primary$date <- as.Date(primary$date, format = "%m.%d.%y")
-write.csv(primary, "primary.csv")
+
 
 parents$country[parents$country == "England & Wales"] <- "United Kingdom"
 parents$date  <- sub('.', '', parents$date)
 parents$date <- as.Date(parents$date, format = "%m.%d.%y")
-write.csv(parents, "parents.csv")
 
 # Join
 ps <- select(primary_secondary, country, region, date,  central)
