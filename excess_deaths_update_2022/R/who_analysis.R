@@ -85,7 +85,7 @@ write.csv(deaths_country_negative, "excess_deaths_update_2022/output/negative_ex
 deaths_country =  deaths_country[which(deaths_country$total > 0),]
 
 # Remove Turkmenistan to match timeseries
-deaths_country = deaths_country[which(deaths_country$country != "Turkmenistan"),] 
+#deaths_country = deaths_country[which(deaths_country$country != "Turkmenistan"),] 
 
 # Join JHU with tfr data
 data = readRDS("excess_deaths_update_2022/data/tfr_who.RDS")

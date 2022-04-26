@@ -97,9 +97,9 @@ write.csv(deaths_country_negative, "excess_deaths_update_2022/output/negative_ex
 deaths_country =  deaths_country[which(deaths_country$total > 0),]
 
 # Remove countries to match timeseries
-deaths_country = deaths_country[which(!deaths_country$country %in% c("Turkmenistan", "Greenland", "Bermuda","Puerto Rico", 
-                                                                    "United States Virgin Islands", "Dem. People's Republic of Korea", "Guam",
-                                                                    "Northern Mariana Islands")),] #<---- ADD BACK IN
+# deaths_country = deaths_country[which(!deaths_country$country %in% c("Turkmenistan", "Greenland", "Bermuda","Puerto Rico", 
+#                                                                     "United States Virgin Islands", "Dem. People's Republic of Korea", "Guam",
+#                                                                     "Northern Mariana Islands")),] #<---- ADD BACK IN
 
 
 # Join JHU with tfr data
