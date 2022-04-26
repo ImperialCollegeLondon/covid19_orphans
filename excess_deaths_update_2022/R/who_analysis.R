@@ -11,6 +11,7 @@ d <- d[3:length(d$Country),]
 ##### Need to check which metric I should be using but doing this based on excess, Final 2021, Final 2022
 d_country = d %>% filter(measure == "excess" & 
                         `source year` %in% c("Final 2020","Final 2021" )) %>% 
+  mutate(sd = (uppr - lwr)/(2*1.96)) %>%
   group_by(Country,`WHO region`) %>%
   summarise(total = sum(as.numeric(mean)),
             lower = sum(as.numeric(lwr)),
