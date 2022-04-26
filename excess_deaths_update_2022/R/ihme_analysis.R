@@ -1,6 +1,6 @@
 # This file produces a time series of orphans.
 library(tidyverse)
-source("excess_deaths_update_2022/R/shiny_table.R")
+source("excess_deaths_update_2022/R/orphanhood_functions.R")
 
 #d <- read.csv("https://ghdx.healthdata.org/sites/default/files/record-attached-files/IHME_EM_COVID_19_2020_2021_DATA_Y2022M03D10.CSV")
 d <- readRDS(file = "excess_deaths_update_2022/data/ihme_excess_deaths.RDS")
@@ -96,10 +96,10 @@ write.csv(deaths_country_negative, "excess_deaths_update_2022/output/negative_ex
 # Remove data which is negative
 deaths_country =  deaths_country[which(deaths_country$total > 0),]
 
-# Remove Turkmenistan
-#deaths_country = deaths_country[which(!deaths_country$country %in% c("Turkmenistan", "Greenland", "Bermuda","Puerto Rico", 
-#                                                                    "United States Virgin Islands", "Dem. People's Republic of Korea", "Guam",
-#                                                                    "Northern Mariana Islands")),] #<---- ADD BACK IN
+# Remove countries to match timeseries
+deaths_country = deaths_country[which(!deaths_country$country %in% c("Turkmenistan", "Greenland", "Bermuda","Puerto Rico", 
+                                                                    "United States Virgin Islands", "Dem. People's Republic of Korea", "Guam",
+                                                                    "Northern Mariana Islands")),] #<---- ADD BACK IN
 
 
 # Join JHU with tfr data
@@ -110,10 +110,10 @@ data$sd = (data$tfr_u-data$tfr_l)/(2*1.96)
 data$europe = ifelse(data$who_region == "European", 1, 0) 
 data = select(data, "country", "tfr", "tfr_l",  "tfr_u", "sd", "who_region", "europe")
 combined_data <- left_join(deaths_country, data, by = c("country"))
-tmp = unique(combined_data$country[is.na(combined_data$tfr)])
-print(length(tmp))
-tmp = unique(combined_data$country[is.na(combined_data$who_region)])
-print(length(tmp))
+#tmp = unique(combined_data$country[is.na(combined_data$tfr)])
+#print(length(tmp))
+#tmp = unique(combined_data$country[is.na(combined_data$who_region)])
+#print(length(tmp))
 
 num_countries = print(sprintf("Number countries IHME: %s", length(unique(combined_data$country))))
 
@@ -124,12 +124,11 @@ primary_secondary = NULL
 
 dates = unique(combined_data$date)
 
-# Could be re-written so just add new column on end of spreadsheet each day
 for (i in 1:length(dates)){
-  print(i)
   c_data <- combined_data[which(combined_data$date == dates[i]), c("country", "tfr", "tfr_l",  "tfr_u", "sd", "who_region", "europe", "total", "lower", "upper")]
   names(c_data) <- c("country", "tfr", "tfr_l", "tfr_u", "sd",  "who_region", "europe", "total_deaths", "lower", "upper")
-  orphans <- calculate_all_orphans_time_series(c_data, dates[i], uncertainty = TRUE, death_uncertainty = TRUE, num_samples = 20000)
+  orphans <- calculate_all_orphans_time_series(c_data, dates[i], uncertainty = TRUE, death_uncertainty = TRUE, 
+                                               num_samples = 20000, source = "ihme")
   
   primary_secondary <- rbind(primary_secondary, orphans[[1]])
   primary <- rbind(primary, orphans[[2]])
@@ -160,7 +159,7 @@ print(dat_uncertainty[dat_uncertainty$country == "Global" & dat_uncertainty$date
 write.csv(dat_uncertainty[dat_uncertainty$country == "Global",], "excess_deaths_update_2022/output/ihme_uncertainty_global.csv", row.names = FALSE)
 
 # Checking uncertainty intervals
-reg = dat_uncertainty[dat_uncertainty$country == dat_uncertainty$region,]
-print(sum(reg$primary_secondary < reg$ps_lower & reg$primary_secondary > reg$ps_upper))
-print(sum(reg$primary < reg$p_lower & reg$primary_secondary > reg$p_upper))
-print(sum(reg$orphanhood < reg$or_lower & reg$primary_secondary > reg$or_upper))
+#reg = dat_uncertainty[dat_uncertainty$country == dat_uncertainty$region,]
+#print(sum(reg$primary_secondary < reg$ps_lower & reg$primary_secondary > reg$ps_upper))
+#print(sum(reg$primary < reg$p_lower & reg$primary_secondary > reg$p_upper))
+#print(sum(reg$orphanhood < reg$or_lower & reg$primary_secondary > reg$or_upper))

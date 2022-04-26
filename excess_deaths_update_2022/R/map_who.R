@@ -46,7 +46,7 @@ world_join$cat = ifelse(world_join$primary_secondary >= 0 & world_join$primary_s
                                                                   ifelse(world_join$primary_secondary >= 150000, 7, 0)))))))
 
 #Save negative excess
-neg_countries = read.csv("negative_excess_deaths_who.csv")
+neg_countries = read.csv("excess_deaths_update_2022/output/negative_excess_deaths_who.csv")
 neg_countries$country[which(neg_countries$country == "Dem. People's Republic of Korea")] = "Democratic People's Republic of Korea"
 world_join$cat[world_join$region %in% neg_countries$country ] <- 0
 

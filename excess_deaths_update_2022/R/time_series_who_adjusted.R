@@ -1,7 +1,7 @@
 # This file produces a time series of orphans.
 library(tidyverse)
 library(readxl)
-source("excess_deaths_update_2022/R/shiny_table.R")
+source("excess_deaths_update_2022/R/orphanhood_functions.R")
 
 # Read in WHO death data
 d <- read_excel("excess_deaths_update_2022/data/EstimatesBySexAge_WHO.xlsx", sheet = 2)
@@ -15,10 +15,6 @@ d_country = d %>% filter(measure == "excess" &
   summarise(total = sum(as.numeric(mean)),
             lower = sum(as.numeric(lwr)),
             upper = sum(as.numeric(uppr)))
-
-tmp = d %>% filter(measure == "excess", Country == "France") %>% 
-  group_by(Country, `WHO region`, `source year`) %>%
-  summarise(total = sum(as.numeric(mean)))
 
 non_country = c("AFRO", "AMRO", "EMRO", "EURO", "Global", "HIC", "LIC", "LMIC", "SEARO", "UMIC", "WPRO")
 d_country = d_country[which(! d_country$Country %in% non_country),]
@@ -71,8 +67,6 @@ deaths_country$Country.Region[which(deaths_country$Country.Region  == "United Ki
 deaths_country$Country.Region[which(deaths_country$Country.Region  == "West Bank and Gaza")] <- "Occupied Palestinian Territory"
 deaths_country$Country.Region[which(deaths_country$Country.Region  == "Micronesia")] <- "Micronesia (Federated States of)"
 
-print(sum(deaths_country[,3:652]))
-
 #-------------------------------------------------------------------------------------
 # Creates adjustment factor JHU/ WHO
 
@@ -114,13 +108,12 @@ parents = NULL
 primary = NULL
 primary_secondary = NULL
 
-# Could be re-written so just add new column on end of spreadsheet each day
+print("Calculating who timeseries")
 for (i in 1:length(dates)){
-  print(i)
   c_data <- combined_data[,c("country", "tfr", "tfr_l",  "tfr_u", "sd", "who_region", "europe", dates[i])]
   c_data[,dates[i]][is.na(c_data[,dates[i]])] <- 0
   names(c_data) <- c("country", "tfr", "tfr_l", "tfr_u", "sd",  "who_region", "europe", "total_deaths")
-  orphans <- calculate_all_orphans_time_series(c_data, dates[i], uncertainty = FALSE, death_uncertainty = FALSE)
+  orphans <- calculate_all_orphans_time_series(c_data, dates[i], uncertainty = FALSE, death_uncertainty = FALSE, source = "who")
   
   primary_secondary <- rbind(primary_secondary, orphans[[1]])
   primary <- rbind(primary, orphans[[2]])
@@ -162,10 +155,9 @@ dat$region = NULL
 
 dat_all = dat
 dat_all <- dat_all[order(dat_all$date),]
-print(dat_all[dat_all$country == "Global" & dat_all$date == "2021-12-31",])
-print(dat_all[dat_all$country == "Global" & dat_all$date == "2022-04-01",])
+#print(dat_all[dat_all$country == "Global" & dat_all$date == "2021-12-31",])
+#print(dat_all[dat_all$country == "Global" & dat_all$date == "2022-04-01",])
 
 dat_all$primary_secondary = ifelse(dat_all$primary_secondary  < dat_all$primary,  dat_all$primary, dat_all$primary_secondary)
-tmp = dat_all[dat_all$primary_secondary  < dat_all$primary, ]
 write.csv(dat_all, "excess_deaths_update_2022/output/orphanhood_timeseries_who_adjusted.csv", row.names=FALSE)
 

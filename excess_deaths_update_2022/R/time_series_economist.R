@@ -1,7 +1,7 @@
 # This file produces a time series of orphans.
 library(tidyverse)
 library(countrycode)
-source("excess_deaths_update_2022/R/shiny_table.R")
+source("excess_deaths_update_2022/R/orphanhood_functions.R")
 
 #d <- read.csv("https://raw.githubusercontent.com/TheEconomist/covid-19-the-economist-global-excess-deaths-model/main/output-data/export_country_cumulative.csv")
 d = readRDS("excess_deaths_update_2022/data/economist_excess_deaths.RDS")
@@ -63,10 +63,10 @@ data$sd = (data$tfr_u-data$tfr_l)/(2*1.96)
 data$europe = ifelse(data$who_region == "European", 1, 0) 
 data = select(data, "country", "tfr", "tfr_l",  "tfr_u", "sd", "who_region", "europe")
 combined_data <- left_join(deaths_country, data, by = c("country"))
-tmp = unique(combined_data$country[is.na(combined_data$tfr)])
-print(length(tmp))
-tmp = unique(combined_data$country[is.na(combined_data$who_region)])
-print(length(tmp))
+#tmp = unique(combined_data$country[is.na(combined_data$tfr)])
+#print(length(tmp))
+#tmp = unique(combined_data$country[is.na(combined_data$who_region)])
+#print(length(tmp))
 
 # Calculate orphans
 parents = NULL
@@ -75,12 +75,14 @@ primary_secondary = NULL
 
 dates = unique(combined_data$date)
 
-# Could be re-written so just add new column on end of spreadsheet each day
+print("Calculating economist timeseries")
 for (i in 1:length(dates)){
-  print(i)
-  c_data <- combined_data[which(combined_data$date == dates[i]), c("country", "tfr", "tfr_l",  "tfr_u", "sd", "who_region", "europe", "cumulative_estimated_daily_excess_deaths")]
+  c_data <- combined_data[which(combined_data$date == dates[i]), 
+                          c("country", "tfr", "tfr_l",  "tfr_u", "sd", "who_region", 
+                            "europe", "cumulative_estimated_daily_excess_deaths")]
   names(c_data) <- c("country", "tfr", "tfr_l", "tfr_u", "sd",  "who_region", "europe", "total_deaths")
-  orphans <- calculate_all_orphans_time_series(c_data, dates[i], uncertainty = FALSE, death_uncertainty = FALSE)
+  orphans <- calculate_all_orphans_time_series(c_data, dates[i], uncertainty = FALSE, 
+                                               death_uncertainty = FALSE, source = "economist")
   
   primary_secondary <- rbind(primary_secondary, orphans[[1]])
   primary <- rbind(primary, orphans[[2]])
@@ -112,7 +114,7 @@ dat_omit = dat[!dat$country %in% omit,]
 
 dat_all = dat
 dat_all <- dat_all[order(dat_all$date),]
-print(dat_all[dat_all$country == "Global" & dat_all$date == "2021-12-27",])
-print(dat_all[dat_all$country == "Global" & dat_all$date == "2022-03-28",])
+#print(dat_all[dat_all$country == "Global" & dat_all$date == "2021-12-27",])
+#print(dat_all[dat_all$country == "Global" & dat_all$date == "2022-03-28",])
 
 write.csv(dat_all, "excess_deaths_update_2022/output/orphanhood_timeseries_economist.csv", row.names=FALSE)
