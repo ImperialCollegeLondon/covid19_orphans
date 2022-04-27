@@ -1,6 +1,6 @@
 print("Runs WHO analysis")
 source("excess_deaths_update_2022/R/time_series_who_adjusted.R")
-source("excess_deaths_update_2022/R/who_analysis.R")
+source("excess_deaths_update_2022/R/who_analysis_new_uq_2.R")
 
 print("Runs Economist analysis")
 source("excess_deaths_update_2022/R/time_series_economist.R")
