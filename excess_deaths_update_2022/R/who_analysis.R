@@ -115,9 +115,9 @@ for (i in 1:length(dates)){
   c_data <- combined_data[which(combined_data$date == dates[i]), 
                           c("country", "tfr", "tfr_l",  "tfr_u", "sd", "who_region", "europe")]
   names(c_data) <- c("country", "tfr", "tfr_l", "tfr_u", "sd",  "who_region", "europe")
-  orphans <- calculate_all_orphans_time_series_samples(c_data = c_data, date = dates[i], 
-                                                  uncertainty = TRUE, death_uncertainty = TRUE,
-                                                  num_samples = 5000, source = "who", samples = samples)
+  orphans <- calculate_all_orphans_time_series(c_data = c_data, date = dates[i], 
+                                               uncertainty = TRUE, death_uncertainty = TRUE,
+                                               num_samples = 5000, source = "who", samples = samples)
   
   primary_secondary <- rbind(primary_secondary, orphans[[1]])
   primary <- rbind(primary, orphans[[2]])

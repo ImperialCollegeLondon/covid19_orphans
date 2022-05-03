@@ -253,7 +253,7 @@ calculate_orphans_time_samples <- function(country_data, coeffs, study_ratios, d
       
       if (death_uncertainty == TRUE){
         dn <- sample(samples[,2:ncol(samples)], 1, replace = FALSE)
-        samples = select(samples, -names(dn)) # Remove sample from list
+        #samples = select(samples, -names(dn)) # Remove sample from list
         estimated_orphans[, i] <- estimated_ratio[, i] * unname(unlist(dn))
         
       } else{
