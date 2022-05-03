@@ -1,25 +1,20 @@
 # This file produces a time series of orphans.
 library(tidyverse)
 library(readxl)
+library(data.table)
 source("excess_deaths_update_2022/R/orphanhood_functions.R")
 
 # Read in WHO data
-d <- read_excel("excess_deaths_update_2022/data/EstimatesBySexAge_WHO.xlsx", sheet = 2)
-names(d) <- as.character(d[2,])
-d <- d[3:length(d$Country),]
+load("excess_deaths_update_2022/data/excess.distribution.Rda")
+d_country = df.dist.2
+d_country = select(d_country, Country, sample, excess)
+names(d_country) = c("country", "sample", "excess")
 
-##### Need to check which metric I should be using but doing this based on excess, Final 2021, Final 2022
-d_country = d %>% filter(measure == "excess" & 
-                        `source year` %in% c("Final 2020","Final 2021" )) %>% 
-  mutate(sd = (uppr - lwr)/(2*1.96)) %>%
-  group_by(Country,`WHO region`) %>%
-  summarise(total = sum(as.numeric(mean)),
-            lower = sum(as.numeric(lwr)),
-            upper = sum(as.numeric(uppr)))
-
-non_country = c("AFRO", "AMRO", "EMRO", "EURO", "Global", "HIC", "LIC", "LMIC", "SEARO", "UMIC", "WPRO")
-d_country = d_country[which(! d_country$Country %in% non_country),]
-names(d_country) = c("country", "region", "total", "lower", "upper")
+# Check global
+global = df.dist.2 %>% 
+  group_by(sample) %>%
+  summarise(excess = sum(excess))
+print(sprintf("%f [%f - %f]", mean(global$excess/1e6), quantile(global$excess, probs = 0.025)/1e6, quantile(global$excess, probs = 0.975)/1e6))
 
 d_country$country[which(d_country$country == "The United Kingdom")] <- "England & Wales"
 d_country$country[which(d_country$country == "Côte d'Ivoire")] <- "Cote d'Ivoire"
@@ -28,13 +23,27 @@ d_country$country[which(d_country$country == "Gambia")] <- "Gambia (Republic of 
 d_country$country[which(d_country$country == "Guinea-Bissau")] <- "Guinea Bissau"
 d_country$country[which(d_country$country == "Democratic People's Republic of Korea")] <- "Dem. People's Republic of Korea"
 
+d_country_mean_negative = d_country %>% 
+  group_by(country) %>%
+  summarise(mean = mean(excess)) %>% 
+  filter(mean < 0)
+write.csv(d_country_mean_negative, "excess_deaths_update_2022/output/negative_excess_deaths_who.csv")
+
 d_country$date = as.Date("2021/12/31")
-deaths_country_who = d_country
+d_country_wide = d_country %>% 
+  group_by(country, sample, date) %>%
+  summarise(excess = sum(excess))  %>%
+  spread(key = sample, value = excess)
+
+# Remove Turkmenistan
+#d_country_wide = d_country_wide[which(d_country_wide$country != "Turkmenistan"),] 
+
+deaths_country_who = d_country_wide
 
 #---------------------------------------------------------------------------------------
 # Read in jhu data
 d <- readRDS("excess_deaths_update_2022/data/downloaded_timeseries_jhu.RDS")
-d2 <- select(d, Country.Region, X4.1.22)
+d2 <- select(d, Country.Region, X4.1.22, X12.31.21)
 
 deaths_country = d2 %>% 
   group_by(Country.Region) %>%
@@ -65,28 +74,18 @@ deaths_country$Country.Region[which(deaths_country$Country.Region  == "United Ki
 deaths_country$Country.Region[which(deaths_country$Country.Region  == "West Bank and Gaza")] <- "Occupied Palestinian Territory"
 deaths_country$Country.Region[which(deaths_country$Country.Region  == "Micronesia")] <- "Micronesia (Federated States of)"
 
-multipliers = read.csv("excess_deaths_update_2022/output/who_jhu_death_multiplier.csv")
-deaths_country = right_join(deaths_country, multipliers, by = "Country.Region")
-names(deaths_country)[1] = "country"
+# Choose countries with positive means
+deaths_country_who <- deaths_country_who[which(!deaths_country_who$country %in% unique(d_country_mean_negative$country)),]
+who_deaths_country = left_join(deaths_country_who, deaths_country, by = c("country"="Country.Region"))
 
-deaths_country$total = deaths_country$X4.1.22 * deaths_country$mult
-deaths_country$lower = deaths_country$X4.1.22 * deaths_country$mult_lower
-deaths_country$upper = deaths_country$X4.1.22 * deaths_country$mult_upper
-deaths_country$date = as.Date("2022/04/01")
-deaths_country$region = NULL
+who_deaths_country[,3:1002] = who_deaths_country[,3:1002]* who_deaths_country$`X4.1.22`/ who_deaths_country$`X12.31.21`
 
-deaths_country = select(deaths_country, -mult, -mult_lower, -mult_upper, -X4.1.22)
+# Remove Turkmenistan - no jhu data
+who_deaths_country = who_deaths_country[which(who_deaths_country$country != "Turkmenistan"),] 
+
+deaths_country = who_deaths_country
+deaths_country$date = as.Date("2022-04-01")
 deaths_country = rbind(deaths_country_who, deaths_country)
-
-# Countries with negative excess deaths
-deaths_country_negative <- deaths_country[which(deaths_country$total < 0),]
-write.csv(deaths_country_negative, "excess_deaths_update_2022/output/negative_excess_deaths_who.csv")
-
-# Remove data which is negative
-deaths_country =  deaths_country[which(deaths_country$total > 0),]
-
-# Remove Turkmenistan to match timeseries
-#deaths_country = deaths_country[which(deaths_country$country != "Turkmenistan"),] 
 
 # Join JHU with tfr data
 data = readRDS("excess_deaths_update_2022/data/tfr_who.RDS")
@@ -101,9 +100,6 @@ combined_data <- left_join(deaths_country, data, by = c("country"))
 #tmp = unique(combined_data$country[is.na(combined_data$who_region)])
 #print(length(tmp))
 
-# update the "europe" column
-combined_data$europe = ifelse(combined_data$who_region == "European", 1, 0)
-
 num_countries = print(sprintf("Number countries WHO: %s", length(unique(combined_data$country))))
 
 # Calculate orphans
@@ -115,12 +111,13 @@ dates = unique(combined_data$date)
 
 for (i in 1:length(dates)){
   print(dates[i])
+  samples = combined_data[which(combined_data$date == dates[i]), c(1,3:1002),]
   c_data <- combined_data[which(combined_data$date == dates[i]), 
-                          c("country", "tfr", "tfr_l",  "tfr_u", "sd", "who_region", "europe", "total", "lower", "upper")]
-  names(c_data) <- c("country", "tfr", "tfr_l", "tfr_u", "sd",  "who_region", "europe", "total_deaths", "lower", "upper")
-  orphans <- calculate_all_orphans_time_series(c_data = c_data, date = dates[i], 
-                                               uncertainty = TRUE, death_uncertainty = TRUE,
-                                               num_samples = 20000, source = "who")
+                          c("country", "tfr", "tfr_l",  "tfr_u", "sd", "who_region", "europe")]
+  names(c_data) <- c("country", "tfr", "tfr_l", "tfr_u", "sd",  "who_region", "europe")
+  orphans <- calculate_all_orphans_time_series_samples(c_data = c_data, date = dates[i], 
+                                                  uncertainty = TRUE, death_uncertainty = TRUE,
+                                                  num_samples = 5000, source = "who", samples = samples)
   
   primary_secondary <- rbind(primary_secondary, orphans[[1]])
   primary <- rbind(primary, orphans[[2]])
@@ -148,7 +145,8 @@ write.csv(dat_uncertainty, "excess_deaths_update_2022/output/who_uncertainty_all
 print(dat_uncertainty[dat_uncertainty$country == "Global" & dat_uncertainty$date == "2021-12-31",])
 print(dat_uncertainty[dat_uncertainty$country == "Global" & dat_uncertainty$date == "2022-04-01",])
 
-write.csv(dat_uncertainty[dat_uncertainty$country == "Global",], "excess_deaths_update_2022/output/who_uncertainty_global.csv", row.names = FALSE)
+write.csv(dat_uncertainty[dat_uncertainty$country == "Global",], 
+          "excess_deaths_update_2022/output/who_uncertainty_global.csv", row.names = FALSE)
 
 # Checking uncertainty intervals
 #reg = dat_uncertainty[dat_uncertainty$country == dat_uncertainty$region,]

@@ -11,17 +11,17 @@ economist$date = who$date
 
 comb = rbind(economist, ihme, who)
 comb$primary_secondary_format = sprintf("%s [%s - %s]", 
-                                        format(round(comb$primary_secondary, -2), big.mark = ",", trim = TRUE), 
-                                        format(round.choose(comb$ps_lower, 100, 0), big.mark = ",", trim = TRUE), 
-                                        format(round.choose(comb$ps_upper, 100, 1), big.mark = ",", trim = TRUE))
+                                        format(round(comb$primary_secondary, -5), big.mark = ",", trim = TRUE), 
+                                        format(round.choose(comb$ps_lower, 100000, 0), big.mark = ",", trim = TRUE), 
+                                        format(round.choose(comb$ps_upper, 100000, 1), big.mark = ",", trim = TRUE))
 comb$primary_format = sprintf("%s [%s - %s]", 
-                                        format(round(comb$primary, -2), big.mark = ",", trim = TRUE), 
-                                        format(round.choose(comb$p_lower, 100, 0), big.mark = ",", trim = TRUE), 
-                                        format(round.choose(comb$p_upper, 100, 1), big.mark = ",", trim = TRUE))
+                                        format(round(comb$primary, -5), big.mark = ",", trim = TRUE), 
+                                        format(round.choose(comb$p_lower, 100000, 0), big.mark = ",", trim = TRUE), 
+                                        format(round.choose(comb$p_upper, 100000, 1), big.mark = ",", trim = TRUE))
 comb$orphanhood_format = sprintf("%s [%s - %s]", 
-                                        format(round(comb$orphanhood, -2), big.mark = ",", trim = TRUE), 
-                                        format(round.choose(comb$or_lower, 100, 0), big.mark = ",", trim = TRUE), 
-                                        format(round.choose(comb$or_upper, 100, 1), big.mark = ",", trim = TRUE))
+                                        format(round(comb$orphanhood, -5), big.mark = ",", trim = TRUE), 
+                                        format(round.choose(comb$or_lower, 100000, 0), big.mark = ",", trim = TRUE), 
+                                        format(round.choose(comb$or_upper, 100000, 1), big.mark = ",", trim = TRUE))
 
 comb_sub = select(comb, source, date, orphanhood_format, primary_format, primary_secondary_format)
 comb_sub_wide = pivot_wider(comb_sub, names_from = date, 

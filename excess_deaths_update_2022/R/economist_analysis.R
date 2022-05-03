@@ -85,7 +85,7 @@ for (i in 1:length(dates)){
   
   orphans <- calculate_all_orphans_time_series(c_data = c_data, date = dates[i], 
                                                uncertainty = TRUE, death_uncertainty = TRUE,
-                                               num_samples = 20000, source = "economist")
+                                               num_samples = 5000, source = "economist")
   
   primary_secondary <- rbind(primary_secondary, orphans[[1]])
   primary <- rbind(primary, orphans[[2]])

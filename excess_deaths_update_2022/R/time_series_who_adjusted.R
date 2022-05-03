@@ -4,20 +4,10 @@ library(readxl)
 source("excess_deaths_update_2022/R/orphanhood_functions.R")
 
 # Read in WHO death data
-d <- read_excel("excess_deaths_update_2022/data/EstimatesBySexAge_WHO.xlsx", sheet = 2)
-names(d) <- as.character(d[2,])
-d <- d[3:length(d$Country),]
-
-##### Need to check which metric I should be using but doing this based on excess, Final 2021, Final 2022
-d_country = d %>% filter(measure == "excess" & 
-                           `source year` %in% c("Final 2020","Final 2021" )) %>% 
-  group_by(Country,`WHO region`) %>%
-  summarise(total = sum(as.numeric(mean)),
-            lower = sum(as.numeric(lwr)))
-
-non_country = c("AFRO", "AMRO", "EMRO", "EURO", "Global", "HIC", "LIC", "LMIC", "SEARO", "UMIC", "WPRO")
-d_country = d_country[which(! d_country$Country %in% non_country),]
-names(d_country) = c("country", "region", "total")
+load("excess_deaths_update_2022/data/excess.distribution.Rda")
+d_country = df.dist.2
+d_country = select(d_country, Country, sample, excess)
+names(d_country) = c("country", "sample", "excess")
 
 d_country$country[which(d_country$country == "The United Kingdom")] <- "England & Wales"
 d_country$country[which(d_country$country == "Côte d'Ivoire")] <- "Cote d'Ivoire"
@@ -26,6 +16,17 @@ d_country$country[which(d_country$country == "Gambia")] <- "Gambia (Republic of 
 d_country$country[which(d_country$country == "Guinea-Bissau")] <- "Guinea Bissau"
 d_country$country[which(d_country$country == "Democratic People's Republic of Korea")] <- "Dem. People's Republic of Korea"
 
+d_country_mean_negative = d_country %>% 
+  group_by(country) %>%
+  summarise(mean = mean(excess)) %>% 
+  filter(mean < 0)
+
+d_country = d_country %>% 
+  group_by(country, sample) %>%
+  summarise(excess = sum(excess))  %>%
+  group_by(country) %>%
+  summarise(total = mean(excess))
+  
 d_who = select(d_country, country, total)
 
 print(sprintf("Total deaths WHO: %s", sum(d_who$total)))
@@ -150,8 +151,8 @@ dat$region = NULL
 
 dat_all = dat
 dat_all <- dat_all[order(dat_all$date),]
-print(dat_all[dat_all$country == "Global" & dat_all$date == "2021-12-31",])
-print(dat_all[dat_all$country == "Global" & dat_all$date == "2022-04-01",])
+#print(dat_all[dat_all$country == "Global" & dat_all$date == "2021-12-31",])
+#print(dat_all[dat_all$country == "Global" & dat_all$date == "2022-04-01",])
 
 dat_all$primary_secondary = ifelse(dat_all$primary_secondary  < dat_all$primary,  dat_all$primary, dat_all$primary_secondary)
 write.csv(dat_all, "excess_deaths_update_2022/output/orphanhood_timeseries_who_adjusted.csv", row.names=FALSE)
