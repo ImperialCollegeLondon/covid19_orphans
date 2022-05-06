@@ -15,8 +15,8 @@ dat$region <- rep(regions, length(dat$country) / length(regions))
 dat$country[dat$country == "South-East Asia"] <- "South-East Asian" 
 
 
-# truncate up to 1st April 2022
-dat <- dat[dat$date <= "2022-04-01",]
+# truncate up to 1st May 2022
+dat <- dat[dat$date <= "2022-05-01",]
 
 
 p <- ggplot(dat, aes(x = date, y = primary_secondary, fill = country)) +
@@ -42,5 +42,5 @@ p <- ggplot(dat, aes(x = date, y = primary_secondary, fill = country)) +
         plot.title = element_text(hjust=0.5, size = 7))  +
   labs(fill = "WHO Region") #, title = paste("Pandemic Orphanhood and Caregiver Death among Children"))
 
-ggsave(filename = "excess_deaths_update_2022/figures/timeseries_apr_2022.pdf", width = 14, height = 10, dpi = 300, units = "cm")
+#ggsave(filename = "excess_deaths_update_2022/figures/timeseries_may_2022.pdf", width = 14, height = 10, dpi = 300, units = "cm")
 saveRDS(p, file = "excess_deaths_update_2022/figures/timeseries.RDS")

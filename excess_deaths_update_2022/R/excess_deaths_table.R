@@ -1,6 +1,8 @@
 library(tidyverse)
 source("excess_deaths_update_2022/R/utils.R")
 
+options(scipen=999)
+
 ihme = read.csv("excess_deaths_update_2022/output/ihme_uncertainty_global.csv")
 ihme$source = "IHME"
 who = read.csv("excess_deaths_update_2022/output/who_uncertainty_global.csv")

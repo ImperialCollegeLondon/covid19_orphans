@@ -42,10 +42,12 @@ d_country$date = as.Date("2021/12/31")
 deaths_country = d_country
 deaths_country_ihme = d_country
 names(deaths_country_ihme) = c("country","total","lower", "upper", "date")
+
 #---------------------------------------------------------------------------------------
 # Read in jhu data
 d = readRDS("excess_deaths_update_2022/data/downloaded_timeseries_jhu.RDS")
-d2 <- select(d, Country.Region, X4.1.22)
+
+d2 =  select(d, -Province.State, -Lat, -Long)
 
 deaths_country = d2 %>% 
   group_by(Country.Region) %>%
@@ -76,31 +78,58 @@ deaths_country$Country.Region[which(deaths_country$Country.Region  == "United Ki
 deaths_country$Country.Region[which(deaths_country$Country.Region  == "West Bank and Gaza")] <- "Occupied Palestinian Territory"
 deaths_country$Country.Region[which(deaths_country$Country.Region  == "Micronesia")] <- "Micronesia (Federated States of)"
 
-multipliers = read.csv("excess_deaths_update_2022/output/ihme_jhu_death_multiplier.csv")
-deaths_country = right_join(deaths_country, multipliers, by = "Country.Region")
-names(deaths_country)[1] = "country"
+#---------------------------------------------------------------------------------------
+# Work out max excess covid for dec 2021
+# Adjust JHU with study country multipliers
+multipliers_study <- read.csv('excess_deaths_update_2022/data/multipliers.csv', header = FALSE)
+names(multipliers_study) <- c("Country.Region", "mult_study")
+remove_study = c("Brazil", "India", "Mexico", "Peru", "South Africa", "Iran (Islamic Republic of)", "Colombia", "Russian Federation")
+multipliers_study = multipliers_study[!multipliers_study$Country %in% remove_study,]
 
-deaths_country$total = deaths_country$X4.1.22 * deaths_country$mult
-deaths_country$lower = deaths_country$X4.1.22 * deaths_country$mult_lower
-deaths_country$upper = deaths_country$X4.1.22 * deaths_country$mult_upper
-deaths_country$date = as.Date("2022/04/01")
-deaths_country$region = NULL
+deaths_country_dec =  select(deaths_country, Country.Region, X12.31.21)
+deaths_country_dec = left_join(deaths_country_dec, multipliers_study, by = "Country.Region")
+deaths_country_dec$X12.31.21 = ifelse(!is.na(deaths_country_dec$mult_study), 
+                                      deaths_country_dec$X12.31.21 * deaths_country_dec$mult_study, 
+                                      deaths_country_dec$X12.31.21)
+deaths_country_dec$mult_study = NULL
 
-deaths_country = select(deaths_country, -mult, -mult_lower, -mult_upper, -X4.1.22)
-deaths_country = rbind(deaths_country_ihme, deaths_country)
+#Combine 
+deaths_country_dec = right_join(deaths_country_dec, deaths_country_ihme, by = c("Country.Region" = "country"))
 
-# Countries with negative excess deaths
-deaths_country_negative <- deaths_country[which(deaths_country$total < 0),]
-write.csv(deaths_country_negative, "excess_deaths_update_2022/output/negative_excess_deaths_ihme.csv")
+#Work out max
+deaths_country_dec$X12.31.21[is.na(deaths_country_dec$X12.31.21)] <- 0
+deaths_country_dec$comb_deaths = ifelse(deaths_country_dec$X12.31.21 > deaths_country_dec$total, 
+                                        deaths_country_dec$X12.31.21, deaths_country_dec$total)
+deaths_country_dec$lower = ifelse(deaths_country_dec$comb_deaths == deaths_country_dec$total, 
+                                  deaths_country_dec$lower, deaths_country_dec$X12.31.21)
+deaths_country_dec$upper = ifelse(deaths_country_dec$comb_deaths == deaths_country_dec$total, 
+                                  deaths_country_dec$upper, deaths_country_dec$X12.31.21)
 
-# Remove data which is negative
-deaths_country =  deaths_country[which(deaths_country$total > 0),]
+# Select final columns 
+deaths_country_dec = select(deaths_country_dec, Country.Region, comb_deaths, lower, upper)
+deaths_country_dec$date = as.Date("2021-12-31")
 
-# Remove countries to match timeseries
-# deaths_country = deaths_country[which(!deaths_country$country %in% c("Turkmenistan", "Greenland", "Bermuda","Puerto Rico", 
-#                                                                     "United States Virgin Islands", "Dem. People's Republic of Korea", "Guam",
-#                                                                     "Northern Mariana Islands")),] #<---- ADD BACK IN
+#---------------------------------------------------------------------------------------
+# Predict forward to April
 
+# Work out timeseries multiplier
+timeseries_multiplier =  select(deaths_country, Country.Region, X12.31.21, X5.1.22)
+timeseries_multiplier$mult = timeseries_multiplier$X5.1.22 / timeseries_multiplier$X12.31.21
+
+# Do adjusting
+deaths_country_apr =  deaths_country_dec
+deaths_country_apr$date = as.Date("2022-04-01")
+deaths_country_apr = left_join(deaths_country_apr, timeseries_multiplier, by = "Country.Region")
+deaths_country_apr$comb_deaths = deaths_country_apr$comb_deaths * deaths_country_apr$mult
+deaths_country_apr$lower = deaths_country_apr$lower * deaths_country_apr$mult
+deaths_country_apr$upper = deaths_country_apr$upper * deaths_country_apr$mult
+deaths_country_apr = select(deaths_country_apr, -X12.31.21, -X5.1.22, -mult)
+deaths_country_apr = deaths_country_apr[!is.na(deaths_country_apr$comb_deaths),]
+
+
+#---------------------------------------------------------------------------------------
+# Combine 2 dates
+deaths_country = rbind(deaths_country_dec, deaths_country_apr)
 
 # Join JHU with tfr data
 data = readRDS("excess_deaths_update_2022/data/tfr_ihme.RDS")
@@ -109,13 +138,13 @@ data$country[which(data$country == "I.R. Iran")] <- "Iran (Islamic Republic of)"
 data$sd = (data$tfr_u-data$tfr_l)/(2*1.96)
 data$europe = ifelse(data$who_region == "European", 1, 0) 
 data = select(data, "country", "tfr", "tfr_l",  "tfr_u", "sd", "who_region", "europe")
-combined_data <- left_join(deaths_country, data, by = c("country"))
-#tmp = unique(combined_data$country[is.na(combined_data$tfr)])
+combined_data <- left_join(deaths_country, data, by = c("Country.Region" = "country"))
+#tmp = unique(combined_data$Country.Region[is.na(combined_data$tfr)])
 #print(length(tmp))
-#tmp = unique(combined_data$country[is.na(combined_data$who_region)])
+#tmp = unique(combined_data$Country.Region[is.na(combined_data$who_region)])
 #print(length(tmp))
 
-num_countries = print(sprintf("Number countries IHME: %s", length(unique(combined_data$country))))
+num_countries = print(sprintf("Number countries IHME: %s", length(unique(combined_data$Country.Region))))
 
 # Calculate orphans
 parents = NULL
@@ -125,7 +154,7 @@ primary_secondary = NULL
 dates = unique(combined_data$date)
 
 for (i in 1:length(dates)){
-  c_data <- combined_data[which(combined_data$date == dates[i]), c("country", "tfr", "tfr_l",  "tfr_u", "sd", "who_region", "europe", "total", "lower", "upper")]
+  c_data <- combined_data[which(combined_data$date == dates[i]), c("Country.Region", "tfr", "tfr_l",  "tfr_u", "sd", "who_region", "europe", "comb_deaths", "lower", "upper")]
   names(c_data) <- c("country", "tfr", "tfr_l", "tfr_u", "sd",  "who_region", "europe", "total_deaths", "lower", "upper")
   orphans <- calculate_all_orphans_time_series(c_data, dates[i], uncertainty = TRUE, death_uncertainty = TRUE, 
                                                num_samples = 5000, source = "ihme")

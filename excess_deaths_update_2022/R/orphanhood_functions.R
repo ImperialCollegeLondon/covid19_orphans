@@ -4,6 +4,8 @@ library(matrixStats)
 library(RCurl)
 library(stringr)
 
+source("excess_deaths_update_2022/R/utils.R")
+
 study_countries <- c("England & Wales", "France", "Germany", "Italy", "Poland",
                      "Russian Federation", "Spain", "Argentina", "Brazil",
                      "Colombia", "Mexico", "Peru", "United States of America", 

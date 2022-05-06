@@ -78,8 +78,16 @@ multipliers = multipliers[!is.na(multipliers$mult),] # Remove missing countries
 multipliers = multipliers[!is.infinite(multipliers$mult),] # Remove inf countries
 multipliers = select(multipliers, Country.Region, mult)
 
-# Remove negative excess deaths 
-multipliers = multipliers[multipliers$mult > 0,]
+multipliers_study <- read.csv('excess_deaths_update_2022/data/multipliers.csv', header = FALSE)
+names(multipliers_study) <- c("Country", "mult_study")
+remove_study = c("Brazil", "India", "Mexico", "Peru", "South Africa", "Iran (Islamic Republic of)", "Colombia", "Russian Federation")
+multipliers_study = multipliers_study[!multipliers_study$Country %in% remove_study,]
+
+multipliers <- left_join(multipliers, multipliers_study, by = c("Country.Region" = "Country"))
+multipliers$mult_study[is.na(multipliers$mult_study)] <- 1
+#print(multipliers$Country.Region[multipliers$mult_study > multipliers$mult])
+multipliers$mult <- ifelse(multipliers$mult_study > multipliers$mult, multipliers$mult_study, multipliers$mult)
+multipliers$mult_study = NULL
 
 # Adjust deaths data
 deaths_country <- right_join(deaths_country, multipliers, by = c("Country.Region"))
@@ -151,8 +159,8 @@ dat$region = NULL
 
 dat_all = dat
 dat_all <- dat_all[order(dat_all$date),]
-#print(dat_all[dat_all$country == "Global" & dat_all$date == "2021-12-31",])
-#print(dat_all[dat_all$country == "Global" & dat_all$date == "2022-04-01",])
+print(dat_all[dat_all$country == "Global" & dat_all$date == "2021-12-31",])
+print(dat_all[dat_all$country == "Global" & dat_all$date == "2022-05-01",])
 
 dat_all$primary_secondary = ifelse(dat_all$primary_secondary  < dat_all$primary,  dat_all$primary, dat_all$primary_secondary)
 write.csv(dat_all, "excess_deaths_update_2022/output/orphanhood_timeseries_who_adjusted.csv", row.names=FALSE)

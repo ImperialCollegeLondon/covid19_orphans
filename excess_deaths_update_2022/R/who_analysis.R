@@ -1,7 +1,7 @@
 # This file produces a time series of orphans.
 library(tidyverse)
 library(readxl)
-library(data.table)
+
 source("excess_deaths_update_2022/R/orphanhood_functions.R")
 
 # Read in WHO data
@@ -43,7 +43,7 @@ deaths_country_who = d_country_wide
 #---------------------------------------------------------------------------------------
 # Read in jhu data
 d <- readRDS("excess_deaths_update_2022/data/downloaded_timeseries_jhu.RDS")
-d2 <- select(d, Country.Region, X4.1.22, X12.31.21)
+d2 <- select(d, Country.Region, X5.1.22, X12.31.21)
 
 deaths_country = d2 %>% 
   group_by(Country.Region) %>%
@@ -74,19 +74,53 @@ deaths_country$Country.Region[which(deaths_country$Country.Region  == "United Ki
 deaths_country$Country.Region[which(deaths_country$Country.Region  == "West Bank and Gaza")] <- "Occupied Palestinian Territory"
 deaths_country$Country.Region[which(deaths_country$Country.Region  == "Micronesia")] <- "Micronesia (Federated States of)"
 
-# Choose countries with positive means
-deaths_country_who <- deaths_country_who[which(!deaths_country_who$country %in% unique(d_country_mean_negative$country)),]
-who_deaths_country = left_join(deaths_country_who, deaths_country, by = c("country"="Country.Region"))
+#---------------------------------------------------------------------------------------
+# Multiply JHU data by multipliers for study countries
+multipliers_study <- read.csv('excess_deaths_update_2022/data/multipliers.csv', header = FALSE)
+names(multipliers_study) <- c("Country.Region", "mult_study")
+remove_study = c("Brazil", "India", "Mexico", "Peru", "South Africa", "Iran (Islamic Republic of)", "Colombia", "Russian Federation")
+multipliers_study = multipliers_study[!multipliers_study$Country.Region %in% remove_study,]
+deaths_country = left_join(deaths_country, multipliers_study, by = ("Country.Region"))
+deaths_country$mult_study[is.na(deaths_country$mult_study)] = 1
+deaths_country$X5.1.22 = deaths_country$X5.1.22*deaths_country$mult_study
+deaths_country$X12.31.21 = deaths_country$X12.31.21*deaths_country$mult_study
+deaths_country$time_multiplier = deaths_country$X5.1.22 / deaths_country$X12.31.21
 
-who_deaths_country[,3:1002] = who_deaths_country[,3:1002]* who_deaths_country$`X4.1.22`/ who_deaths_country$`X12.31.21`
+# Work out which countries need to switch out
+mean_who = data.frame("country" = deaths_country_who$country,
+                      "mean_excess" = rowMeans(deaths_country_who[,3:1002]))
+mean_who = right_join(deaths_country, mean_who, by = c("Country.Region" = "country"))
+mean_who$switch = ifelse(mean_who$X12.31.21 > mean_who$mean_excess, 1, 0)
+mean_who = select(mean_who, Country.Region, switch, X12.31.21)
 
-# Remove Turkmenistan - no jhu data
-who_deaths_country = who_deaths_country[which(who_deaths_country$country != "Turkmenistan"),] 
+# Remove countries with no JHU data and negative excess
+mean_who = mean_who[!is.na(mean_who$switch),]
 
-deaths_country = who_deaths_country
-deaths_country$date = as.Date("2022-04-01")
-deaths_country = rbind(deaths_country_who, deaths_country)
+# Switch out data
+deaths_country_dec = right_join(deaths_country_who, mean_who, by = c("country" = "Country.Region"))
+for (i in 1:1000){
+  deaths_country_dec[,2+i] = ifelse(deaths_country_dec$switch == 1, deaths_country_dec$X12.31.21, unlist(deaths_country_dec[,2+i]))
+}
 
+#---------------------------------------------------------------------------------------
+# Multiply by factor to get April deaths
+deaths_country_apr = deaths_country_dec
+deaths_country_apr = left_join(deaths_country_apr, deaths_country, by = c("country" = "Country.Region"))
+for (i in 1:length(deaths_country_apr$country)){
+  if (is.infinite(deaths_country_apr$time_multiplier[i]) | is.nan(deaths_country_apr$time_multiplier[i])){
+    deaths_country_apr[i, 3:1002] = as.list(rep(deaths_country_apr$X5.1.22[i], 1000)) # Countries with no deaths at first time point
+  } else {
+    deaths_country_apr[i, 3:1002] = deaths_country_apr[i,3:1002] * deaths_country_apr$time_multiplier[i]
+  }
+}
+
+deaths_country_apr$date = as.Date("2022-05-01")
+deaths_country = rbind(deaths_country_dec, deaths_country_apr)
+
+# Removes countries that are not in WHO timeseries
+deaths_country = deaths_country[!deaths_country$country %in% c("Kiribati", "Marshall Islands", 
+                                                               "Micronesia (Federated States of)", 
+                                                               "Palau", "Samoa", "Solomon Islands", "Tonga"),]
 # Join JHU with tfr data
 data = readRDS("excess_deaths_update_2022/data/tfr_who.RDS")
 data$country[which(data$country == "USA")] <- "United States of America"
@@ -143,7 +177,7 @@ dat_uncertainty <- left_join(dat_uncertainty,  select(parents, country, date, or
 write.csv(dat_uncertainty, "excess_deaths_update_2022/output/who_uncertainty_all.csv", row.names = FALSE)
 
 print(dat_uncertainty[dat_uncertainty$country == "Global" & dat_uncertainty$date == "2021-12-31",])
-print(dat_uncertainty[dat_uncertainty$country == "Global" & dat_uncertainty$date == "2022-04-01",])
+print(dat_uncertainty[dat_uncertainty$country == "Global" & dat_uncertainty$date == "2022-05-01",])
 
 write.csv(dat_uncertainty[dat_uncertainty$country == "Global",], 
           "excess_deaths_update_2022/output/who_uncertainty_global.csv", row.names = FALSE)

@@ -3,11 +3,9 @@ source("excess_deaths_update_2022/R/time_series_who_adjusted.R")
 source("excess_deaths_update_2022/R/who_analysis.R")
 
 print("Runs Economist analysis")
-source("excess_deaths_update_2022/R/time_series_economist.R")
 source("excess_deaths_update_2022/R/economist_analysis.R")
 
 print("Runs IHME analysis")
-source("excess_deaths_update_2022/R/time_series_ihme_adjusted.R")
 source("excess_deaths_update_2022/R/ihme_analysis.R")
 
 print("Makes tables and figures")

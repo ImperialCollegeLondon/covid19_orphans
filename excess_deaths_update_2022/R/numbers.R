@@ -1,8 +1,9 @@
 library(tidyverse)
 source("excess_deaths_update_2022/R/utils.R")
+options(scipen=999)
 
 d <- read.csv("excess_deaths_update_2022/output/who_uncertainty_all.csv")
-d <- d[d$date == as.Date("2022-04-01"),]
+d <- d[d$date == as.Date("2022-05-01"),]
 
 d_countries = d[8:length(d$country),]
 d_countries = d_countries[order(d_countries$primary_secondary, decreasing = TRUE),]

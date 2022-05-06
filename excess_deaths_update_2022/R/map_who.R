@@ -32,7 +32,7 @@ world_coordinates$region[which(world_coordinates$region == "Falkland Islands")] 
 world_coordinates$region[which(world_coordinates$region == "Palestine")] <- "Occupied Palestinian Territory"
 
 timeseries <- read.csv("excess_deaths_update_2022/output/orphanhood_timeseries_no_omit_who_adjusted.csv")
-timeseries_max <- timeseries[which(timeseries$date == as.Date("2022-04-01")),]
+timeseries_max <- timeseries[which(timeseries$date == as.Date("2022-05-01")),]
 timeseries_max <- select(timeseries_max, country, primary_secondary)
 
 world_join <- left_join(world_coordinates, timeseries_max, by = c( "region" = "country"))
@@ -45,13 +45,9 @@ world_join$cat = ifelse(world_join$primary_secondary >= 0 & world_join$primary_s
                                                            ifelse(world_join$primary_secondary >= 100000 & world_join$primary_secondary < 150000, 6, 
                                                                   ifelse(world_join$primary_secondary >= 150000, 7, 0)))))))
 
-#Save negative excess
-neg_countries = read.csv("excess_deaths_update_2022/output/negative_excess_deaths_who.csv")
-neg_countries$country[which(neg_countries$country == "Dem. People's Republic of Korea")] = "Democratic People's Republic of Korea"
-world_join$cat[world_join$region %in% neg_countries$country ] <- 0
 
 world_join$cat = factor(world_join$cat, 
-                        labels = c("<0", "0-9,999", "10,000-19,999", "20,000-24,999", 
+                        labels = c("0-9,999", "10,000-19,999", "20,000-24,999", 
                                    "25,000-49,999", "50,000-99,999", "100,000-149,999", "150,000+"))
 
 p  <-   ggplot() + 
@@ -62,5 +58,5 @@ p  <-   ggplot() +
               values = c("#fee8c8", "#fdd49e", "#fdbb84", "#fc8d59", "#ef6548", "#d7301f", "#b30000", "#7f0000")) +
   theme(legend.position = "bottom", legend.key.width = unit(2, 'cm'), legend.title = element_blank())
 print(p)
-ggsave("excess_deaths_update_2022/figures/map_apr_2022.pdf", p, width = 13)
-saveRDS(p, "excess_deaths_update_2022/figures/map_apr_2022.RDS")
+#ggsave("excess_deaths_update_2022/figures/map_may_2022.pdf", p, width = 13)
+saveRDS(p, "excess_deaths_update_2022/figures/map_may_2022.RDS")
