@@ -188,7 +188,6 @@ write.csv(dat_uncertainty, "excess_deaths_update_2022/output/economist_uncertain
 
 print(dat_uncertainty[dat_uncertainty$country == "Global" & dat_uncertainty$date == "2021-12-27",])
 print(dat_uncertainty[dat_uncertainty$country == "Global" & dat_uncertainty$date == "2022-04-25",])
-
 write.csv(dat_uncertainty[dat_uncertainty$country == "Global",], "excess_deaths_update_2022/output/economist_uncertainty_global.csv", row.names = FALSE)
 
 # Checking uncertainty intervals
