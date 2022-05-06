@@ -118,7 +118,7 @@ timeseries_multiplier$mult = timeseries_multiplier$X5.1.22 / timeseries_multipli
 
 # Do adjusting
 deaths_country_apr =  deaths_country_dec
-deaths_country_apr$date = as.Date("2022-04-01")
+deaths_country_apr$date = as.Date("2022-05-01")
 deaths_country_apr = left_join(deaths_country_apr, timeseries_multiplier, by = "Country.Region")
 deaths_country_apr$comb_deaths = deaths_country_apr$comb_deaths * deaths_country_apr$mult
 deaths_country_apr$lower = deaths_country_apr$lower * deaths_country_apr$mult
@@ -183,7 +183,7 @@ dat_uncertainty <- left_join(dat_uncertainty,  select(parents, country, date, or
 write.csv(dat_uncertainty, "excess_deaths_update_2022/output/ihme_uncertainty_all.csv", row.names = FALSE)
 
 print(dat_uncertainty[dat_uncertainty$country == "Global" & dat_uncertainty$date == "2021-12-31",])
-print(dat_uncertainty[dat_uncertainty$country == "Global" & dat_uncertainty$date == "2022-04-01",])
+print(dat_uncertainty[dat_uncertainty$country == "Global" & dat_uncertainty$date == "2022-05-01",])
 
 write.csv(dat_uncertainty[dat_uncertainty$country == "Global",], "excess_deaths_update_2022/output/ihme_uncertainty_global.csv", row.names = FALSE)
 

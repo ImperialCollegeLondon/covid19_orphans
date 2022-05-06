@@ -55,7 +55,7 @@ p  <-   ggplot() +
            map = world_join, aes(long, lat, map_id = region, fill =  cat)) + 
   theme_void() +
   scale_fill_manual(name = "Primary and/or secondary caregiver loss \n",
-              values = c("#fee8c8", "#fdd49e", "#fdbb84", "#fc8d59", "#ef6548", "#d7301f", "#b30000", "#7f0000")) +
+              values = c("#fdd49e", "#fdbb84", "#fc8d59", "#ef6548", "#d7301f", "#b30000", "#7f0000")) +
   theme(legend.position = "bottom", legend.key.width = unit(2, 'cm'), legend.title = element_blank())
 print(p)
 #ggsave("excess_deaths_update_2022/figures/map_may_2022.pdf", p, width = 13)
