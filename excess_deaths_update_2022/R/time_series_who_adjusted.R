@@ -83,6 +83,10 @@ names(multipliers_study) <- c("Country", "mult_study")
 remove_study = c("Brazil", "India", "Mexico", "Peru", "South Africa", "Iran (Islamic Republic of)", "Colombia", "Russian Federation")
 multipliers_study = multipliers_study[!multipliers_study$Country %in% remove_study,]
 
+## Switch KENYA
+multipliers_study = rbind(multipliers_study, data.frame("Country" = "Kenya",
+                                                        "mult_study" = 10))
+
 multipliers <- left_join(multipliers, multipliers_study, by = c("Country.Region" = "Country"))
 multipliers$mult_study[is.na(multipliers$mult_study)] <- 1
 #print(multipliers$Country.Region[multipliers$mult_study > multipliers$mult])

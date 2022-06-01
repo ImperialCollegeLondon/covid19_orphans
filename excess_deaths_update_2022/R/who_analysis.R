@@ -80,6 +80,11 @@ multipliers_study <- read.csv('excess_deaths_update_2022/data/multipliers.csv', 
 names(multipliers_study) <- c("Country.Region", "mult_study")
 remove_study = c("Brazil", "India", "Mexico", "Peru", "South Africa", "Iran (Islamic Republic of)", "Colombia", "Russian Federation")
 multipliers_study = multipliers_study[!multipliers_study$Country.Region %in% remove_study,]
+
+## Switch KENYA
+multipliers_study = rbind(multipliers_study, data.frame("Country.Region" = "Kenya",
+                                                        "mult_study" = 10))
+
 deaths_country = left_join(deaths_country, multipliers_study, by = ("Country.Region"))
 deaths_country$mult_study[is.na(deaths_country$mult_study)] = 1
 deaths_country$X5.1.22 = deaths_country$X5.1.22*deaths_country$mult_study

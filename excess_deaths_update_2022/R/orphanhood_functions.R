@@ -63,6 +63,7 @@ calculate_orphans_time <- function(country_data, coeffs, study_ratios, date,
     n = num_samples
     estimated_ratio <- matrix(nrow = length(country_data$country), ncol = n)
     estimated_orphans <- matrix(nrow = length(country_data$country), ncol = n)
+    total_deaths = vector(length = n)
     
     for (i in 1:n){
       rn <- rnorm(length(country_data$country), mean = country_data$tfr, sd = country_data$sd)
@@ -77,11 +78,21 @@ calculate_orphans_time <- function(country_data, coeffs, study_ratios, date,
         
         dn <- rnorm(length(country_data$country), mean = country_data$total_deaths, sd = deaths_sd)
         estimated_orphans[, i] <- estimated_ratio[, i] * dn
+        
+        total_deaths[i] = sum(dn)
       
         } else{
         estimated_orphans[, i] <- estimated_ratio[, i] * country_data$total_deaths
+        
+        total_deaths[i] = sum(country_data$total_deaths)
       }
       
+    }
+    if (death_uncertainty == TRUE){
+      print(sprintf("Total deaths: %s [%s - %s]", 
+              format(round(mean(total_deaths), -5), big.mark = ",", trim = TRUE), 
+              format(round.choose(quantile(total_deaths, probs = 0.025), 100000, 0), big.mark = ",", trim = TRUE), 
+              format(round.choose(quantile(total_deaths, probs = 0.975), 100000, 1), big.mark = ",", trim = TRUE)))
     }
     
     # Save orphanhood samples for use later
@@ -263,6 +274,13 @@ calculate_orphans_time_samples <- function(country_data, coeffs, study_ratios, d
       }
       
     }
+    
+    total_deaths = colSums(as.matrix(samples[,2:1001]))
+    
+    print(sprintf("%s [%s - %s]",  #-5 100000
+                  format(round(mean(total_deaths), -3), big.mark = ",", trim = TRUE), 
+                  format(round.choose(quantile(total_deaths, probs = 0.025), 1000, 0), big.mark = ",", trim = TRUE), 
+                  format(round.choose(quantile(total_deaths, probs = 0.975), 1000, 1), big.mark = ",", trim = TRUE)))
     
     # Save orphanhood samples for use later
     estimated_orphans_ = as.data.frame(estimated_orphans)
