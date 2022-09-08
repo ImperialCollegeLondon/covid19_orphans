@@ -4,6 +4,7 @@ This repository includes code and data to recreate the following analyses:
 1) [Hillis, Unwin, Chen et al. (2021)](http://www.thelancet.com/journals/lancet/article/PIIS0140-6736(21)01253-8/fulltext) [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5595419.svg)](https://doi.org/10.5281/zenodo.5595419),
 2) [Hillis, Blenkinsop, Villaveces et al. (2021)](https://publications.aap.org/pediatrics/article/148/6/e2021053760/183446/COVID-19-Associated-Orphanhood-and-Caregiver-Death)[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5901319.svg)](https://doi.org/10.5281/zenodo.5901319),
 3) [Unwin, Hillis et al. (2022)](https://www.thelancet.com/journals/lanchi/article/PIIS2352-4642(22)00005-0/fulltext)[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.6284634.svg)](https://doi.org/10.5281/zenodo.6284634)
+4) [Hillis et al. (2022)](https://jamanetwork.com/journals/jamapediatrics/fullarticle/2795650)
 
 ## Global minimum estimates of children affected by COVID-19-associated orphanhood and deaths of caregivers: a modelling study
 
@@ -43,6 +44,8 @@ TheLancetCAH_global_age_analysis_2022.R script is used to recreate the analysis 
 
 Please be warned the script "TheLancetCAH_global_age_analysis_2022/R/run_age_analysis_uncertainty.R" takes quite a while to run since it implements the bootstrapping for the uncertainty in the age calculation.  All necessary output is included in the repository so this step can be skipped if necessary. 
 
+## Orphanhood and Caregiver Loss Among Children Based on New Global Excess COVID-19 Death Estimates
+The JAMAPeds_excess_deaths_update_2022.R script is used to recreate the analysis in this paper.  It updates our analysis using excess deaths.
 
 ## R packages
 The following R packages are necessary:
