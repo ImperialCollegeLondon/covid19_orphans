@@ -1,10 +1,10 @@
 # This file produces a time series of orphans.
 library(tidyverse)
 library(readxl)
-source("excess_deaths_update_2022/R/orphanhood_functions.R")
+source("JAMAPeds_excess_deaths_update_2022/R/orphanhood_functions.R")
 
 # Read in WHO death data
-load("excess_deaths_update_2022/data/excess.distribution.Rda")
+load("JAMAPeds_excess_deaths_update_2022/data/excess.distribution.Rda")
 d_country = df.dist.2
 d_country = select(d_country, Country, sample, excess)
 names(d_country) = c("country", "sample", "excess")
@@ -34,7 +34,7 @@ print(sprintf("Total deaths WHO: %s", sum(d_who$total)))
 # Reads in JHU data
 #d <- read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv")
 #saveRDS(d, file = "excess_deaths_update_2022/data/downloaded_timeseries_jhu.RDS")
-d = readRDS("excess_deaths_update_2022/data/downloaded_timeseries_jhu.RDS")
+d = readRDS("JAMAPeds_excess_deaths_update_2022/data/downloaded_timeseries_jhu.RDS")
 
 d2 <- select(d, -Long, -Lat, -Province.State)
 
@@ -78,7 +78,7 @@ multipliers = multipliers[!is.na(multipliers$mult),] # Remove missing countries
 multipliers = multipliers[!is.infinite(multipliers$mult),] # Remove inf countries
 multipliers = select(multipliers, Country.Region, mult)
 
-multipliers_study <- read.csv('excess_deaths_update_2022/data/multipliers.csv', header = FALSE)
+multipliers_study <- read.csv('JAMAPeds_excess_deaths_update_2022/data/multipliers.csv', header = FALSE)
 names(multipliers_study) <- c("Country", "mult_study")
 remove_study = c("Brazil", "India", "Mexico", "Peru", "South Africa", "Iran (Islamic Republic of)", "Colombia", "Russian Federation")
 multipliers_study = multipliers_study[!multipliers_study$Country %in% remove_study,]
@@ -99,7 +99,7 @@ deaths_country[, 2:(ncol(deaths_country)-1)] <- deaths_country[,2:(ncol(deaths_c
 
 #-------------------------------------------------------------------------------------
 # Join JHU with tfr data
-data = readRDS("excess_deaths_update_2022/data/tfr.RDS")
+data = readRDS("JAMAPeds_excess_deaths_update_2022/data/tfr.RDS")
 data$country[which(data$country == "USA")] <- "United States of America"
 data$country[which(data$country == "I.R. Iran")] <- "Iran (Islamic Republic of)"
 data$sd = (data$tfr_u-data$tfr_l)/(2*1.96)
@@ -153,7 +153,7 @@ names(pa) <- c("country", "date", "orphanhood")
 
 dat <- left_join(ps, p, by = c("country", "date"))
 dat <- left_join(dat, pa, by = c("country", "date"))
-write.csv(dat, "excess_deaths_update_2022/output/orphanhood_timeseries_no_omit_who_adjusted.csv", row.names=FALSE)
+write.csv(dat, "JAMAPeds_excess_deaths_update_2022/output/orphanhood_timeseries_no_omit_who_adjusted.csv", row.names=FALSE)
 
 #-------------------------------------------------------------------------------------
 # Remove countries with fewer than 25 orphans 
@@ -167,5 +167,5 @@ print(dat_all[dat_all$country == "Global" & dat_all$date == "2021-12-31",])
 print(dat_all[dat_all$country == "Global" & dat_all$date == "2022-05-01",])
 
 dat_all$primary_secondary = ifelse(dat_all$primary_secondary  < dat_all$primary,  dat_all$primary, dat_all$primary_secondary)
-write.csv(dat_all, "excess_deaths_update_2022/output/orphanhood_timeseries_who_adjusted.csv", row.names=FALSE)
+write.csv(dat_all, "JAMAPeds_excess_deaths_update_2022/output/orphanhood_timeseries_who_adjusted.csv", row.names=FALSE)
 

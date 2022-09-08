@@ -1,8 +1,8 @@
 library(tidyverse)
-source("excess_deaths_update_2022/R/utils.R")
+source("JAMAPeds_excess_deaths_update_2022/R/utils.R")
 options(scipen=999)
 
-d <- read.csv("excess_deaths_update_2022/output/who_uncertainty_all.csv")
+d <- read.csv("JAMAPeds_excess_deaths_update_2022/output/who_uncertainty_all.csv")
 d <- d[d$date == as.Date("2022-05-01"),]
 
 d_countries = d[8:length(d$country),]

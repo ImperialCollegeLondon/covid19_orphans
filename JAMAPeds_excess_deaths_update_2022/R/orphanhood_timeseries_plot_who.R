@@ -5,7 +5,7 @@ library(tidyverse)
 library(ggsci)
 
 
-d <- read_csv("excess_deaths_update_2022/output/orphanhood_timeseries_who_adjusted.csv", show_col_types = FALSE)
+d <- read_csv("JAMAPeds_excess_deaths_update_2022/output/orphanhood_timeseries_who_adjusted.csv", show_col_types = FALSE)
 
 dat <- d[d$country %in% d$country[2:7],]
 regions <- c("AFRO","AMRO","EMRO","EURO","SEARO","WPRO")
@@ -42,5 +42,5 @@ p <- ggplot(dat, aes(x = date, y = primary_secondary, fill = country)) +
         plot.title = element_text(hjust=0.5, size = 7))  +
   labs(fill = "WHO Region") #, title = paste("Pandemic Orphanhood and Caregiver Death among Children"))
 
-#ggsave(filename = "excess_deaths_update_2022/figures/timeseries_may_2022.pdf", width = 14, height = 10, dpi = 300, units = "cm")
-saveRDS(p, file = "excess_deaths_update_2022/figures/timeseries.RDS")
+#ggsave(filename = "JAMAPeds_excess_deaths_update_2022/figures/timeseries_may_2022.pdf", width = 14, height = 10, dpi = 300, units = "cm")
+saveRDS(p, file = "JAMAPeds_excess_deaths_update_2022/figures/timeseries.RDS")

@@ -4,7 +4,7 @@ library(matrixStats)
 library(RCurl)
 library(stringr)
 
-source("excess_deaths_update_2022/R/utils.R")
+source("JAMAPeds_excess_deaths_update_2022/R/utils.R")
 
 study_countries <- c("England & Wales", "France", "Germany", "Italy", "Poland",
                      "Russian Federation", "Spain", "Argentina", "Brazil",
@@ -171,7 +171,7 @@ calculate_orphans_time <- function(country_data, coeffs, study_ratios, date,
 
 calculate_all_orphans_time_series<- function(c_data, date, uncertainty, death_uncertainty, num_samples, source, samples = NULL){
   # Read study data in
-  study_ratios <- readRDS("excess_deaths_update_2022/data/calculated_ratios.RDS")
+  study_ratios <- readRDS("JAMAPeds_excess_deaths_update_2022/data/calculated_ratios.RDS")
   
   if (is.null(samples)) {
     # Calculate
@@ -285,7 +285,7 @@ calculate_orphans_time_samples <- function(country_data, coeffs, study_ratios, d
     # Save orphanhood samples for use later
     estimated_orphans_ = as.data.frame(estimated_orphans)
     estimated_orphans_$country = country_data$country
-    #saveRDS(estimated_orphans_, file = "excess_deaths_update_2022/output/orphanhood_samples.RDS")
+    #saveRDS(estimated_orphans_, file = "JAMAPeds_excess_deaths_update_2022/output/orphanhood_samples.RDS")
     
     uq <- rowQuantiles(estimated_orphans, probs = c(0.025, 0.975))
     

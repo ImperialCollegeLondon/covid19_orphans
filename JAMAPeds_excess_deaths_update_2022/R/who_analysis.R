@@ -2,10 +2,10 @@
 library(tidyverse)
 library(readxl)
 
-source("excess_deaths_update_2022/R/orphanhood_functions.R")
+source("JAMAPeds_excess_deaths_update_2022/R/orphanhood_functions.R")
 
 # Read in WHO data
-load("excess_deaths_update_2022/data/excess.distribution.Rda")
+load("JAMAPeds_excess_deaths_update_2022/data/excess.distribution.Rda")
 d_country = df.dist.2
 d_country = select(d_country, Country, sample, excess)
 names(d_country) = c("country", "sample", "excess")
@@ -27,7 +27,7 @@ d_country_mean_negative = d_country %>%
   group_by(country) %>%
   summarise(mean = mean(excess)) %>% 
   filter(mean < 0)
-write.csv(d_country_mean_negative, "excess_deaths_update_2022/output/negative_excess_deaths_who.csv")
+write.csv(d_country_mean_negative, "JAMAPeds_excess_deaths_update_2022/output/negative_excess_deaths_who.csv")
 
 d_country$date = as.Date("2021/12/31")
 d_country_wide = d_country %>% 
@@ -42,7 +42,7 @@ deaths_country_who = d_country_wide
 
 #---------------------------------------------------------------------------------------
 # Read in jhu data
-d <- readRDS("excess_deaths_update_2022/data/downloaded_timeseries_jhu.RDS")
+d <- readRDS("JAMAPeds_excess_deaths_update_2022/data/downloaded_timeseries_jhu.RDS")
 d2 <- select(d, Country.Region, X5.1.22, X12.31.21)
 
 deaths_country = d2 %>% 
@@ -76,7 +76,7 @@ deaths_country$Country.Region[which(deaths_country$Country.Region  == "Micronesi
 
 #---------------------------------------------------------------------------------------
 # Multiply JHU data by multipliers for study countries
-multipliers_study <- read.csv('excess_deaths_update_2022/data/multipliers.csv', header = FALSE)
+multipliers_study <- read.csv('JAMAPeds_excess_deaths_update_2022/data/multipliers.csv', header = FALSE)
 names(multipliers_study) <- c("Country.Region", "mult_study")
 remove_study = c("Brazil", "India", "Mexico", "Peru", "South Africa", "Iran (Islamic Republic of)", "Colombia", "Russian Federation")
 multipliers_study = multipliers_study[!multipliers_study$Country.Region %in% remove_study,]
@@ -127,7 +127,7 @@ deaths_country = deaths_country[!deaths_country$country %in% c("Kiribati", "Mars
                                                                "Micronesia (Federated States of)", 
                                                                "Palau", "Samoa", "Solomon Islands", "Tonga"),]
 # Join JHU with tfr data
-data = readRDS("excess_deaths_update_2022/data/tfr_who.RDS")
+data = readRDS("JAMAPeds_excess_deaths_update_2022/data/tfr_who.RDS")
 data$country[which(data$country == "USA")] <- "United States of America"
 data$country[which(data$country == "I.R. Iran")] <- "Iran (Islamic Republic of)"
 data$sd = (data$tfr_u-data$tfr_l)/(2*1.96)
@@ -179,13 +179,13 @@ dat_uncertainty <- left_join(primary_secondary, select(primary, country, date, p
 dat_uncertainty <- left_join(dat_uncertainty,  select(parents, country, date, orphanhood, 
                                                       or_lower, or_upper), by = c("country", "date"))
 
-write.csv(dat_uncertainty, "excess_deaths_update_2022/output/who_uncertainty_all.csv", row.names = FALSE)
+write.csv(dat_uncertainty, "JAMAPeds_excess_deaths_update_2022/output/who_uncertainty_all.csv", row.names = FALSE)
 
 print(dat_uncertainty[dat_uncertainty$country == "Global" & dat_uncertainty$date == "2021-12-31",])
 print(dat_uncertainty[dat_uncertainty$country == "Global" & dat_uncertainty$date == "2022-05-01",])
 
 write.csv(dat_uncertainty[dat_uncertainty$country == "Global",], 
-          "excess_deaths_update_2022/output/who_uncertainty_global.csv", row.names = FALSE)
+          "JAMAPeds_excess_deaths_update_2022/output/who_uncertainty_global.csv", row.names = FALSE)
 
 # Checking uncertainty intervals
 #reg = dat_uncertainty[dat_uncertainty$country == dat_uncertainty$region,]

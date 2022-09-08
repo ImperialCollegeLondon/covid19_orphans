@@ -31,7 +31,7 @@ world_coordinates$region[which(world_coordinates$region == "New Caledonia")] <- 
 world_coordinates$region[which(world_coordinates$region == "Falkland Islands")] <- "United Kingdom"
 world_coordinates$region[which(world_coordinates$region == "Palestine")] <- "Occupied Palestinian Territory"
 
-timeseries <- read.csv("excess_deaths_update_2022/output/orphanhood_timeseries_no_omit_who_adjusted.csv")
+timeseries <- read.csv("JAMAPeds_excess_deaths_update_2022/output/orphanhood_timeseries_no_omit_who_adjusted.csv")
 timeseries_max <- timeseries[which(timeseries$date == as.Date("2022-05-01")),]
 timeseries_max <- select(timeseries_max, country, primary_secondary)
 
@@ -58,5 +58,5 @@ p  <-   ggplot() +
               values = c("#fdd49e", "#fdbb84", "#fc8d59", "#ef6548", "#d7301f", "#b30000", "#7f0000")) +
   theme(legend.position = "bottom", legend.key.width = unit(2, 'cm'), legend.title = element_blank())
 print(p)
-#ggsave("excess_deaths_update_2022/figures/map_may_2022.pdf", p, width = 13)
-saveRDS(p, "excess_deaths_update_2022/figures/map_may_2022.RDS")
+#ggsave("JAMAPeds_excess_deaths_update_2022/figures/map_may_2022.pdf", p, width = 13)
+saveRDS(p, "JAMAPeds_excess_deaths_update_2022/figures/map_may_2022.RDS")
