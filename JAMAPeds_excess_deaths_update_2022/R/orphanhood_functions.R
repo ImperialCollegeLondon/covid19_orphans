@@ -175,26 +175,26 @@ calculate_all_orphans_time_series<- function(c_data, date, uncertainty, death_un
   
   if (is.null(samples)) {
     # Calculate
-    ps_orphans <- calculate_orphans_time(c_data, readRDS("excess_deaths_update_2022/data/primary_secondary_coefficients.RDS"), 
+    ps_orphans <- calculate_orphans_time(c_data, readRDS("JAMAPeds_excess_deaths_update_2022/data/primary_secondary_coefficients.RDS"), 
                                          study_ratios[,c(1,4)], date, uncertainty = uncertainty, 
                                          death_uncertainty = death_uncertainty, num_samples, source,  type = "primary_secondary")
-    primary_orphans <- calculate_orphans_time(c_data, readRDS("excess_deaths_update_2022/data/primary_coefficients.RDS"), 
+    primary_orphans <- calculate_orphans_time(c_data, readRDS("JAMAPeds_excess_deaths_update_2022/data/primary_coefficients.RDS"), 
                                               study_ratios[,c(1,3)], date, uncertainty = uncertainty, 
                                               death_uncertainty = death_uncertainty, num_samples, source, type = "primary")
-    parents_orphans <- calculate_orphans_time(c_data, readRDS("excess_deaths_update_2022/data/parent_coefficients.RDS"), 
+    parents_orphans <- calculate_orphans_time(c_data, readRDS("JAMAPeds_excess_deaths_update_2022/data/parent_coefficients.RDS"), 
                                               study_ratios[,c(1,2)], date, uncertainty = uncertainty, 
                                               death_uncertainty = death_uncertainty,  num_samples, source, type = "orphanhood")
   } else {
     # Calculate
-    ps_orphans <- calculate_orphans_time_samples(c_data, readRDS("excess_deaths_update_2022/data/primary_secondary_coefficients.RDS"), 
+    ps_orphans <- calculate_orphans_time_samples(c_data, readRDS("JAMAPeds_excess_deaths_update_2022/data/primary_secondary_coefficients.RDS"), 
                                                  study_ratios[,c(1,4)], date, uncertainty = uncertainty, 
                                                  death_uncertainty = death_uncertainty, num_samples = num_samples, 
                                                  samples = samples, source = source,  type = "primary_secondary")
-    primary_orphans <- calculate_orphans_time_samples(c_data, readRDS("excess_deaths_update_2022/data/primary_coefficients.RDS"), 
+    primary_orphans <- calculate_orphans_time_samples(c_data, readRDS("JAMAPeds_excess_deaths_update_2022/data/primary_coefficients.RDS"), 
                                                       study_ratios[,c(1,3)], date, uncertainty = uncertainty, 
                                                       death_uncertainty = death_uncertainty, num_samples = num_samples, 
                                                       samples = samples, source = source, type = "primary")
-    parents_orphans <- calculate_orphans_time_samples(c_data, readRDS("excess_deaths_update_2022/data/parent_coefficients.RDS"), 
+    parents_orphans <- calculate_orphans_time_samples(c_data, readRDS("JAMAPeds_excess_deaths_update_2022/data/parent_coefficients.RDS"), 
                                                       study_ratios[,c(1,2)], date, uncertainty = uncertainty, 
                                                       death_uncertainty = death_uncertainty, num_samples = num_samples, 
                                                       samples = samples, source = source, type = "orphanhood")
